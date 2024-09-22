@@ -1,26 +1,40 @@
+<script setup>
+import MenuView from "@/views/MenuView.vue";
+import ContentView from "@/views/ContentView.vue";
+</script>
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-container id="container">
+    <v-row id="main">
+      <v-col cols="3" id="menu">
+        <MenuView />
+      </v-col>
+      <v-col cols="9">
+        <ContentView />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "app",
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+.v-container {
+  // padding-top: 3rem !important;
+  // min-height: 800px;
+
+  // #main {
+  //   padding: 0;
+  // }
+
+  // #menu {
+  //   height: auto;
+  //   padding-left: 1em;
+  //   padding-right: 3em;
+  // }
 }
 </style>
