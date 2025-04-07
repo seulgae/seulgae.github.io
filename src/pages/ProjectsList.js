@@ -4,7 +4,7 @@ import projects from "./Projects"; // 프로젝트 데이터 import
 const ProjectsList = () => {
   return (
     <div>
-      <h1>  프로젝트 목록</h1>
+      <h1>프로젝트 목록</h1>
       {projects.map((project, index) => (
         <div key={index} style={styles.projectContainer}>
           <h2>{project.projectName}</h2>
