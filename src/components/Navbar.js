@@ -6,7 +6,8 @@ function Navbar({ isOpen, toggleSidebar }) {
     <div style={{ 
       position: "fixed",
       left: isOpen ? "0" : "-250px",
-      width: "250px", 
+      width: "min(250px, 80vw)",  // 👉 모바일에서는 80% 화면 크기로 조절
+      maxWidth: "100vw",  // 👉 화면을 넘지 않도록 제한
       height: "100vh", 
       backgroundColor: "#222",
       color: "white", 
@@ -15,7 +16,7 @@ function Navbar({ isOpen, toggleSidebar }) {
       boxSizing: "border-box",
       fontFamily: "'Noto Sans KR', sans-serif",
       display: "flex",
-      flexDirection: "column" // ✅ 세로 정렬 유지
+      flexDirection: "column", // ✅ 세로 정렬 유지
     }}>
       {/* 사이드바 토글 버튼 */}
       <button 

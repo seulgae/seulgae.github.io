@@ -25,3 +25,4 @@ npm install gh-pages --save-dev
 
 # 프로젝트 일지
 4/7 React 프로젝트 생성, 기본 설정 파일 수정<br>
+4/8 포트폴리오 기반 틀 디자인 작업<br>
