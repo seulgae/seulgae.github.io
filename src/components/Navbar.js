@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaGithub, FaBlog } from "react-icons/fa";
 
 function Navbar({ isOpen, toggleSidebar }) {
   return (
@@ -7,20 +8,23 @@ function Navbar({ isOpen, toggleSidebar }) {
       left: isOpen ? "0" : "-250px",
       width: "250px", 
       height: "100vh", 
-      backgroundColor: "#222",  // ✅ 좀 더 세련된 색감
+      backgroundColor: "#222",
       color: "white", 
       padding: "20px",
       transition: "left 0.3s",
       boxSizing: "border-box",
-      fontFamily: "'Noto Sans KR', sans-serif" // ✅ 한국어 가독성 좋은 글꼴
+      fontFamily: "'Noto Sans KR', sans-serif",
+      display: "flex",
+      flexDirection: "column" // ✅ 세로 정렬 유지
     }}>
+      {/* 사이드바 토글 버튼 */}
       <button 
         onClick={toggleSidebar} 
         style={{
           position: "absolute",
           top: "10px",
           right: "-50px",
-          backgroundColor: "#444", // ✅ 살짝 다른 색으로 구분
+          backgroundColor: "#444",
           color: "white",
           border: "none",
           padding: "10px",
@@ -28,20 +32,19 @@ function Navbar({ isOpen, toggleSidebar }) {
           borderRadius: "5px",
           transition: "0.3s", 
         }}
-        onMouseOver={(e) => e.target.style.backgroundColor = "#666"} // ✅ hover 효과
+        onMouseOver={(e) => e.target.style.backgroundColor = "#666"}
         onMouseOut={(e) => e.target.style.backgroundColor = "#444"}
       >
         {isOpen ? "✖" : "☰"}
       </button>
 
-      <h2 style={{ textAlign: "center", fontSize: "22px", fontWeight: "bold" }}>
+      {/* 상단 로고 & 이미지 */}
+      <div style={{ textAlign: "center" }}>
+      <h2 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "30px" }}>
         <a href="/" style={{ textDecoration: "none", color: "white" }}>
           Seulgae Portfolio
         </a>
       </h2>
-
-      {/* ✅ 동그란 프로필 이미지 */}
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
         <img 
           src="/giltaehyeong.jpg" 
           alt="Profile"
@@ -51,16 +54,20 @@ function Navbar({ isOpen, toggleSidebar }) {
             borderRadius: "50%",
             objectFit: "cover",
             border: "3px solid white",
-            boxShadow: "0px 0px 8px rgba(255, 255, 255, 0.5)", // ✅ 약간의 글로우 효과
+            boxShadow: "0px 0px 8px rgba(255, 255, 255, 0.5)",
           }}
         />
       </div>
 
-      <nav>
+      {/* ✅ 네비게이션 영역 */}
+      <nav style={{ flexGrow: 1, marginTop: "10px" }}> 
         <ul style={{ 
           listStyle: "none", 
           padding: 0,
-          textAlign: "center" // ✅ 중앙 정렬
+          textAlign: "center",
+          display: "flex", 
+          flexDirection: "column",
+          alignItems: "center",
         }}>
           {[
             { to: "/", text: "자기소개서" },
@@ -72,7 +79,9 @@ function Navbar({ isOpen, toggleSidebar }) {
           ].map((item, index) => (
             <li key={index} style={{ 
               padding: "10px 0", 
-              borderBottom: "1px solid rgba(255, 255, 255, 0.2)", // ✅ 구분선 추가
+              width: "100%", 
+              textAlign: "center",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
               transition: "0.3s",
             }}>
               <Link 
@@ -87,7 +96,7 @@ function Navbar({ isOpen, toggleSidebar }) {
                   borderRadius: "5px",
                   transition: "0.3s"
                 }}
-                onMouseOver={(e) => e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)"} // ✅ hover 효과
+                onMouseOver={(e) => e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)"}
                 onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
               >
                 {item.text}
@@ -96,6 +105,21 @@ function Navbar({ isOpen, toggleSidebar }) {
           ))}
         </ul>
       </nav>
+
+      {/* 하단 아이콘 */}
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        gap: "15px", 
+        paddingBottom: "20px"
+      }}>
+        <a href="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
+          <FaGithub size={24} color="white" />
+        </a>
+        <a href="https://blog.naver.com/seulgae" target="_blank" rel="noopener noreferrer">
+          <FaBlog size={24} color="white" />
+        </a>
+      </div>
     </div>
   );
 }
