@@ -116,7 +116,7 @@ function Navbar({ isOpen, toggleSidebar }) {
         <a href="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
           <FaGithub size={24} color="white" />
         </a>
-        <a href="https://blog.naver.com/seulgae" target="_blank" rel="noopener noreferrer">
+        <a href="https://doltae.tistory.com/" target="_blank" rel="noopener noreferrer">
           <FaBlog size={24} color="white" />
         </a>
       </div>
