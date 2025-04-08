@@ -76,7 +76,7 @@ const projects = [
             tools: ["Jenkins", "SecureCRT", "Trusted Orange", "UplusStudio"]
           }
         }
-      ]
+      ],
     }
   ];
   

@@ -1,0 +1,73 @@
+/* Home.css */
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-align: center;
+    position: relative;
+    z-index: -1;
+    background: white;
+  }
+  
+  .content {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 2;
+  }
+  
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    font-style: italic;
+  }
+  
+  .skills {
+    font-size: 1.2rem;
+    color: #333;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    text-align: center;
+    z-index: 10;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .menu button:hover {
+    text-decoration: underline;
+  }

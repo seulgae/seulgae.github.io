@@ -5,7 +5,7 @@
   width: min(250px, 80vw);
   max-width: 100vw;
   height: 100vh;
-  background-color: #222;
+  background-color: #004080;
   color: white;
   padding: 20px;
   transition: left 0.3s;
@@ -25,7 +25,7 @@
   position: absolute;
   top: 10px;
   right: -50px;
-  background-color: #444;
+  background-color: #0059b3;
   color: white;
   border: none;
   padding: 10px;
@@ -35,7 +35,7 @@
 }
 
 .menu-button:hover {
-  background-color: #666;
+  background-color: #0073e6;
 }
 
 /* 로고 및 이미지 */
@@ -90,7 +90,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 하단 아이콘 */
@@ -105,11 +105,11 @@ nav ul li a:hover {
 
 /* 아이콘 색상 변경 */
 .icon-container a {
-  color: white; /* 아이콘 색상 흰색 적용 */
+  color: #b3e0ff; /* 아이콘 색상을 밝은 푸른색으로 적용 */
   font-size: 24px; /* 필요 시 아이콘 크기 조정 */
   transition: color 0.3s; /* 색상 전환 효과 */
 }
 
 .icon-container a:hover {
-  color: rgba(255, 255, 255, 0.7); /* 살짝 회색으로 변하는 효과 */
+  color: #66b3ff; /* 아이콘 색상이 더 밝은 푸른색으로 변하는 효과 */
 }

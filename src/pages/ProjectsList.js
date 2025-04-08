@@ -1,14 +1,16 @@
 import React from "react";
 import projects from "./Projects"; // 프로젝트 데이터 import
+import "./ProjectsList.css"; // 분리된 CSS 파일 import
 
 const ProjectsList = () => {
   return (
-    <div>
-      <h1>프로젝트 목록</h1>
+    <div className="projects-container">
+      <h1>📋 프로젝트 목록</h1>
       {projects.map((project, index) => (
-        <div key={index} style={styles.projectContainer}>
+        <div key={index} className="project">
           <h2>{project.projectName}</h2>
           <p><strong>기간:</strong> {project.period}</p>
+
           <h3>주요 업무</h3>
           <ul>
             {project.mainTasks.map((task, i) => (
@@ -18,7 +20,7 @@ const ProjectsList = () => {
 
           <h3>세부 프로젝트</h3>
           {project.projects.map((subProject, j) => (
-            <div key={j} style={styles.subProjectContainer}>
+            <div key={j} className="sub-project">
               <h4>{subProject.title}</h4>
               <p><strong>기간:</strong> {subProject.period}</p>
 
@@ -50,24 +52,6 @@ const ProjectsList = () => {
       ))}
     </div>
   );
-};
-
-// 간단한 스타일 추가
-const styles = {
-  projectContainer: {
-    border: "1px solid #ddd",
-    padding: "15px",
-    margin: "15px 0",
-    borderRadius: "8px",
-    backgroundColor: "#f9f9f9"
-  },
-  subProjectContainer: {
-    border: "1px solid #ccc",
-    padding: "10px",
-    margin: "10px 0",
-    borderRadius: "6px",
-    backgroundColor: "#ffffff"
-  }
 };
 
 export default ProjectsList;

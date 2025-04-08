@@ -13,7 +13,7 @@ function Navbar({ isOpen, toggleSidebar }) {
       {/* 상단 로고 */}
       <div className="logo">
         <h2>
-          <a href="/">Seulgae Portfolio</a>
+          <a href="/">Seulgae</a>
         </h2>
         <img src="/giltaehyeong.jpg" alt="Profile" className="profile-image" />
       </div>
@@ -22,12 +22,11 @@ function Navbar({ isOpen, toggleSidebar }) {
       <nav>
         <ul>
           {[
-            { to: "/", text: "자기소개서" },
-            { to: "/ProjectsList", text: "포트폴리오" },
-            { to: "/experience", text: "프로젝트 경험" },
-            { to: "/education", text: "교육/학력" },
-            { to: "/awards", text: "수상경력" },
-            { to: "/contact", text: "연락처" },
+            { to: "/", text: "About Me" },
+            { to: "/ProjectsList", text: "Project Experience" },
+            { to: "/EducationList", text: "Education" },
+            { to: "/awards", text: "Awards" },
+            { to: "/contact", text: "Contact" },
           ].map((item, index) => (
             <li key={index}>
               <Link to={item.to}>{item.text}</Link>
