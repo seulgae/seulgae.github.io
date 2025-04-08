@@ -1,75 +1,26 @@
 import { Link } from "react-router-dom";
 import { FaGithub, FaBlog } from "react-icons/fa";
+import "./navbar.css"; // CSS 파일 추가
 
 function Navbar({ isOpen, toggleSidebar }) {
   return (
-    <div style={{ 
-      position: "fixed",
-      left: isOpen ? "0" : "-250px",
-      width: "min(250px, 80vw)",  // 👉 모바일에서는 80% 화면 크기로 조절
-      maxWidth: "100vw",  // 👉 화면을 넘지 않도록 제한
-      height: "100vh", 
-      backgroundColor: "#222",
-      color: "white", 
-      padding: "20px",
-      transition: "left 0.3s",
-      boxSizing: "border-box",
-      fontFamily: "'Noto Sans KR', sans-serif",
-      display: "flex",
-      flexDirection: "column" // ✅ 세로 정렬 유지
-    }}>
+    <div className={`navbar ${isOpen ? "open" : "closed"}`}>
       {/* 사이드바 토글 버튼 */}
-      <button 
-        onClick={toggleSidebar} 
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "-50px",
-          backgroundColor: "#444",
-          color: "white",
-          border: "none",
-          padding: "10px",
-          cursor: "pointer",
-          borderRadius: "5px",
-          transition: "0.3s", 
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = "#666"}
-        onMouseOut={(e) => e.target.style.backgroundColor = "#444"}
-      >
+      <button className="menu-button" onClick={toggleSidebar}>
         {isOpen ? "✖" : "☰"}
       </button>
 
-      {/* 상단 로고 & 이미지 */}
-      <div style={{ textAlign: "center" }}>
-      <h2 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "30px" }}>
-        <a href="/" style={{ textDecoration: "none", color: "white" }}>
-          Seulgae Portfolio
-        </a>
-      </h2>
-        <img 
-          src="/giltaehyeong.jpg" 
-          alt="Profile"
-          style={{
-            width: "180px",
-            height: "180px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            border: "3px solid white",
-            boxShadow: "0px 0px 8px rgba(255, 255, 255, 0.5)",
-          }}
-        />
+      {/* 상단 로고 */}
+      <div className="logo">
+        <h2>
+          <a href="/">Seulgae Portfolio</a>
+        </h2>
+        <img src="/giltaehyeong.jpg" alt="Profile" className="profile-image" />
       </div>
 
-      {/* ✅ 네비게이션 영역 */}
-      <nav style={{ flexGrow: 1, marginTop: "10px" }}> 
-        <ul style={{ 
-          listStyle: "none", 
-          padding: 0,
-          textAlign: "center",
-          display: "flex", 
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
+      {/* 네비게이션 메뉴 */}
+      <nav>
+        <ul>
           {[
             { to: "/", text: "자기소개서" },
             { to: "/ProjectsList", text: "포트폴리오" },
@@ -78,47 +29,20 @@ function Navbar({ isOpen, toggleSidebar }) {
             { to: "/awards", text: "수상경력" },
             { to: "/contact", text: "연락처" },
           ].map((item, index) => (
-            <li key={index} style={{ 
-              padding: "10px 0", 
-              width: "100%", 
-              textAlign: "center",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-              transition: "0.3s",
-            }}>
-              <Link 
-                to={item.to} 
-                style={{ 
-                  color: "white", 
-                  textDecoration: "none", 
-                  fontSize: "18px",
-                  fontWeight: "500",
-                  display: "block", 
-                  padding: "10px",
-                  borderRadius: "5px",
-                  transition: "0.3s"
-                }}
-                onMouseOver={(e) => e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)"}
-                onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
-              >
-                {item.text}
-              </Link>
+            <li key={index}>
+              <Link to={item.to}>{item.text}</Link>
             </li>
           ))}
         </ul>
       </nav>
 
       {/* 하단 아이콘 */}
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        gap: "15px", 
-        paddingBottom: "20px"
-      }}>
+      <div className="icon-container">
         <Link to="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
-          <FaGithub size={24} color="white" />
+          <FaGithub size={24} />
         </Link>
         <Link to="https://doltae.tistory.com/" target="_blank" rel="noopener noreferrer">
-          <FaBlog size={24} color="white" />
+          <FaBlog size={24} />
         </Link>
       </div>
     </div>
