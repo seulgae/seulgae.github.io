@@ -5,10 +5,6 @@ import "./navbar.css"; // CSS 파일 추가
 function Navbar({ isOpen, toggleSidebar }) {
   return (
     <div className={`navbar ${isOpen ? "open" : "closed"}`}>
-      {/* 사이드바 토글 버튼 */}
-      <button className="menu-button" onClick={toggleSidebar}>
-        {isOpen ? "✖" : "☰"}
-      </button>
 
       {/* 상단 로고 */}
       <div className="logo">
