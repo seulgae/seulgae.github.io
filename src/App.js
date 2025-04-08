@@ -34,20 +34,6 @@ function App() {
         </div>
       </div>
 
-      {/* ✅ 모바일에서 Sidebar가 완전히 숨겨지도록 CSS 추가 */}
-      <style>
-        {`
-          @media (max-width: 768px) {
-            .sidebar {
-              position: absolute;
-              left: ${isOpen ? "0" : "-250px"};
-              width: 250px;
-              height: 100vh;
-              transition: left 0.3s ease-in-out;
-            }
-          }
-        `}
-      </style>
     </Router>
   );
 }
