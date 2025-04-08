@@ -17,6 +17,8 @@ function Navbar({ isOpen, toggleSidebar }) {
       fontFamily: "'Noto Sans KR', sans-serif",
       display: "flex",
       flexDirection: "column", // ✅ 세로 정렬 유지
+      position: "relative",  // 추가
+      zIndex: 10 // 추가
     }}>
       {/* 사이드바 토글 버튼 */}
       <button 
