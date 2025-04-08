@@ -114,12 +114,12 @@ function Navbar({ isOpen, toggleSidebar }) {
         gap: "15px", 
         paddingBottom: "20px"
       }}>
-        <a href="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
+        <Link to="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
           <FaGithub size={24} color="white" />
-        </a>
-        <a href="https://doltae.tistory.com/" target="_blank" rel="noopener noreferrer">
+        </Link>
+        <Link to="https://doltae.tistory.com/" target="_blank" rel="noopener noreferrer">
           <FaBlog size={24} color="white" />
-        </a>
+        </Link>
       </div>
     </div>
   );
