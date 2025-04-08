@@ -1,13 +1,45 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isOpen, toggleSidebar }) {
   return (
-    <nav style={{ padding: "10px", background: "#333", color: "#fff" }}>
-      <Link to="/" style={{ margin: "10px", color: "#fff", textDecoration: "none" }}>홈</Link>
-      <Link to="/ProjectsList" style={{ margin: "10px", color: "#fff", textDecoration: "none" }}>프로젝트</Link>
-      <Link to="/contact" style={{ margin: "10px", color: "#fff", textDecoration: "none" }}>연락처</Link>
-    </nav>
+    <div style={{ 
+      position: "fixed",
+      left: isOpen ? "0" : "-250px", // ✅ isOpen 값에 따라 숨김/표시
+      width: "250px", 
+      height: "100vh", 
+      backgroundColor: "#333", 
+      color: "white", 
+      padding: "20px",
+      transition: "left 0.3s",
+      boxSizing: "border-box"
+    }}>
+      {/* ✅ 버튼을 사이드바 내부 상단에 배치 */}
+      <button 
+        onClick={toggleSidebar} 
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "-50px", // 사이드바 바깥쪽에 배치
+          backgroundColor: "#333",
+          color: "white",
+          border: "none",
+          padding: "10px",
+          cursor: "pointer",
+          borderRadius: "5px"
+        }}
+      >
+        {isOpen ? "✖" : "☰"}
+      </button>
+
+      <h2>Seulgae Portfollo</h2>
+      <nav>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          <li><Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link></li>
+          <li><Link to="/ProjectsList" style={{ color: "white", textDecoration: "none" }}>Projects</Link></li>
+          <li><Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link></li>
+        </ul>
+      </nav>
+    </div>
   );
 }
 
