@@ -93,6 +93,58 @@ nav ul li a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* 드롭다운 메뉴 스타일 */
+.navbar .dropdown {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar .dropdown-toggle {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+}
+
+.navbar .submenu {
+  list-style: none;
+  margin: 0;
+  padding: 5px 0;
+  position: relative;
+  background-color: #003366;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* 세부 메뉴 스타일 */
+.navbar .submenu li {
+  padding: 5px 0;
+}
+
+.navbar .submenu li a {
+  color: #b3e0ff;
+  font-size: 10px; /* 메인 메뉴보다 작은 글씨 */
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  transition: 0.3s;
+}
+
+.navbar .submenu li a:hover {
+  background-color: #004080;
+  color: white;
+  border-radius: 3px;
+}
+
 /* 하단 아이콘 */
 .icon-container {
   display: flex;

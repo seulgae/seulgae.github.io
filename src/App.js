@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProjectsList from "./pages/ProjectsList";
+import ProjectsList2 from "./pages/ProjectsList2";
+import ProjectsList3 from "./pages/ProjectsList3";
+import ProjectsList4 from "./pages/ProjectsList4";
 import EducationList from "./pages/EducationList";
 import Contact from "./pages/Contact";
 import Awards from "./pages/Awards";
@@ -78,6 +81,30 @@ function App() {
                 element={
                   <PageWrapper>
                     <ProjectsList />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/ProjectsList2"
+                element={
+                  <PageWrapper>
+                    <ProjectsList2 />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/ProjectsList3"
+                element={
+                  <PageWrapper>
+                    <ProjectsList3 />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/ProjectsList4"
+                element={
+                  <PageWrapper>
+                    <ProjectsList4 />
                   </PageWrapper>
                 }
               />
