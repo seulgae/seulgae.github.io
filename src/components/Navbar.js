@@ -30,29 +30,28 @@ function Navbar({ isOpen, toggleSidebar }) {
           </li>
 
           {/* ProjectsList 항목 */}
-          <li className="dropdown">
-            <button
-              className="dropdown-toggle"
-              onClick={() => setShowSubmenu(!showSubmenu)}
-            >
+          <li 
+            className="dropdown"
+            onMouseEnter={() => setShowSubmenu(true)}
+            onMouseLeave={() => setShowSubmenu(false)}
+          >
+            <button className="dropdown-toggle">
               Project Experience
             </button>
-            {showSubmenu && (
-              <ul className="submenu">
-                <li>
-                  <Link to="/ProjectsList">LG CNS 빌링 디지털 서비스 팀 SM개발/운영</Link>
-                </li>
-                <li>
-                  <Link to="/ProjectsList2">LG CNS 빌링 디지털 서비스 팀 SI개발</Link>
-                </li>
-                <li>
-                  <Link to="/ProjectsList3">LG CNS 클라우드 플랫폼 팀 SI개발</Link>
-                </li>
-                <li>
-                  <Link to="/ProjectsList4">LG CNS 빌링 GW 연동파트 개발/운영</Link>
-                </li>
-              </ul>
-            )}
+            <ul className={`submenu ${showSubmenu ? "open" : ""}`}>
+              <li>
+                <Link to="/ProjectsList">LG CNS 빌링 디지털 서비스 팀 SM개발/운영</Link>
+              </li>
+              <li>
+                <Link to="/ProjectsList2">LG CNS 빌링 디지털 서비스 팀 SI개발</Link>
+              </li>
+              <li>
+                <Link to="/ProjectsList3">LG CNS 클라우드 플랫폼 팀 SI개발</Link>
+              </li>
+              <li>
+                <Link to="/ProjectsList4">LG CNS 빌링 GW 연동파트 개발/운영</Link>
+              </li>
+            </ul>
           </li>
 
           <li>
@@ -60,6 +59,9 @@ function Navbar({ isOpen, toggleSidebar }) {
           </li>
           <li>
             <Link to="/awards">Awards</Link>
+          </li>
+          <li>
+            <Link to="/Licenses">Licenses</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>

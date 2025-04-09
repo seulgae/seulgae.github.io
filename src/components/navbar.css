@@ -112,18 +112,30 @@ nav ul li a:hover {
   font-weight: 500;
 }
 
+/* 서브메뉴 애니메이션 효과 */
 .navbar .submenu {
   list-style: none;
   margin: 0;
-  padding: 5px 0;
-  position: relative;
+  padding: 0;
   background-color: #003366;
   width: 100%;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* 애니메이션 효과 */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
+/* 서브메뉴가 열릴 때 */
+.navbar .submenu.open {
+  max-height: 300px; /* 적절한 높이 설정 */
+  opacity: 1;
+  padding: 5px 0;
+}
 /* 세부 메뉴 스타일 */
 .navbar .submenu li {
   padding: 5px 0;

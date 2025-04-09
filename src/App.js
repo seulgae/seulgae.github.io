@@ -10,6 +10,7 @@ import ProjectsList4 from "./pages/ProjectsList4";
 import EducationList from "./pages/EducationList";
 import Contact from "./pages/Contact";
 import Awards from "./pages/Awards";
+import Licenses from "./pages/Licenses";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,6 +122,14 @@ function App() {
                 element={
                   <PageWrapper>
                     <EducationList />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/Licenses"
+                element={
+                  <PageWrapper>
+                    <Licenses />
                   </PageWrapper>
                 }
               />
