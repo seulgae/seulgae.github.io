@@ -1,4 +1,4 @@
-깃허브 포트폴리오 제작<br>
+# AI 페어 프로그래밍 깃허브 포트폴리오 제작<br>
 
 ## VsCode 설치 </br>
 https://code.visualstudio.com/
@@ -7,6 +7,9 @@ https://code.visualstudio.com/
 ## 노드 js 설치 </br>
 https://nodejs.org/ko 
 </br>
+
+## ChatGPT 링크 </br>
+https://chatgpt.com/
 
 ## 리액트 설치 </br>
 npm install react
@@ -28,3 +31,4 @@ npm install gh-pages --save-dev
 4/8 포트폴리오 기반 틀 디자인 작업<br>
 4/9 프로젝트 목록 정리, 보완 예정<br>
 4/10 Contact 디자인 적용<br>
+4/11 ReadMe 정리<br>
