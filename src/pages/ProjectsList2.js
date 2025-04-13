@@ -24,17 +24,31 @@ const ProjectsList2 = () => {
               <h4>{subProject.title}</h4>
               <p><strong>기간:</strong> {subProject.period}</p>
 
-              <h5>설명</h5>
+              <h5>상황 (Situation)</h5>
               <ul>
-                {subProject.description.map((desc, k) => (
-                  <li key={k}>{desc}</li>
+                {subProject.situation.map((item, k) => (
+                  <li key={k}>{item}</li>
                 ))}
               </ul>
 
-              <h5>성과</h5>
+              <h5>과제 (Task)</h5>
               <ul>
-                {subProject.achievements.map((achievement, m) => (
-                  <li key={m}>{achievement}</li>
+                {subProject.task.map((item, k) => (
+                  <li key={k}>{item}</li>
+                ))}
+              </ul>
+
+              <h5>행동 (Action)</h5>
+              <ul>
+                {subProject.action.map((item, k) => (
+                  <li key={k}>{item}</li>
+                ))}
+              </ul>
+
+              <h5>결과 (Result)</h5>
+              <ul>
+                {subProject.result.map((item, k) => (
+                  <li key={k}>{item}</li>
                 ))}
               </ul>
 

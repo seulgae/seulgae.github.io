@@ -1,83 +1,112 @@
 const projects = [
-    {
-      projectName: "LG CNS 빌링 디지털 서비스팀 SM 개발/운영",
-      period: "2022.11.21 ~ 2024.10.07",
-      mainTasks: [
-        "유플러스 청구 파트 시스템 유지보수"
-      ],
-      projects: [
-        {
-          title: "GW 모니터링 데이터 연동 diff건 조치 및 관리",
-          period: "2024.01.29 ~ 2024.09.26",
-          description: [
-            "GW 모니터링 사이트를 활용해 데이터 일관성을 유지.",
-            "원부 DB와 응용 DB 간 검증 쿼리 실행.",
-            "불일치 데이터(difference) 탐지 및 수정."
-          ],
-          achievements: [
-            "데이터 불일치 문제를 선제적으로 해결하여 연동 간 데이터 정확도를 99%로 향상 및 유지."
-          ],
-          techStack: {
-            messagingSystem: "Kafka (실시간 비동기 통신)",
-            database: ["Oracle (Orange)", "MySQL (DBeaver)"]
-          }
-        },
-        {
-          title: "캘린더 테스트 수행 결과 내역 엑셀 표기 개선",
-          period: "2024.01.26 ~ 2024.02.22",
-          description: [
-            "테스트 수행 결과 데이터를 자동화된 방식으로 엑셀 형식에 출력.",
-            "기존 자바 I/O 기반의 데이터 처리 로직을 개선하여 Apache POI를 활용한 엑셀 파일 생성 및 처리 기능을 구현."
-          ],
-          achievements: [
-            "운영자가 텍스트 파일을 엑셀로 수작업 변환할 필요 없이, 결과를 바로 전달할 수 있는 환경을 구축하여 편의성 증대."
-          ],
-          techStack: {
-            backend: "Spring Batch",
-            buildTools: "Maven",
-            library: "Apache POI",
-            database: "Oracle",
-            tools: ["Jenkins", "SecureCRT", "Trusted Orange", "UplusStudio"]
-          }
-        },
-        {
-          title: "유플러스, MVNO 이메일 청구서 13종 표기 개선",
-          period: "2023.05.31 ~ 2023.08.26",
-          description: [
-            "이메일 청구서 내 휴대폰 이용 내역에 대한 셀 병합 조건 추가 및 수정.",
-            "청구서 하단 문구를 요구사항에 맞게 수정 및 반영하여 고객이 필요한 정보를 명확히 이해할 수 있도록 개선.",
-            "이메일 템플릿의 구조를 개선하여 다양한 청구서 유형에 대응 가능하도록 작업."
-          ],
-          achievements: [
-            "고객이 이메일 청구서에서 휴대폰 이용 내역을 보다 쉽게 확인할 수 있게 되어 정보 전달의 효율성 향상."
-          ],
-          techStack: {
-            frontend: ["HTML5", "CSS", "JavaScript"],
-            fileTransfer: "SFTP (FileZilla)",
-            tools: ["Trusted Orange", "EditPlus(HTML)"]
-          }
-        },
-        {
-          title: "V컬러링 Biz 상품의 개인 과금 유형 추가 개발",
-          period: "2023.02.01 ~ 2023.03.23",
-          description: [
-            "개인 과금 유형 추가를 위해 연동 파일(B, C, D)을 신규로 정의 및 추가.",
-            "SFTP 서버와 연동하여 파일 업로드 프로세스를 구현."
-          ],
-          achievements: [
-            "기존 하나의 배치 프로그램이 한 가지 작업만 처리할 수 있었던 구조를 다양한 파일을 처리할 수 있도록 개선하여 작업 효율성을 향상.",
-            "자동화된 파일 업로드 프로세스를 통해 수동 작업을 축소시켜 운영자 편의성 증대."
-          ],
-          techStack: {
-            backend: "Spring Batch",
-            buildTools: "Maven",
-            database: "Oracle (Orange)",
-            server: "Linux",
-            tools: ["Jenkins", "SecureCRT", "Trusted Orange", "UplusStudio"]
-          }
+  {
+    projectName: "LG CNS 빌링 디지털 서비스팀 SM 개발/운영",
+    period: "2022.11.21 ~ 2024.10.07",
+    mainTasks: [
+      "유플러스 청구 파트 시스템 SM 개발/운영"
+    ],
+    projects: [
+      {
+        title: "GW 모니터링 데이터 연동 diff건 조치 및 관리",
+        period: "2024.01.29 ~ 2024.09.26",
+        situation: ["가상단 파트 차세대 시스템 오픈 이후, 가상단(MySQL)과 응용 파트(Oracle) 간의 데이터 관리 키가 상이하여 연동 데이터의 불일치가 발생함. 이로 인해 각 시스템 간 데이터 정합성이 요구되었고, 이를 해결하기 위한 GW 모니터링 사이트를 활용해 양쪽 DB 간의 데이터를 비교, 검증 필요."],
+        task: ["매일 수집되는 가상단과 응용 DB 간의 데이터 불일치를 빠르게 식별하고,응용 파트 기준의 데이터 형식에 맞춰 정확하게 수정함으로써 시스템 간 데이터 정합성을 유지하는 것"],
+        action: [
+          "GW 모니터링 사이트를 통해 두 DB의 데이터를 조회하고, 사전 정의된 검증 쿼리를 기반으로 Diff(불일치) 데이터를 일일 단위로 확인",
+          "Diff 발생 시, 응용 DB의 데이터 형식에 맞춰 직접 수정 작업 수행",
+          "반복적으로 발생하는 패턴을 분석해 쿼리 또는 원천 데이터 로직 개선 제안"
+        ],
+        result: ["연동 시스템 간 데이터 정합도를 99% 이상으로 유지(1% 원부 비정상 데이터)", 
+                 "사전에 문제를 탐지하고 조치함으로써 운영 중 장애 예방", 
+                 "데이터 불일치 관련 이슈의 평균 대응 시간을 30% 이상 단축, 오전 근무 시간 중 데이터 조치 완료"],
+        techStack: {
+          InternalTool: ["GW 모니터링 사이트(Python 기반)"],
+          DB: ["Oracle", "MySQL"],
+          Tools: ["Trusted Orange", "Trusted Orange Ade", "DBeaver"]
         }
-      ],
-    }
-  ];
-  
-  export default projects;
+      },
+      {
+        title: "캘린더 테스트 수행 결과 내역 엑셀 표기 개선",
+        period: "2024.01.26 ~ 2024.02.22",
+        situation: ["청구 프로세스에서 캘린더 작업 후 추출된 데이터는 CSV 파일 형태로만 변환되어 저장되었고, CSV 파일은 데이터 구조나 형식에 제약이 있어 작업 효율성이 떨어지며, 이로 인해 운영자가 파일을 활용하는 데 제약사항 발생"],
+        task: ["운영자가 데이터를 더 쉽게 관리하고 활용할 수 있도록 개선하는 작업이 필요, 클라이언트가 요구하는 형태에 맞게 엑셀 파일(XLSX) 형태로 변환저장."],
+        action: [
+          "Apache POI 라이브러리를 사용하여 캘린더 작업 이후 추출 데이터를 한줄씩 읽어 요구형태에 맞게 변환하여 XLSX 파일로 저장하는 로직 작성.",
+          "변환된 엑셀 파일을 보다 관리하기 쉽도록 형식에 맞게 데이터를 저장하는 프로세스 추가.",
+          "배치 작업 후 운영자가 변환된 엑셀 파일을 쉽게 업로드하고 활용할 수 있도록 SFTP 파일서버 연동."
+        ],
+        result: ["CSV 파일의 형식적 한계를 넘어 엑셀 파일(XLSX)로 변환하여 운영자가 더 효율적으로 데이터를 처리하고 관리할 수 있게 됨.", 
+                 "업무에 필요한 데이터를 한 번의 배치 작업으로 엑셀 파일로 처리 가능하게 되어 편의성 향상.", 
+                 "업무 효율성이 증가 및 작업 시간 단축"],
+        techStack: {
+          Backend: ["Spring Boot", "Spring Batch"],
+          Framework: "Waffle Framework(Spring F/W 기반의 유플러스 자사 F/W)",
+          Library: ["Apache POI", "MyBatis"],
+          buildTools: "Maven",
+          Infra: ["Jenkins", "GitLab", "SFTP", "WhaTap"],
+          Server : ["Linux"],
+          DB: ["Oracle"],
+          Tools: ["Trusted Orange", "UplusStuio(STS)", "SecureCRT"]
+        }
+      },
+      {
+        title: "유플러스, MVNO 이메일 청구서 13종 표기 개선",
+        period: "2023.05.31 ~ 2023.08.26",
+        situation: ["기존 이메일 청구서의 휴대폰 이용 내역 항목은 제공 항목만 표기되고 사용량 및 초과 사용량 정보가 없어, 고객이 자신의 실제 이용 내역이나 사용료에 대해 명확히 파악하기 어려운 구조였음."],
+        task: ["청구서 수신자가 자신의 이용 내역과 사용료를 명확히 이해할 수 있도록, 항목을 추가하고 표기 방식을 개선 요청."],
+        action: [
+          "휴대폰 이용 내역을 제공으로 수정하고, 사용량, 데이터 사용량, 초과 사용량 항목 추가",
+          "청구서 하단에 항목 데이터 이용내역 안내 메세지 추가",
+          "13종의 청구서 유형에 공통 적용될 수 있도록 템플릿 구조 분석 및 개선"
+        ],
+        result: ["고객이 제공량 대비 실제 사용량과 초과 사용량을 직관적으로 확인할 수 있게 되었음", 
+                 "자신의 데이터 사용 패턴과 초과 사용 여부를 청구서만으로 파악할 수 있어 정보 전달력 향상", 
+                 "청구서 가독성과 신뢰도가 개선되었으며, 향후 다양한 청구서 유형에도 동일한 구조로 확장 가능"],
+        techStack: {
+          frontend: ["HTML5", "CSS", "JavaScript"],
+          Infra: ["TMS(UPlUS 이메일 발송 솔루션 시스템)", "SFTP"],
+          DB: ["Oracle"],
+          Tools: ["Trusted Orange", "UplusStuio(STS)", "EditPlus"]
+        }
+      },
+      {
+        title: "V컬러링 Biz 상품의 개인 과금 유형 추가 개발",
+        period: "2023.02.01 ~ 2023.03.23",
+        situation: ["기존 V컬러링 Biz 상품의 개인 과금 처리 배치 프로그램은 단일 메모장 파일만 처리할 수 있는 Tasklet 기반으로 구성되어 있었으며, "
+                   + "로컬 경로에 존재하는 텍스트 파일을 직접 열어 하나씩 읽고 처리하는 구조였다."
+                   + "새로운 과금 유형(A, B 코드)을 추가로 반영한 상황에서, " +
+                   + "C, D 등 다양한 유형이 지속적으로 확장될 수 있는 요구가 발생함에 따라 " 
+                   + "더 이상 단일 파일을 처리하는 구조로는 확장성과 유지보수성이 떨어졌다."],
+        task: ["Tasklet 기반의 기존 프로그램을 개선하여 "
+               + "다수의 과금 유형 파일(A, B, C, D 등)을 유연하게 처리할 수 있는 구조로 전환", 
+              "향후에도 과금 유형이 추가될 경우 DB 참조 정보(REF) + SFTP 경로 기반으로 "
+               + "자동으로 파일을 읽고 처리할 수 있도록 개선", 
+               "데이터 처리 효율성과 자동화 수준 향상이 필요함"],
+        action: [
+          "기존 Tasklet 구조를 Chunk-Oriented Processing 구조로 전면 재구성.",
+          "과금 유형 및 파일 경로 정보를 DB REF 테이블에 등록하여 처리 대상과 경로를 동적으로 구성.",
+          "각 과금 유형에 대응하는 텍스트 파일을 SFTP 서버에 등록하고, " 
+        + "배치가 해당 경로를 조회하여 자동으로 다건의 파일을 읽고 처리하는 로직 구현",
+          "파일을 읽고 처리하는 단계는 Reader → Processor → Writer 구조로 구성하여 유지보수성과 확장성 확보"
+        ],
+        result: ["단일 파일만 처리 가능했던 구조를 개선하여, 다양한 과금 유형의 파일을 자동으로 처리할 수 있는 배치 환경을 구축", 
+                 "과금 유형이 추가되어도 DB와 SFTP 연동만으로 자동 대응 가능해짐", 
+                 "수작업 개입이 필요 없이 운영자의 효율성이 증가, 전체 작업 처리 속도 및 안정성 또한 향상됨"],
+        techStack: {
+          Backend: ["Spring Boot", "Spring Batch"],
+          Framework: "Waffle Framework(Spring F/W 기반의 유플러스 자사 F/W)",
+          Library: ["MyBatis"],
+          buildTools: "Maven",
+          Infra: ["Jenkins", "GitLab", "SFTP", "WhaTap"],
+          Server : ["Linux"],
+          DB: ["Oracle"],
+          Tools: ["Trusted Orange", "UplusStuio(STS)", "SecureCRT"]
+        }
+      },
+    ],
+    
+
+  }
+];
+
+export default projects;
