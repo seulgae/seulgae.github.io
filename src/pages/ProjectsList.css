@@ -1,6 +1,6 @@
 /* 전체 컨테이너 스타일 */
 .projects-container {
-  max-width: 800px;
+  max-width: 50%;
   margin: 0 auto;
   padding: 20px;
 }

@@ -8,6 +8,7 @@ import ProjectsList2 from "./pages/ProjectsList2";
 import ProjectsList3 from "./pages/ProjectsList3";
 import ProjectsList4 from "./pages/ProjectsList4";
 import EducationList from "./pages/EducationList";
+import SideProjects from "./pages/SideProjects";
 import Contact from "./pages/Contact";
 import Awards from "./pages/Awards";
 import Licenses from "./pages/Licenses";
@@ -106,6 +107,14 @@ function App() {
                 element={
                   <PageWrapper>
                     <ProjectsList4 />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/SideProjects"
+                element={
+                  <PageWrapper>
+                    <SideProjects />
                   </PageWrapper>
                 }
               />

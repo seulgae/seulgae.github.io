@@ -46,14 +46,16 @@ function Navbar({ isOpen, toggleSidebar }) {
                 <Link to="/ProjectsList2">LG CNS 빌링 디지털 서비스 팀 SI개발</Link>
               </li>
               <li>
-                <Link to="/ProjectsList3">LG CNS 클라우드 플랫폼 개발</Link>
+                <Link to="/ProjectsList3">★ LG CNS 클라우드 플랫폼 개발 ★</Link>
               </li>
               <li>
                 <Link to="/ProjectsList4">LG CNS 빌링 GW 연동 파트 개발/운영</Link>
               </li>
             </ul>
           </li>
-
+          <li>
+            <Link to="/SideProjects">Side Projects</Link>
+          </li>
           <li>
             <Link to="/EducationList">Education</Link>
           </li>
