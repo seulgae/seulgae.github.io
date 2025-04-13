@@ -32,4 +32,5 @@ npm install gh-pages --save-dev
 4/8 포트폴리오 기반 틀 디자인 작업<br>
 4/9 프로젝트 목록 정리, 보완 예정<br>
 4/10 Contact 디자인 적용<br>
-4/11 ReadMe 정리<br>
+4/13 프로젝트 리스트 양식 STAR 양식으로 수정<br>
+4/14 SideProject 메뉴 추가<br>
