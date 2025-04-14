@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
@@ -16,49 +16,46 @@ import Licenses from "./pages/Licenses";
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // 왼쪽 30px 영역에 진입하면 열고, 250px 이상 벗어나면 닫음
+      if (e.clientX < 30) {
+        setIsOpen(true);
+      } else if (e.clientX > 270 && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isOpen]);
 
   return (
     <Router>
       <div style={{ display: "flex", height: "100vh", position: "relative" }}>
         {/* ✅ Sidebar 애니메이션 */}
         <motion.div
+          initial={{ x: "-100%" }} // ← 초기 상태를 명확하게 지정
           animate={{ x: isOpen ? 0 : "-100%" }}
-          transition={{ type: "spring", stiffness: 100 }}
+          transition={{ type: "tween", duration: 0.3 }} // spring → tween으로 부드럽게
           style={{
-            position: "absolute",
+            position: "fixed", // absolute → fixed로 변경
             left: 0,
             top: 0,
             bottom: 0,
             width: "250px",
             background: "#333",
             color: "white",
-            zIndex: 10, // 사이드바보다 낮게 설정
+            zIndex: 1000,
+            overflow: "hidden",
+            willChange: "transform", // 렌더링 최적화
+            background: "transparent", // ← 배경 제거
           }}
         >
-          <Navbar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+          <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
         </motion.div>
 
-        {/* ✅ 버튼 (오른쪽 상단으로 이동) */}
-        <button
-          onClick={toggleSidebar}
-          style={{
-            position: "absolute",
-            top: 20,
-            right: 20, // 왼쪽 → 오른쪽으로 변경
-            zIndex: 15, // 사이드바보다 위로 배치
-            background: "#007BFF",
-            color: "white",
-            padding: "10px 15px",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          {isOpen ? "Close" : "Open"}
-        </button>
-
-        {/* ✅ 페이지 컨텐츠 (애니메이션 적용) */}
+        {/* ✅ 컨텐츠 영역 */}
         <div
           style={{
             flexGrow: 1,
@@ -158,7 +155,6 @@ function App() {
   );
 }
 
-/* ✅ 페이지 전환 애니메이션 */
 function PageWrapper({ children }) {
   return (
     <motion.div
