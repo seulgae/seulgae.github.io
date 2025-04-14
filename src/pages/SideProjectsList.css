@@ -1,3 +1,4 @@
+/* 전체 컨테이너 스타일 */
 .sideProjects-container {
   max-width: 50%;
   margin: 0 auto;
@@ -11,11 +12,24 @@
   }
 }
 
+/* 리스트 스타일 */
 .sideProjects-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   align-items: stretch;
+}
+
+/* 애니메이션 효과: 올라오는 효과 */
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* 카드 스타일 */
@@ -29,8 +43,11 @@
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 0; /* 초기 상태는 보이지 않음 */
+  animation: fadeInUp 0.6s ease-in-out forwards; /* 애니메이션 적용 */
 }
 
+/* hover 효과 */
 .sideProjects-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
@@ -66,6 +83,7 @@
   color: #2980b9;
 }
 
+/* 링크 스타일 */
 .sideProjects-link {
   text-decoration: none;
   color: inherit;
@@ -74,6 +92,7 @@
   height: 100%;
 }
 
+/* hover 상태에서 카드 변화 */
 .sideProjects-link:hover .sideProjects-card {
   transform: translateY(-5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);

@@ -3,12 +3,13 @@
   max-width: 70%;
   margin: 0 auto;
   padding: 20px;
+  animation: slideFadeUp 0.5s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
   .awards-container {
     max-width: 100%;
-    padding: 20px; /* 필요하다면 여기도 조정 */
+    padding: 20px;
   }
 }
 
@@ -23,15 +24,16 @@
 .awards-card {
   display: flex;
   align-items: center;
-  border: 2px solid #3498db; /* 푸른색 테두리 */
+  border: 2px solid #3498db;
   padding: 15px;
   border-radius: 8px;
-  background-color: #ecf6ff; /* 연한 푸른색 배경 */
+  background-color: #ecf6ff;
   transition: 0.3s;
+  animation: slideFadeUp 0.6s ease-in-out;
 }
 
 .awards-card:hover {
-  box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.3); /* 푸른색 그림자 효과 */
+  box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.3);
   transform: scale(1.02);
 }
 
@@ -43,7 +45,7 @@
   margin-right: 15px;
   object-fit: cover;
   border: 2px solid #2980b9;
-  cursor: pointer; /* 클릭 가능하게 변경 */
+  cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -72,7 +74,7 @@
 }
 
 .modal-content {
-  position: relative; /* 닫기 버튼 기준 위치 설정을 위해 추가 */
+  position: relative;
   max-width: 80%;
   max-height: 80%;
   background: white;
@@ -100,5 +102,17 @@
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 선택사항: 버튼이 더 잘 보이도록 */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* 공통 애니메이션 */
+@keyframes slideFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

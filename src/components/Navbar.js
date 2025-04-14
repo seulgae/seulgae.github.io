@@ -65,9 +65,9 @@ function Navbar({ isOpen, toggleSidebar }) {
           <li>
             <Link to="/Licenses">Licenses</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/contact">Contact</Link>
-          </li>
+          </li> */}
         </ul>
       </nav>
 

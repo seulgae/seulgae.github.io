@@ -3,51 +3,66 @@
   max-width: 50%;
   margin: 0 auto;
   padding: 20px;
+  animation: slideFadeUp 0.5s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
   .projects-container {
     max-width: 100%;
-    padding: 20px; /* 필요하다면 여기도 조정 */
+    padding: 20px;
   }
 }
 
 /* 개별 프로젝트 스타일 */
 .project {
-  border: 1px solid #3498db; /* 푸른색 테두리 */
+  border: 1px solid #3498db;
   padding: 15px;
   margin: 15px 0;
   border-radius: 8px;
-  background-color: #ecf6ff; /* 연한 푸른색 배경 */
+  background-color: #ecf6ff;
   transition: 0.3s;
+  animation: slideFadeUp 0.6s ease-in-out;
 }
 
 .project:hover {
-  box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.3); /* 푸른색 계열 그림자 */
+  box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.3);
 }
 
 /* 세부 프로젝트 스타일 */
 .sub-project {
-  border: 1px solid #2980b9; /* 진한 푸른색 테두리 */
+  border: 1px solid #2980b9;
   padding: 10px;
   margin: 10px 0;
   border-radius: 6px;
   background-color: #ffffff;
   transition: 0.3s;
+  animation: slideFadeUp 0.7s ease-in-out;
 }
 
 .sub-project:hover {
-  background-color: #d6ebff; /* 밝은 푸른색으로 변경 */
+  background-color: #d6ebff;
+}
+
+/* 애니메이션 공통 */
+@keyframes slideFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 제목 스타일 */
 h1 {
   text-align: center;
-  color: #2c3e50; /* 진한 푸른색 */
+  color: #2c3e50;
 }
 
 h2, h3, h4, h5 {
-  color: #34495e; /* 어두운 푸른색 */
+  color: #34495e;
 }
 
 /* 리스트 스타일 */
@@ -57,5 +72,5 @@ ul {
 
 li {
   margin-bottom: 5px;
-  color: #2c3e50; /* 리스트 텍스트도 푸른색 계열로 변경 */
+  color: #2c3e50;
 }

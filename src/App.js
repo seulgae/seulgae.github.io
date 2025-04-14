@@ -81,7 +81,7 @@ function App() {
         <motion.div
           initial={{ x: "100%" }}
           animate={{ x: isOpen ? 0 : "100%" }}
-          transition={{ type: "tween", duration: 0.3 }} // 속도 빠르게 수정
+          transition={{ type: "tween", duration: 0.8 }} // 속도 빠르게 수정
           style={{
             position: "fixed",
             right: 0,
@@ -139,7 +139,7 @@ function App() {
               <Route path="/Awards" element={<PageWrapper><Awards /></PageWrapper>} />
               <Route path="/EducationList" element={<PageWrapper><EducationList /></PageWrapper>} />
               <Route path="/Licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
-              <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+              {/* <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} /> */}
             </Routes>
           </AnimatePresence>
         </div>
