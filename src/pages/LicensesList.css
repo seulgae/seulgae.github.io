@@ -5,6 +5,13 @@
   padding: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .licenses-container {
+    max-width: 100%;
+    padding: 20px; /* 필요하다면 여기도 조정 */
+  }
+}
+
 /* 수상 목록 스타일 */
 .licenses-list {
   display: flex;

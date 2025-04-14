@@ -5,6 +5,13 @@
   padding: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .projects-container {
+    max-width: 100%;
+    padding: 20px; /* 필요하다면 여기도 조정 */
+  }
+}
+
 /* 개별 프로젝트 스타일 */
 .project {
   border: 1px solid #3498db; /* 푸른색 테두리 */

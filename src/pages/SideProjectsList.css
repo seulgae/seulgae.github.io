@@ -4,6 +4,13 @@
   padding: 40px 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .sideProjects-container {
+    max-width: 100%;
+    padding: 20px; /* 필요하다면 여기도 조정 */
+  }
+}
+
 .sideProjects-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
