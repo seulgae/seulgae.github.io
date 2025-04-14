@@ -26,12 +26,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile) return; // 모바일에서는 마우스 이벤트 처리 안 함
 
     const handleMouseMove = (e) => {
-      if (e.clientX < 30) {
+      if (e.clientX > window.innerWidth - 30) {
         setIsOpen(true);
-      } else if (e.clientX > 270 && isOpen) {
+      } else if (e.clientX < window.innerWidth - 270 && isOpen) {
         setIsOpen(false);
       }
     };
@@ -41,7 +41,7 @@ function App() {
   }, [isMobile, isOpen]);
 
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile) return; // 모바일에서는 터치 이벤트 처리
 
     let touchStartX = 0;
     let touchEndX = 0;
@@ -56,9 +56,9 @@ function App() {
 
     const handleTouchEnd = () => {
       const diff = touchEndX - touchStartX;
-      if (touchStartX < 30 && diff > 50) {
+      if (touchStartX > window.innerWidth - 30 && diff < -50) {
         setIsOpen(true);
-      } else if (touchStartX > 250 && diff < -50) {
+      } else if (touchStartX < window.innerWidth - 250 && diff > 50) {
         setIsOpen(false);
       }
     };
@@ -77,55 +77,54 @@ function App() {
   return (
     <Router>
       <div style={{ display: "flex", height: "100vh", position: "relative" }}>
-        {/* ✅ 햄버거 버튼 (모바일 전용) */}
-        {isMobile && (
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            style={{
-              position: "fixed",
-              top: 20,
-              left: 20,
-              zIndex: 1100,
-              background: "#007BFF",
-              color: "white",
-              padding: "10px 15px",
-              border: "none",
-              borderRadius: "5px",
-            }}
-          >
-            ☰
-          </button>
-        )}
-
-        {/* ✅ Sidebar 애니메이션 */}
+        {/* ✅ 사이드바와 버튼을 분리 */}
         <motion.div
-          initial={{ x: "-100%" }}
-          animate={{ x: isOpen ? 0 : "-100%" }}
-          transition={{ type: "tween", duration: 0.3 }}
+          initial={{ x: "100%" }}
+          animate={{ x: isOpen ? 0 : "100%" }}
+          transition={{ type: "tween", duration: 0.3 }} // 속도 빠르게 수정
           style={{
             position: "fixed",
-            left: 0,
+            right: 0,
             top: 0,
             bottom: 0,
             width: "250px",
-            background: "#333",
+            // background: "#333",
             color: "white",
             zIndex: 1000,
             overflow: "hidden",
             willChange: "transform",
-            background: "transparent",
+            display: "flex",
+            flexDirection: "column", // 버튼을 사이드바 내부에 배치하지 않음
           }}
         >
           <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
         </motion.div>
+
+        {/* ✅ 버튼을 사이드바 외부로 이동 */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "20px",
+            zIndex: 1100,
+            fontSize: "25px",
+            background: "transparent",
+            color: "black",
+            padding: "10px 15px",
+            border: "none",
+            borderRadius: "5px",
+          }}
+        >
+          {isOpen ? "X" : "☰"}
+        </button>
 
         {/* ✅ 컨텐츠 영역 */}
         <div
           style={{
             flexGrow: 1,
             padding: "20px",
-            transition: "margin-left 0.3s ease",
-            marginLeft: isOpen && !isMobile ? "250px" : "0",
+            transition: "margin-right 0.2s ease",
             width: "100%",
           }}
         >
