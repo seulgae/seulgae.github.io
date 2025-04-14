@@ -3,25 +3,32 @@ import SideProjectsList from "./SideProjectsList";
 
 const sideProjects = [
   {
-    title: "Spring Batch 사이드 프로젝트",
-    date: "2025.05",
-    description: "Spring Batch 사이드 프로젝트 입니다.",
-    image: "/LGCNS.png",
+    title: "슬개페이",
+    date: "2024.05",
+    description: "슬개페이 빌링 프로세스 구현.",
+    image: "/SeulgaePayLogo.png",
     link: "https://github.com/your-id/spring-batch-project"
   },
   {
-    title: "Spring Boot 사이드 프로젝트",
-    date: "2025.06",
-    description: "Spring Boot 사이드 프로젝트 입니다.",
-    image: "/LGCNS.png",
-    link: "https://github.com/your-id/spring-batch-project"
+    title: "슬개고리즘 공부",
+    date: "2025.04",
+    description: "Java 코딩테스트 대비 공부.",
+    image: "/CodingTest.png",
+    link: "https://github.com/seulgae/SeulgaeGorithm.git"
   },
   {
-    title: "React 사이드 프로젝트",
-    date: "2025.08",
-    description: "React 사이드 프로젝트 입니다.",
-    image: "/LGCNS.png",
-    link: "https://github.com/your-id/spring-batch-project"
+    title: "풋살 매니저(UCAMP 36기 프로젝트)",
+    date: "2022.11, 리뉴얼 2025.04 ~ ",
+    description: "LG CNS UCAMP 36기 교육 최종 프로젝트.",
+    image: "/FMSideProject.png",
+    link: "https://github.com/seulgae/fmBoot.git"
+  },
+  {
+    title: "원데이 클래스(Ezen 아카데미)",
+    date: "2021.10",
+    description: "Ezen 아카데미 팀 프로젝트.",
+    image: "/OneDayClass.png",
+    link: "https://github.com/seulgae/Proj_OnedayClass"
   },
 ];
 
