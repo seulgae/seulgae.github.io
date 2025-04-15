@@ -9,7 +9,6 @@ import ProjectsList3 from "./pages/ProjectsList3";
 import ProjectsList4 from "./pages/ProjectsList4";
 import EducationList from "./pages/EducationList";
 import SideProjects from "./pages/SideProjects";
-import Contact from "./pages/Contact";
 import Awards from "./pages/Awards";
 import Licenses from "./pages/Licenses";
 
@@ -139,7 +138,6 @@ function App() {
               <Route path="/Awards" element={<PageWrapper><Awards /></PageWrapper>} />
               <Route path="/EducationList" element={<PageWrapper><EducationList /></PageWrapper>} />
               <Route path="/Licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
-              {/* <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} /> */}
             </Routes>
           </AnimatePresence>
         </div>

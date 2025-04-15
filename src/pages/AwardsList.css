@@ -1,6 +1,6 @@
 /* 전체 컨테이너 스타일 */
 .awards-container {
-  max-width: 70%;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
   animation: slideFadeUp 0.5s ease-in-out;

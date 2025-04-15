@@ -1,6 +1,6 @@
 /* 사이드바 스타일 */
 .navbar {
-  position: fixed;
+  position: relative;
   right: -250px; /* 초기 위치: 오른쪽 밖으로 숨겨놓기 */
   width: min(250px, 80vw);
   max-width: 100%;

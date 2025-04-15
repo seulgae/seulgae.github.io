@@ -77,13 +77,6 @@ function Home() {
             이메일: <a href="mailto:r1605866@gmail.com">r1605866@gmail.com</a>
           </p>
         </div>
-
-        {/* 아이콘들 */}
-        <div className="icons">
-          <div className="icon code"></div>
-          <div className="icon rocket"></div>
-          <div className="icon lightbulb"></div>
-        </div>
       </div>
     </div>
   );
