@@ -1,16 +1,16 @@
 .education-container {
-  max-width: 100%;
+  max-width: 80%;
   margin: 0 auto;
   padding: 20px;
   animation: slideFadeUp 0.5s ease-in-out;
 }
 
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .education-container {
     max-width: 100%;
     padding: 20px;
   }
-} */
+}
 
 /* 리스트 정렬 */
 .education-list {

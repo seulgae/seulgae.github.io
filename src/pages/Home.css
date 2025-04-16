@@ -25,7 +25,7 @@
 }
 
 .content {
-  max-width: 100%; /* 콘텐츠의 최대 너비를 지정하여 더 깔끔한 정렬 */
+  max-width: 90%; /* 콘텐츠의 최대 너비를 지정하여 더 깔끔한 정렬 */
   width: 100%;
   padding: 40px;
   background: #ecf6ff;
