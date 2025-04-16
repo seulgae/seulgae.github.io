@@ -5,12 +5,12 @@
   padding: 40px 20px;
 }
 
-/*@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .sideProjects-container {
     max-width: 100%;
     padding: 20px;
   }
-}*/
+}
 
 /* 리스트 스타일 */
 .sideProjects-list {
