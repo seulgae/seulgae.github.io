@@ -1,6 +1,6 @@
 import React from "react";
 import educationData from "./Education";
-import "./EducationList.css"; // 스타일 적용
+import "../styles/educationList.css";
 
 const EducationList = () => {
   return (

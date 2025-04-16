@@ -1,5 +1,6 @@
 import React from "react";
-import "./SideProjectsList.css"; // 스타일 import
+import "../styles/sideProjectsList.css";
+
 
 const SideProjectsList = ({ sideProjects = [] }) => {
   return (

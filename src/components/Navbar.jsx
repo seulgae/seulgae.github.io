@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaGithub, FaBlog } from "react-icons/fa";
-import "./navbar.css"; // CSS 파일 추가
+import "../styles/navBar.css"; // CSS 파일 추가
 
 function Navbar({ isOpen, toggleSidebar }) {
   const [showSubmenu, setShowSubmenu] = useState(false);

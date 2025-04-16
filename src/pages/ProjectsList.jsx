@@ -1,6 +1,7 @@
 import React from "react";
 import projects from "./Projects"; // 프로젝트 데이터 import
-import "./ProjectsList.css"; // 분리된 CSS 파일 import
+import "../styles/projectsList.css";
+
 
 const ProjectsList = () => {
   return (

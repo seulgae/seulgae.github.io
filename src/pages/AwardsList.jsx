@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AwardsList.css"; // 스타일 파일 추가
+import "../styles/awardsList.css";
 
 const AwardsList = ({ awards }) => {
   const [selectedImage, setSelectedImage] = useState(null);
