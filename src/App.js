@@ -134,7 +134,7 @@ function App() {
               <Route path="/ProjectsList2" element={<PageWrapper><ProjectsList2 /></PageWrapper>} />
               <Route path="/ProjectsList3" element={<PageWrapper><ProjectsList3 /></PageWrapper>} />
               <Route path="/ProjectsList4" element={<PageWrapper><ProjectsList4 /></PageWrapper>} />
-              {/* <Route path="/SideProjects" element={<PageWrapper><SideProjects /></PageWrapper>} /> */}
+              <Route path="/SideProjects" element={<PageWrapper><SideProjects /></PageWrapper>} />
               <Route path="/Awards" element={<PageWrapper><Awards /></PageWrapper>} />
               <Route path="/EducationList" element={<PageWrapper><EducationList /></PageWrapper>} />
               <Route path="/Licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
