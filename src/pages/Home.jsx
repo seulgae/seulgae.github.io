@@ -47,6 +47,7 @@ function Home() {
          <div className="tech-section">
           <h2>🚀 기술 스택</h2>
           <div className="tech-grid">
+            <span className="tech-item">Spring</span>
             <span className="tech-item">Spring Boot</span>
             <span className="tech-item">Spring Batch</span>
             <span className="tech-item">Rest API</span>
