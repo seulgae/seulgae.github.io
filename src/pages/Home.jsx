@@ -28,8 +28,8 @@ function Home() {
           <h2>💡 개발자가 되고 싶었던 계기</h2>
           <p>
             어릴 적부터 무언가를 만들고 구현하는 걸 좋아했습니다. <br />
-            대학교에서 소프트웨어를 접하면서 무에서 유를 만들어내는 프로그래밍의 매력에 빠지게 되었고, 그 순간부터
-            개발자의 길을 걷기 시작했습니다.
+            대학교에서 소프트웨어를 접하면서 무에서 유를 만들어내는 프로그래밍의 매력에 빠지게 되었고, <br />
+            그 순간부터 개발자의 길을 걷기 시작했습니다.
           </p>
         </div>
 
@@ -43,6 +43,15 @@ function Home() {
         </div>
 
         <div className="section">
+          <h2>🌱 앞으로의 다짐</h2>
+          <p>
+            이제는 누군가 만든 시스템을 운영하는 수준을 넘어, <strong>설계부터 구현까지 전 과정을 주도하는 개발자</strong>가 되고 싶습니다. <br />
+            나만의 구조, 나만의 코드로 문제를 해결하는 프로그램을 만들어가며, <br />
+            <strong>명확한 설계와 효율적인 구현을 통해 가치 있는 서비스를 제공</strong>하는 개발자로 성장하겠습니다.
+          </p>
+        </div>
+
+        <div className="section">
          {/* 기술 스택 */}
          <div className="tech-section">
           <h2>🚀 기술 스택</h2>
@@ -52,6 +61,7 @@ function Home() {
             <span className="tech-item">Spring Batch</span>
             <span className="tech-item">Rest API</span>
             <span className="tech-item">React</span>
+            <span className="tech-item">Vue</span>
             <span className="tech-item">Redis</span>
             <span className="tech-item">Kafka</span>
             <span className="tech-item">MyBatis</span>
