@@ -14,11 +14,11 @@ const educationData = [
     image: "/FastCampusEdu.png",
   },
   {
-    degree: "Java Backend Developer 과정",
+    degree: "[빅데이터전문가]빅데이터분석 머신러닝활용(자바, 파이썬) 과정",
     school: "EZEN ACADEMY",
     period: "2021. 06 ~ 2022. 01",
-    description: "Java backend developer 과정 수료.",
-    image: "/Ezen2.jpg",
+    description: "Java Backend Developer 과정 수료",
+    image: "/Ezen2.png",
   },
   {
     degree: "컴퓨터공학과 학사",
