@@ -20,6 +20,7 @@ const SideProjectsList = ({ sideProjects = [] }) => {
                 <h2>{project.title}</h2>
                 <p><strong>📅 날짜:</strong> {project.date}</p>
                 <p>{project.description}</p>
+                <p>{project.skill}</p>
               </div>
             </a>
           </div>
