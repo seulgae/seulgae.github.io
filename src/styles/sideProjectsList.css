@@ -83,13 +83,29 @@
   color: #2980b9;
 }
 
-/* 링크 스타일 */
+/* 링크 영역 (링크 2~3개 가로 정렬용) */
+.sideProjects-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* 각 링크 버튼 스타일 */
 .sideProjects-link {
   text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  color: white;
+  background-color: #3498db;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  transition: background-color 0.2s;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.sideProjects-link:hover {
+  background-color: #2980b9;
 }
 
 /* hover 상태에서 카드 변화 */
