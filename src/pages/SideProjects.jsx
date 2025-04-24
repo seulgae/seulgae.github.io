@@ -14,7 +14,7 @@ const sideProjects = [
     title: "풋살 매니저(UCAMP 36기 프로젝트)",
     date: "2022.11, 리뉴얼 2025.04.18 ~ ",
     description: "LG CNS UCAMP 36기 팀 프로젝트.",
-    image: "/FmLogo.png",
+    image: "/FMLogo.png",
     link: "https://github.com/seulgae/fmBootReact",
     oldLink: "https://github.com/seulgae/fmBoot.git"
   },
