@@ -26,11 +26,3 @@ npm install gh-pages --save-dev
 
 ## GitHub Pages에 배포할 때 사용하는 커밋 명령어 </br>
  npm run deploy -- -m "내용" </br>
-
-# 프로젝트 일지
-4/7 React 프로젝트 생성, 기본 설정 파일 수정<br>
-4/8 포트폴리오 기반 틀 디자인 작업<br>
-4/9 프로젝트 목록 정리, 보완 예정<br>
-4/10 Contact 디자인 적용<br>
-4/13 프로젝트 리스트 양식 STAR 양식으로 수정<br>
-4/14 SideProject 메뉴 추가<br>
