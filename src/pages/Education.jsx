@@ -6,13 +6,13 @@ const educationData = [
     description: "LG CNS UCAMP 36기 developer 과정 수료",
     image: "/LGCNS.png", // 이미지 추가
   },
-  // {
-  //   degree: "스프링의 정석 : 남궁성과 끝까지 간다",
-  //   school: "Fast campus",
-  //   period: "2022. 05 ~ 2022. 07",
-  //   description: "Spring Framework 교육 과정 수료.",
-  //   image: "/FastCampusEdu.png",
-  // },
+  {
+    degree: "스프링의 정석 : 남궁성과 끝까지 간다",
+    school: "Fast campus",
+    period: "2022. 05 ~ 2022. 07",
+    description: "Spring Framework 교육 과정 수료.",
+    image: "/FastCampusEdu.png",
+  },
   {
     degree: "[빅데이터전문가]빅데이터분석 머신러닝활용(자바, 파이썬) 과정",
     school: "EZEN ACADEMY",
