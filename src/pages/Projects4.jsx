@@ -1,9 +1,9 @@
 const projects4 = [
   {
     projectName: "LG CNS 빌링 GW 연동 파트 SM개발/운영",
-    period: "2025.02.07 ~ 2025.04.30",
+    period: "2025.02.03 ~ 2025.04.30",
     mainTasks: [
-      "GW 파트 연동파트 SM 개발 시스템 운영 유지보수"
+      "LG CNS 빌링 디지털 서비스팀 빌링GW 파트 SM개발/운영"
     ],
     projects: [
       {
