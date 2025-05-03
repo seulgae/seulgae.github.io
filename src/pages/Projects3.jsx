@@ -3,7 +3,7 @@ const projects3 = [
     projectName: "LG CNS 클라우드 플랫폼 팀",
     period: "2024.10.07 ~ 2025.01.30",
     mainTasks: [
-      "클라우드 플랫폼 팀 Server Backend API 개발"
+      "LG CNS CloudXper 플랫폼 사이트 서버 API 개발"
     ],
     projects: [
       {

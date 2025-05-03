@@ -3,7 +3,7 @@ const projects2 = [
     projectName: "LG CNS 빌링 디지털 서비스팀 SI 개발",
     period: "2022.11.21 ~ 2024.10.07",
     mainTasks: [
-      "LGU+ 청구 파트 시스템 SI 개발"
+      "LG CNS 빌링 디지털 서비스팀 청구파트 SM/SI 개발"
     ],
     projects: [
       {
