@@ -26,14 +26,14 @@ const sideProjects = [
     link: "https://github.com/seulgae/fmBootReact",
     oldLink: "https://github.com/seulgae/fmBoot.git"
   },
-  {
-    title: "OneDayClass",
-    date: "2021.10, 리뉴얼 2025.06 ~ ",
-    description: "수강생을 연결해주는 일일 체험 학습 플랫폼 사이트, 누구나 쉽게 클래스를 등록하고 리뷰로 소통할 수 있는 공간.",
-    image: "/OneDayClass.png",
-    link: "https://github.com/seulgae/OneDayClass.git",
-    oldLink: "https://github.com/seulgae/Proj_OnedayClass"
-  },
+  // {
+  //   title: "OneDayClass",
+  //   date: "2021.10, 리뉴얼 2025.06 ~ ",
+  //   description: "수강생을 연결해주는 일일 체험 학습 플랫폼 사이트, 누구나 쉽게 클래스를 등록하고 리뷰로 소통할 수 있는 공간.",
+  //   image: "/OneDayClass.png",
+  //   link: "https://github.com/seulgae/OneDayClass.git",
+  //   oldLink: "https://github.com/seulgae/Proj_OnedayClass"
+  // },
 ];
 
 const SideProjects = () => {

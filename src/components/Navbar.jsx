@@ -53,9 +53,9 @@ function Navbar({ isOpen, toggleSidebar }) {
               </li>
             </ul>
           </li>
-          {/*<li>*/}
-          {/*  <Link to="/SideProjects">Side Projects</Link>*/}
-          {/*</li>*/}
+          <li>
+            <Link to="/SideProjects">Side Projects</Link>
+          </li>
           <li>
             <Link to="/EducationList">Education</Link>
           </li>
