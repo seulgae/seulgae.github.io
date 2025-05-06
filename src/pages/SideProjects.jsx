@@ -10,14 +10,14 @@ const sideProjects = [
   //   link: "https://github.com/seulgae/springBatch.git",
   //   oldLink: null
   // },
-  {
-    title: "BillNest",
-    date: "2025.08 ~ ",
-    description: "결제 정보를 기반으로 청구서를 자동 생성하고 이메일로 발송하는 청구서 발송 시스템.",
-    image: "/BillNestLogo.png",
-    link: "https://github.com/seulgae/springBatch",
-    oldLink: null
-  },
+  // {
+  //   title: "BillNest",
+  //   date: "2025.08 ~ ",
+  //   description: "결제 정보를 기반으로 청구서를 자동 생성하고 이메일로 발송하는 청구서 발송 시스템.",
+  //   image: "/BillNestLogo.png",
+  //   link: "https://github.com/seulgae/springBatch",
+  //   oldLink: null
+  // },
   {
     title: "FM Manager",
     date: "2022.11, 리뉴얼 2025.04.18 ~ ",

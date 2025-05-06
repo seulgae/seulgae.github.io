@@ -52,29 +52,44 @@ function Home() {
         </div>
 
         <div className="section">
-         {/* 기술 스택 */}
-         <div className="tech-section">
-          <h2>🚀 기술 스택</h2>
-          <div className="tech-grid">
-            <span className="tech-item">Spring</span>
-            <span className="tech-item">Spring Boot</span>
-            <span className="tech-item">Spring Batch</span>
-            <span className="tech-item">Rest API</span>
-            <span className="tech-item">React</span>
-            <span className="tech-item">Vue</span>
-            <span className="tech-item">Redis</span>
-            <span className="tech-item">Kafka</span>
-            <span className="tech-item">MyBatis</span>
-            <span className="tech-item">RDBMS</span>
-            <span className="tech-item">JPA</span>
-            <span className="tech-item">Oracle</span>
-            <span className="tech-item">MySQL</span>
-            <span className="tech-item">Linux</span>
-            <span className="tech-item">Maven</span>
-            <span className="tech-item">Gradle</span>
-            <span className="tech-item">Git</span>
+          {/* 기술 스택 */}
+          <div className="tech-section">
+            <h2>🚀 기술 스택</h2>
+
+            {/* 백엔드 */}
+            <h3>🔧 Back-End</h3>
+            <div className="tech-grid">
+              <span className="tech-item">Spring</span>
+              <span className="tech-item">Spring Boot</span>
+              <span className="tech-item">Spring Batch</span>
+              <span className="tech-item">Rest API</span>
+              <span className="tech-item">Redis</span>
+              <span className="tech-item">Kafka</span>
+              <span className="tech-item">MyBatis</span>
+              <span className="tech-item">JPA</span>
+              <span className="tech-item">RDBMS</span>
+              <span className="tech-item">Oracle</span>
+              <span className="tech-item">MySQL</span>
+            </div>
+
+            {/* 프론트엔드 */}
+            <h3>🎨 Front-End</h3>
+            <div className="tech-grid">
+              <span className="tech-item">React</span>
+              <span className="tech-item">Thymeleaf</span>
+              <span className="tech-item">HTML + CSS + JS</span>
+              {/*<span className="tech-item">Vue</span>*/}
+            </div>
+
+            {/* 기타 / 인프라 */}
+            <h3>🛠 기타 / 인프라</h3>
+            <div className="tech-grid">
+              <span className="tech-item">Linux</span>
+              <span className="tech-item">Maven</span>
+              <span className="tech-item">Gradle</span>
+              <span className="tech-item">Git</span>
+            </div>
           </div>
-        </div>
         </div>
 
         {/* 연락처 및 이메일 섹션 */}
