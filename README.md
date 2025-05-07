@@ -25,4 +25,4 @@ npm install gh-pages --save-dev
 </br>
 
 ## GitHub Pages에 배포할 때 사용하는 커밋 명령어 </br>
- npm run deploy -- -m "내용" </br>
+npm run deploy -- -m "내용" </br>
