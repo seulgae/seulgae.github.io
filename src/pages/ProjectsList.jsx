@@ -23,19 +23,8 @@ const ProjectsList = () => {
                     <h3>주요 업무(KOSA 인증)</h3>
                     <ul className="task-list">
                         {project.mainTasks.map((task, i) => (
-                            <li
-                                key={i}
-                                onClick={() =>
-                                    handleImageClick(
-                                        i === 0
-                                            ? "/Licenses1.png"
-                                            : i === 1
-                                                ? "/Ezen.png"
-                                                : "/Licenses1.png" // 기본 이미지
-                                    )
-                                }
-                            >
-                                📝 {task}
+                            <li key={i} onClick={() => handleImageClick("/ex.png")}>
+                                📝 {task} {/* 업무 항목 클릭 시 KOSA 경력증명서 이미지 확대 모달 열기 */}
                             </li>
                         ))}
                     </ul>
