@@ -63,11 +63,11 @@ function Home() {
               <span className="tech-item">Spring Boot</span>
               <span className="tech-item">Spring Batch</span>
               <span className="tech-item">Rest API</span>
-              <span className="tech-item">Redis</span>
-              <span className="tech-item">Kafka</span>
+              {/*<span className="tech-item">Redis</span>*/}
+              {/*<span className="tech-item">Kafka</span>*/}
               <span className="tech-item">MyBatis</span>
-              <span className="tech-item">JPA</span>
-              <span className="tech-item">RDBMS</span>
+              {/*<span className="tech-item">JPA</span>*/}
+              {/*<span className="tech-item">RDBMS</span>*/}
               <span className="tech-item">Oracle</span>
               <span className="tech-item">MySQL</span>
             </div>
@@ -77,7 +77,9 @@ function Home() {
             <div className="tech-grid">
               <span className="tech-item">React</span>
               <span className="tech-item">Thymeleaf</span>
-              <span className="tech-item">HTML + CSS + JS</span>
+              <span className="tech-item">HTML</span>
+              <span className="tech-item">CSS</span>
+              <span className="tech-item">JS/jQuery</span>
               {/*<span className="tech-item">Vue</span>*/}
             </div>
 
