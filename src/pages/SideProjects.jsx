@@ -20,7 +20,7 @@ const sideProjects = [
   // },
   {
     title: "FM Manager",
-    date: "2022.11, 리뉴얼 2025.06(예정) ",
+    date: "2022.11, 고도화 2025.06.01 ~  ",
     description: "구장 예약부터 동호회 소통까지, 풋살을 즐기는 사람들을 위한 올인원 플랫폼 사이트.",
     image: "/FMLogo.png",
     link: "https://github.com/seulgae/fmBootReact",
@@ -28,7 +28,7 @@ const sideProjects = [
   },
   {
     title: "OneDayClass",
-    date: "2021.10, 리뉴얼 2025.07(예정) ",
+    date: "2021.10, 고도화 2025.07(예정) ",
     description: "수강생을 연결해주는 일일 체험 학습 플랫폼 사이트, 누구나 쉽게 클래스를 등록하고 리뷰로 소통할 수 있는 공간.",
     image: "/OneDayClass.png",
     link: "https://github.com/seulgae/OneDayClass.git",

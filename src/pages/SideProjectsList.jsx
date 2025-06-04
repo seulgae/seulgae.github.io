@@ -22,7 +22,7 @@ const SideProjectsList = ({ sideProjects = [] }) => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            🔄 마이그레이션 전
+                                            🔄 고도화 전
                                         </a>
                                         <a
                                             href={project.link}
@@ -30,7 +30,7 @@ const SideProjectsList = ({ sideProjects = [] }) => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            ✅ 마이그레이션 후
+                                            ✅ 고도화 후
                                         </a>
                                     </>
                                 ) : (
