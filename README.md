@@ -1,5 +1,5 @@
-# AI 페어 프로그래밍 깃허브 포트폴리오 페이지 제작<br>
-AI 페어 프로그래밍(AI Pair Programming)이란 개발자가 AI와 협업하여 코드를 작성하고 개선하는 프로그래밍 방식<br>
+# 깃허브 포트폴리오 페이지 제작<br>
+슬개 포트폴리오 사이트 제작<br>
 
 ## VsCode 설치 </br>
 https://code.visualstudio.com/
@@ -14,7 +14,7 @@ https://chatgpt.com/
 
 ## 리액트 설치 </br>
 npm install react
-</br>
+</br>git 
 
 ## 리액트 패키지 설치 </br>
 npx create-react-app seulgae.github.io
