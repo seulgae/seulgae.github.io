@@ -14,7 +14,7 @@ https://chatgpt.com/
 
 ## 리액트 설치 </br>
 npm install react
-</br>git 
+</br>
 
 ## 리액트 패키지 설치 </br>
 npx create-react-app seulgae.github.io
@@ -26,3 +26,7 @@ npm install gh-pages --save-dev
 
 ## GitHub Pages에 배포할 때 사용하는 커밋 명령어 </br>
 npm run deploy -- -m "내용" </br>
+
+## 📌 변경 사항 기록
+
+
