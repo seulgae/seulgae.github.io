@@ -28,5 +28,5 @@ npm install gh-pages --save-dev
 npm run deploy -- -m "내용" </br>
 
 ## 📌 변경 사항 기록
-
+[20250627] SQLD 자격증 취득 정보 업데이트
 
