@@ -12,7 +12,7 @@ const licenses = [
     title: "SQLD",
     date: "2025.06.27",
     description: "한국데이터산업진흥원장",
-    image: "" // 이미지 URL (수정 가능)
+    image: "/Licenses2.png"
   },
   {
     title: "웹 디자인 개발기능사",
