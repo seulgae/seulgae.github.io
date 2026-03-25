@@ -1,51 +1,44 @@
-const projects3 = [
+const projects = [
   {
-    projectName: "LG CNS 클라우드 플랫폼 팀",
-    period: "2024.10.07 ~ 2025.01.30",
-    mainTasks: [
-      "LG CNS CloudXper 플랫폼 사이트 서버 API 개발"
-    ],
-    projects: [
+    projectName:
+      "LG U+ 통합 빌링 플랫폼 운영 및 유지보수 " +
+      "(배치·API·GW / NUBL·NUBO 기반)",
+    description:
+      "빌링 청구 시스템의 배치·조회 서비스와 Kafka 기반 GW 연동 시스템의 운영 및 유지보수를 담당했습니다.",
+    periodAndRole: "2022.11 ~ 2025.04 / 시스템 운영·기능 개발",
+    skills: [
       {
-        title: "CloudXper 플랫폼 사이트 API 개발",
-        period: "2024.10.07 ~ 2025.01.30",
-        situation: ["LG CNS는 AWS, GCP, KAKAO, Azure 4사의 클라우드 저장소를 대량으로 대여하여 다양한 업체들에게 판매하는 사업을 진행하고 있었음. "
-                   + "이전에는 각 업체별 대여 정보를 엑셀 문서로만 관리하고 있었고, 이로 인해 관리 및 청구 업무에서 효율성 문제와 데이터 정확한 관리에 어려움이 생김."
-                   + "이러한 문제를 해결하기 위해, 클라우드 저장소 대여 정보와 청구 프로세스를 통합하고 자동화할 수 있는 새로운 관리 시스템이 필요했으며,"
-                   + " 이를 위해 CloudXper라는 클라우드 기반 관리 플랫폼을 구축하게되었음."],
-        task: [
-               "각 화면에서 사용하는 검색 조건에 대한 공통 모듈 API 개발",
-               "Back-End API 개발환경 표준화 구축",
-               "CloudXper 가입 프로세스 API 개발",
-               "CloudXper 청구 프로세스 API 개발",
-               "CloudXper 상품 프로세스 API 개발",
-               "사용자 권한 인증 및 보안 관리 API 개발과 Redis 연계를 통한 성능 최적화",
-        ],
-        action: [
-          "개발 환경 표준화 구축: 개발 환경 표준화가 부족했던 상황에서, 다양한 백엔드 개발자들이 일관성 있게 작업할 수 있도록 표준화 작업을 진행. 이를 위해 디자인 패턴 중 빌더 패턴을 공부하여, API 개발에 필요한 소스 코드 표준을 설계.",
-          "설계한 표준 소스를 다른 백엔드 개발자들에게 공유하기 위해 회의를 진행하고, 표준화된 소스 구조와 코드 스타일에 대한 가이드를 전달.",
-          "개발 표준화 과정에서 성능 최적화를 염두에 두고, 이전에는 1분 정도 걸리던 작업을 15초로 단축할 수 있는 성능 개선을 진행.",
-          "API 개발: 설계된 표준에 맞추어 CloudXper 가입, 청구, 상품 프로세스 API를 개발하고, 사용자 권한 인증 및 보안 관리 API와 Redis 연계를 통한 성능 최적화 작업을 수행.",
-          "각 화면에서 사용하는 검색 조건 공통 모듈 API를 개발 및 사용자 권한 인증 API 적용, 시스템 전반에 걸쳐 효율적인 검색 기능을 제공하도록 작업."
-        ],
-        result: ["개발 환경 표준화 덕분에 모든 백엔드 개발자들이 동일한 코드 스타일을 따를 수 있게 되었고, 이로 인해 코드의 일관성이 유지되며 협업 효율성이 크게 향상됨.", 
-                 "회의를 통해 개발자들 간의 소통이 원활해졌고, 표준화된 소스와 구조 덕분에 다른 개발자들이 빠르게 개발을 진행할 수 있도록 지원.", 
-                 "각종 API의 개발이 원활하게 이루어졌으며, CloudXper 시스템의 가입, 청구, 상품 프로세스와 사용자 권한 인증, 보안 관리 기능이 원활하게 구현되어 서비스의 기능적 안정성이 크게 향상됨.",
-                 "프로젝트를 통해 팀의 실적이 작년 실적에 비해 15% 인상되었으며, 이로 인해 최우수 팀으로 선정.",
-                 "팀내 우수사원으로 인정받아 본부장 상을 수상, 개인적으로도 큰 성과를 거두었으며, 팀의 목표 달성에 중요한 기여를 한 것으로 평가받음."],
-        techStack: {
-          Backend: ["Spring Boot", "Rest API"],
-          Framework: ["Spring Framework (Spring MVC 기반)"],
-          Library: ["Swagger", "MyBatis"],
-          buildTools: "Gradle",
-          Infra: ["Jenkins", "GitLab"],
-          Server : ["Linux"],
-          DB: ["MySQL"],
-          Tools: ["DBeaver", "IntelliJ", "VsCode"]
-        }
+        label: "기술",
+        value:
+          "Spring Boot(2.x.x), Batch(4.x.x), REST API, HTML5, CSS, JavaScript, Swagger, MyBatis, Maven",
+      },
+      {
+        label: "인프라",
+        value:
+          "Redis, Kafka, APIM, TMS, Jenkins, GitLab, WhaTap, JobPass, Linux(CentOs), Oracle",
+      },
+      {
+        label: "사용 툴",
+        value: "Trusted Orange, STS, SecureCRT, FileZilla(SFTP), VSCode",
       },
     ],
-  }
+    mainTasks: [
+      "Kafka Topic 기반 데이터 처리 로직 설계·구현 및 연동 시스템 모니터링·장애 대응",
+      "빌링 요금·위약금 조회 및 전자세금계산서·청구 API 설계·개발",
+      "Spring Batch 기반 배치 처리 및 리포팅 자동화 시스템 개발·운영",
+    ],
+    achievements: [
+      {
+        text: "WhaTap 기반 오류 분석 및 재처리 프로세스 구축으로 Kafka 연동 오류 93% 감소(70건 -> 5건 미만)",
+      },
+      {
+        text: "Oracle·MySQL 인코딩 처리 로직 개선으로 데이터 오류 95% 이상 감소",
+      },
+      {
+        text: "배치·리포팅 자동화(CSV -> XLSX·SFTP)로 업무 처리 시간을 80% 이상 단축",
+      },
+    ],
+  },
 ];
 
-export default projects3;
+export default projects;

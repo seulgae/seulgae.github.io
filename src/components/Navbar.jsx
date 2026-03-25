@@ -1,85 +1,157 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaGithub, FaBlog } from "react-icons/fa";
-import "../styles/navBar.css"; // CSS 파일 추가
+import { FaBlog, FaGithub } from "react-icons/fa";
+import "../styles/navBar.css";
+
+function splitLabel(text) {
+  const bracketIndex = text.indexOf("(");
+
+  if (bracketIndex === -1) {
+    return { main: text, sub: "" };
+  }
+
+  return {
+    main: text.slice(0, bracketIndex).trimEnd(),
+    sub: text.slice(bracketIndex).trim(),
+  };
+}
+
+function NavLabel({ text }) {
+  const { main, sub } = splitLabel(text);
+
+  return (
+    <span className="nav-label-text">
+      <span>{main}</span>
+      {sub ? <span className="nav-label-sub">{sub}</span> : null}
+    </span>
+  );
+}
 
 function Navbar({ isOpen, toggleSidebar }) {
   const [showSubmenu, setShowSubmenu] = useState(false);
-  const location = useLocation(); // 현재 경로 감지
+  const location = useLocation();
 
-  // 경로 변경 시 스크롤을 최상단으로 이동
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setShowSubmenu(false);
   }, [location.pathname]);
 
   return (
     <div className={`navbar ${isOpen ? "open" : "closed"}`}>
-      {/* 상단 로고 */}
-      <div className="logo">
-        <h2>
-          <a href="/">Seulgae</a>
-        </h2>
-        <img src="/giltaehyeong.jpg" alt="Profile" className="profile-image" />
+      <div className="logo-shell">
+        <div className="business-card">
+          <div className="business-head">
+            <img
+              src={`${process.env.PUBLIC_URL}/giltaehyeong.jpg`}
+              alt="Profile"
+              className="profile-image"
+            />
+            <div className="logo-copy">
+              <span className="logo-badge">SI / SM Developer</span>
+              <h2>
+                <Link to="/" onClick={toggleSidebar}>
+                  길태형
+                </Link>
+              </h2>
+              <p className="logo-description">Backend Developer</p>
+            </div>
+          </div>
+
+          <div className="business-body">
+            <a className="business-link" href="tel:+82-10-3933-3763">
+              <span className="business-label">Phone</span>
+              <strong>010-3933-3763</strong>
+            </a>
+            <a className="business-link" href="mailto:r1605866@gmail.com">
+              <span className="business-label">Email</span>
+              <strong>r1605866@gmail.com</strong>
+            </a>
+          </div>
+
+          <div className="business-icons">
+            <a
+              href="https://github.com/seulgae"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FaGithub size={22} />
+            </a>
+            <a
+              href="https://doltae.tistory.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Blog"
+            >
+              <FaBlog size={22} />
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* 네비게이션 메뉴 */}
       <nav>
         <ul>
           <li>
-            <Link to="/">About Me</Link>
+            <Link to="/" onClick={toggleSidebar}>
+              About Me
+            </Link>
           </li>
-
-          {/* ProjectsList 항목 */}
-          <li 
+          <li
             className="dropdown"
             onMouseEnter={() => setShowSubmenu(true)}
             onMouseLeave={() => setShowSubmenu(false)}
           >
-            <button className="dropdown-toggle">
+            <button type="button" className="dropdown-toggle">
               Project Experience
             </button>
             <ul className={`submenu ${showSubmenu ? "open" : ""}`}>
               <li>
-                <Link to="/ProjectsList">LG CNS 빌링 디지털 서비스 팀 SM개발/운영</Link>
+                <Link to="/ProjectsList" onClick={toggleSidebar}>
+                  <NavLabel text="전세사기 피해 지원관리시스템 운영·개발 (국토교통부)" />
+                </Link>
               </li>
               <li>
-                <Link to="/ProjectsList2">LG CNS 빌링 디지털 서비스 팀 SI개발</Link>
+                <Link to="/ProjectsList2" onClick={toggleSidebar}>
+                  <NavLabel text="CloudXper 클라우드 빌링 통합 관리 플랫폼 고도화 개발 (LG CNS)" />
+                </Link>
               </li>
               <li>
-                <Link to="/ProjectsList3">★ LG CNS 클라우드 플랫폼 개발 ★</Link>
-              </li>
-              <li>
-                <Link to="/ProjectsList4">LG CNS 빌링 GW 연동 파트 개발/운영</Link>
+                <Link to="/ProjectsList3" onClick={toggleSidebar}>
+                  <NavLabel text="LG U+ 통합 빌링 플랫폼 운영 및 유지보수 (배치·API·GW / NUBL·NUBO 기반)" />
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/SideProjects">Side Projects</Link>
-          </li>
-          {/*<li>*/}
-          {/*  <Link to="/SideProjects">Skill Upgrades</Link>*/}
-          {/*</li>*/}
-          <li>
-            <Link to="/EducationList">Education</Link>
+            <Link to="/Inventory" onClick={toggleSidebar}>
+              Inventory
+            </Link>
           </li>
           <li>
-            <Link to="/awards">Awards</Link>
+            <Link to="/EducationList" onClick={toggleSidebar}>
+              Education
+            </Link>
           </li>
           <li>
-            <Link to="/Licenses">Licenses</Link>
+            <Link to="/Awards" onClick={toggleSidebar}>
+              Awards
+            </Link>
+          </li>
+          <li>
+            <Link to="/Licenses" onClick={toggleSidebar}>
+              Licenses
+            </Link>
           </li>
         </ul>
       </nav>
 
-      {/* 하단 아이콘 */}
-      <div className="icon-container">
-        <Link to="https://github.com/seulgae" target="_blank" rel="noopener noreferrer">
-          <FaGithub size={24} />
-        </Link>
-        <Link to="https://doltae.tistory.com/" target="_blank" rel="noopener noreferrer">
-          <FaBlog size={24} />
-        </Link>
-      </div>
+      <Link to="/Architecture" onClick={toggleSidebar} className="sidebar-credit">
+        <span className="sidebar-credit-mark">SG</span>
+        <span className="sidebar-credit-copy">
+          <strong>Designed by seulgae</strong>
+          <span>Portfolio structure & design notes</span>
+        </span>
+      </Link>
     </div>
   );
 }

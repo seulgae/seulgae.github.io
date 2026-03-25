@@ -1,118 +1,129 @@
-/* 전체 컨테이너 스타일 */
 .awards-container {
-  max-width: 90%;
+  width: min(1320px, calc(100vw - 32px));
   margin: 0 auto;
-  padding: 20px;
-  animation: slideFadeUp 0.5s ease-in-out;
+  padding: 56px 0 72px;
 }
 
-@media screen and (max-width: 768px) {
-  .awards-container {
-    max-width: 1000px;
-    padding: 20px;
-  }
+.awards-container > h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
 }
 
-/* 수상 목록 스타일 */
 .awards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: grid;
+  gap: 18px;
 }
 
-/* 개별 수상 항목 */
 .awards-card {
-  display: flex;
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 22px;
   align-items: center;
-  border: 2px solid #3498db;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #ecf6ff;
-  transition: 0.3s;
-  animation: slideFadeUp 0.6s ease-in-out;
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
 }
 
-.awards-card:hover {
-  box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.3);
-  transform: scale(1.02);
-}
-
-/* 이미지 스타일 (네모난 형태 유지) */
 .awards-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
-  margin-right: 15px;
+  width: 140px;
+  height: 140px;
+  border-radius: 24px;
   object-fit: cover;
-  border: 2px solid #2980b9;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-.awards-image:hover {
-  transform: scale(1.1);
-}
-
-/* 텍스트 스타일 */
 .awards-details h2 {
-  color: #2c3e50;
-  margin: 0;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
 }
 
-/* 모달 스타일 */
+
+.awards-details p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.awards-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.award-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--accent-soft);
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  color: #115e59;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  padding: 24px;
+  background: rgba(9, 14, 25, 0.68);
+  backdrop-filter: blur(10px);
+  z-index: 1200;
 }
 
 .modal-content {
   position: relative;
-  max-width: 80%;
-  max-height: 80%;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
+  width: min(860px, 100%);
+  padding: 18px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  overflow: auto;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
 }
 
 .modal-content img {
+  display: block;
   width: 100%;
   height: auto;
-  border-radius: 8px;
-  max-height: 90vh;
-  object-fit: contain;
+  border-radius: 18px;
 }
 
-/* 닫기 버튼 위치 조정 */
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: white;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
   border: none;
-  font-size: 24px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.86);
+  color: #fff;
   cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* 공통 애니메이션 */
-@keyframes slideFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@media (max-width: 768px) {
+  .awards-container {
+    width: min(100vw - 24px, 1320px);
+    padding-top: 28px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .awards-card {
+    grid-template-columns: 1fr;
+  }
+
+  .awards-image {
+    width: 100%;
+    height: 220px;
   }
 }

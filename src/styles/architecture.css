@@ -1,0 +1,190 @@
+.architecture-page {
+  width: min(1320px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 56px 0 72px;
+  color: var(--text);
+}
+
+.architecture-hero,
+.architecture-card,
+.architecture-shell,
+.map-box,
+.package-card,
+.flow-step {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.architecture-hero {
+  padding: 34px;
+  border-radius: 30px;
+  margin-bottom: 22px;
+}
+
+.architecture-eyebrow,
+.architecture-index {
+  display: inline-flex;
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.architecture-hero h1,
+.architecture-header h2 {
+  margin: 10px 0 12px;
+  letter-spacing: -0.04em;
+}
+
+.architecture-hero p,
+.architecture-card p,
+.package-card p,
+.flow-step p {
+  margin: 0;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.architecture-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.map-column {
+  display: grid;
+  gap: 8px;
+}
+
+.map-box {
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.map-box strong,
+.package-card h3 {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.map-box span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.map-arrow {
+  display: none;
+}
+
+.architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.architecture-grid-wide {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.architecture-card {
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.architecture-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+}
+
+.architecture-shell {
+  padding: 28px;
+  border-radius: 28px;
+  margin-bottom: 20px;
+}
+
+.architecture-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.package-card {
+  padding: 20px;
+  border-radius: 22px;
+}
+
+.architecture-code {
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #dbeafe;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.flow-list {
+  display: grid;
+  gap: 14px;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px;
+  border-radius: 20px;
+}
+
+.flow-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+@media (max-width: 960px) {
+  .architecture-map,
+  .architecture-grid-wide,
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .architecture-page {
+    width: min(100vw - 24px, 1320px);
+    padding-top: 28px;
+  }
+
+  .architecture-grid,
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-hero,
+  .architecture-shell {
+    padding: 22px;
+  }
+}

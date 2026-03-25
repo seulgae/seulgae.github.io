@@ -1,63 +1,87 @@
-import { useState, useEffect } from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { HashRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProjectsList from "./pages/ProjectsList";
 import ProjectsList2 from "./pages/ProjectsList2";
 import ProjectsList3 from "./pages/ProjectsList3";
-import ProjectsList4 from "./pages/ProjectsList4";
 import EducationList from "./pages/EducationList";
-import SideProjects from "./pages/SideProjects";
+import InventoryList from "./pages/InventoryList";
 import Awards from "./pages/Awards";
 import Licenses from "./pages/Licenses";
+import Architecture from "./pages/Architecture";
+
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/ProjectsList", element: <ProjectsList /> },
+  { path: "/ProjectsList2", element: <ProjectsList2 /> },
+  { path: "/ProjectsList3", element: <ProjectsList3 /> },
+  { path: "/Inventory", element: <InventoryList /> },
+  { path: "/Awards", element: <Awards /> },
+  { path: "/EducationList", element: <EducationList /> },
+  { path: "/Licenses", element: <Licenses /> },
+  { path: "/Architecture", element: <Architecture /> },
+];
 
 function App() {
+  return (
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <AppLayout />
+    </Router>
+  );
+}
+
+function AppLayout() {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    if (isMobile) return; // 모바일에서는 마우스 이벤트 처리 안 함
+    if (isMobile) {
+      return undefined;
+    }
 
-    const handleMouseMove = (e) => {
-      if (e.clientX > window.innerWidth - 30) {
+    const handleMouseMove = (event) => {
+      if (event.clientX > window.innerWidth - 10) {
         setIsOpen(true);
-      } else if (e.clientX < window.innerWidth - 270 && isOpen) {
+      } else if (event.clientX < window.innerWidth - 400) {
         setIsOpen(false);
       }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isMobile, isOpen]);
+  }, [isMobile]);
 
   useEffect(() => {
-    if (!isMobile) return; // 모바일에서는 터치 이벤트 처리
+    if (!isMobile) {
+      return undefined;
+    }
 
     let touchStartX = 0;
     let touchEndX = 0;
 
-    const handleTouchStart = (e) => {
-      touchStartX = e.touches[0].clientX;
+    const handleTouchStart = (event) => {
+      touchStartX = event.touches[0].clientX;
+      touchEndX = touchStartX;
     };
 
-    const handleTouchMove = (e) => {
-      touchEndX = e.touches[0].clientX;
+    const handleTouchMove = (event) => {
+      touchEndX = event.touches[0].clientX;
     };
 
     const handleTouchEnd = () => {
       const diff = touchEndX - touchStartX;
-      if (touchStartX > window.innerWidth - 30 && diff < -50) {
+      if (touchStartX > window.innerWidth - 40 && diff < -40) {
         setIsOpen(true);
-      } else if (touchStartX < window.innerWidth - 250 && diff > 50) {
+      } else if (touchStartX < window.innerWidth - 260 && diff > 40) {
         setIsOpen(false);
       }
     };
@@ -74,86 +98,79 @@ function App() {
   }, [isMobile]);
 
   return (
-    <Router>
-      <div style={{ display: "flex", height: "100vh", position: "relative" }}>
-        {/* ✅ 사이드바와 버튼을 분리 */}
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: isOpen ? 0 : "100%" }}
-          transition={{ type: "tween", duration: 0.8 }} // 속도 빠르게 수정
-          style={{
-            position: "fixed",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: "250px",
-            // background: "#333",
-            color: "white",
-            zIndex: 1000,
-            overflow: "hidden",
-            willChange: "transform",
-            display: "flex",
-            flexDirection: "column", // 버튼을 사이드바 내부에 배치하지 않음
-          }}
-        >
-          <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
-        </motion.div>
+    <div style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
+      <motion.aside
+        initial={{ x: "100%" }}
+        animate={{ x: isOpen ? 0 : "100%" }}
+        transition={{ type: "tween", duration: 0.35 }}
+        style={{
+          position: "fixed",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: "380px",
+          color: "white",
+          zIndex: 1000,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
+      </motion.aside>
 
-        {/* ✅ 버튼을 사이드바 외부로 이동 */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          style={{
-            position: "fixed",
-            top: "20px",
-            right: "20px",
-            zIndex: 1100,
-            fontSize: "25px",
-            background: "transparent",
-            color: "black",
-            padding: "10px 15px",
-            border: "none",
-            borderRadius: "5px",
-          }}
-        >
-          {isOpen ? "X" : "☰"}
-        </button>
+      <button
+        type="button"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        onClick={() => setIsOpen((prev) => !prev)}
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          zIndex: 1100,
+          fontSize: "20px",
+          background: "transparent",
+          color: "black",
+          padding: "10px 15px",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        {isOpen ? "X" : "Menu"}
+      </button>
 
-        {/* ✅ 컨텐츠 영역 */}
-        <div
-          style={{
-            flexGrow: 1,
-            padding: "20px",
-            transition: "margin-right 0.2s ease",
-            width: "100%",
-          }}
-        >
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-              <Route path="/ProjectsList" element={<PageWrapper><ProjectsList /></PageWrapper>} />
-              <Route path="/ProjectsList2" element={<PageWrapper><ProjectsList2 /></PageWrapper>} />
-              <Route path="/ProjectsList3" element={<PageWrapper><ProjectsList3 /></PageWrapper>} />
-              <Route path="/ProjectsList4" element={<PageWrapper><ProjectsList4 /></PageWrapper>} />
-              <Route path="/SideProjects" element={<PageWrapper><SideProjects /></PageWrapper>} />
-              <Route path="/Awards" element={<PageWrapper><Awards /></PageWrapper>} />
-              <Route path="/EducationList" element={<PageWrapper><EducationList /></PageWrapper>} />
-              <Route path="/Licenses" element={<PageWrapper><Licenses /></PageWrapper>} />
-            </Routes>
-          </AnimatePresence>
-        </div>
-      </div>
-    </Router>
+      <main
+        style={{
+          flexGrow: 1,
+          padding: "20px",
+          width: "100%",
+        }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<PageWrapper>{route.element}</PageWrapper>}
+              />
+            ))}
+          </Routes>
+        </AnimatePresence>
+      </main>
+    </div>
   );
 }
 
 function PageWrapper({ children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -50 }}
+      initial={{ opacity: 0, x: -80 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
-      transition={{ duration: 0.5 }}
-      style={{ position: "relative", width: "100%", height: "100%" }}
+      exit={{ opacity: 0, x: 80 }}
+      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      style={{ width: "100%", height: "100%" }}
     >
       {children}
     </motion.div>

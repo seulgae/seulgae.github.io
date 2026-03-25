@@ -13,23 +13,42 @@ const AwardsList = ({ awards }) => {
               src={award.image}
               alt={award.title}
               className="awards-image"
-              onClick={() => setSelectedImage(award.image)} // 이미지 클릭 시 모달 오픈
+              onClick={() => setSelectedImage(award.image)}
             />
             <div className="awards-details">
               <h2>{award.title}</h2>
-              <p><strong>취득일:</strong> {award.date}</p>
+              <p>
+                <strong>취득일</strong> {award.date}
+              </p>
               <p>{award.description}</p>
+
+              {award.links?.length ? (
+                <div className="awards-links">
+                  {award.links.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="award-link"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         ))}
       </div>
 
-      {/* 이미지 확대 모달 */}
       {selectedImage && (
-        <div className="modal" onClick={() => setSelectedImage(null)}> {/* 클릭하면 닫힘 */}
+        <div className="modal" onClick={() => setSelectedImage(null)}>
           <div className="modal-content">
-            <button className="modal-close" onClick={() => setSelectedImage(null)}>×</button>
-            <img src={selectedImage} alt="확대된 자격증 이미지" />
+            <button className="modal-close" onClick={() => setSelectedImage(null)}>
+              X
+            </button>
+            <img src={selectedImage} alt="수상 이미지" />
           </div>
         </div>
       )}

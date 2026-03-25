@@ -1,220 +1,267 @@
-/* 사이드바 스타일 */
 .navbar {
   position: relative;
-  right: -250px; /* 초기 위치: 오른쪽 밖으로 숨겨놓기 */
-  width: min(250px, 80vw);
-  max-width: 100%;
-  height: 100%; /* 사이드바의 높이를 화면에 맞게 설정 */
-  background-color: #004080;
-  color: white;
-  padding: 20px;
-  transition: right 0.3s; /* right 이동에 애니메이션 적용 */
+  width: min(380px, 90vw);
+  height: 100%;
+  padding: 30px 24px 22px;
   box-sizing: border-box;
-  font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* 내용이 많을 경우 세로 스크롤 가능 */
+  overflow-y: auto;
+  background:
+    linear-gradient(180deg, rgba(10, 15, 28, 0.94), rgba(12, 21, 41, 0.98)),
+    radial-gradient(circle at top, rgba(45, 212, 191, 0.14), transparent 32%);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -24px 0 60px rgba(5, 10, 24, 0.36);
 }
 
-/* 사이드바 열림 상태 */
-.navbar.open {
-  right: 0; /* 사이드바가 열리면 오른쪽 0 위치로 이동 */
-}
-
-/* 메뉴 버튼 스타일 (모바일 전용) */
-.menu-button {
-  position: absolute;
-  top: 10px;
-  left: -50px; /* 오른쪽에서 나오는 버튼 위치 */
-  background-color: #0059b3;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
-  z-index: 1100; /* 버튼이 다른 요소에 가려지지 않도록 */
-}
-
-.menu-button:hover {
-  background-color: #0073e6;
-}
-
-/* 로고 및 이미지 */
-.logo {
-  text-align: center;
-}
-
-.logo h2 a {
-  text-decoration: none;
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
+.logo-shell {
   margin-bottom: 30px;
 }
 
-.profile-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid white;
-  box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5);
-}
-
-/* 네비게이션 */
-nav ul {
-  list-style: none;
-  padding: 0;
-  text-align: center;
+.business-card {
   display: flex;
   flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.business-head {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
   align-items: center;
 }
 
-nav ul li {
-  padding: 10px 0;
-  width: 100%;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  transition: 0.3s;
+.business-body {
+  display: grid;
+  gap: 10px;
 }
 
-nav ul li a {
-  color: white;
+.business-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
   text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-  transition: 0.3s;
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.business-label {
+  color: rgba(148, 163, 184, 0.9);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-/* 드롭다운 메뉴 스타일 */
-.navbar .dropdown {
-  position: relative;
+.business-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.business-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  color: #dbeafe;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.business-icons a:hover {
+  transform: translateY(-2px);
+  background: rgba(45, 212, 191, 0.16);
+}
+
+.logo-copy h2 {
+  margin: 8px 0 8px;
+}
+
+.logo-copy h2 a {
+  color: #f8fafc;
+  text-decoration: none;
+  font-size: 1.95rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(45, 212, 191, 0.14);
+  border: 1px solid rgba(45, 212, 191, 0.18);
+  color: #99f6e4;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.logo-description {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 32px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.28);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+nav ul li {
   width: 100%;
-  text-align: center;
 }
 
+nav ul li a,
 .navbar .dropdown-toggle {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 8px;
   width: 100%;
-  text-align: center;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  min-height: 52px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.92);
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-/* 서브메뉴 애니메이션 효과 */
+nav ul li a:hover,
+.navbar .dropdown-toggle:hover,
+.sidebar-credit:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateX(-2px);
+}
+
+.navbar .dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .navbar .submenu {
   list-style: none;
   margin: 0;
-  padding: 0;
-  background-color: #003366;
-  width: 100%;
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /* 애니메이션 효과 */
+  padding: 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   max-height: 0;
-  overflow: hidden;
   opacity: 0;
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.25s ease;
 }
 
-/* 서브메뉴가 열릴 때 */
 .navbar .submenu.open {
-  max-height: 300px; /* 적절한 높이 설정 */
+  max-height: 320px;
   opacity: 1;
-  padding: 5px 0;
-}
-
-/* 세부 메뉴 스타일 */
-.navbar .submenu li {
-  padding: 5px 0;
 }
 
 .navbar .submenu li a {
-  color: #b3e0ff;
-  font-size: 10px; /* 메인 메뉴보다 작은 글씨 */
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(203, 213, 225, 0.96);
+  white-space: normal;
+  word-break: keep-all;
+  align-items: flex-start;
+  justify-content: flex-start;
   text-align: left;
-  text-decoration: none;
-  display: block;
-  padding: 8px;
-  transition: 0.3s;
 }
 
-.navbar .submenu li a:hover {
-  background-color: #004080;
-  color: white;
-  border-radius: 3px;
-}
-
-/* 하단 아이콘 */
-.icon-container {
+.nav-label-text {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding-bottom: 20px;
-  padding-top: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-label-sub {
+  display: block;
+}
+
+.sidebar-credit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-top: auto;
+  padding: 16px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-/* 아이콘 색상 변경 */
-.icon-container a {
-  color: #b3e0ff; /* 아이콘 색상을 밝은 푸른색으로 적용 */
-  font-size: 24px; /* 필요 시 아이콘 크기 조정 */
-  transition: color 0.3s; /* 색상 전환 효과 */
+.sidebar-credit-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(45, 212, 191, 0.14);
+  color: #99f6e4;
+  font-weight: 800;
+  letter-spacing: 0.06em;
 }
 
-.icon-container a:hover {
-  color: #66b3ff; /* 아이콘 색상이 더 밝은 푸른색으로 변하는 효과 */
+.sidebar-credit-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
-/* 모바일 화면에서 사이드바 조정 */
+.sidebar-credit-copy strong {
+  font-size: 0.95rem;
+}
+
+.sidebar-credit-copy span {
+  color: rgba(203, 213, 225, 0.78);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .navbar {
-    right: -100%; /* 모바일에서는 사이드바 숨김 */
+    width: min(380px, 92vw);
+    padding-top: 64px;
   }
 
-  .navbar.open {
-    right: 0; /* 모바일에서 사이드바 열기 */
-  }
-
-  /* 사이드바 메뉴 버튼 모바일 전용 스타일 */
-  .menu-button {
-    top: 20px;
-    left: 20px;
-    z-index: 1200; /* 버튼이 최상위에 위치하도록 */
-  }
-
-  /* 사이드바 내용 */
-  nav ul {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin-top: 50px;
-  }
-
-  .navbar .submenu {
-    max-height: 0; /* 모바일에서 서브메뉴 숨기기 */
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  }
-
-  .navbar .submenu.open {
-    max-height: 300px; /* 서브메뉴 열릴 때 높이 */
-    opacity: 1;
+  .business-head {
+    grid-template-columns: 1fr;
   }
 }
