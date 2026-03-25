@@ -2,10 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!-- 페이지 아이콘  -->
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
     <title>Wellcome to Seulgae Portfolio</title>
+    <script>
+      (function () {
+        var redirect = sessionStorage.getItem("spa_redirect");
+
+        if (redirect) {
+          sessionStorage.removeItem("spa_redirect");
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
