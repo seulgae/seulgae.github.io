@@ -18,7 +18,7 @@ const AwardsList = ({ awards }) => {
             <div className="awards-details">
               <h2>{award.title}</h2>
               <p>
-                <strong>취득일</strong> {award.date}
+                <strong>수상일</strong> {award.date}
               </p>
               <p>{award.description}</p>
 

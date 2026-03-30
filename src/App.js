@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProjectsList from "./pages/ProjectsList";
@@ -11,6 +12,7 @@ import InventoryList from "./pages/InventoryList";
 import Awards from "./pages/Awards";
 import Licenses from "./pages/Licenses";
 import Architecture from "./pages/Architecture";
+import ResumePrint from "./pages/ResumePrint";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -22,6 +24,7 @@ const routes = [
   { path: "/EducationList", element: <EducationList /> },
   { path: "/Licenses", element: <Licenses /> },
   { path: "/Architecture", element: <Architecture /> },
+  { path: "/ResumePrint", element: <ResumePrint /> },
 ];
 
 function App() {
@@ -98,8 +101,9 @@ function AppLayout() {
   }, [isMobile]);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
+    <div className="app-shell" style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
       <motion.aside
+        className="app-sidebar"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "tween", duration: 0.35 }}
@@ -121,6 +125,7 @@ function AppLayout() {
 
       <button
         type="button"
+        className="app-menu-toggle"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         onClick={() => setIsOpen((prev) => !prev)}
         style={{
@@ -141,6 +146,7 @@ function AppLayout() {
       </button>
 
       <main
+        className="app-main"
         style={{
           flexGrow: 1,
           padding: "20px",

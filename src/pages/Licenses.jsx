@@ -1,7 +1,7 @@
 import React from "react";
 import LicensesList from "./LicensesList";
 
-const licenses = [
+export const licenses = [
   {
     title: "SQLD",
     date: "2025.06.27",

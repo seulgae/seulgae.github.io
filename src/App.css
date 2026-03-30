@@ -1,1 +1,14 @@
-/* 사용 x */
+.app-shell {
+  isolation: isolate;
+}
+
+@media print {
+  .app-sidebar,
+  .app-menu-toggle {
+    display: none !important;
+  }
+
+  .app-main {
+    padding: 0 !important;
+  }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import AwardsList from "./AwardsList";
 
-const awards = [
+export const awards = [
   {
     title: "(주)애버커스 통신사업본부 우수사원",
     date: "2024.12",
@@ -22,7 +22,7 @@ const awards = [
   {
     title: "LG CNS UCAMP 프로젝트 최우수상",
     date: "2022.11",
-    description: "교육 과정 중 진행한 프로젝트 성과로 수상했습니다.",
+    description: "사전 평가 시험에서 반 2등을 기록해 2팀 팀장을 맡았고, 4명의 팀원과 협업하여 프로젝트를 최우수상으로 이끌었습니다.",
     image: "/UCAMP.jpg",
     links: [
       {

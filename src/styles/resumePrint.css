@@ -1,0 +1,301 @@
+.resume-print-page {
+  width: min(100%, 940px);
+  margin: 0 auto;
+  padding: 24px 0 64px;
+  color: #142033;
+}
+
+.resume-print-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+}
+
+.resume-print-toolbar strong,
+.resume-print-toolbar span {
+  display: block;
+}
+
+.resume-print-toolbar span {
+  margin-top: 4px;
+  color: #5f6b7c;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.resume-print-button {
+  border: none;
+  border-radius: 999px;
+  padding: 11px 16px;
+  background: #0f766e;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.resume-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 16px;
+  padding: 10mm 11mm;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  page-break-after: always;
+}
+
+.resume-sheet:last-child {
+  page-break-after: auto;
+}
+
+.resume-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) 215px;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.resume-eyebrow {
+  color: #0f766e;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.resume-header h1 {
+  margin: 8px 0 2px;
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+}
+
+.resume-role {
+  margin: 0 0 8px;
+  color: #0f766e;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.resume-intro {
+  margin: 0;
+  color: #405065;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.resume-contact-card,
+.resume-panel,
+.resume-summary-card,
+.resume-project-card,
+.resume-tech-card,
+.resume-highlight-card {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.resume-contact-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.08), rgba(255, 255, 255, 1));
+}
+
+.resume-contact-card span,
+.resume-summary-card span,
+.resume-simple-list span {
+  display: block;
+  color: #66758a;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.resume-contact-card strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.88rem;
+}
+
+.resume-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.resume-top-grid {
+  grid-template-columns: 1.05fr 0.95fr;
+  margin-bottom: 10px;
+}
+
+.resume-bottom-grid {
+  grid-template-columns: 1.12fr 0.88fr;
+}
+
+.resume-side-column {
+  display: grid;
+  gap: 10px;
+}
+
+.resume-panel {
+  padding: 11px 12px;
+}
+
+.resume-panel h2 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+  letter-spacing: -0.03em;
+}
+
+.resume-panel h3 {
+  margin: 0 0 4px;
+  font-size: 0.88rem;
+  letter-spacing: -0.02em;
+}
+
+.resume-summary-grid,
+.resume-project-list,
+.resume-tech-grid,
+.resume-highlight-list,
+.resume-workstyle-list,
+.resume-simple-list {
+  display: grid;
+  gap: 8px;
+}
+
+.resume-workstyle-list {
+  margin-top: 8px;
+}
+
+.resume-summary-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.resume-summary-card,
+.resume-project-card,
+.resume-tech-card,
+.resume-highlight-card {
+  padding: 9px 10px;
+}
+
+.resume-summary-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.86rem;
+}
+
+.resume-project-head p,
+.resume-tech-card p,
+.resume-highlight-card p,
+.resume-simple-list p {
+  margin: 0;
+  color: #566579;
+  line-height: 1.45;
+  font-size: 0.8rem;
+}
+
+.resume-tech-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.resume-bullet-list {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.resume-bullet-list li {
+  color: #39485b;
+  font-size: 0.8rem;
+  line-height: 1.42;
+}
+
+.resume-bullet-list.compact li + li {
+  margin-top: 2px;
+}
+
+.resume-simple-list article + article {
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 960px) {
+  .resume-print-page {
+    width: 100%;
+    padding: 18px 0 48px;
+  }
+
+  .resume-print-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resume-sheet {
+    width: min(100%, calc(100vw - 24px));
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .resume-header,
+  .resume-top-grid,
+  .resume-bottom-grid,
+  .resume-tech-grid,
+  .resume-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 7mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .resume-print-page {
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resume-print-toolbar {
+    display: none !important;
+  }
+
+  .resume-sheet {
+    width: auto;
+    min-height: auto;
+    margin: 0;
+    padding: 8mm 9mm;
+    border: none;
+    box-shadow: none;
+    page-break-after: always;
+    font-size: 0.97em;
+  }
+
+  .resume-sheet:last-child {
+    page-break-after: auto;
+  }
+
+  .resume-panel,
+  .resume-summary-card,
+  .resume-project-card,
+  .resume-tech-card,
+  .resume-highlight-card,
+  .resume-simple-list article,
+  .resume-contact-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

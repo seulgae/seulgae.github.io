@@ -122,11 +122,11 @@ function Navbar({ isOpen, toggleSidebar }) {
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="/Inventory" onClick={toggleSidebar}>
-              Inventory
-            </Link>
-          </li>
+          {/*<li>*/}
+          {/*  <Link to="/Inventory" onClick={toggleSidebar}>*/}
+          {/*    Inventory*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
           <li>
             <Link to="/EducationList" onClick={toggleSidebar}>
               Education
@@ -140,6 +140,11 @@ function Navbar({ isOpen, toggleSidebar }) {
           <li>
             <Link to="/Licenses" onClick={toggleSidebar}>
               Licenses
+            </Link>
+          </li>
+          <li>
+            <Link to="/ResumePrint" onClick={toggleSidebar}>
+              Resume Print
             </Link>
           </li>
         </ul>
