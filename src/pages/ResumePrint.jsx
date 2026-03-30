@@ -82,7 +82,7 @@ function ResumePrint() {
       <div className="resume-print-toolbar">
         <div>
           <strong>출력용 이력서</strong>
-          <span>Ctrl+P 후 `추가 설정 > 머리글 및 바닥글`을 끄고, `배경 그래픽`을 켜면 가장 깔끔합니다.</span>
+          <span>Ctrl+P 후 `추가 설정 {" > "} 머리글 및 바닥글`을 끄고, `배경 그래픽`을 켜면 가장 깔끔합니다.</span>
         </div>
         <button type="button" className="resume-print-button" onClick={() => window.print()}>
           인쇄하기

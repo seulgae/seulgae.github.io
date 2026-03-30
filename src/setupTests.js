@@ -1,3 +1,4 @@
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
+import { vi } from "vitest";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();

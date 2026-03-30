@@ -42,7 +42,7 @@ function Navbar({ isOpen, toggleSidebar }) {
         <div className="business-card">
           <div className="business-head">
             <img
-              src={`${process.env.PUBLIC_URL}/giltaehyeong.jpg`}
+              src={`${import.meta.env.BASE_URL}giltaehyeong.jpg`}
               alt="Profile"
               className="profile-image"
             />
