@@ -1,6 +1,6 @@
 const educationData = [
   {
-    degree: "LG CNS U-CAMP 신입 교육 프로그램",
+    degree: "LG CNS U-CAMP 36기 신입 교육 프로그램",
     school: "LG CNS",
     period: "2022.09 - 2022.11",
     description:

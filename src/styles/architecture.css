@@ -10,7 +10,8 @@
 .architecture-shell,
 .map-box,
 .package-card,
-.flow-step {
+.route-card,
+.timeline-card {
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -18,13 +19,14 @@
 }
 
 .architecture-hero {
-  padding: 34px;
+  padding: 36px;
   border-radius: 30px;
   margin-bottom: 22px;
 }
 
 .architecture-eyebrow,
-.architecture-index {
+.architecture-index,
+.architecture-card-step {
   display: inline-flex;
   color: var(--accent);
   font-size: 0.82rem;
@@ -41,8 +43,10 @@
 
 .architecture-hero p,
 .architecture-card p,
+.map-box span,
 .package-card p,
-.flow-step p {
+.route-card p,
+.timeline-card p {
   margin: 0;
   line-height: 1.8;
   color: var(--muted);
@@ -51,8 +55,7 @@
 .architecture-map {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  align-items: center;
+  gap: 14px;
   margin-bottom: 22px;
 }
 
@@ -62,31 +65,26 @@
 }
 
 .map-box {
+  min-height: 180px;
   padding: 18px;
   border-radius: 22px;
 }
 
 .map-box strong,
-.package-card h3 {
+.package-card strong,
+.route-head strong,
+.timeline-card h3,
+.architecture-card h3 {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-size: 1rem;
-}
-
-.map-box span {
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.map-arrow {
-  display: none;
+  letter-spacing: -0.02em;
 }
 
 .architecture-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
-  margin-bottom: 22px;
 }
 
 .architecture-grid-wide {
@@ -98,9 +96,8 @@
   border-radius: 24px;
 }
 
-.architecture-card h2 {
-  margin: 0 0 10px;
-  font-size: 1.08rem;
+.architecture-card-step {
+  margin-bottom: 12px;
 }
 
 .architecture-shell {
@@ -116,15 +113,63 @@
   margin-bottom: 16px;
 }
 
+.route-list,
+.timeline-list {
+  display: grid;
+  gap: 14px;
+}
+
+.route-card,
+.timeline-card {
+  padding: 18px 20px;
+  border-radius: 22px;
+}
+
+.route-head,
+.package-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.route-head span,
+.package-meta span,
+.timeline-card span {
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.route-guide,
+.package-note {
+  margin-top: 8px !important;
+}
+
 .package-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
+.package-grid-wide {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .package-card {
   padding: 20px;
   border-radius: 22px;
+}
+
+.package-card em {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: #115e59;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .architecture-code {
@@ -134,41 +179,19 @@
   border-radius: 22px;
   background: rgba(15, 23, 42, 0.92);
   color: #dbeafe;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.7;
 }
 
-.flow-list {
-  display: grid;
-  gap: 14px;
+.architecture-code-tall {
+  max-height: 560px;
 }
 
-.flow-step {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-  padding: 18px;
-  border-radius: 20px;
-}
-
-.flow-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: rgba(15, 118, 110, 0.12);
-  color: var(--accent);
-  font-weight: 800;
-}
-
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
   .architecture-map,
   .architecture-grid-wide,
-  .package-grid {
-    grid-template-columns: 1fr;
+  .package-grid-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -178,13 +201,26 @@
     padding-top: 28px;
   }
 
+  .architecture-map,
   .architecture-grid,
-  .package-grid {
+  .architecture-grid-wide,
+  .package-grid,
+  .package-grid-wide {
     grid-template-columns: 1fr;
   }
 
   .architecture-hero,
   .architecture-shell {
     padding: 22px;
+  }
+
+  .route-head,
+  .package-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .map-box {
+    min-height: auto;
   }
 }
