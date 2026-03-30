@@ -189,33 +189,6 @@
   line-height: 1.5;
 }
 
-@media (max-width: 960px) {
-  .resume-print-page {
-    width: 100%;
-    padding: 18px 0 48px;
-  }
-
-  .resume-print-toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .resume-paper {
-    width: min(100%, calc(100vw - 24px));
-    min-height: auto;
-    padding: 24px;
-  }
-
-  .resume-project-title-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .resume-project-title-row span {
-    white-space: normal;
-  }
-}
-
 @page {
   size: A4;
   margin: 8mm;

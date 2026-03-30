@@ -27,6 +27,19 @@ const routes = [
   { path: "/ResumePrint", element: <ResumePrint /> },
 ];
 
+function getViewMode() {
+  const ua = window.navigator.userAgent;
+  const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  const mobileUa = /Android|iPhone|iPad|iPod/i.test(ua);
+  const appWebViewUa = /WebView|; wv\)|NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\//i.test(ua);
+
+  if (appWebViewUa || (mobileUa && hasCoarsePointer && window.innerWidth <= 980)) {
+    return "app-web";
+  }
+
+  return "desktop";
+}
+
 function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -38,16 +51,27 @@ function App() {
 function AppLayout() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  const [viewMode, setViewMode] = useState(() => getViewMode());
+  const isAppWeb = viewMode === "app-web";
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setViewMode(getViewMode());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
+    document.documentElement.dataset.viewMode = viewMode;
+    document.body.dataset.viewMode = viewMode;
+
+    return () => {
+      delete document.documentElement.dataset.viewMode;
+      delete document.body.dataset.viewMode;
+    };
+  }, [viewMode]);
+
+  useEffect(() => {
+    if (isAppWeb) {
       return undefined;
     }
 
@@ -61,10 +85,10 @@ function AppLayout() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isMobile]);
+  }, [isAppWeb]);
 
   useEffect(() => {
-    if (!isMobile) {
+    if (!isAppWeb) {
       return undefined;
     }
 
@@ -98,27 +122,15 @@ function AppLayout() {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isMobile]);
+  }, [isAppWeb]);
 
   return (
-    <div className="app-shell" style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
+    <div className={`app-shell ${viewMode}`}>
       <motion.aside
         className="app-sidebar"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "tween", duration: 0.35 }}
-        style={{
-          position: "fixed",
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: "380px",
-          color: "white",
-          zIndex: 1000,
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
       >
         <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
       </motion.aside>
@@ -128,31 +140,11 @@ function AppLayout() {
         className="app-menu-toggle"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         onClick={() => setIsOpen((prev) => !prev)}
-        style={{
-          position: "fixed",
-          top: "20px",
-          right: "20px",
-          zIndex: 1100,
-          fontSize: "20px",
-          background: "transparent",
-          color: "black",
-          padding: "10px 15px",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
       >
         {isOpen ? "X" : "Menu"}
       </button>
 
-      <main
-        className="app-main"
-        style={{
-          flexGrow: 1,
-          padding: "20px",
-          width: "100%",
-        }}
-      >
+      <main className="app-main">
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
             {routes.map((route) => (

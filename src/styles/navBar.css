@@ -255,14 +255,3 @@ nav ul li a:hover,
   line-height: 1.5;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    width: min(380px, 92vw);
-    padding-top: 64px;
-  }
-
-  .business-head {
-    grid-template-columns: 1fr;
-  }
-}
-

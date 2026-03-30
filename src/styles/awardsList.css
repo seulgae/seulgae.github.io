@@ -112,19 +112,3 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .awards-container {
-    width: min(100vw - 24px, 1320px);
-    padding-top: 28px;
-  }
-
-  .awards-card {
-    grid-template-columns: 1fr;
-  }
-
-  .awards-image {
-    width: 100%;
-    height: 220px;
-  }
-}
-

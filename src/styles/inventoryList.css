@@ -79,16 +79,3 @@
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
-@media (max-width: 900px) {
-  .sideProjects-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .sideProjects-container {
-    width: min(100vw - 24px, 1320px);
-    padding-top: 28px;
-  }
-}
-

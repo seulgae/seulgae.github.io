@@ -1,0 +1,7 @@
+[data-view-mode="desktop"] .app-sidebar {
+  width: 380px;
+}
+
+[data-view-mode="desktop"] .app-main {
+  padding: 20px;
+}
