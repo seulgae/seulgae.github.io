@@ -145,9 +145,9 @@ function Home() {
             <h3>Back-End</h3>
             <div className="tech-grid">
               <span className="tech-item">Spring</span>
-              <span className="tech-item">Spring Boot</span>
               <span className="tech-item">Spring Batch</span>
-              <span className="tech-item">REST API</span>
+              <span className="tech-item">Kafka</span>
+              <span className="tech-item">Thymeleaf</span>
               <span className="tech-item">MyBatis</span>
               <span className="tech-item">Oracle</span>
               <span className="tech-item">MySQL</span>
@@ -158,11 +158,8 @@ function Home() {
             <h3>Front-End</h3>
             <div className="tech-grid">
               <span className="tech-item">React</span>
-              <span className="tech-item">HTML</span>
-              <span className="tech-item">CSS</span>
-              <span className="tech-item">JavaScript</span>
-              <span className="tech-item">jQuery</span>
-              <span className="tech-item">Thymeleaf</span>
+              <span className="tech-item">HTML/CSS</span>
+              <span className="tech-item">JS</span>
             </div>
           </div>
 
@@ -174,7 +171,6 @@ function Home() {
               <span className="tech-item">Maven</span>
               <span className="tech-item">Gradle</span>
               <span className="tech-item">WhaTap</span>
-              <span className="tech-item">Kafka</span>
             </div>
           </div>
         </div>
