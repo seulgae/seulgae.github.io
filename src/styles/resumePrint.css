@@ -158,6 +158,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
+  margin-bottom: 8px;
 }
 
 .resume-project-title-row h3 {
@@ -191,7 +192,7 @@
 
 @page {
   size: A4;
-  margin: 8mm;
+  margin: 0;
 }
 
 @media print {
@@ -213,12 +214,13 @@
   }
 
   .resume-paper {
-    width: auto;
-    min-height: auto;
+    width: 210mm;
+    min-height: 297mm;
     margin: 0;
-    padding: 0;
+    padding: 10mm 12mm;
     border: none;
     box-shadow: none;
+    box-sizing: border-box;
   }
 
   .page-break {
@@ -226,10 +228,87 @@
     break-before: page;
   }
 
-  .resume-doc-section,
+  .resume-doc-header {
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .resume-doc-eyebrow {
+    margin-bottom: 4px;
+  }
+
+  .resume-doc-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .resume-doc-role {
+    margin: 4px 0 8px;
+  }
+
+  .resume-doc-intro {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .resume-doc-section + .resume-doc-section {
+    margin-top: 12px;
+  }
+
+  .resume-doc-section h2 {
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+  }
+
+  .resume-table {
+    font-size: 0.8rem;
+  }
+
+  .resume-table th,
+  .resume-table td {
+    padding: 6px 8px;
+    line-height: 1.35;
+  }
+
+  .resume-doc-list {
+    padding-left: 16px;
+  }
+
+  .resume-doc-list li {
+    line-height: 1.4;
+  }
+
+  .resume-doc-list.compact li + li {
+    margin-top: 2px;
+  }
+
+  .resume-project-entry {
+    padding: 8px 0;
+  }
+
+  .resume-project-title-row h3 {
+    font-size: 0.92rem;
+  }
+
+  .resume-project-title-row span {
+    font-size: 0.76rem;
+  }
+
   .resume-project-entry,
-  .resume-table tr {
+  .resume-table tr,
+  .resume-doc-header,
+  .resume-project-title-row {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  .resume-doc-section {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .resume-project-table,
+  .resume-table {
+    break-inside: auto;
+    page-break-inside: auto;
   }
 }

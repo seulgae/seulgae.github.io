@@ -77,6 +77,8 @@ const techRows = [
 const printEducation = [...educationData];
 const printAwards = [...awards];
 const printLicenses = [...licenses];
+const firstPageProjects = projects.slice(0, 2);
+const secondPageProjects = projects.slice(2);
 
 function ResumePrint() {
   return (
@@ -129,7 +131,7 @@ function ResumePrint() {
 
         <section className="resume-doc-section">
           <h2>경력 기술서</h2>
-          {projects.map((project) => (
+          {firstPageProjects.map((project) => (
             <article key={project.name} className="resume-project-entry">
               <div className="resume-project-title-row">
                 <h3>{project.name}</h3>
@@ -167,6 +169,44 @@ function ResumePrint() {
       </section>
 
       <section className="resume-paper page-break">
+        <section className="resume-doc-section">
+          <h2>경력 기술서</h2>
+          {secondPageProjects.map((project) => (
+            <article key={project.name} className="resume-project-entry">
+              <div className="resume-project-title-row">
+                <h3>{project.name}</h3>
+                <span>
+                  {project.period} / {project.role}
+                </span>
+              </div>
+              <table className="resume-table resume-project-table">
+                <tbody>
+                  <tr>
+                    <th scope="row">주요 업무</th>
+                    <td>
+                      <ul className="resume-doc-list compact">
+                        {project.tasks.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">주요 성과</th>
+                    <td>
+                      <ul className="resume-doc-list compact">
+                        {project.achievements.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          ))}
+        </section>
+
         <section className="resume-doc-section">
           <h2>기술 스택</h2>
           <table className="resume-table">
