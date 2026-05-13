@@ -28,15 +28,6 @@ const routes = [
 ];
 
 function getViewMode() {
-  const ua = window.navigator.userAgent;
-  const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-  const mobileUa = /Android|iPhone|iPad|iPod/i.test(ua);
-  const appWebViewUa = /WebView|; wv\)|NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\//i.test(ua);
-
-  if (appWebViewUa || (mobileUa && hasCoarsePointer && window.innerWidth <= 980)) {
-    return "app-web";
-  }
-
   return "desktop";
 }
 

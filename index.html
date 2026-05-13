@@ -7,6 +7,19 @@
     <title>Wellcome to Seulgae Portfolio</title>
     <script>
       (function () {
+        var desktopViewportWidth = 1440;
+        var viewport = document.querySelector('meta[name="viewport"]');
+        var mobileUserAgent = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var coarsePointer =
+          window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+
+        if (viewport && (mobileUserAgent || coarsePointer)) {
+          viewport.setAttribute("content", "width=" + desktopViewportWidth);
+        }
+      })();
+    </script>
+    <script>
+      (function () {
         var redirect = sessionStorage.getItem("spa_redirect");
 
         if (redirect) {
