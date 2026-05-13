@@ -140,6 +140,55 @@
   margin-top: 8px;
 }
 
+.achievement-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.achievement-list > li {
+  position: relative;
+  padding-left: 22px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.achievement-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.achievement-list > li + li {
+  margin-top: 18px;
+}
+
+.achievement-title {
+  display: block;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.45;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.achievement-detail {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.achievement-result {
+  margin: 7px 0 0;
+  color: var(--accent);
+  line-height: 1.6;
+  font-weight: 800;
+}
+
 .tech-stack-shell {
   padding: 24px;
   border-radius: 24px;

@@ -25,13 +25,22 @@ const projects = [
     ],
     achievements: [
       {
-        text: "Java Parallel Stream 기반 병렬 처리 구조 적용으로 대용량 집계 처리 성능 87% 개선(10분 -> 1분 15초)",
+        title: "대용량 데이터 조회 성능 최적화 및 디자인 패턴 표준화",
+        detail:
+          "Java Parallel Stream 기반 병렬 처리 구조를 소스 전역 집계 로직에 적용하여 대용량 데이터 처리 성능 개선",
+        result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
       },
       {
-        text: "Redis 기반 인증·권한 캐싱 구조 설계로 인증 과정의 DB 조회를 제거하고 처리 성능을 개선",
+        title: "Redis 기반 인증 아키텍처 자동화",
+        detail:
+          "OAuth 인증·권한 정보를 Redis에 캐싱하는 권한 모듈을 신규 개발하고 토큰 만료와 Redis TTL을 자동 동기화",
+        result: "인증 과정 Zero DB Access 달성, 인증 일관성 확보",
       },
       {
-        text: "Builder Pattern 기반 객체 생성 구조와 코드 표준 정의로 중복 로직을 제거하고 유지보수성을 높임",
+        title: "코드 리팩토링 및 개발 컨벤션 표준화",
+        detail:
+          "Builder Pattern 도입으로 객체 생성 중복 제거, 패키지 구조 재정립과 코딩 컨벤션 문서를 직접 작성·팀에 공유하여 온보딩 시간 단축",
+        result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
       },
     ],
   },

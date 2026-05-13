@@ -25,6 +25,38 @@ function ProjectTitle({ text }) {
   );
 }
 
+function AchievementItem({ achievement }) {
+  const item =
+    typeof achievement === "string" ? { text: achievement, href: "" } : achievement;
+
+  if (item.title || item.detail || item.result) {
+    return (
+      <li className="achievement-item">
+        {item.title ? <strong className="achievement-title">{item.title}</strong> : null}
+        {item.detail ? <p className="achievement-detail">{item.detail}</p> : null}
+        {item.result ? <p className="achievement-result">→ {item.result}</p> : null}
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      {item.href ? (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="achievement-link"
+        >
+          {item.text}
+        </a>
+      ) : (
+        item.text
+      )}
+    </li>
+  );
+}
+
 function ProjectExperiencePage({ title = "프로젝트 경험", projects = [] }) {
   return (
     <div className="projects-container">
@@ -57,30 +89,17 @@ function ProjectExperiencePage({ title = "프로젝트 경험", projects = [] })
 
             <section className="project-block">
               <h3>주요 성과</h3>
-              <ul className="project-list">
-                {project.achievements.map((achievement) => {
-                  const item =
-                    typeof achievement === "string"
-                      ? { text: achievement, href: "" }
-                      : achievement;
-
-                  return (
-                    <li key={item.text}>
-                      {item.href ? (
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="achievement-link"
-                        >
-                          {item.text}
-                        </a>
-                      ) : (
-                        item.text
-                      )}
-                    </li>
-                  );
-                })}
+              <ul className="project-list achievement-list">
+                {project.achievements.map((achievement) => (
+                  <AchievementItem
+                    key={
+                      typeof achievement === "string"
+                        ? achievement
+                        : achievement.title || achievement.text
+                    }
+                    achievement={achievement}
+                  />
+                ))}
               </ul>
             </section>
           </div>
