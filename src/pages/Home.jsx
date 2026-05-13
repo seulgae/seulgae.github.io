@@ -12,7 +12,7 @@ const highlights = [
   },
   {
     label: "업무 효율화",
-    value: "AI 기반 로그 분석 자동화",
+    value: "AI 기반 로그 분석 및 업무 효율 60% 향상",
   },
 ];
 
