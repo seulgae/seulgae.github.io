@@ -31,9 +31,10 @@ const projects = [
       "SVN 기반 JAR 패키징 및 SFTP/SSH 활용 운영 환경 배포",
     ],
     achievements: [
-      "웹 접근성 전수 개선(31개 화면) 및 WAI-ARIA 적용으로 준수율 99.7% 달성",
-      "34건의 결함 개선 조치와 오류 분석·보완으로 월 평균 오류 신고 접수율 3건 미만 유지",
-      "민원 처리 시스템 결함 개선과 기능 고도화로 오류 신고·중복 접수 감소",
+      "보안 취약점 16건·SQL Injection 오류 14건 개선 및 Jasypt 기반 환경별 계정정보 17건 암호화 적용",
+      "Markdown 기반 AI 유지보수 체계 구축으로 유지보수 시간 30~40% 단축, 업무 효율 60% 향상",
+      "Apache SSHD 기반 인프라 모니터링·점검 자동화로 평균 서버 리소스 사용률 30% 이하 안정 유지",
+      "웹 접근성 품질 개선으로 준수율 99.7% 달성 및 품질인증마크 획득",
     ],
   },
   {
@@ -69,7 +70,7 @@ const projects = [
 ];
 
 const techRows = [
-  ["Back-End", "Java, Spring, Spring Boot, Spring Batch, REST API, MyBatis"],
+  ["Back-End", "Java, Spring, Spring Boot, Spring Batch, REST API, MyBatis, Jasypt"],
   ["Data / Infra", "Oracle, MySQL, Redis, Kafka, Linux, Jenkins, WhaTap"],
   ["Front / Tools", "React, JavaScript, jQuery, Git, Maven, Gradle, DBeaver"],
 ];
