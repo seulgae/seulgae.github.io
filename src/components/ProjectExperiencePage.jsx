@@ -35,6 +35,28 @@ function AchievementItem({ achievement }) {
         {item.title ? <strong className="achievement-title">{item.title}</strong> : null}
         {item.detail ? <p className="achievement-detail">{item.detail}</p> : null}
         {item.result ? <p className="achievement-result">→ {item.result}</p> : null}
+        {item.references?.length ? (
+          <div className="achievement-references">
+            <span>참고 기사 ↗</span>
+            {item.references.map((reference) =>
+              reference.href ? (
+                <a
+                  key={reference.href}
+                  href={reference.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="achievement-link"
+                >
+                  {reference.text}
+                </a>
+              ) : (
+                <span key={reference.text} className="achievement-reference-text">
+                  {reference.text}
+                </span>
+              )
+            )}
+          </div>
+        ) : null}
       </li>
     );
   }
