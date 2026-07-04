@@ -1,8 +1,8 @@
 const projects = [
   {
-    projectName: "CloudXper 빌링 통합 관리 플랫폼 고도화 개발 (LG CNS)",
+    projectName: "LG CNS CloudXper 클라우드 빌링 플랫폼 고도화",
     description:
-      "클라우드(AWS, GCP, Azure, Kakao) 저장소 대여·청구를 통합하고 자동화하는 백엔드 고도화 프로젝트입니다.",
+      "AWS · GCP · Azure · Kakao 저장소 대여·청구 통합 관리 플랫폼의 백엔드 아키텍처 개선 및 대용량 데이터 처리 최적화",
     periodAndRole: "2024.10 ~ 2025.02 / 플랫폼 서버 백엔드 개발",
     skills: [
       {
@@ -25,16 +25,16 @@ const projects = [
     ],
     achievements: [
       {
-        title: "대용량 데이터 조회 성능 최적화 및 디자인 패턴 표준화",
+        title: "대용량 데이터 조회 성능 최적화",
         detail:
           "Java Parallel Stream 기반 병렬 처리 구조를 소스 전역 집계 로직에 적용하여 대용량 데이터 처리 성능 개선",
         result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
       },
       {
-        title: "Redis 기반 인증 아키텍처 자동화",
+        title: "Redis 기반 인증 아키텍처 최적화",
         detail:
           "OAuth 인증·권한 정보를 Redis에 캐싱하는 권한 모듈을 신규 개발하고 토큰 만료와 Redis TTL을 자동 동기화",
-        result: "인증 과정 Zero DB Access 달성, 인증 일관성 확보",
+        result: "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
       },
       {
         title: "코드 리팩토링 및 개발 컨벤션 표준화",

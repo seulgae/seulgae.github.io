@@ -107,17 +107,17 @@ function Navbar({ isOpen, toggleSidebar }) {
             <ul className={`submenu ${showSubmenu ? "open" : ""}`}>
               <li>
                 <Link to="/ProjectsList" onClick={toggleSidebar}>
-                  <NavLabel text="전세사기 피해 지원관리시스템 운영·개발 (국토교통부)" />
+                  <NavLabel text="전세사기 피해자 지원관리시스템 운영·고도화" />
                 </Link>
               </li>
               <li>
                 <Link to="/ProjectsList2" onClick={toggleSidebar}>
-                  <NavLabel text="CloudXper 클라우드 빌링 통합 관리 플랫폼 고도화 개발 (LG CNS)" />
+                  <NavLabel text="CloudXper 클라우드 빌링 플랫폼 고도화" />
                 </Link>
               </li>
               <li>
                 <Link to="/ProjectsList3" onClick={toggleSidebar}>
-                  <NavLabel text="LG U+ 통합 빌링 플랫폼 운영 및 유지보수 (배치·API·GW / NUBL·NUBO 기반)" />
+                  <NavLabel text="빌링 GW 시스템 개발·운영 유지보수" />
                 </Link>
               </li>
             </ul>
