@@ -25,6 +25,15 @@ test("상단 헤더 메뉴가 routes 정의대로 렌더링된다", () => {
   );
 });
 
+test("모바일 하단 탭바가 렌더링된다", () => {
+  renderAt(paths.home);
+
+  ["홈", "프로젝트", "블로그", "이력서"].forEach((label) => {
+    expect(screen.getByRole("link", { name: label })).toBeInTheDocument();
+  });
+  expect(screen.getByRole("button", { name: "더보기" })).toBeInTheDocument();
+});
+
 test("/projects 목록에 모든 프로젝트 카드가 나온다", () => {
   renderAt(paths.projects);
 

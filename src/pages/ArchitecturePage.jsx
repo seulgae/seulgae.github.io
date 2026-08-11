@@ -60,7 +60,7 @@ const maintenanceGuide = [
   },
   {
     title: "화면 대응 범위",
-    body: "데스크톱·모바일 반응형입니다. 960px 이하에서 상단 메뉴가 햄버거 버튼으로 바뀌고, 카드 그리드는 1열로 접힙니다. 출력용 이력서는 A4 폭을 유지하고 모바일에서 가로 스크롤로 열람합니다.",
+    body: "3단계 적응형입니다. 데스크톱(960px 초과)은 상단 메뉴, 태블릿(769~960px)은 햄버거 패널, 모바일(768px 이하)은 앱 스타일 하단 탭바(BottomNav)로 이동합니다. 모바일은 여백·글자 밀도도 별도로 조정되며, 출력용 이력서는 A4 폭 유지 + 가로 스크롤로 열람합니다.",
   },
   {
     title: "배포 절차",
@@ -201,6 +201,7 @@ const structureTree = [
   "  lib/posts.js                // posts/ 로더 + frontmatter 파서",
   "  components/                 // 재사용 UI",
   "    Header.jsx / Footer.jsx   // 상단 고정 메뉴, 연락처 푸터",
+  "    BottomNav.jsx             // 모바일 전용 하단 탭바 (+더보기 시트)",
   "    ProjectDetail.jsx         // 프로젝트 상세 렌더러 (+이전/다음 이동)",
   "    CredentialList.jsx        // 수상·자격 공용 카드 목록",
   "    Lightbox.jsx / ZoomableImage.jsx / ExternalLinks.jsx",
@@ -216,7 +217,7 @@ const structureTree = [
   "  styles/",
   "    tokens.css                // 색·반경·그림자·폰트 단일 출처 (클린 라이트)",
   "    pageShell.css             // 페이지 공통 폭·제목·뒤로가기",
-  "    header.css / footer.css / blog.css / projectsIndex.css",
+  "    header.css / footer.css / bottomNav.css / blog.css / projectsIndex.css",
   "    lightbox.css / externalLinks.css / credentials.css",
   "    home.css / projectDetail.css / education.css",
   "    architecture.css / resume.css / notFound.css",

@@ -31,6 +31,13 @@
   }
 }
 
+/* 모바일: 하단 탭바가 콘텐츠·푸터를 가리지 않도록 여백을 확보합니다. */
+@media (max-width: 768px) {
+  .app-shell {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+}
+
 @media print {
   .site-header,
   .site-footer {

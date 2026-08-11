@@ -247,8 +247,27 @@
   border-radius: var(--radius-inner);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .blog-post {
-    padding: 24px 18px;
+    padding: 20px 16px;
+  }
+
+  .blog-card {
+    padding: 16px;
+  }
+
+  .blog-card-head h2 {
+    font-size: 1.02rem;
+  }
+
+  .blog-prose {
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+
+  /* 넓은 표는 표 안에서만 가로 스크롤되게 합니다. */
+  .blog-prose table {
+    display: block;
+    overflow-x: auto;
   }
 }

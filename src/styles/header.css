@@ -108,6 +108,7 @@
   background: var(--text);
 }
 
+/* 태블릿(769~960px): 상단 메뉴가 좁아지므로 햄버거 패널로 전환합니다. */
 @media (max-width: 960px) {
   .site-brand-role {
     display: none;
@@ -142,5 +143,31 @@
   .site-nav a {
     min-height: 48px;
     font-size: 1rem;
+  }
+}
+
+/* 모바일(768px 이하): 이동은 하단 탭바가 담당하므로 헤더는 이름만 남깁니다. */
+@media (max-width: 768px) {
+  .site-header {
+    --header-height: 52px;
+  }
+
+  .site-menu-button,
+  .site-nav,
+  .site-nav.open {
+    display: none;
+  }
+
+  .site-header-inner {
+    justify-content: center;
+  }
+
+  .site-brand-avatar {
+    width: 26px;
+    height: 26px;
+  }
+
+  .site-brand-name {
+    font-size: 0.98rem;
   }
 }

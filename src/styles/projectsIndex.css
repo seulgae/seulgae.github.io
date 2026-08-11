@@ -82,3 +82,23 @@
   font-size: 0.9rem;
   font-weight: 700;
 }
+
+@media (max-width: 768px) {
+  .project-index-card {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .project-index-head h2 {
+    font-size: 1.02rem;
+  }
+
+  .project-index-description {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .project-index-result {
+    font-size: 0.85rem;
+  }
+}

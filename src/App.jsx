@@ -9,6 +9,7 @@ import {
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import BottomNav from "./components/BottomNav";
 import HomePage from "./pages/HomePage";
 import ProjectsIndexPage from "./pages/ProjectsIndexPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
@@ -76,6 +77,9 @@ function AppLayout() {
       </main>
 
       <Footer />
+
+      {/* 모바일(768px 이하) 전용 하단 탭바. 데스크톱에서는 CSS로 숨겨집니다. */}
+      <BottomNav />
     </div>
   );
 }
