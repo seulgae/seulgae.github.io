@@ -1,0 +1,53 @@
+/**
+ * 디자인 토큰 단일 출처.
+ * 이전에는 home.css의 :root에 선언돼 있어서 다른 파일들이 같은 색을 하드코딩하고 있었습니다.
+ * 색·반경·그림자를 바꿀 때는 이 파일만 수정하면 전체에 반영됩니다.
+ */
+:root {
+  /* 표면 / 텍스트 */
+  --bg: #f5f7fb;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: #ffffff;
+  --line: rgba(15, 23, 42, 0.08);
+  --line-soft: rgba(15, 23, 42, 0.06);
+  --text: #142033;
+  --muted: #5f6b7c;
+
+  /* 강조색 */
+  --accent: #0f766e;
+  --accent-ink: #115e59;
+  --accent-soft: rgba(15, 118, 110, 0.08);
+  --accent-wash: rgba(15, 118, 110, 0.05);
+  --accent-tint: rgba(15, 118, 110, 0.12);
+  --accent-border: rgba(15, 118, 110, 0.16);
+  --accent-rule: rgba(15, 118, 110, 0.35);
+
+  /* 확대 보기 레이어 */
+  --overlay: rgba(9, 14, 25, 0.68);
+  --overlay-panel: rgba(255, 255, 255, 0.94);
+  --overlay-ink: rgba(15, 23, 42, 0.86);
+
+  /* 사이드바(다크 계열) */
+  --sidebar-ink: #f8fafc;
+  --sidebar-muted: rgba(203, 213, 225, 0.78);
+  --sidebar-surface: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-accent: rgba(45, 212, 191, 0.14);
+  --sidebar-accent-ink: #99f6e4;
+
+  /* 형태 */
+  --radius-card: 28px;
+  --radius-block: 24px;
+  --radius-inner: 18px;
+  --radius-pill: 999px;
+  --shadow: 0 24px 60px rgba(17, 24, 39, 0.08);
+  --shadow-strong: 0 24px 60px rgba(15, 23, 42, 0.22);
+
+  /* 레이아웃 */
+  --page-width: min(1320px, calc(100vw - 32px));
+  --sidebar-width: 380px;
+  --z-sidebar: 1000;
+  --z-menu-toggle: 1100;
+  --z-overlay: 1200;
+}

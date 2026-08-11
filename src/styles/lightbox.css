@@ -1,0 +1,47 @@
+/**
+ * 이미지 확대 보기 공용 스타일.
+ * Awards / Licenses / Education이 동일한 모달 CSS를 각각 복제하고 있었고,
+ * 전역 클래스명(.modal)이 서로 충돌하고 있었으므로 하나로 합쳤습니다.
+ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--overlay);
+  backdrop-filter: blur(10px);
+  z-index: var(--z-overlay);
+}
+
+.lightbox-panel {
+  position: relative;
+  width: min(860px, 100%);
+  padding: 18px;
+  border-radius: var(--radius-card);
+  background: var(--overlay-panel);
+  overflow: auto;
+  box-shadow: var(--shadow-strong);
+}
+
+.lightbox-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-inner);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--overlay-ink);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

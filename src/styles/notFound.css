@@ -1,0 +1,39 @@
+.not-found-page {
+  width: var(--page-width);
+  margin: 0 auto;
+  padding: 96px 0;
+  color: var(--text);
+  text-align: center;
+}
+
+.not-found-code {
+  display: inline-flex;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.not-found-page h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.not-found-page p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}

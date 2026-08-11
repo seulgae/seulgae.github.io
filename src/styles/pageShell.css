@@ -1,0 +1,45 @@
+/**
+ * 모든 페이지가 공유하는 폭·여백·제목 스타일.
+ * 이전에는 이 블록이 home / projectsList / educationList / awardsList / licensesList /
+ * architecture CSS에 각각 복제돼 있었습니다.
+ */
+.page-shell {
+  width: var(--page-width);
+  margin: 0 auto;
+  padding: 56px 0 72px;
+  color: var(--text);
+}
+
+.page-shell > h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+/* 카드 계열 공통 표면 */
+.surface-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+/* 이미지 확대 버튼은 시각적으로 이미지 그대로 보이게 합니다. */
+.image-zoom-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.image-link {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.image-zoom-button:focus-visible,
+.image-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
