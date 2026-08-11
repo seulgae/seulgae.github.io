@@ -12,7 +12,8 @@
 
 .project-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  /* 기간/역할 카드가 어중간하게 줄바꿈되지 않도록 오른쪽 컬럼을 넉넉히 확보 */
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
   gap: 20px;
 }
 
@@ -61,6 +62,13 @@
   border-radius: var(--radius-block);
   background: var(--accent-wash);
   border: 1px solid var(--accent-tint);
+}
+
+.meta-card strong {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  word-break: keep-all; /* 줄바꿈이 생겨도 단어 중간에서 끊기지 않게 */
 }
 
 .meta-label {
