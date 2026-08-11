@@ -19,11 +19,11 @@ export const paths = {
 export const navigation = [
   { label: "About", to: paths.home },
   { label: "Projects", to: paths.projects },
-  { label: "Blog", to: paths.blog },
   { label: "Education", to: paths.education },
   { label: "Awards", to: paths.awards },
   { label: "Licenses", to: paths.licenses },
   { label: "Resume", to: paths.resume },
+  { label: "Blog", to: paths.blog },
 ];
 
 /**

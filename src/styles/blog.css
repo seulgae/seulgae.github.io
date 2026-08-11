@@ -260,9 +260,10 @@
     font-size: 1.02rem;
   }
 
+  /* 읽기용 본문은 UI 텍스트보다 한 단계 크게 유지합니다. (root 15px 기준 = 15px) */
   .blog-prose {
     line-height: 1.75;
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   /* 넓은 표는 표 안에서만 가로 스크롤되게 합니다. */

@@ -36,9 +36,14 @@
   letter-spacing: -0.02em;
 }
 
+.education-details h2 {
+  font-size: 1.15rem; /* 브라우저 기본값(24px)이 페이지 제목보다 커지는 문제 방지 */
+}
+
 .education-details h3 {
   margin-top: 6px;
   color: var(--accent);
+  font-size: 0.95rem;
 }
 
 .education-details p {
@@ -74,5 +79,17 @@
   .education-image {
     width: 112px;
     height: 112px;
+  }
+}
+
+@media (max-width: 768px) {
+  .education-details h2 {
+    font-size: 1.05rem;
+  }
+
+  .education-details p,
+  .education-curriculum ul {
+    font-size: 0.92rem;
+    line-height: 1.65;
   }
 }

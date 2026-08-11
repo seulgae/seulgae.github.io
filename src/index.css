@@ -3,6 +3,17 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-padding-top: calc(var(--header-height) + 16px);
+  /* 모바일 브라우저가 텍스트를 임의로 확대(font boosting)하지 못하게 고정 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* 모바일: 국내 서비스 기준(14~15px)에 맞춰 기준 폰트를 한 단계 낮춥니다.
+   사이트 전체가 rem 기반이라 이 한 줄로 모든 글자가 비례 축소됩니다. */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
 }
 
 *,

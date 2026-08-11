@@ -2,13 +2,6 @@ import profile from "../data/profile";
 import "../styles/pageShell.css";
 import "../styles/home.css";
 
-// Home 화면에서만 쓰는 서술형 콘텐츠입니다. (수치 요약은 프로젝트 성과와 연결된 문구)
-const highlights = [
-  { label: "운영 안정화", value: "주간 오류 93% 감소" },
-  { label: "성능 개선", value: "10분 -> 1분 15초" },
-  { label: "업무 효율화", value: "AI 기반 로그 분석 및 업무 효율 60% 향상" },
-];
-
 const stories = [
   {
     index: "01",
@@ -90,18 +83,6 @@ function HomePage() {
             생각합니다. 운영 환경에서 반복되는 문제를 구조적으로 줄이고, 팀이 더 빠르게
             인지하고 대응할 수 있는 흐름을 만드는 데 집중해왔습니다.
           </p>
-        </div>
-
-        <div className="hero-panel">
-          <div className="hero-panel-title">Core Outcomes</div>
-          <div className="highlight-list">
-            {highlights.map((item) => (
-              <div key={item.label} className="highlight-item">
-                <span className="highlight-label">{item.label}</span>
-                <strong className="highlight-value">{item.value}</strong>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
