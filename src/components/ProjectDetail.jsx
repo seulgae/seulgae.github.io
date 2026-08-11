@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { paths } from "../routes";
 import { splitBracketTitle } from "../utils/text";
 import "../styles/pageShell.css";
 import "../styles/projectDetail.css";
@@ -43,11 +45,16 @@ function AchievementItem({ achievement }) {
   );
 }
 
-/** 프로젝트 한 건의 상세 화면. data/projects.js의 항목 하나를 그대로 받습니다. */
-function ProjectDetail({ project }) {
+/**
+ * 프로젝트 한 건의 상세 화면. data/projects.js의 항목 하나를 그대로 받습니다.
+ * prev/next를 받으면 하단에 이전/다음 프로젝트 이동을 제공합니다.
+ */
+function ProjectDetail({ project, prev, next }) {
   return (
     <div className="page-shell">
-      <h1>프로젝트 경험</h1>
+      <Link to={paths.projects} className="page-back-link">
+        ← 프로젝트 목록
+      </Link>
       <article className="project">
         <div className="project-header">
           <div>
@@ -67,25 +74,23 @@ function ProjectDetail({ project }) {
           </div>
         </div>
 
-        <div className="project-section-grid">
-          <section className="project-block accent-block">
-            <h3>주요 업무</h3>
-            <ul className="project-list">
-              {project.mainTasks.map((task) => (
-                <li key={task}>{task}</li>
-              ))}
-            </ul>
-          </section>
+        <section className="project-block accent-block">
+          <h3>주요 업무</h3>
+          <ul className="project-list">
+            {project.mainTasks.map((task) => (
+              <li key={task}>{task}</li>
+            ))}
+          </ul>
+        </section>
 
-          <section className="project-block">
-            <h3>주요 성과</h3>
-            <ul className="project-list achievement-list">
-              {project.achievements.map((achievement) => (
-                <AchievementItem key={achievement.title} achievement={achievement} />
-              ))}
-            </ul>
-          </section>
-        </div>
+        <section className="project-block">
+          <h3>주요 성과</h3>
+          <ul className="project-list achievement-list">
+            {project.achievements.map((achievement) => (
+              <AchievementItem key={achievement.title} achievement={achievement} />
+            ))}
+          </ul>
+        </section>
 
         <div className="tech-stack-shell">
           <h3>보유 기술</h3>
@@ -99,6 +104,25 @@ function ProjectDetail({ project }) {
           </div>
         </div>
       </article>
+
+      <nav className="project-pager" aria-label="프로젝트 이동">
+        {prev ? (
+          <Link to={paths.project(prev.slug)} className="project-pager-link">
+            <span>← 이전 프로젝트</span>
+            <strong>{prev.shortTitle || prev.title}</strong>
+          </Link>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <Link to={paths.project(next.slug)} className="project-pager-link next">
+            <span>다음 프로젝트 →</span>
+            <strong>{next.shortTitle || next.title}</strong>
+          </Link>
+        ) : (
+          <span />
+        )}
+      </nav>
     </div>
   );
 }

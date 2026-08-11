@@ -1,0 +1,146 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--header-border);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: var(--page-width);
+  height: var(--header-height);
+  margin: 0 auto;
+}
+
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.site-brand-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.site-brand-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.site-brand-role {
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.site-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 13px;
+  border-radius: var(--radius-inner);
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--text);
+  background: var(--surface-soft);
+}
+
+/* 현재 페이지 표시 */
+.site-nav a.active {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+
+.site-menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: var(--radius-inner);
+  background: transparent;
+  cursor: pointer;
+}
+
+.site-menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 20px;
+}
+
+.site-menu-icon span {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+}
+
+@media (max-width: 960px) {
+  .site-brand-role {
+    display: none;
+  }
+
+  .site-menu-button {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    display: none;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .site-nav.open {
+    display: block;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 16px 14px;
+  }
+
+  .site-nav a {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+}

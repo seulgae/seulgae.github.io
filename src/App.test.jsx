@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, expect, test } from "vitest";
 import App from "./App";
 import projects from "./data/projects";
+import { getAllPosts } from "./lib/posts";
 import { paths } from "./routes";
 
 function renderAt(path) {
@@ -14,26 +15,23 @@ beforeEach(() => {
   window.history.pushState({}, "", "/");
 });
 
-test("사이드바 메뉴가 routes 정의대로 렌더링된다", () => {
+test("상단 헤더 메뉴가 routes 정의대로 렌더링된다", () => {
   renderAt(paths.home);
 
-  expect(screen.getByRole("link", { name: "About Me" })).toBeInTheDocument();
-  expect(
-    screen.getByRole("button", { name: "Project Experience" }),
-  ).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Education" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Awards" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Licenses" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Resume Print" })).toBeInTheDocument();
+  ["About", "Projects", "Blog", "Education", "Awards", "Licenses", "Resume"].forEach(
+    (label) => {
+      expect(screen.getByRole("link", { name: label })).toBeInTheDocument();
+    },
+  );
 });
 
-test("프로젝트 서브메뉴가 데이터 건수만큼 생성된다", () => {
-  renderAt(paths.home);
+test("/projects 목록에 모든 프로젝트 카드가 나온다", () => {
+  renderAt(paths.projects);
 
   projects.forEach((project) => {
-    const label = project.shortTitle || project.title;
-
-    expect(screen.getByRole("link", { name: label })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: project.shortTitle || project.title }),
+    ).toBeInTheDocument();
   });
 });
 
@@ -48,6 +46,24 @@ test("/projects/:slug 하나로 각 프로젝트 상세가 렌더링된다", () 
 
     unmount();
   });
+});
+
+test("/blog 목록에 마크다운 글이 나온다", () => {
+  renderAt(paths.blog);
+
+  getAllPosts().forEach((post) => {
+    expect(
+      screen.getByRole("heading", { level: 2, name: post.title }),
+    ).toBeInTheDocument();
+  });
+});
+
+test("/blog/:slug에서 마크다운 본문이 렌더링된다", () => {
+  const [post] = getAllPosts();
+
+  renderAt(paths.blogPost(post.slug));
+
+  expect(screen.getByRole("heading", { level: 1, name: post.title })).toBeInTheDocument();
 });
 
 test("이전 경로로 들어오면 새 경로 화면으로 이동한다", () => {

@@ -9,7 +9,6 @@
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
 }
 
 .architecture-hero {
@@ -186,4 +185,19 @@
   color: var(--muted);
   line-height: 1.7;
   font-size: 0.92rem;
+}
+
+@media (max-width: 900px) {
+  .architecture-map,
+  .architecture-grid,
+  .architecture-grid-wide,
+  .package-grid,
+  .package-grid-wide {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-hero,
+  .architecture-shell {
+    padding: 22px 18px;
+  }
 }

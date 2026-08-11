@@ -1,55 +1,39 @@
 .app-shell {
   display: flex;
-  min-height: 100vh;
-  position: relative;
-  isolation: isolate;
-}
-
-.app-sidebar {
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: var(--sidebar-width);
-  color: var(--sidebar-ink);
-  z-index: var(--z-sidebar);
-  overflow: hidden;
-  display: flex;
   flex-direction: column;
-}
-
-.app-menu-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: var(--z-menu-toggle);
-  font-size: 20px;
-  background: transparent;
-  color: var(--text);
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.app-menu-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  min-height: 100vh;
 }
 
 .app-main {
-  flex-grow: 1;
+  flex: 1 0 auto;
   width: 100%;
-  padding: 20px;
+}
+
+/* 페이지 진입 애니메이션 — 나가는 애니메이션 없이 짧게, 콘텐츠 공백이 없도록. */
+.page-enter {
+  animation: page-enter 0.22s ease-out;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
 }
 
 @media print {
-  .app-sidebar,
-  .app-menu-toggle {
+  .site-header,
+  .site-footer {
     display: none !important;
-  }
-
-  .app-main {
-    padding: 0 !important;
   }
 }

@@ -312,3 +312,15 @@
     page-break-inside: auto;
   }
 }
+
+/* 모바일: A4 폭(210mm)은 유지하고 가로 스크롤로 열람합니다. 인쇄 결과에는 영향 없음. */
+@media (max-width: 900px) {
+  .resume-print-page {
+    overflow-x: auto;
+    padding-bottom: 24px;
+  }
+
+  .resume-paper {
+    margin-left: 0;
+  }
+}

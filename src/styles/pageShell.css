@@ -1,19 +1,41 @@
 /**
  * 모든 페이지가 공유하는 폭·여백·제목 스타일.
- * 이전에는 이 블록이 home / projectsList / educationList / awardsList / licensesList /
- * architecture CSS에 각각 복제돼 있었습니다.
  */
 .page-shell {
   width: var(--page-width);
   margin: 0 auto;
-  padding: 56px 0 72px;
+  padding: 44px 0 64px;
   color: var(--text);
 }
 
 .page-shell > h1 {
-  margin: 0 0 24px;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  letter-spacing: -0.04em;
+  margin: 0 0 20px;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+/* 페이지 제목 아래 안내 문단 */
+.page-lead {
+  margin: -8px 0 28px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: var(--prose-width);
+}
+
+/* 목록으로 돌아가기 링크 */
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-back-link:hover {
+  color: var(--accent-ink);
 }
 
 /* 카드 계열 공통 표면 */
@@ -21,7 +43,6 @@
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
 }
 
 /* 이미지 확대 버튼은 시각적으로 이미지 그대로 보이게 합니다. */
@@ -42,4 +63,10 @@
 .image-link:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding: 28px 0 48px;
+  }
 }
