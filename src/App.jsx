@@ -1,35 +1,38 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import ProjectsList from "./pages/ProjectsList";
-import ProjectsList2 from "./pages/ProjectsList2";
-import ProjectsList3 from "./pages/ProjectsList3";
-import EducationList from "./pages/EducationList";
-import InventoryList from "./pages/InventoryList";
-import Awards from "./pages/Awards";
-import Licenses from "./pages/Licenses";
-import Architecture from "./pages/Architecture";
-import ResumePrint from "./pages/ResumePrint";
+import HomePage from "./pages/HomePage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import EducationPage from "./pages/EducationPage";
+import AwardsPage from "./pages/AwardsPage";
+import LicensesPage from "./pages/LicensesPage";
+import ArchitecturePage from "./pages/ArchitecturePage";
+import ResumePage from "./pages/ResumePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { legacyRedirects, paths } from "./routes";
 
-const routes = [
-  { path: "/", element: <Home /> },
-  { path: "/ProjectsList", element: <ProjectsList /> },
-  { path: "/ProjectsList2", element: <ProjectsList2 /> },
-  { path: "/ProjectsList3", element: <ProjectsList3 /> },
-  { path: "/Inventory", element: <InventoryList /> },
-  { path: "/Awards", element: <Awards /> },
-  { path: "/EducationList", element: <EducationList /> },
-  { path: "/Licenses", element: <Licenses /> },
-  { path: "/Architecture", element: <Architecture /> },
-  { path: "/ResumePrint", element: <ResumePrint /> },
+// 마우스가 오른쪽 화면 끝에서 이 거리 안으로 들어오면 사이드바가 열립니다.
+const EDGE_OPEN_THRESHOLD = 10;
+// 사이드바 폭보다 왼쪽으로 마우스가 벗어나면 닫습니다.
+const CLOSE_DISTANCE = 400;
+
+const pageRoutes = [
+  { path: paths.home, element: <HomePage /> },
+  { path: `${paths.projects}/:slug`, element: <ProjectDetailPage /> },
+  { path: paths.education, element: <EducationPage /> },
+  { path: paths.awards, element: <AwardsPage /> },
+  { path: paths.licenses, element: <LicensesPage /> },
+  { path: paths.resume, element: <ResumePage /> },
+  { path: paths.architecture, element: <ArchitecturePage /> },
 ];
-
-function getViewMode() {
-  return "desktop";
-}
 
 function App() {
   return (
@@ -42,94 +45,51 @@ function App() {
 function AppLayout() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [viewMode, setViewMode] = useState(() => getViewMode());
-  const isAppWeb = viewMode === "app-web";
 
   useEffect(() => {
-    const handleResize = () => setViewMode(getViewMode());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.dataset.viewMode = viewMode;
-    document.body.dataset.viewMode = viewMode;
-
-    return () => {
-      delete document.documentElement.dataset.viewMode;
-      delete document.body.dataset.viewMode;
-    };
-  }, [viewMode]);
-
-  useEffect(() => {
-    if (isAppWeb) {
-      return undefined;
-    }
-
     const handleMouseMove = (event) => {
-      if (event.clientX > window.innerWidth - 10) {
+      if (event.clientX > window.innerWidth - EDGE_OPEN_THRESHOLD) {
         setIsOpen(true);
-      } else if (event.clientX < window.innerWidth - 400) {
+      } else if (event.clientX < window.innerWidth - CLOSE_DISTANCE) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
         setIsOpen(false);
       }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isAppWeb]);
-
-  useEffect(() => {
-    if (!isAppWeb) {
-      return undefined;
-    }
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    const handleTouchStart = (event) => {
-      touchStartX = event.touches[0].clientX;
-      touchEndX = touchStartX;
-    };
-
-    const handleTouchMove = (event) => {
-      touchEndX = event.touches[0].clientX;
-    };
-
-    const handleTouchEnd = () => {
-      const diff = touchEndX - touchStartX;
-      if (touchStartX > window.innerWidth - 40 && diff < -40) {
-        setIsOpen(true);
-      } else if (touchStartX < window.innerWidth - 260 && diff > 40) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isAppWeb]);
+  }, []);
 
   return (
-    <div className={`app-shell ${viewMode}`}>
+    <div className="app-shell">
       <motion.aside
+        id="app-sidebar"
         className="app-sidebar"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "tween", duration: 0.35 }}
+        // 닫혀 있을 때는 화면 밖이므로 키보드 탭 이동에서도 제외합니다.
+        inert={!isOpen}
       >
-        <Navbar isOpen={isOpen} toggleSidebar={() => setIsOpen(false)} />
+        <Navbar onNavigate={() => setIsOpen(false)} />
       </motion.aside>
 
       <button
         type="button"
         className="app-menu-toggle"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
+        aria-expanded={isOpen}
+        aria-controls="app-sidebar"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {isOpen ? "X" : "Menu"}
@@ -138,13 +98,24 @@ function AppLayout() {
       <main className="app-main">
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
-            {routes.map((route) => (
+            {pageRoutes.map((route) => (
               <Route
                 key={route.path}
                 path={route.path}
                 element={<PageWrapper>{route.element}</PageWrapper>}
               />
             ))}
+
+            {/* 이전 버전 경로로 들어온 방문자를 새 경로로 넘겨 줍니다. */}
+            {legacyRedirects.map((redirect) => (
+              <Route
+                key={redirect.from}
+                path={redirect.from}
+                element={<Navigate to={redirect.to} replace />}
+              />
+            ))}
+
+            <Route path="*" element={<PageWrapper><NotFoundPage /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
       </main>

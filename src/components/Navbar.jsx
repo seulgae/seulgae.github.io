@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBlog, FaGithub } from "react-icons/fa";
+import { navigation, paths } from "../routes";
+import profile from "../data/profile";
+import { assetUrl, splitBracketTitle } from "../utils/text";
 import "../styles/navBar.css";
 
-function splitLabel(text) {
-  const bracketIndex = text.indexOf("(");
-
-  if (bracketIndex === -1) {
-    return { main: text, sub: "" };
-  }
-
-  return {
-    main: text.slice(0, bracketIndex).trimEnd(),
-    sub: text.slice(bracketIndex).trim(),
-  };
-}
-
 function NavLabel({ text }) {
-  const { main, sub } = splitLabel(text);
+  const { main, sub } = splitBracketTitle(text);
 
   return (
     <span className="nav-label-text">
@@ -27,50 +17,102 @@ function NavLabel({ text }) {
   );
 }
 
-function Navbar({ isOpen, toggleSidebar }) {
-  const [showSubmenu, setShowSubmenu] = useState(false);
+function NavItem({ item, currentPath, onNavigate }) {
+  const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  useEffect(() => {
+    setSubmenuOpen(false);
+  }, [currentPath]);
+
+  if (item.kind === "link") {
+    return (
+      <li>
+        <Link
+          to={item.to}
+          onClick={onNavigate}
+          aria-current={currentPath === item.to ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      </li>
+    );
+  }
+
+  const hasActiveChild = item.children.some((child) => child.to === currentPath);
+
+  return (
+    <li
+      className="dropdown"
+      onMouseEnter={() => setSubmenuOpen(true)}
+      onMouseLeave={() => setSubmenuOpen(false)}
+    >
+      <button
+        type="button"
+        className="dropdown-toggle"
+        aria-expanded={submenuOpen || hasActiveChild}
+        onClick={() => setSubmenuOpen((prev) => !prev)}
+      >
+        {item.label}
+      </button>
+      <ul className={`submenu ${submenuOpen || hasActiveChild ? "open" : ""}`}>
+        {item.children.map((child) => (
+          <li key={child.to}>
+            <Link
+              to={child.to}
+              onClick={onNavigate}
+              aria-current={currentPath === child.to ? "page" : undefined}
+            >
+              <NavLabel text={child.label} />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </li>
+  );
+}
+
+function Navbar({ onNavigate }) {
   const location = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setShowSubmenu(false);
   }, [location.pathname]);
 
   return (
-    <div className={`navbar ${isOpen ? "open" : "closed"}`}>
+    <div className="navbar">
       <div className="logo-shell">
         <div className="business-card">
           <div className="business-head">
             <img
-              src={`${import.meta.env.BASE_URL}giltaehyeong.jpg`}
-              alt="Profile"
+              src={assetUrl(profile.profileImage)}
+              alt={`${profile.name} 프로필 사진`}
               className="profile-image"
             />
             <div className="logo-copy">
-              <span className="logo-badge">SI / SM Developer</span>
+              <span className="logo-badge">{profile.badge}</span>
               <h2>
-                <Link to="/" onClick={toggleSidebar}>
-                  길태형
+                <Link to={paths.home} onClick={onNavigate}>
+                  {profile.name}
                 </Link>
               </h2>
-              <p className="logo-description">Backend Developer</p>
+              <p className="logo-description">{profile.role}</p>
             </div>
           </div>
 
           <div className="business-body">
-            <a className="business-link" href="tel:+82-10-3933-3763">
+            <a className="business-link" href={`tel:${profile.phone.replace(/-/g, "")}`}>
               <span className="business-label">Phone</span>
-              <strong>010-3933-3763</strong>
+              <strong>{profile.phone}</strong>
             </a>
-            <a className="business-link" href="mailto:r1605866@gmail.com">
+            <a className="business-link" href={`mailto:${profile.email}`}>
               <span className="business-label">Email</span>
-              <strong>r1605866@gmail.com</strong>
+              <strong>{profile.email}</strong>
             </a>
           </div>
 
           <div className="business-icons">
             <a
-              href="https://github.com/seulgae"
+              href={profile.links.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -78,7 +120,7 @@ function Navbar({ isOpen, toggleSidebar }) {
               <FaGithub size={22} />
             </a>
             <a
-              href="https://doltae.tistory.com/"
+              href={profile.links.blog}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Blog"
@@ -89,72 +131,24 @@ function Navbar({ isOpen, toggleSidebar }) {
         </div>
       </div>
 
-      <nav>
+      <nav aria-label="주요 메뉴">
         <ul>
-          <li>
-            <Link to="/" onClick={toggleSidebar}>
-              About Me
-            </Link>
-          </li>
-          <li
-            className="dropdown"
-            onMouseEnter={() => setShowSubmenu(true)}
-            onMouseLeave={() => setShowSubmenu(false)}
-          >
-            <button type="button" className="dropdown-toggle">
-              Project Experience
-            </button>
-            <ul className={`submenu ${showSubmenu ? "open" : ""}`}>
-              <li>
-                <Link to="/ProjectsList" onClick={toggleSidebar}>
-                  <NavLabel text="전세사기 피해자 지원관리시스템 운영·고도화" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/ProjectsList2" onClick={toggleSidebar}>
-                  <NavLabel text="CloudXper 클라우드 빌링 플랫폼 고도화" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/ProjectsList3" onClick={toggleSidebar}>
-                  <NavLabel text="빌링 GW 시스템 개발·운영 유지보수" />
-                </Link>
-              </li>
-            </ul>
-          </li>
-          {/*<li>*/}
-          {/*  <Link to="/Inventory" onClick={toggleSidebar}>*/}
-          {/*    Inventory*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
-          <li>
-            <Link to="/EducationList" onClick={toggleSidebar}>
-              Education
-            </Link>
-          </li>
-          <li>
-            <Link to="/Awards" onClick={toggleSidebar}>
-              Awards
-            </Link>
-          </li>
-          <li>
-            <Link to="/Licenses" onClick={toggleSidebar}>
-              Licenses
-            </Link>
-          </li>
-          <li>
-            <Link to="/ResumePrint" onClick={toggleSidebar}>
-              Resume Print
-            </Link>
-          </li>
+          {navigation.map((item) => (
+            <NavItem
+              key={item.label}
+              item={item}
+              currentPath={location.pathname}
+              onNavigate={onNavigate}
+            />
+          ))}
         </ul>
       </nav>
 
-      <Link to="/Architecture" onClick={toggleSidebar} className="sidebar-credit">
+      <Link to={paths.architecture} onClick={onNavigate} className="sidebar-credit">
         <span className="sidebar-credit-mark">SG</span>
         <span className="sidebar-credit-copy">
           <strong>Designed by seulgae</strong>
-          <span>Portfolio structure & design notes</span>
+          <span>Portfolio structure &amp; design notes</span>
         </span>
       </Link>
     </div>
