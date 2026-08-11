@@ -101,19 +101,3 @@ summary: 목록 카드에 보여줄 한 줄 요약
 
 이전 경로(`/ProjectsList`, `/Awards`, `/ResumePrint` 등)는 `src/routes.js`의 `legacyRedirects`에
 등록돼 있어 새 경로로 자동 이동합니다.
-
-## Update Notes
-
-- 2026-08-11 : 클린 라이트 개편 + 블로그 추가 — 숨은 사이드바를 상단 고정 헤더로 교체,
-  모바일 반응형 적용(뷰포트 고정 제거, 햄버거 메뉴), Pretendard 폰트 도입,
-  마크다운 파일 기반 블로그(`/blog`)와 프로젝트 목록(`/projects`) 신설,
-  framer-motion 제거 및 페이지 전환 CSS 대체
-- 2026-08-11 : 구조 리팩터링 — 콘텐츠를 `data/`로 분리해 화면·이력서 내용 중복 제거,
-  프로젝트별 페이지 파일을 `/projects/:slug` 단일 라우트로 통합, 미사용 반응형 코드와
-  중복 CSS 정리, 디자인 토큰 분리, 미사용 의존성 제거, 메타 태그·접근성 보완
-- 2026-05-12 : Projects.jsx, Projects2.jsx, Projects3.jsx 내용 현행화 및 구조 수정
-- 2026-03-31 : Architecture 페이지에 라우팅, 패키지 버전, 유지보수 가이드, 커밋 이력 문서화
-- 2026-03-31 : ResumePrint를 A4 출력용 표 기반 문서 레이아웃으로 재구성
-- 2026-03-30 : 이력서 출력 페이지 추가, Awards/Licenses 내용 수정
-- 2026-03-26 : BrowserRouter 변경 및 포트폴리오 구조 개선
-- 2025-06-27 : SQLD 자격 정보 및 README 업데이트
