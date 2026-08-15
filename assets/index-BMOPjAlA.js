@@ -1397,7 +1397,7 @@ public abstract class AbstractGwService {
   로 분기한다. MER(merge)은 join 조건 기준으로 있으면 UPDATE, 없으면
   INSERT다.
 
-\`\`\`java
+\`\`\`java     
 switch (event.getEventWorkCd()) {
     case INS -> targetDao.insert(row);
     case UPD -> targetDao.update(row);        // joinT로 정의된 조건 컬럼 기준
