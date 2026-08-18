@@ -45,13 +45,17 @@
   box-shadow: var(--shadow);
 }
 
-/* 이미지 확대 버튼은 시각적으로 이미지 그대로 보이게 합니다. */
+/* 이미지 확대 버튼은 시각적으로 이미지 그대로 보이게 합니다.
+   display를 .image-link(a 태그)와 동일하게 맞춰서, 모바일 1열 레이아웃에서
+   버튼(기본 가운데 정렬)과 링크(왼쪽 정렬)의 이미지 정렬이 달라지지 않게 합니다. */
 .image-zoom-button {
+  display: inline-flex;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
   line-height: 0;
+  text-align: left;
 }
 
 .image-link {
