@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { paths } from "../routes";
 import { splitBracketTitle } from "../utils/text";
+import BillingArchitecture from "./BillingArchitecture";
+import ProjectArchitecture from "./ProjectArchitecture";
 import "../styles/pageShell.css";
 import "../styles/projectDetail.css";
 
@@ -73,6 +75,10 @@ function ProjectDetail({ project, prev, next }) {
             </div>
           </div>
         </div>
+
+        {project.slug === "lgu-billing-gw"
+          ? <BillingArchitecture />
+          : <ProjectArchitecture slug={project.slug} />}
 
         <section className="project-block accent-block">
           <h3>주요 업무</h3>

@@ -88,7 +88,7 @@ const projects = [
   },
   {
     slug: "cloudxper-billing",
-    title: "LG CNS CloudXper 클라우드 빌링 플랫폼 고도화",
+    title: "CloudXper 클라우드 빌링 플랫폼 고도화",
     shortTitle: "CloudXper 클라우드 빌링 플랫폼 고도화",
     description:
       "AWS · GCP · Azure · Kakao 저장소 대여·청구 통합 관리 플랫폼의 백엔드 아키텍처 개선 및 대용량 데이터 처리 최적화",
@@ -137,7 +137,7 @@ const projects = [
   },
   {
     slug: "lgu-billing-gw",
-    title: "LG U+ 청구 및 빌링 GW 시스템 개발·운영 유지보수",
+    title: "빌링 GW 시스템 개발·운영 유지보수",
     shortTitle: "빌링 GW 시스템 개발·운영 유지보수",
     description:
       "Kafka 기반 청구·빌링 GW 시스템의 개발 및 운영, 이기종 시스템 연동 및 데이터 흐름 표준화",

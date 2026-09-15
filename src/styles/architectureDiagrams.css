@@ -1,0 +1,70 @@
+.architecture-diagrams { min-width: 0; }
+.arch-intro { color: #526174; font-size: .94rem; }
+.arch-figure { --arch-color: #0f766e; --arch-wash: #eef8f4; margin: 24px 0 32px; min-width: 0; }
+.arch-theme-event { --arch-color: #7951b0; --arch-wash: #f5f0fc; }
+.arch-theme-cloud { --arch-color: #2463a6; --arch-wash: #eff6ff; }
+.arch-theme-public { --arch-color: #14756f; --arch-wash: #eef8f4; }
+.arch-figure-heading, .arch-dialog-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.arch-figure-heading h4 { color: var(--arch-color); margin: 0; }
+.arch-figure button, .arch-dialog button { font: inherit; font-size: .85rem; min-height: 40px; padding: 8px 12px; border: 1px solid #ccd7e2; border-radius: 8px; background: #fff; color: #33465c; cursor: pointer; }
+.arch-figure button:hover, .arch-dialog button:hover { background: #f1f5f9; }
+.arch-figure button:focus-visible, .arch-scroll:focus-visible, .arch-dialog button:focus-visible { outline: 3px solid var(--arch-color); outline-offset: 3px; }
+.arch-scroll { max-width: 100%; overflow-x: auto; border: 1px solid #dce4ed; border-radius: 12px; background: #fcfdff; overscroll-behavior-x: contain; }
+.arch-canvas { width: 100%; min-width: 880px; height: auto; display: block; font-family: var(--font-sans); }
+.arch-zone rect { fill: #f3f6fa; stroke: #c8d4df; stroke-width: 1; stroke-dasharray: 5 4; }
+.arch-zone text { fill: #4e6074; font-size: 14px; font-weight: 700; }
+.arch-zone-owned rect { fill: var(--arch-wash); stroke: var(--arch-color); }
+.arch-zone-owned text { fill: var(--arch-color); }
+.arch-edge path { fill: none; stroke: var(--arch-color); stroke-width: 1.8; stroke-linejoin: round; }
+.arch-edge text { fill: #46566a; font-size: 12.5px; font-weight: 600; paint-order: stroke; stroke: #fcfdff; stroke-width: 5px; stroke-linejoin: round; }
+.arch-edge.arch-lookup path { stroke: #526b8e; stroke-dasharray: 5 4; }
+.arch-edge.arch-retry path { stroke: #b66a0b; }
+.arch-arrowhead.arch-data { fill: var(--arch-color); }
+.arch-arrowhead.arch-lookup { fill: #526b8e; }
+.arch-arrowhead.arch-retry { fill: #b66a0b; }
+.arch-node { cursor: pointer; }
+.arch-node-bg { fill: #fff; stroke: #b9cad9; stroke-width: 1.2; }
+.arch-node-owned .arch-node-bg { stroke: var(--arch-color); stroke-width: 2; }
+.arch-node:hover .arch-node-bg, .arch-node:focus-visible .arch-node-bg, .arch-node[aria-pressed="true"] .arch-node-bg { fill: var(--arch-wash); stroke: var(--arch-color); stroke-width: 3; }
+.arch-node:focus { outline: none; }
+.arch-node-title { font-size: 15px; font-weight: 750; fill: #192d40; }
+.arch-node-line { font-size: 12.5px; fill: #506174; }
+.arch-ownership { font-size: 11px; fill: var(--arch-color); font-weight: 700; }
+.arch-glyph { fill: none; stroke: #4f6a84; stroke-width: 1.7; }
+.arch-dim { opacity: .28; }
+.arch-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; color: #4e6174; font-size: .78rem; padding-top: 12px; }
+.arch-legend span::before { content: "· "; font-weight: 800; }
+.arch-help { font-size: .8rem; color: #586b7b; }
+.arch-selection { margin-top: 14px; padding: 14px 16px; background: var(--arch-wash); border-left: 3px solid var(--arch-color); color: #253b4d; border-radius: 0 8px 8px 0; }
+.arch-selection strong { font-size: .9rem; color: var(--arch-color); }
+.arch-selection p { font-size: .87rem; margin-bottom: 0; line-height: 1.7; }
+.arch-reading-guide { padding: 0; margin: 20px 0 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+.arch-reading-guide li { padding-top: 12px; border-top: 2px solid #dce5ec; min-width: 0; }
+.arch-reading-guide strong { font-size: .91rem; color: #253b4d; }
+.arch-reading-guide p { color: #536779; font-size: .86rem; }
+.arch-providers { padding: 14px 18px; background: #f6f8fb; border-radius: 10px; display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap; margin: 20px 0; }
+.arch-providers > span { font-size: .85rem; color: #536779; }
+.arch-providers > div, .arch-tool-list { display: flex; flex-wrap: wrap; gap: 10px 16px; }
+.arch-providers small { flex-basis: 100%; }
+.arch-tech { display: inline-flex; align-items: center; gap: 7px; color: #2e4357; font-size: .83rem; }
+.arch-tech img { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
+.arch-tool-context { padding-top: 18px; border-top: 1px solid var(--line); }
+.arch-tool-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+.arch-tool-groups h5 { margin: 10px 0 14px; font-size: .88rem; color: #40586b; }
+.arch-tool-groups p { font-size: .8rem; color: #596b7b; }
+.arch-dialog { width: min(1480px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 40px); border: 1px solid #dce4ed; border-radius: 16px; padding: 20px; background: #fff; color: #192d40; overflow: auto; }
+.arch-dialog::backdrop { background: rgba(15, 23, 42, .65); }
+.arch-dialog .arch-canvas { min-width: 880px; }
+@media (max-width: 768px) {
+  .arch-reading-guide { grid-template-columns: 1fr; gap: 8px; }
+  .arch-figure-heading h4 { font-size: .94rem; }
+  .arch-figure-heading button { min-height: 44px; }
+  .arch-dialog { padding: 12px; width: calc(100vw - 16px); }
+  .arch-tool-groups { grid-template-columns: 1fr; gap: 10px; }
+}
+@media print {
+  .arch-canvas { min-width: 0; }
+  .arch-scroll { overflow: visible; }
+  .arch-figure-heading button, .arch-help, .arch-dialog { display: none; }
+  .arch-dim { opacity: 1; }
+}
