@@ -2,6 +2,12 @@
 
 const licenses = [
   {
+    id: "engineer-information-processing",
+    title: "정보처리기사",
+    date: "2026.12.18",
+    description: "한국산업인력공단",
+  },
+  {
     id: "sqld",
     title: "SQLD",
     date: "2025.06.27",
