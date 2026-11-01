@@ -13,12 +13,12 @@ const architectureSteps = [
   {
     step: "02. Application Shell",
     title: "App.jsx",
-    body: "BrowserRouter, 상단 고정 헤더, 푸터, 페이지 진입 애니메이션을 관리합니다. 라우트 목록은 routes.js에서 가져옵니다.",
+    body: "BrowserRouter 안에서 포트폴리오 전용 셸(PortfolioLayout)과 블로그 전용 셸(BlogLayout)을 분리해 각각의 헤더·푸터·네비게이션을 독립적으로 마운트합니다.",
   },
   {
     step: "03. Routing Source",
     title: "routes.js",
-    body: "경로와 상단 메뉴 구성의 단일 출처입니다. App(라우팅)과 Header(메뉴)가 같은 정의를 공유합니다.",
+    body: "경로와 공간별 메뉴(포트폴리오 navigation / 블로그 blogNavigation)의 단일 출처입니다.",
   },
   {
     step: "04. Content Data",

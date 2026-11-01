@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import projects from "./projects";
+import projects, { getCareerGroups } from "./projects";
 import education from "./education";
 import awards from "./awards";
 import licenses from "./licenses";
@@ -13,8 +13,12 @@ describe("projects", () => {
     slugs.forEach((slug) => expect(slug).toMatch(/^[a-z0-9-]+$/));
   });
 
-  test("화면과 이력서가 요구하는 필드가 모두 채워져 있다", () => {
+  test("화면과 이력서가 요구하는 필드와 소속 회사·팀이 모두 채워져 있다", () => {
     projects.forEach((project) => {
+      expect(project.companyId).toBeTruthy();
+      expect(project.company).toBeTruthy();
+      expect(project.team).toBeTruthy();
+      expect(project.affiliation).toBeTruthy();
       expect(project.title).toBeTruthy();
       expect(project.period).toBeTruthy();
       expect(project.role).toBeTruthy();
@@ -22,6 +26,17 @@ describe("projects", () => {
       expect(project.skills.length).toBeGreaterThan(0);
       expect(project.achievements.length).toBeGreaterThan(0);
     });
+  });
+
+  test("소속 회사·팀 단위로 그룹핑하면 전체 프로젝트 합계와 일치한다", () => {
+    const groups = getCareerGroups();
+    expect(groups).toHaveLength(2);
+    expect(groups[0].affiliation).toBe("(주)마이크로 서비스 | SI 본부");
+    expect(groups[1].affiliation).toBe("(주)애버커스 | 빌링시스템팀");
+    expect(groups[1].projects).toHaveLength(2);
+
+    const total = groups.reduce((sum, group) => sum + group.projects.length, 0);
+    expect(total).toBe(projects.length);
   });
 
   test("성과 항목에는 이력서에 쓰이는 result가 있다", () => {

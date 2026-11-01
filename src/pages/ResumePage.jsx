@@ -25,6 +25,7 @@ function ProjectEntry({ project }) {
       <div className="resume-project-title-row">
         <h3>{project.title}</h3>
         <span>
+          {project.affiliation ? `${project.affiliation} · ` : ""}
           {project.period} / {project.role}
         </span>
       </div>

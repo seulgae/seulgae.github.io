@@ -1,0 +1,1043 @@
+/* ── 포스터 공통 프레임 (스크롤 스파이 기준 단위) ── */
+.portfolio-posters {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.poster-section {
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 3.2vw, 2.75rem);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.poster-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.eyebrow,
+.poster-index {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.poster-index {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: var(--radius-inner);
+  background: var(--accent-soft);
+}
+
+.poster-title-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.poster-heading h2 {
+  margin: 0;
+  font-size: clamp(1.32rem, 2.1vw, 1.68rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* 포스터 제목 우측 도움말(?) 호버 툴팁 */
+.poster-help-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.poster-help-btn {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: help;
+  transition: all 0.16s ease;
+}
+
+.poster-help-btn:hover,
+.poster-help-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.28);
+}
+
+.poster-help-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -6px;
+  z-index: 30;
+  width: max-content;
+  max-width: min(400px, 72vw);
+  padding: 10px 14px;
+  border-radius: var(--radius-block);
+  background: #18222f;
+  color: #f8fafc;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.58;
+  word-break: keep-all;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+}
+
+.poster-help-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  background: #18222f;
+  transform: rotate(45deg);
+}
+
+.poster-help-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ── 00. About Poster (Hero + KPI) ── */
+.hero-poster {
+  padding-bottom: 34px;
+}
+
+.hero-title {
+  margin: 12px 0 14px;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  line-height: 1.24;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.hero-subtitle {
+  font-size: 1.03rem;
+  line-height: 1.75;
+  color: var(--muted);
+  margin: 0 0 16px;
+  max-width: 65ch;
+  word-break: keep-all;
+}
+
+.hero-strength-list {
+  margin: 0 0 22px;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.hero-strength-list li + li {
+  margin-top: 5px;
+}
+
+.hero-contact-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.16s ease;
+}
+
+.contact-pill:hover {
+  border-color: var(--accent-rule);
+  background: var(--accent-wash);
+  color: var(--accent-ink);
+}
+
+.contact-pill.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.contact-pill.primary:hover {
+  background: var(--accent-ink);
+  color: #ffffff;
+}
+
+.contact-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: var(--radius-block);
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-border);
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+.kpi-value {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--accent-ink);
+  letter-spacing: -0.02em;
+}
+
+.kpi-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kpi-detail {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── 01. Skills Poster ── */
+.skill-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.skill-matrix-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border-radius: var(--radius-block);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.skill-matrix-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.06rem;
+  color: var(--text);
+}
+
+.skill-matrix-summary {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.tech-item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 11px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-tint);
+  color: var(--accent-ink);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.skill-matrix-evidence {
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.skill-matrix-evidence strong {
+  color: var(--text);
+}
+
+/* ── 02. Projects Poster (소속 회사·팀 그룹 + 수행 프로젝트 트랙 구조) ── */
+.career-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3.5vw, 3rem);
+}
+
+.career-company-group {
+  display: grid;
+  grid-template-columns: clamp(16rem, 25%, 19.5rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.6vw, 2.25rem);
+  padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+
+.career-company-group:first-child {
+  padding-top: 0.25rem;
+  border-top: none;
+}
+
+.career-company-meta {
+  position: sticky;
+  top: calc(var(--header-height) + 1.25rem);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.project-period {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.career-affiliation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  line-height: 1.35;
+}
+
+.career-company-name {
+  font-size: clamp(1.14rem, 1.3vw, 1.28rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.career-affiliation-sep {
+  color: var(--line);
+  font-weight: 400;
+}
+
+.career-team-name {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-inner);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-ink);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.project-desc {
+  margin: 0.2rem 0 0;
+  font-size: 0.89rem;
+  line-height: 1.65;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+/* 같은 회사·팀 내 다중 프로젝트 빠른 이동 인덱스 */
+.career-track-summary {
+  margin-top: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-block);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.career-track-summary-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.career-track-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.career-track-jump {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: var(--radius-inner);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.83rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.career-track-jump:hover {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.track-num {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.track-jump-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 우측 수행 프로젝트 트랙 컬럼 */
+.career-tracks-column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 2.4vw, 2.25rem);
+  min-width: 0;
+}
+
+.project-track-card {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.project-track-card.is-grouped {
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+  border-radius: var(--radius-block);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  box-shadow: 0 2px 10px rgba(25, 31, 40, 0.03);
+}
+
+.project-track-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--line);
+}
+
+.project-track-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.project-track-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.project-track-badge.primary {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-ink);
+}
+
+.project-track-badge.parallel {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+}
+
+.project-track-period {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.project-title-heading {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.45vw, 1.36rem);
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  word-break: keep-all;
+}
+
+.project-role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--radius-inner);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.project-track-desc {
+  margin: 0;
+  font-size: 0.91rem;
+  line-height: 1.62;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.project-poster-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.project-skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-skill-pill {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #f1f3f5;
+  color: #343a40;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.project-content-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-block-label {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.project-task-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.project-achievement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-achievement-card {
+  padding: 16px 18px;
+  border-radius: var(--radius-block);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.project-achievement-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.project-achievement-title {
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.project-achievement-result {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-ink);
+  font-size: 0.81rem;
+  font-weight: 700;
+}
+
+.project-achievement-detail {
+  margin: 0;
+  font-size: 0.91rem;
+  line-height: 1.68;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.project-evidence-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.evidence-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 11px;
+  border-radius: var(--radius-inner);
+  font-size: 0.81rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.blog-chip {
+  background: #ffffff;
+  border: 1px solid var(--accent-border);
+  color: var(--accent-ink);
+}
+
+.blog-chip:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.news-chip {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+.news-chip:hover {
+  border-color: var(--text);
+}
+
+/* 아키텍처 인라인 펼침 드로어 */
+.project-arch-toggle-wrap {
+  margin-top: 4px;
+}
+
+.project-arch-toggle-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 18px;
+  border-radius: var(--radius-block);
+  background: var(--surface);
+  border: 1px solid var(--accent-rule);
+  color: var(--accent-ink);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+.project-arch-toggle-btn:hover,
+.project-arch-toggle-btn.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.toggle-hint {
+  flex-shrink: 0;
+  font-size: 0.81rem;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+.project-arch-drawer {
+  margin-top: 14px;
+}
+
+/* ── 시스템 아키텍처 팝업 모달 ── */
+.arch-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--overlay);
+  backdrop-filter: blur(4px);
+  animation: modal-backdrop-in 0.16s ease-out;
+}
+
+.arch-modal-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(92vw, 74rem);
+  max-height: min(90vh, 58rem);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-strong);
+  overflow: hidden;
+  animation: modal-panel-up 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.arch-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.arch-modal-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.arch-modal-title {
+  margin: 0;
+  font-size: clamp(1.08rem, 2vw, 1.32rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  word-break: keep-all;
+}
+
+.arch-modal-close {
+  flex-shrink: 0;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.arch-modal-close:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.arch-modal-body {
+  padding: 22px 24px 26px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-panel-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── 03. Credentials Poster (Education + Awards + Licenses 통합) ── */
+.credentials-group + .credentials-group {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.credentials-group-title {
+  margin: 0 0 16px;
+  font-size: 1.08rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.education-poster-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.credential-rich-card {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 20px 22px;
+  border-radius: var(--radius-block);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.credential-thumb {
+  width: 92px;
+  height: 92px;
+  border-radius: var(--radius-inner);
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.credential-thumb:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.credential-thumb-placeholder {
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-inner);
+  border: 1px dashed var(--accent-border);
+  background: var(--accent-wash);
+  font-size: 1.9rem;
+}
+
+.credential-rich-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.credential-period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.credential-rich-title {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.credential-org {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.credential-extra {
+  margin: 2px 0 0;
+  font-size: 0.83rem;
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.credentials-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.credential-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 68rem) {
+  .career-company-group {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .career-company-meta {
+    position: static;
+  }
+}
+
+@media (max-width: 60rem) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skill-matrix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .credentials-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .project-title-heading {
+    white-space: normal;
+    word-break: keep-all;
+  }
+
+  .portfolio-posters {
+    gap: 1rem;
+  }
+
+  .poster-help-wrap {
+    position: static;
+  }
+
+  .poster-help-tooltip {
+    left: 0;
+    max-width: min(18.75rem, 80vw);
+  }
+
+  .poster-help-tooltip::before {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 1.42rem;
+    line-height: 1.32;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .project-achievement-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .credential-rich-card {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .credential-thumb,
+  .credential-thumb-placeholder {
+    width: 68px;
+    height: 68px;
+    font-size: 1.5rem;
+  }
+
+  .arch-modal-backdrop {
+    padding: 12px 8px;
+  }
+
+  .arch-modal-panel {
+    max-height: 92vh;
+  }
+
+  .arch-modal-header {
+    padding: 14px 16px;
+  }
+
+  .arch-modal-body {
+    padding: 14px 12px 18px;
+  }
+}

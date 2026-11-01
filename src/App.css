@@ -31,16 +31,18 @@
   }
 }
 
-/* 모바일: 하단 탭바가 콘텐츠·푸터를 가리지 않도록 여백을 확보합니다. */
+/* 모바일: 포트폴리오 전용 하단 탭바가 콘텐츠·푸터를 가리지 않도록 여백을 확보합니다. */
 @media (max-width: 768px) {
-  .app-shell {
+  .portfolio-shell {
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
   }
 }
 
 @media print {
   .site-header,
-  .site-footer {
+  .site-footer,
+  .blog-header,
+  .blog-footer {
     display: none !important;
   }
 }

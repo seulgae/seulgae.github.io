@@ -1,43 +1,49 @@
 /**
- * 경로 정의의 단일 출처.
- * App.jsx(라우팅)와 Header.jsx(메뉴)가 같은 곳을 보게 해서 둘이 어긋나지 않도록 합니다.
+ * 경로 및 포스터 섹션 정의의 단일 출처.
+ * 포트폴리오 셸(스크롤 스파이 섹션 + 출력용 이력서)과 블로그 셸이 공유합니다.
  */
 export const paths = {
   home: "/",
-  projects: "/projects",
-  project: (slug) => `/projects/${slug}`,
+  section: (id) => (id === "about" ? "/" : `/#${id}`),
+  projectAnchor: (slug) => `/#project-${slug}`,
   blog: "/blog",
   blogPost: (slug) => `/blog/${slug}`,
-  education: "/education",
-  awards: "/awards",
-  licenses: "/licenses",
   resume: "/resume",
-  architecture: "/architecture",
 };
 
-/** 상단 헤더 메뉴 구성. 프로젝트·블로그 개별 글은 각 인덱스 페이지에서 진입합니다. */
-export const navigation = [
-  { label: "About", to: paths.home },
-  { label: "Projects", to: paths.projects },
-  { label: "Education", to: paths.education },
-  { label: "Awards", to: paths.awards },
-  { label: "Licenses", to: paths.licenses },
-  { label: "Resume", to: paths.resume },
-  { label: "Blog", to: paths.blog },
+/**
+ * 메인 포트폴리오(/) 원페이지를 구성하는 4개 포스터 섹션.
+ * 스크롤 위치에 따라 상단 헤더·모바일 하단바의 활성 커서가 이 순서대로 이동합니다.
+ */
+export const portfolioSections = [
+  { id: "about", label: "About", mobileLabel: "소개" },
+  { id: "skills", label: "Skills", mobileLabel: "역량" },
+  { id: "projects", label: "Projects", mobileLabel: "프로젝트" },
+  { id: "credentials", label: "Credentials", mobileLabel: "이력·자격" },
+];
+
+/** 독립된 블로그 공간(/blog/*) 전용 상단 메뉴 구성. */
+export const blogNavigation = [
+  { label: "전체 글", to: paths.blog, end: true },
 ];
 
 /**
- * 이전 버전에서 쓰던 경로. 이력서·메일 등으로 이미 공유된 링크가 깨지지 않도록 유지합니다.
- * 프로젝트 경로는 순서가 아니라 slug를 직접 지정해, 데이터 순서를 바꿔도 링크가 엉키지 않습니다.
+ * 통합 전 개별 페이지 경로 및 구 버전 경로 리다이렉트.
+ * 기존에 공유된 링크로 들어와도 메인 페이지의 해당 포스터 위치로 안내합니다.
  */
 export const legacyRedirects = [
-  { from: "/ProjectsList", to: paths.project("jeonse-support-system") },
-  { from: "/ProjectsList2", to: paths.project("cloudxper-billing") },
-  { from: "/ProjectsList3", to: paths.project("lgu-billing-gw") },
-  { from: "/EducationList", to: paths.education },
-  { from: "/Awards", to: paths.awards },
-  { from: "/Licenses", to: paths.licenses },
+  { from: "/projects", to: paths.section("projects") },
+  { from: "/education", to: paths.section("credentials") },
+  { from: "/awards", to: paths.section("credentials") },
+  { from: "/licenses", to: paths.section("credentials") },
+  { from: "/architecture", to: paths.home },
+  { from: "/ProjectsList", to: paths.projectAnchor("jeonse-support-system") },
+  { from: "/ProjectsList2", to: paths.projectAnchor("cloudxper-billing") },
+  { from: "/ProjectsList3", to: paths.projectAnchor("lgu-billing-gw") },
+  { from: "/EducationList", to: paths.section("credentials") },
+  { from: "/Awards", to: paths.section("credentials") },
+  { from: "/Licenses", to: paths.section("credentials") },
   { from: "/ResumePrint", to: paths.resume },
-  { from: "/Architecture", to: paths.architecture },
+  { from: "/Architecture", to: paths.home },
   { from: "/Inventory", to: paths.home },
 ];

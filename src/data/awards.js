@@ -4,7 +4,7 @@ const awards = [
   {
     id: "abacus-2024",
     title: "(주)애버커스 통신사업본부 우수사원",
-    date: "2024.12",
+    date: "2025.01",
     description:
       "CloudXper 플랫폼 성능 개선과 LG U+ 통합 빌링 운영 안정화 성과를 바탕으로 선정되었습니다.",
     image: "ABACUS.jpg",

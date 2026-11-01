@@ -1,26 +1,11 @@
-import { Link } from "react-router-dom";
 import { paths } from "../routes";
 import ArchitectureDiagrams from "./ArchitectureDiagrams";
 import "../styles/billingArchitecture.css";
-
-const metrics = [
-  { label: "주간 Kafka 연동 오류", value: "70 → 5건 미만", detail: "실패 패턴 분석 · 대응 절차 표준화" },
-  { label: "인코딩 오류", value: "95% 감소", detail: "문자열 처리 개선 · 정합성 검증" },
-  { label: "신규 연동 실패율", value: "5% 미만", detail: "검증 로직 공통 모듈화" },
-];
 
 /** 블로그에 기록된 논리 구조. Redis는 메시지 큐가 아닌 업무키 매핑 저장소다. */
 export default function BillingArchitecture() {
   return (
     <div className="billing-overview">
-      <section aria-label="대표 성과" className="billing-metrics">
-        {metrics.map(({ label, value, detail }) => (
-          <div className="billing-metric" key={label}>
-            <span>{label}</span><strong>{value}</strong><p>{detail}</p>
-          </div>
-        ))}
-      </section>
-
       <section className="project-block billing-architecture" aria-labelledby="billing-architecture-title">
         <div className="billing-section-heading">
           <h3 id="billing-architecture-title">시스템 한눈에 보기</h3>
@@ -46,6 +31,10 @@ export default function BillingArchitecture() {
             <div><dt>반영</dt><dd>eventWorkCd에 따라 INS / UPD / MER / DEL을 실행합니다. MER는 join 조건 기준으로 존재하면 UPDATE, 없으면 INSERT합니다.</dd></div>
           </dl>
         </details>
+        <details className="billing-details">
+          <summary>신규 이벤트 연동을 추가하는 절차</summary>
+          <p>토픽 등록 → 이벤트 필드 정의 → 원천·대상 매핑 및 join 조건 등록 → 공통 DTO 수정 → Nexus 배포 및 파트별 pom 의존성 갱신</p>
+        </details>
 
         <div className="billing-operations">
           <h4>운영에서 정합성을 확인하는 방법</h4>
@@ -55,18 +44,14 @@ export default function BillingArchitecture() {
           </div>
         </div>
         <p className="billing-source">경험을 정리한 논리 구조입니다. 강조 영역은 담당 업무 범위를 나타냅니다.<br />
-          <Link to={paths.blogPost("kafka-gw-data-integrity")}>데이터 정합성 개선 과정 자세히 읽기 →</Link>
+          <a
+            href={paths.blogPost("kafka-gw-data-integrity")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            데이터 정합성 개선 과정 자세히 읽기 ↗
+          </a>
         </p>
-      </section>
-
-      <section className="project-block">
-        <h3>대표 개선 사례</h3>
-        <dl className="billing-steps">
-          <div><dt>문제</dt><dd>원천 테이블 분리와 PK 변경으로 발행·구독 데이터가 불일치하고, 이벤트 순서 역전 시 업무키 해석이 실패했습니다.</dd></div>
-          <div><dt>담당 업무</dt><dd>원인별 대응 시나리오 정리, 불일치 보정과 재대사, 반복 보정 스크립트 정비를 수행했습니다.</dd></div>
-          <div><dt>결과</dt><dd><strong>모니터링·대응 체계 개선으로 주간 Kafka 오류 70건 → 5건 미만</strong></dd></div>
-        </dl>
-        <details className="billing-details"><summary>신규 이벤트 연동을 추가하는 절차</summary><p>토픽 등록 → 이벤트 필드 정의 → 원천·대상 매핑 및 join 조건 등록 → 공통 DTO 수정 → Nexus 배포 및 파트별 pom 의존성 갱신</p></details>
       </section>
     </div>
   );

@@ -47,9 +47,9 @@
     "Segoe UI", "Noto Sans KR", sans-serif;
   --font-mono: "Cascadia Code", Consolas, "D2Coding", monospace;
 
-  /* 레이아웃 */
-  --page-width: min(1080px, calc(100vw - 40px));
-  --prose-width: 768px;
+  /* 레이아웃 — 뷰포트 비율(vw)과 글자 배율(rem)에 맞춰 유동 반응형으로 동작 */
+  --page-width: clamp(20rem, 90vw, 72rem);
+  --prose-width: 48rem;
   --z-header: 1000;
   --z-overlay: 1200;
 }

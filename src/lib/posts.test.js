@@ -1,8 +1,13 @@
 import { describe, expect, test } from "vitest";
-import { findPostBySlug, getAllPosts, getAllTags } from "./posts";
+import {
+  findPostBySlug,
+  getAllPosts,
+  getAllTags,
+  getCategoryTree,
+} from "./posts";
 
 describe("블로그 글 로더", () => {
-  test("모든 글이 필수 frontmatter(title, date)를 갖는다", () => {
+  test("모든 글이 필수 frontmatter(title, date)와 분류 카테고리를 갖는다", () => {
     const posts = getAllPosts();
 
     expect(posts.length).toBeGreaterThan(0);
@@ -10,6 +15,10 @@ describe("블로그 글 로더", () => {
       expect(post.title).toBeTruthy();
       expect(post.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(post.body.trim().length).toBeGreaterThan(0);
+      expect(post.category.groupId).toBeTruthy();
+      expect(post.category.groupLabel).toBeTruthy();
+      expect(post.category.subId).toBeTruthy();
+      expect(post.category.subLabel).toBeTruthy();
     });
   });
 
@@ -38,5 +47,20 @@ describe("블로그 글 로더", () => {
       expect(tag.name).toBeTruthy();
       expect(tag.count).toBeGreaterThan(0);
     });
+  });
+
+  test("카테고리 트리 합계는 전체 글 수와 일치한다", () => {
+    const posts = getAllPosts();
+    const tree = getCategoryTree();
+
+    const totalFromGroups = tree.reduce((sum, group) => sum + group.count, 0);
+    const totalFromSubs = tree.reduce(
+      (sum, group) =>
+        sum + group.subs.reduce((subSum, sub) => subSum + sub.count, 0),
+      0,
+    );
+
+    expect(totalFromGroups).toBe(posts.length);
+    expect(totalFromSubs).toBe(posts.length);
   });
 });

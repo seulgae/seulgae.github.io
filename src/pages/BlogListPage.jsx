@@ -1,30 +1,83 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { getAllPosts, getAllTags } from "../lib/posts";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { CATEGORY_DEFINITIONS, getAllPosts } from "../lib/posts";
 import { paths } from "../routes";
-import "../styles/pageShell.css";
 import "../styles/blog.css";
 
 const PAGE_SIZE = 10;
 
+function resolveFeedHeading(groupParam, categoryParam, tagParam) {
+  if (categoryParam) {
+    for (const group of CATEGORY_DEFINITIONS) {
+      const foundSub = group.subs.find((sub) => sub.id === categoryParam);
+      if (foundSub) {
+        return {
+          eyebrow: group.groupLabel,
+          title: foundSub.label,
+        };
+      }
+    }
+  }
+
+  if (groupParam) {
+    const foundGroup = CATEGORY_DEFINITIONS.find(
+      (group) => group.groupId === groupParam,
+    );
+    if (foundGroup) {
+      return {
+        eyebrow: "CATEGORY GROUP",
+        title: foundGroup.groupLabel,
+      };
+    }
+  }
+
+  if (tagParam) {
+    return {
+      eyebrow: "TAG ARCHIVE",
+      title: `#${tagParam}`,
+    };
+  }
+
+  return {
+    eyebrow: "ALL ARTICLES",
+    title: "분류 전체보기",
+  };
+}
+
 /**
- * 블로그 글 목록.
- * 태그 필터 + 검색(제목·요약·본문·태그) + 10개 단위 페이징을 제공합니다.
- * 글은 src/posts/의 마크다운 파일에서 자동 생성됩니다.
+ * 티스토리 스타일 블로그 글 목록.
+ * 좌측 사이드바의 대분류(group)·소분류(category)·태그(tag) 쿼리 파라미터와
+ * 키워드 실시간 검색 + 10개 단위 페이징을 연동합니다.
  */
 function BlogListPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
-  const [activeTag, setActiveTag] = useState(null);
   const [page, setPage] = useState(1);
 
+  const groupParam = searchParams.get("group");
+  const categoryParam = searchParams.get("category");
+  const tagParam = searchParams.get("tag");
+
+  useEffect(() => {
+    setPage(1);
+  }, [groupParam, categoryParam, tagParam]);
+
   const posts = getAllPosts();
-  const tags = getAllTags();
+  const heading = resolveFeedHeading(groupParam, categoryParam, tagParam);
 
   const filtered = useMemo(() => {
     const keyword = query.trim().toLowerCase();
 
     return posts.filter((post) => {
-      if (activeTag && !post.tags.includes(activeTag)) {
+      if (categoryParam && post.category.subId !== categoryParam) {
+        return false;
+      }
+
+      if (groupParam && post.category.groupId !== groupParam) {
+        return false;
+      }
+
+      if (tagParam && !post.tags.includes(tagParam)) {
         return false;
       }
 
@@ -39,9 +92,8 @@ function BlogListPage() {
         post.body.toLowerCase().includes(keyword)
       );
     });
-  }, [posts, activeTag, query]);
+  }, [posts, groupParam, categoryParam, tagParam, query]);
 
-  // 필터 결과가 줄어 현재 페이지가 범위를 벗어나면 마지막 페이지로 보정합니다.
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const visible = filtered.slice(
@@ -54,9 +106,10 @@ function BlogListPage() {
     setPage(1);
   };
 
-  const handleTag = (tag) => {
-    setActiveTag(tag);
+  const resetAllFilters = () => {
+    setQuery("");
     setPage(1);
+    setSearchParams({});
   };
 
   const goToPage = (next) => {
@@ -64,71 +117,94 @@ function BlogListPage() {
     window.scrollTo(0, 0);
   };
 
-  const isFiltering = query.trim() !== "" || activeTag !== null;
+  const isSearching = query.trim() !== "";
+  const hasUrlFilter = Boolean(groupParam || categoryParam || tagParam);
 
   return (
-    <div className="page-shell">
-      <h1>Blog</h1>
-      <p className="page-lead">
-        공부한 내용과 작업 기록을 정리하는 공간입니다. 글은 마크다운 파일로 관리됩니다.
-      </p>
+    <div className="blog-feed-sheet">
+      <header className="blog-feed-header">
+        <div className="blog-feed-title-wrap">
+          <span className="blog-feed-eyebrow">{heading.eyebrow}</span>
+          <div className="blog-feed-title-row">
+            <h1>{heading.title}</h1>
+            <span className="blog-feed-badge">{filtered.length}</span>
+          </div>
+        </div>
 
-      <div className="blog-search">
-        <input
-          type="search"
-          value={query}
-          placeholder="제목 · 내용 · 태그 검색"
-          aria-label="블로그 글 검색"
-          onChange={(event) => handleSearch(event.target.value)}
-        />
-      </div>
+        <div className="blog-search">
+          <input
+            type="search"
+            value={query}
+            placeholder="제목 · 내용 · 태그 검색"
+            aria-label="블로그 글 검색"
+            onChange={(event) => handleSearch(event.target.value)}
+          />
+        </div>
+      </header>
 
-      {tags.length ? (
-        <div className="blog-tags" role="group" aria-label="태그 필터">
+      {isSearching || hasUrlFilter ? (
+        <div className="blog-filter-bar">
+          <p className="blog-result-count">검색 결과 {filtered.length}건</p>
           <button
             type="button"
-            className={`blog-tag ${activeTag === null ? "active" : ""}`}
-            onClick={() => handleTag(null)}
+            className="blog-reset-btn"
+            onClick={resetAllFilters}
           >
-            전체 {posts.length}
+            필터 초기화 ×
           </button>
-          {tags.map((tag) => (
-            <button
-              key={tag.name}
-              type="button"
-              className={`blog-tag ${activeTag === tag.name ? "active" : ""}`}
-              onClick={() => handleTag(tag.name)}
-            >
-              {tag.name} {tag.count}
-            </button>
-          ))}
         </div>
-      ) : null}
-
-      {isFiltering ? (
-        <p className="blog-result-count">검색 결과 {filtered.length}건</p>
       ) : null}
 
       <div className="blog-list">
         {visible.map((post) => (
-          <Link key={post.slug} to={paths.blogPost(post.slug)} className="blog-card">
-            <div className="blog-card-head">
-              <h2>{post.title}</h2>
+          <article key={post.slug} className="blog-feed-item">
+            <div className="blog-item-meta">
+              <Link
+                to={`${paths.blog}?category=${post.category.subId}`}
+                className="blog-item-cat"
+              >
+                {post.category.subLabel}
+              </Link>
+              <span className="blog-meta-dot" aria-hidden="true">
+                ·
+              </span>
               <time dateTime={post.date}>{post.date}</time>
             </div>
-            {post.summary ? <p className="blog-card-summary">{post.summary}</p> : null}
+
+            <Link to={paths.blogPost(post.slug)} className="blog-item-link">
+              <h2>{post.title}</h2>
+              {post.summary ? (
+                <p className="blog-card-summary">{post.summary}</p>
+              ) : null}
+            </Link>
+
             {post.tags.length ? (
               <div className="blog-card-tags">
                 {post.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
+                  <Link
+                    key={tag}
+                    to={`${paths.blog}?tag=${encodeURIComponent(tag)}`}
+                    className="blog-tag-chip"
+                  >
+                    #{tag}
+                  </Link>
                 ))}
               </div>
             ) : null}
-          </Link>
+          </article>
         ))}
 
         {!visible.length ? (
-          <p className="blog-empty">조건에 맞는 글이 없습니다.</p>
+          <div className="blog-empty">
+            <p>조건에 맞는 게시글이 없습니다.</p>
+            <button
+              type="button"
+              className="blog-reset-btn"
+              onClick={resetAllFilters}
+            >
+              전체 글 보기로 돌아가기
+            </button>
+          </div>
         ) : null}
       </div>
 

@@ -1,16 +1,22 @@
 // 프로젝트 경력의 단일 출처(single source of truth).
-// 상세 페이지(/projects/:slug), 사이드바 서브메뉴, 출력용 이력서가 모두 이 파일만 참조합니다.
-// 항목을 추가하려면 아래 배열에 객체 하나를 넣으면 됩니다. 라우트/메뉴/이력서는 자동 반영됩니다.
+// 메인 포트폴리오의 Projects 포스터(소속 회사·팀 그룹 구조)와 출력용 이력서(/resume)가 모두 이 파일만 참조합니다.
 //
-// slug        : URL 경로 (/projects/<slug>). 변경하면 기존 링크가 깨지므로 신중히.
-// title       : 상세 페이지·이력서에 쓰는 정식 명칭
-// shortTitle  : 사이드바 메뉴처럼 폭이 좁은 곳에서 쓰는 축약 명칭 (없으면 title 사용)
-// achievements: { title, detail, result, references? }
-//               result는 이력서의 성과 한 줄로 그대로 재사용됩니다.
+// slug        : 프로젝트 고유 식별자 (#project-<slug> 앵커 및 아키텍처 다이어그램 매핑 키)
+// affiliation : 소속 회사 및 부서/팀 표기
+// title       : 포스터·이력서에 쓰는 정식 프로젝트 명칭
+// achievements: { title, detail, result, relatedPosts?, references? }
+//               result는 출력용 이력서의 성과 한 줄로 그대로 재사용됩니다.
 
 const projects = [
   {
     slug: "jeonse-support-system",
+    companyId: "microservice",
+    company: "(주)마이크로 서비스",
+    team: "SI 본부",
+    affiliation: "(주)마이크로 서비스 | SI 본부",
+    companyPeriod: "2025.09 ~ 2026.08",
+    companySummary:
+      "공공 행정 시스템 레거시 고도화, 성능·보안 아키텍처 개선 및 서버 인프라 운영 자동화 수행",
     title: "전세사기 피해자 지원관리시스템 운영·고도화",
     shortTitle: "전세사기 피해자 지원관리시스템 운영·고도화",
     description:
@@ -38,12 +44,19 @@ const projects = [
       "SVN 기반 JAR 패키징 및 SFTP/SSH 활용 운영 환경 배포",
     ],
     achievements: [
+      /*
       {
         title: "CodeRay 기반 SAST 취약점 전수 분석 및 시큐어코딩 개선",
         detail:
           "CodeRay SAST 탐지 취약점 전수 분석 및 CWE 유형별 시큐어코딩 적용, 단순 코드 수정뿐 아니라 실행 경로 검증을 통해 미사용·벤더·테스트 코드까지 제거하여 애플리케이션 보안 품질 강화",
         result:
           "CodeRay 기반 SAST 취약점 358건을 CWE 유형별 분석·시큐어코딩하고 반복 재검증하여 최종 탐지 4건 달성",
+        relatedPosts: [
+          { slug: "cwe-79-xss-remediation", label: "CWE-79 XSS 200건 조치" },
+          { slug: "cwe-476-null-dereference", label: "CWE-476 NPE 공통 유틸 해결" },
+          { slug: "cwe-330-489-dead-code-removal", label: "CWE-330·489 미사용 코드 제거" },
+          { slug: "cwe-209-error-message-exposure", label: "CWE-209 오류 메시지 노출 방지" },
+        ],
       },
       {
         title: "국자원 웹 취약점 점검 사전 대응 및 보안 아키텍처 강화",
@@ -51,13 +64,37 @@ const projects = [
           "KISA 표준 웹 취약점 점검 결과 기반 HIGH 6·MEDIUM 7·LOW 3 항목 개선 및 SQL Injection 오류 14건 대응, 9개 테이블·97개 컬럼 정적 SQL 분기 재설계와 Jasypt 공통 암호화 유틸 적용으로 4개 환경별 계정 정보 17건 보호",
         result:
           "보안 취약점 16건 개선, SQL Injection 14건 해소, 계정정보 17건 암호화 적용",
+        relatedPosts: [
+          { slug: "dynamic-to-static-sync-query", label: "망간 동기화 정적 쿼리 전환기" },
+          { slug: "cwe-615-sensitive-comments", label: "주석 민감정보 제거 & 암호화" },
+        ],
       },
+      */
+      {
+        title: "CodeRay SAST · KISA 표준 취약점 점검 대응 및 보안 아키텍처 강화",
+        detail:
+          "CodeRay SAST 결함의 CWE 유형별 시큐어코딩·미사용 코드 제거, KISA 표준 웹 취약점(HIGH 6·MEDIUM 7·LOW 3) 조치, 망간 동기화 동적 쿼리(9개 테이블·97개 컬럼)의 정적 SQL 재설계 및 Jasypt 기반 4개 환경 계정 설정 암호화 수행",
+        result:
+          "SAST 취약점 358건 → 4건 감축, 웹 취약점 16건·SQL Injection 14건 해소 및 계정정보 17건 암호화",
+        relatedPosts: [
+          { slug: "dynamic-to-static-sync-query", label: "망간 동기화 정적 쿼리 전환기" },
+          { slug: "cwe-79-xss-remediation", label: "CWE-79 XSS 200건 조치" },
+          { slug: "cwe-476-null-dereference", label: "CWE-476 NPE 공통 유틸 해결" },
+          { slug: "cwe-330-489-dead-code-removal", label: "CWE-330·489 미사용 코드 제거" },
+          { slug: "cwe-209-error-message-exposure", label: "CWE-209 오류 메시지 노출 방지" },
+          { slug: "cwe-615-sensitive-comments", label: "CWE-615 주석 민감정보 제거" },
+        ],
+      },
+      /*
       {
         title: "개인정보 대량 암호화 패치 및 CI값 보안 강화",
         detail:
           "티빙 CI값 유출 사례 인지 후 가입·인증 컬럼 암호화 선제 조치, Damo 암복호화 솔루션 기반 CSQL nohup 백그라운드 처리로 서비스 중단 없이 대량 패치 완료",
         result:
           "행안부 연계 CI값 14만 건·개인정보 이력 로그 370만 건, 총 384만 건 암호화 적용",
+        relatedPosts: [
+          { slug: "csql-nohup-mass-patch", label: "csql·nohup 수백만 건 무중단 패치" },
+        ],
         references: [
           {
             text: "티빙 CI값 유출 관련 보도 - JTBC",
@@ -65,78 +102,46 @@ const projects = [
           },
         ],
       },
+      */
       {
         title: "운영 행정망 Slow Query 분석 및 인덱스 튜닝",
         detail:
           "DBeaver 실행계획(EXPLAIN)을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
         result: "53초 소요 Slow Query 개선 및 월간 운영 점검 특이사항 0건 유지",
+        relatedPosts: [
+          { slug: "cubrid-query-plan-index-tuning", label: "53초 조회 CUBRID 복합 인덱스 설계" },
+        ],
       },
+      /*
       {
         title: "Markdown 기반 AI 유지보수 자동화 체계 구축",
         detail:
-          "전세사기 도메인 업무를 Markdown 기반 템플릿으로 정형화하고 AI 활용 개발 프로세스를 적용하여 기능 개발 속도 및 업무 처리 효율 개선",
-        result: "사용자 오류 재현 및 소스 분석 시간 30~40% 단축",
+          "복잡한 전세사기 접수·심사 상태 흐름, 테이블 관계, 망간 동기화 규칙을 Markdown 컨텍스트 문서로 구조화하고 AI 활용 분석 프로세스를 적용하여 유지보수 효율 개선",
+        result: "사용자 오류 재현 및 소스 영향도 분석 시간 30~40% 단축",
       },
+      */
       {
         title: "인프라 용량 관리 모니터링 자동화 및 점검 프로세스 표준화",
         detail:
-          "Apache SSHD 의존성을 적용하여 SSH 기반 서버 접속 기능을 구현하고, CPU·메모리·디스크 사용률 정보를 실시간 수집해 화면에서 시각적으로 확인 가능한 기능 개발",
+          "Apache SSHD 의존성을 적용하여 SSH 기반 서버 접속 기능을 구현하고, CPU·메모리·디스크 사용률 정보를 주기 수집해 화면에서 시각적으로 확인 가능한 기능 개발",
         result:
           "CLI 수동 점검 화면 기반 모니터링으로 전환, 메모리·시스템 용량 사용률 30% 이하 관리",
-      },
-    ],
-  },
-  {
-    slug: "cloudxper-billing",
-    title: "CloudXper 클라우드 빌링 플랫폼 고도화",
-    shortTitle: "CloudXper 클라우드 빌링 플랫폼 고도화",
-    description:
-      "AWS · GCP · Azure · Kakao 저장소 대여·청구 통합 관리 플랫폼의 백엔드 아키텍처 개선 및 대용량 데이터 처리 최적화",
-    period: "2024.10 ~ 2025.02",
-    role: "플랫폼 서버 백엔드 개발",
-    skills: [
-      {
-        label: "기술",
-        value: "Spring Boot(3.x.x), REST API, React, Swagger, MyBatis, Gradle",
-      },
-      {
-        label: "인프라",
-        value: "Redis, MySQL, SonarQube, Linux(Ubuntu), Jenkins, GitLab",
-      },
-      {
-        label: "사용 툴",
-        value: "DBeaver, IntelliJ, VSCode",
-      },
-    ],
-    mainTasks: [
-      "가입, 청구, 상품 및 공통 조회 등 주요 REST API 설계·개발",
-      "프로젝트 구조 표준 정의 및 코드 리팩토링 후 팀 공유 및 적용",
-      "OAuth 사용자 인증 정보 Redis 캐싱 기반 저장·조회 권한 모듈 신규 개발",
-    ],
-    achievements: [
-      {
-        title: "대용량 데이터 조회 성능 최적화",
-        detail:
-          "Java Parallel Stream 기반 병렬 처리 구조를 소스 전역 집계 로직에 적용하여 대용량 데이터 처리 성능 개선",
-        result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
-      },
-      {
-        title: "Redis 기반 인증 아키텍처 최적화",
-        detail:
-          "OAuth 인증·권한 정보를 Redis에 캐싱하는 권한 모듈을 신규 개발하고 토큰 만료와 Redis TTL을 자동 동기화",
-        result:
-          "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
-      },
-      {
-        title: "코드 리팩토링 및 개발 컨벤션 표준화",
-        detail:
-          "Builder Pattern 도입으로 객체 생성 중복 제거, 패키지 구조 재정립과 코딩 컨벤션 문서를 직접 작성·팀에 공유하여 온보딩 시간 단축",
-        result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
+        relatedPosts: [
+          { slug: "jsch-to-mina-sshd", label: "JSch 협상 실패와 MINA SSHD 전환" },
+        ],
       },
     ],
   },
   {
     slug: "lgu-billing-gw",
+    companyId: "abacus",
+    company: "(주)애버커스",
+    team: "빌링시스템팀",
+    affiliation: "(주)애버커스 | 빌링시스템팀",
+    companyPeriod: "2022.11 ~ 2025.05",
+    companySummary:
+      "통신·클라우드 청구·빌링 도메인 백엔드 개발·운영 및 클라우드 빌링 플랫폼(CloudXper) 고도화 수행",
+    trackBadge: "개발·운영",
     title: "빌링 GW 시스템 개발·운영 유지보수",
     shortTitle: "빌링 GW 시스템 개발·운영 유지보수",
     description:
@@ -170,23 +175,127 @@ const projects = [
         detail:
           "WhaTap 히트맵 기반 연동 실패 패턴을 분석해 오류 유형별 대응 시나리오를 매뉴얼화하고, 데이터 보정 스크립트 정비 및 장애 발생 시 동일한 절차로 즉시 대응 가능한 운영 체계 마련",
         result: "주간 Kafka 오류 70건 → 5건 미만 (93% 감소)",
+        relatedPosts: [
+          { slug: "kafka-gw-data-integrity", label: "Kafka 도메인 GW 데이터 정합성 지키기" },
+        ],
       },
       {
         title: "이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증",
         detail:
           "Oracle ↔ MySQL 인코딩 차이 이슈를 Java 바이트 변환 로직(SUBSTRB)·Subscriber 로직 수정으로 근본 해결, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
         result: "인코딩 오류 95% 감소, 신규 연동 실패율 5% 미만 유지",
+        relatedPosts: [
+          { slug: "kafka-gw-data-integrity", label: "원천 분할·PK 변환 및 대사 보정" },
+        ],
+      },
+      /*
+      {
+        title: "청구 도메인 요금·위약금 조회 API 개발 및 조회·리포팅 성능 개선",
+        detail:
+          "고객 계약·요금제·청구 통합 조회 REST API 설계·개발, Oracle 스칼라 서브쿼리 묵시적 형변환 실행계획 튜닝 및 건수 기반 POI(XSSF/SXSSF) 대용량 엑셀 다운로드 구현",
+        result:
+          "실시간 요금 시뮬레이터 API 제공, 슬로우 쿼리 인덱스 접근 전환 및 수작업 엑셀 추출 자동화",
+        relatedPosts: [
+          { slug: "oracle-hint-subquery-fullscan", label: "Oracle 묵시적 형변환 & 실행계획 튜닝" },
+          { slug: "sxssf-vs-xssf-excel-download", label: "XSSF vs SXSSF 대용량 엑셀 기준" },
+        ],
+      },
+      */
+    ],
+  },
+  {
+    slug: "cloudxper-billing",
+    companyId: "abacus",
+    company: "(주)애버커스",
+    team: "빌링시스템팀",
+    affiliation: "(주)애버커스 | 빌링시스템팀",
+    companyPeriod: "2022.11 ~ 2025.05",
+    companySummary:
+      "통신·클라우드 청구·빌링 도메인 백엔드 개발·운영 및 클라우드 빌링 플랫폼(CloudXper) 고도화 수행",
+    trackBadge: "SI 프로젝트",
+    title: "CloudXper 클라우드 빌링 플랫폼 고도화",
+    shortTitle: "CloudXper 클라우드 빌링 플랫폼 고도화",
+    description:
+      "AWS · GCP · Azure · Kakao 저장소 대여·청구 통합 관리 플랫폼의 백엔드 아키텍처 개선 및 대용량 데이터 처리 최적화",
+    period: "2024.10 ~ 2025.02",
+    role: "플랫폼 서버 백엔드 개발",
+    skills: [
+      {
+        label: "기술",
+        value: "Spring Boot(3.x.x), REST API, React, Swagger, MyBatis, Gradle",
       },
       {
-        title: "청구 도메인 기반 요금·위약금 조회 API 신규 개발",
+        label: "인프라",
+        value: "Redis, MySQL, SonarQube, Linux(Ubuntu), Jenkins, GitLab",
+      },
+      {
+        label: "사용 툴",
+        value: "DBeaver, IntelliJ, VSCode",
+      },
+    ],
+    mainTasks: [
+      "가입, 청구, 상품 및 공통 조회 등 주요 REST API 설계·개발",
+      "프로젝트 구조 표준 정의 및 코드 리팩토링 후 팀 공유 및 적용",
+      "OAuth 사용자 인증 정보 Redis 캐싱 기반 저장·조회 권한 모듈 신규 개발",
+    ],
+    achievements: [
+      {
+        title: "대용량 데이터 조회 성능 최적화",
         detail:
-          "고객 계약·요금제·청구 정보를 통합 조회하는 REST API를 설계·개발하여 상담 시스템의 실시간 요금·위약금 조회 기능 구현",
+          "화면별로 파편화된 Map 기반 N+1 연관 조회 로직을 DTO·Model·ServiceImpl 계층으로 통합하고, 병렬 스트림을 적용해 순차 DB 왕복 대기 시간을 단축",
+        result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
+        relatedPosts: [
+          { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 N+1 병렬화와 한계 회고" },
+        ],
+      },
+      {
+        title: "Redis 기반 인증 아키텍처 최적화",
+        detail:
+          "OAuth 인증·권한 정보를 Redis에 캐싱하는 권한 모듈을 신규 개발하고 토큰 만료와 Redis TTL을 자동 동기화",
         result:
-          "요금 분석 시뮬레이터 실시간 조회 API 제공, 3개월 예상 요금 안내 상담 업무 효율 향상",
+          "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
+        relatedPosts: [
+          { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 세션 TTL 동기화" },
+        ],
+      },
+      {
+        title: "코드 리팩토링 및 개발 컨벤션 표준화",
+        detail:
+          "Builder Pattern 도입으로 객체 생성 중복 제거, 패키지 구조 재정립과 코딩 컨벤션 문서를 직접 작성·팀에 공유하여 온보딩 시간 단축",
+        result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
+        relatedPosts: [
+          { slug: "mybatis-builder-parallel-refactoring", label: "Map 제거 · DTO/Model 계층 분리" },
+        ],
       },
     ],
   },
 ];
+
+/** 소속 회사·부서 단위로 프로젝트를 묶어서 반환합니다. */
+export function getCareerGroups() {
+  const groups = [];
+  const map = new Map();
+
+  projects.forEach((project) => {
+    let group = map.get(project.companyId);
+    if (!group) {
+      group = {
+        companyId: project.companyId,
+        company: project.company,
+        team: project.team,
+        affiliation: project.affiliation,
+        period: project.companyPeriod || project.period,
+        summary: project.companySummary,
+        projects: [],
+      };
+      map.set(project.companyId, group);
+      groups.push(group);
+    }
+    group.projects.push(project);
+  });
+
+  return groups;
+}
 
 export function findProjectBySlug(slug) {
   return projects.find((project) => project.slug === slug);
