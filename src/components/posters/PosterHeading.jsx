@@ -1,13 +1,31 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 /**
  * 포스터 섹션 공통 헤더.
- * 섹션 번호와 제목을 간결하게 표시하고, 부가 설명은 우측 도움말(?) 버튼에
- * 마우스를 올렸을 때만 툴팁으로 노출해 화면 밀도를 깔끔하게 유지합니다.
+ * 섹션 번호와 제목을 간결하게 표시하고, 부가 설명은 우측 도움말(?) 버튼을 통해
+ * 데스크톱 호버 및 모바일 터치(토글) 툴팁으로 노출합니다.
+ * 외부 영역 터치/클릭 시 자동으로 닫힙니다.
  */
 function PosterHeading({ index, titleId, title, helpText }) {
   const [visible, setVisible] = useState(false);
   const tooltipId = useId();
+  const wrapRef = useRef(null);
+
+  // 모바일 등에서 외부 영역을 탭했을 때 툴팁을 닫도록 처리
+  useEffect(() => {
+    if (!visible) return;
+
+    function handlePointerDownOutside(event) {
+      if (wrapRef.current && !wrapRef.current.contains(event.target)) {
+        setVisible(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDownOutside);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
+  }, [visible]);
 
   return (
     <div className="poster-heading">
@@ -17,6 +35,7 @@ function PosterHeading({ index, titleId, title, helpText }) {
 
         {helpText ? (
           <span
+            ref={wrapRef}
             className="poster-help-wrap"
             onMouseEnter={() => setVisible(true)}
             onMouseLeave={() => setVisible(false)}
@@ -27,9 +46,10 @@ function PosterHeading({ index, titleId, title, helpText }) {
               aria-label={`${title} 도움말`}
               aria-describedby={visible ? tooltipId : undefined}
               aria-expanded={visible}
-              onFocus={() => setVisible(true)}
-              onBlur={() => setVisible(false)}
-              onClick={() => setVisible((prev) => !prev)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setVisible((prev) => !prev);
+              }}
               onKeyDown={(event) => {
                 if (event.key === "Escape") {
                   setVisible(false);
@@ -44,6 +64,7 @@ function PosterHeading({ index, titleId, title, helpText }) {
               role="tooltip"
               aria-hidden={!visible}
               className={`poster-help-tooltip ${visible ? "visible" : ""}`}
+              onClick={(e) => e.stopPropagation()}
             >
               {helpText}
             </span>

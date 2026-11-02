@@ -984,16 +984,20 @@
   }
 
   .poster-help-wrap {
-    position: static;
-  }
-
-  .poster-help-tooltip {
-    left: 0;
-    max-width: min(18.75rem, 80vw);
-  }
-
-  .poster-help-tooltip::before {
     display: none;
+  }
+
+  .project-track-card.is-grouped {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .project-track-card.is-grouped + .project-track-card.is-grouped {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
   }
 
   .hero-title {
