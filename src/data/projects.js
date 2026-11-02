@@ -242,10 +242,10 @@ const projects = [
       {
         title: "대용량 데이터 조회 성능 최적화",
         detail:
-          "화면별로 파편화된 Map 기반 N+1 연관 조회 로직을 DTO·Model·ServiceImpl 계층으로 통합하고, 병렬 스트림을 적용해 순차 DB 왕복 대기 시간을 단축 (이후 쿼리 횟수 자체를 줄이는 집합 조회 방식으로 한계 복기)",
-        result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
+          "Java Parallel Stream 기반 병렬 처리 구조를 소스 전역 집계 로직에 적용하여 대용량 데이터 처리 성능 개선",
+        result: "API 응답 시간 95% 단축 (10분 → 30초 이내)",
         relatedPosts: [
-          { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 N+1 병렬화와 한계 회고" },
+          { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 병렬화와 한계 회고" },
         ],
       },
       {
@@ -262,9 +262,10 @@ const projects = [
         title: "코드 리팩토링 및 개발 컨벤션 표준화",
         detail:
           "Builder Pattern 도입으로 객체 생성 중복 제거, 패키지 구조 재정립과 코딩 컨벤션 문서를 직접 작성·팀에 공유하여 온보딩 시간 단축",
-        result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
+        // result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
+        result: "객체 생성 중복 제거 및 유지보수성·협업 효율 향상",
         relatedPosts: [
-          { slug: "mybatis-builder-parallel-refactoring", label: "Map 제거 · DTO/Model 계층 분리" },
+          { slug: "backend-code-convention-standardization", label: "4인 백엔드 코드 표준화 & PDF 컨벤션 공유기" },
         ],
       },
     ],

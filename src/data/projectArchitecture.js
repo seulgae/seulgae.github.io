@@ -7,10 +7,10 @@ const projectArchitecture = {
     details: [
       { title: "조회 성능은 어떻게 달라졌을까?", open: true, items: [
         { title: "개선 전 · 순차 조회", body: "부모 목록 조회 후 항목별 연관 리스트를 하나씩 조회. 100만 건 테스트에서 약 10분 소요." },
-        { title: "개선 후 · 병렬 조회", body: "ServiceImpl로 조회·조립을 모으고 병렬 스트림 적용. 같은 테스트 조건에서 약 1분 15초로 단축." },
+        { title: "개선 후 · 병렬 조회", body: "ServiceImpl로 조회·조립을 모으고 병렬 스트림 적용. 같은 테스트 조건에서 약 30초 이내로 단축." },
       ] },
       { title: "병렬 처리의 범위와 남은 과제", items: [
-        { title: "당시 적용한 개선", body: "SQL 횟수는 그대로이며 N+1을 제거한 것은 아닙니다. 여러 DB 조회의 대기 시간을 겹쳐 응답 시간을 줄였습니다." },
+        { title: "당시 적용한 개선", body: "SQL 횟수는 그대로이며 반복 호출 자체를 제거한 것은 아닙니다. 여러 DB 조회의 대기 시간을 겹쳐 응답 시간을 줄였습니다." },
         { title: "회고에서 정리한 다음 단계", body: "EXPLAIN 확인과 집합 단위 조회로 쿼리 수를 줄이는 방향을 검토했습니다. 커넥션 풀 부하와 작업 스레드의 트랜잭션 경계도 고려 대상입니다." },
       ] },
       { title: "권한 캐시는 언제 갱신할까?", items: [
@@ -19,8 +19,9 @@ const projectArchitecture = {
       ] },
     ],
     sources: [
-      { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 성능 검증과 계층 리팩토링" },
+      { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 성능 개선과 병렬화" },
       { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 만료 정책" },
+      { slug: "backend-code-convention-standardization", label: "4인 백엔드 코드 리팩토링과 PDF 컨벤션 표준화" },
     ],
   },
   "jeonse-support-system": {

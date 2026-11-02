@@ -20,7 +20,7 @@ const skillCompetencies = [
       "Jasypt",
     ],
     evidence:
-      "Map 기반 레거시 계층화(DTO/Model/Builder), SSH 비동기 타임아웃 제어 및 도메인 GW 변환 설계",
+      "백엔드 패키지·계층 표준화(Request·Response DTO/Model/Builder), SSH 비동기 타임아웃 제어 및 도메인 GW 변환 설계",
   },
   {
     category: "Database & Performance",
@@ -98,8 +98,8 @@ const profile = {
       postSlug: "cwe-476-null-dereference",
     },
     {
-      value: "10분 → 1분 15초",
-      label: "100만 건 조회 응답 87% 단축",
+      value: "10분 → 30초 이내",
+      label: "100만 건 조회 응답 95% 단축",
       detail: "계층 분리 리팩토링 · 병렬 스트림 적용",
       postSlug: "mybatis-builder-parallel-refactoring",
     },

@@ -76,13 +76,13 @@ const diagrams = {
       ],
     }, {
       id: "cloud-performance", title: "02 / 성능 개선 지점 · 순차 대기를 병렬 대기로", height: 325,
-      summary: "개선 전에는 연관 DB 조회를 순서대로 기다렸습니다. 개선 후 parallelStream에서 일부 조회를 동시에 처리했고, N+1 SQL 횟수는 그대로입니다.",
-      zones: [{ x: 20, y: 18, w: 440, h: 276, label: "BEFORE · 약 10분" }, { x: 490, y: 18, w: 450, h: 276, label: "AFTER · 약 1분 15초", owned: true }],
+      summary: "개선 전에는 하위 selectList 조회를 순서대로 기다렸습니다. 개선 후 parallelStream에서 병렬로 처리했고, 반복 SQL 호출 횟수는 그대로입니다.",
+      zones: [{ x: 20, y: 18, w: 440, h: 276, label: "BEFORE · 약 10분" }, { x: 490, y: 18, w: 450, h: 276, label: "AFTER · 약 30초 이내", owned: true }],
       nodes: [
         node("sequential", 44, 80, 180, "순차 조회", ["항목 1 → 2 → 3 → …", "이전 조회 종료까지 대기"], "java", "부모 목록의 각 항목마다 연관 리스트를 순서대로 조회하던 형태입니다. 100만 건 데이터에서 약 10분이 소요됐습니다."),
-        node("beforedb", 270, 80, 164, "MySQL", ["목록 1회 + 연관 N회", "대기 시간 누적"], "mysql", "N+1 조회가 데이터 증가에 따라 병목으로 드러났습니다.", false, "database"),
-        node("parallel", 514, 80, 204, "parallelStream", ["여러 연관 조회 동시 진행", "ServiceImpl에서 조립"], "java", "같은 테스트 조건에서 약 1분 15초로 줄었습니다. 작업 스레드, 커넥션 풀과 DB 자원의 영향을 받는 개선입니다.", true),
-        node("afterdb", 770, 80, 146, "MySQL", ["SQL 수는 동일", "N+1 구조는 남음"], "mysql", "N+1 자체를 제거한 개선은 아닙니다. 집합 조회와 EXPLAIN 분석은 회고에서 정리한 다음 단계입니다.", false, "database"),
+        node("beforedb", 270, 80, 164, "MySQL", ["마스터 1회 + 상세 반복", "대기 시간 직렬 누적"], "mysql", "반복 selectList 조회의 직렬 대기 시간이 데이터 증가에 따라 병목으로 드러났습니다.", false, "database"),
+        node("parallel", 514, 80, 204, "parallelStream", ["여러 연관 조회 동시 진행", "ServiceImpl에서 조립"], "java", "같은 테스트 조건에서 약 30초 이내로 줄었습니다. 작업 스레드, 커넥션 풀과 DB 자원의 영향을 받는 개선입니다.", true),
+        node("afterdb", 770, 80, 146, "MySQL", ["SQL 수는 동일", "반복 호출은 유지"], "mysql", "반복 호출 횟수 자체를 제거한 개선은 아닙니다. 집합 조회(IN 절)와 EXPLAIN 분석은 회고에서 정리한 다음 단계입니다.", false, "database"),
       ],
       edges: [edge("sequential", "beforedb", "M224 134 H270", "SQL", 247, 121), edge("parallel", "afterdb", "M718 110 H770", "", 744, 98), edge("parallel", "afterdb", "M718 140 H770", "", 744, 98), edge("parallel", "afterdb", "M718 170 H770", "", 744, 98)],
       notes: ["동일한 100만 건 테스트 조건에서 비교 · 시간 축 비례 도표 아님"],
