@@ -10,11 +10,13 @@ function AboutPoster() {
       aria-label="소개 및 핵심 성과 지표"
     >
       <div className="hero-identity">
+        {/*
         <span className="eyebrow">
           {profile.role} · {profile.badge} ({profile.careerSummary})
         </span>
+        */}
         <h1 className="hero-title">
-          복잡한 운영 이슈를 구조적으로 해결하는
+          성능과 안정성을 실질적인 개선으로 증명하는
           <br />
           백엔드 개발자 {profile.name}입니다.
         </h1>
