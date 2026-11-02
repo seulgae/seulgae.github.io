@@ -5,9 +5,9 @@ tags: Interview, Retrospective, CUBRID, Security, Infra, Java
 summary: 전세사기 피해자 지원관리시스템의 6대 성과를 의사결정 근거(Why & Trade-off)·실패 복구(Fail-Recovery)·과장 없는 기여도 기준으로 재구성한 경력 기술서 및 면접 대비 정리본
 ---
 
-포트폴리오의 첫 번째 프로젝트인 **[전세사기 피해자 지원관리시스템 운영·고도화 (2025.09 ~ 2026.08)](/projects/jeonse-support-system)**의 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 실패 복구 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
+포트폴리오의 **[전세사기 피해자 지원관리시스템 운영·고도화 (2025.09 ~ 2026.08)](/#project-jeonse-support-system)** 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 실패 복구 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
 
-- **담당 역할**: 시스템 운영 및 기능 개발
+- **소속 및 역할**: (주)마이크로 서비스 | SI 본부 · 시스템 운영 및 기능 개발
 - **사용 기술 스택**: eGovFrame 4.1.0, Java, JSP/JSTL, MyBatis, CUBRID, Apache MINA SSHD, Damo, Jasypt, Linux (망분리: 인터넷망 ↔ 업무망)
 
 ---

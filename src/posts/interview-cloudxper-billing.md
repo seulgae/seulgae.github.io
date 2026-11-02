@@ -5,9 +5,9 @@ tags: Interview, Retrospective, Spring, MyBatis, Redis, Performance
 summary: CloudXper 빌링 플랫폼의 핵심 성과(100만 건 N+1 병렬화와 한계 회고, Redis 권한 캐시와 세션 TTL 동기화, DTO/Model 계층 분리)를 의사결정 근거와 트레이드오프 중심으로 재구성한 경력 기술서
 ---
 
-포트폴리오의 두 번째 프로젝트인 **[CloudXper 클라우드 빌링 플랫폼 고도화 (2024.10 ~ 2025.02)](/projects/cloudxper-billing)**의 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 한계 복기 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
+포트폴리오의 **[CloudXper 클라우드 빌링 플랫폼 고도화 (2024.10 ~ 2025.02)](/#project-cloudxper-billing)** 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 한계 복기 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
 
-- **담당 역할**: 플랫폼 서버 백엔드 개발 (AWS · GCP · Azure · Kakao 멀티 클라우드 대여·청구 통합 관리)
+- **소속 및 역할**: (주)애버커스 | 빌링시스템팀 (SI 프로젝트) · 플랫폼 서버 백엔드 개발 (AWS · GCP · Azure · Kakao 멀티 클라우드 대여·청구 통합 관리)
 - **사용 기술 스택**: Spring Boot 3.x, Java, REST API, React, MyBatis, MySQL, Redis, SonarQube, Gradle
 
 ---

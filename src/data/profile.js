@@ -28,7 +28,8 @@ const skillCompetencies = [
     summary: "실행계획(EXPLAIN) 기반 슬로우 쿼리 튜닝, 복합 인덱스 설계 및 무중단 대량 DML",
     items: ["Oracle", "MySQL", "CUBRID", "Redis", "SQLD"],
     evidence:
-      "CUBRID 53초→1초 미만 복합 인덱스, Oracle 묵시적 형변환 튜닝, Redis 세션 TTL 동기화 캐싱(10초→0.1초)",
+      // "CUBRID 53초→1초 미만 복합 인덱스, Oracle 묵시적 형변환 튜닝, Redis 세션 TTL 동기화 캐싱(10초→0.1초)",
+      "CUBRID 53초→1초 미만 복합 인덱스, 이기종 DB(Oracle·MySQL) 정합성 검증, Redis 세션 TTL 동기화 캐싱(10초→0.10초)",
   },
   {
     category: "Messaging · Infra · Security",
@@ -38,7 +39,7 @@ const skillCompetencies = [
       "Apache Kafka",
       "Linux",
       "WhaTap",
-      "Damo",
+      // "Damo",
       "CodeRay SAST",
       "Jenkins",
       "Git / SVN",
@@ -63,6 +64,7 @@ const profile = {
   email: "r1605866@gmail.com",
   profileImage: "giltaehyeong.jpg",
   links: {
+    portfolio: "https://seulgae.github.io",
     github: "https://github.com/seulgae",
     blog: "https://seulgae.github.io/blog",
   },

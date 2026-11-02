@@ -82,9 +82,10 @@ function ResumePage() {
     ["연락처", `${profile.phone} / ${profile.email}`],
     [
       "링크",
-      `${profile.links.github.replace(/^https?:\/\//, "")} / ${profile.links.blog
-        .replace(/^https?:\/\//, "")
-        .replace(/\/$/, "")}`,
+      [profile.links.portfolio, profile.links.blog, profile.links.github]
+        .filter(Boolean)
+        .map((url) => url.replace(/^https?:\/\//, "").replace(/\/$/, ""))
+        .join(" / "),
     ],
   ];
 

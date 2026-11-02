@@ -242,7 +242,7 @@ const projects = [
       {
         title: "대용량 데이터 조회 성능 최적화",
         detail:
-          "화면별로 파편화된 Map 기반 N+1 연관 조회 로직을 DTO·Model·ServiceImpl 계층으로 통합하고, 병렬 스트림을 적용해 순차 DB 왕복 대기 시간을 단축",
+          "화면별로 파편화된 Map 기반 N+1 연관 조회 로직을 DTO·Model·ServiceImpl 계층으로 통합하고, 병렬 스트림을 적용해 순차 DB 왕복 대기 시간을 단축 (이후 쿼리 횟수 자체를 줄이는 집합 조회 방식으로 한계 복기)",
         result: "API 응답 시간 87% 단축 (10분 → 1분 15초)",
         relatedPosts: [
           { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 N+1 병렬화와 한계 회고" },

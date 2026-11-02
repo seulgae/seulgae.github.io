@@ -5,8 +5,8 @@ tags: Java, Spring, Redis, Performance
 summary: 셀렉트 박스 하나 그릴 때마다 권한 테이블을 조회하던 구조를 Redis 캐시로 바꾸고, TTL을 로그아웃(세션 만료) 시간과 일치시켜 정합성과 속도를 함께 잡은 기록
 ---
 
-권한 관리가 화면 단위로 촘촘한 시스템이 있었다. 같은 조회 화면이라도 사용자
-권한에 따라 **셀렉트 박스에 보이는 항목이 달랐다** — 일반 사용자는 자기 부서
+권한 관리가 화면 단위로 촘촘한 시스템이 있었다. OAuth 기반으로 로그인한 사용자라도
+권한에 따라 **같은 화면의 셀렉트 박스에 보이는 항목이 달랐다** — 일반 사용자는 자기 부서·테넌트
 코드만, 관리자는 전체 코드가 보이는 식이다. 문제는 이걸 구현한 방식이었다.
 
 ## AS-IS — 렌더링할 때마다 권한 테이블로
@@ -27,9 +27,10 @@ public String boardList(Model model, Principal principal) {
 }
 ```
 
-권한 조회 쿼리는 사용자-역할-권한-코드를 잇는 조인이라 가볍지 않았고,
-셀렉트 박스가 대여섯 개인 화면은 열릴 때마다 그 조인을 대여섯 번씩 실행했다.
-사용자 입장에선 **화면 하나 이동할 때마다 같은 질문을 DB에 반복**하는
+권한 조회 쿼리는 사용자-역할-권한-코드를 잇는 다중 조인이라 가볍지 않았고,
+셀렉트 박스와 필터가 대여섯 개인 관리 화면은 열릴 때마다 그 조인을 연달아 실행했다.
+데이터가 쌓인 환경에서는 **메뉴 이동과 초기 렌더링에만 최대 10초 가까이 지연**이
+발생했다. 사용자 입장에선 화면 하나 이동할 때마다 같은 질문을 DB에 반복하는
 구조다. 답은 뻔했다 — 로그인해 있는 동안 이 사용자의 권한은 바뀌지 않는데,
 왜 매번 묻는가.
 
@@ -37,12 +38,18 @@ public String boardList(Model model, Principal principal) {
 
 권한 데이터의 성질을 먼저 정리했다.
 
-- **읽기는 매우 잦다** — 모든 화면 렌더링이 읽는다.
+- **읽기는 매우 잦다** — 모든 화면 이동과 렌더링이 읽는다.
 - **변경은 매우 드물다** — 관리자가 권한을 바꾸는 이벤트는 하루에 몇 번도 안 된다.
-- **사용자별로 다르지만, 세션 동안에는 같다.**
+- **사용자별로 다르지만, 세션(토큰 유효 구간) 동안에는 같다.**
 
 읽기 압도적 + 변경 희소 + 세션 단위 일관성 — 캐시에 딱 맞는 프로필이다.
-로그인 시점에 권한을 조회해 Redis에 올리고, 이후 렌더링은 전부 캐시에서
+이때 인메모리 로컬 캐시(Caffeine, Ehcache) 대신 **Redis 분산 캐시**를 선택했다.
+다중 인스턴스 환경에서 로컬 캐시를 쓰면 관리자가 특정 사용자의 권한을 회수하거나
+사용자가 로그아웃했을 때 다른 서버 메모리에 예전 권한이 남을 수 있지만, Redis를
+단일 캐시 저장소로 두면 한 번의 Evict로 모든 인스턴스가 즉시 같은 상태를 바라보게
+할 수 있기 때문이다.
+
+로그인(인증) 시점에 권한을 조회해 Redis에 올리고, 이후 렌더링은 전부 캐시에서
 읽도록 바꿨다.
 
 ```java
@@ -54,11 +61,11 @@ public List<CodeVO> getAllowedCodes(String username, String codeGroup) {
 ```
 
 ```java
-// Redis 캐시 설정 — TTL을 세션 만료 시간과 동일하게
+// Redis 캐시 설정 — TTL을 인증 만료 시간과 동일하게 동기화
 @Bean
 public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
     RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(30))   // ← 세션 타임아웃과 같은 값
+            .entryTtl(Duration.ofMinutes(30))   // ← 세션/토큰 타임아웃과 같은 값
             .serializeValuesWith(SerializationPair.fromSerializer(
                     new GenericJackson2JsonRedisSerializer()));
     return RedisCacheManager.builder(factory)
@@ -70,7 +77,7 @@ public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
 ## 핵심 설계 — 왜 TTL을 로그아웃 시간과 맞췄나
 
 이 작업에서 코드보다 중요한 게 TTL 값의 결정이었다. 캐시 TTL을
-**세션 만료(로그아웃) 시간과 동일하게** 잡았는데, 이유는 이렇다.
+**세션·토큰 만료(로그아웃) 시간과 동일하게** 잡았는데, 이유는 이렇다.
 
 - **TTL이 세션보다 길면**: 사용자가 로그아웃하고 권한이 변경된 뒤 재로그인해도
   낡은 권한이 캐시에 살아 있을 수 있다. 권한 데이터에서 이건 성능 문제가
@@ -98,9 +105,9 @@ public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
 ## 결과
 
 - 화면 하나를 그릴 때 나가던 권한 조인 쿼리 여러 건이 **로그인 후 첫 조회
-  이후에는 0건**이 됐다. 권한 조회가 DB 왕복에서 Redis 메모리 조회(밀리초
-  미만)로 바뀌면서 화면 체감 렌더링이 눈에 띄게 빨라졌고, 특히 셀렉트
-  박스가 많은 관리 화면일수록 개선 폭이 컸다.
+  이후에는 0건**이 됐다. 권한 조회가 DB 다중 조인 왕복에서 Redis 메모리 조회로
+  바뀌면서, 셀렉트 박스가 집중된 관리 화면 기준으로 **약 10초까지 지연되던 페이지
+  전환·렌더링 응답 속도가 0.10초 이내**로 단축됐다.
 - DB 입장에서는 접속자 수 × 화면 이동 수만큼 반복되던 동일 조인이
   사라졌다 — 캐시는 응답 속도만이 아니라 **DB의 여유**를 만드는 장치였다.
 

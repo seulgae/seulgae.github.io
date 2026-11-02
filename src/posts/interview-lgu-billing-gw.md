@@ -5,9 +5,9 @@ tags: Interview, Retrospective, Kafka, Oracle, POI, Spring
 summary: LG U+ 빌링 GW 시스템의 핵심 성과(주간 Kafka 오류 70건→5건 미만, 이기종 DB 인코딩 오류 95% 감소, Oracle 묵시적 형변환 튜닝 및 POI 엑셀 선택 기준)를 의사결정과 실패 복구 중심으로 재구성한 경력 기술서
 ---
 
-포트폴리오의 세 번째 프로젝트인 **[빌링 GW 시스템 개발·운영 유지보수 (2022.11 ~ 2025.05)](/projects/lgu-billing-gw)**의 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 트러블슈팅 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
+포트폴리오의 **[빌링 GW 시스템 개발·운영 유지보수 (2022.11 ~ 2025.05)](/#project-lgu-billing-gw)** 경험을 채용 담당자와 테크 리드 관점의 **5단계 구조(문제 정의 → 의사결정 및 대안 비교 → 해결 및 트러블슈팅 → 정량·정성 성과 → 심층 꼬리 질문)**로 재구성했다.
 
-- **담당 역할**: SM/SI 서비스 개발 및 연동 시스템 유지보수
+- **소속 및 역할**: (주)애버커스 | 빌링시스템팀 (개발·운영) · SM/SI 서비스 개발 및 연동 시스템 유지보수
 - **사용 기술 스택**: Spring Boot 2.x, Spring Batch 4.x, Apache Kafka, Redis, Oracle, MySQL, MyBatis, WhaTap, Trusted Orange, Linux (CentOS)
 
 ---
