@@ -64,7 +64,7 @@ function BlogSidebar({ drawerOpen = false, onCloseDrawer }) {
         <div className="blog-profile-box">
           <div className="blog-profile-top">
             <img
-              src={assetUrl(profile.profileImage)}
+              src={assetUrl(profile.profileThumbnail || profile.profileImage)}
               alt={profile.name}
               className="blog-profile-avatar"
             />

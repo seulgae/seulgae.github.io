@@ -4,7 +4,7 @@
  * href가 있으면 확대 대신 외부 링크로 이동합니다.
  */
 function ZoomableImage({ src, alt, className, href, onZoom }) {
-  const image = <img src={src} alt={alt} className={className} />;
+  const image = <img src={src} alt={alt} className={className} loading="lazy" decoding="async" />;
 
   if (href) {
     return (

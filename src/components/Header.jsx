@@ -2,22 +2,19 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { paths, portfolioSections } from "../routes";
 import profile from "../data/profile";
-import { useScrollSpy } from "../hooks/useScrollSpy";
 import { assetUrl } from "../utils/text";
 import "../styles/header.css";
 
-const SECTION_IDS = portfolioSections.map((section) => section.id);
 
 /**
  * 포트폴리오 상단 고정 헤더.
  * 메인(/) 스크롤 위치에 따라 활성 커서(슬라이딩 인디케이터)가 각 포스터 메뉴로 이동합니다.
  * 출력용 이력서(/resume)는 우측 별도 액션 버튼으로 구분해 배치합니다.
  */
-function Header() {
+function Header({ activeSection, navigateToSection }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === paths.home;
-  const [activeSection, navigateToSection] = useScrollSpy(SECTION_IDS, isHome);
 
   const itemRefs = useRef({});
   const [cursorMetrics, setCursorMetrics] = useState(null);
@@ -94,7 +91,7 @@ function Header() {
           onClick={(event) => handleSectionClick(event, "about")}
         >
           <img
-            src={assetUrl(profile.profileImage)}
+            src={assetUrl(profile.profileThumbnail || profile.profileImage)}
             alt=""
             className="site-brand-avatar"
           />

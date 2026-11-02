@@ -7,10 +7,8 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { paths, portfolioSections } from "../routes";
-import { useScrollSpy } from "../hooks/useScrollSpy";
 import "../styles/bottomNav.css";
 
-const SECTION_IDS = portfolioSections.map((section) => section.id);
 
 const SECTION_ICONS = {
   about: FaUser,
@@ -24,10 +22,9 @@ const SECTION_ICONS = {
  * 스크롤 위치에 따라 4개 포스터 탭의 활성 표시가 자동으로 이동하며,
  * 우측 끝에는 출력용 이력서(/resume) 탭을 배치합니다.
  */
-function BottomNav() {
+function BottomNav({ activeSection, navigateToSection }) {
   const location = useLocation();
   const isHome = location.pathname === paths.home;
-  const [activeSection, navigateToSection] = useScrollSpy(SECTION_IDS, isHome);
 
   const handleSectionClick = (event, sectionId) => {
     if (!isHome) {

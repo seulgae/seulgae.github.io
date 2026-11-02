@@ -46,3 +46,10 @@
     display: none !important;
   }
 }
+
+.loading-status {
+  margin: 48px auto;
+  padding: 0 20px;
+  color: var(--muted);
+  text-align: center;
+}

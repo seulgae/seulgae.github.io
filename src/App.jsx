@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -12,16 +12,16 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BottomNav from "./components/BottomNav";
-import BlogHeader from "./components/BlogHeader";
-import BlogSidebar from "./components/BlogSidebar";
-import BlogFooter from "./components/BlogFooter";
 import HomePage from "./pages/HomePage";
-import BlogListPage from "./pages/BlogListPage";
-import BlogPostPage from "./pages/BlogPostPage";
-import ResumePage from "./pages/ResumePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { findProjectBySlug } from "./data/projects";
-import { legacyRedirects, paths } from "./routes";
+import { legacyRedirects, paths, portfolioSections } from "./routes";
+import { useScrollSpy } from "./hooks/useScrollSpy";
+
+const BlogLayout = lazy(() => import("./pages/BlogLayout"));
+const BlogListPage = lazy(() => import("./pages/BlogListPage"));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+const ResumePage = lazy(() => import("./pages/ResumePage"));
 
 function ProjectLegacyRedirect() {
   const { slug } = useParams();
@@ -38,41 +38,47 @@ function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollAndTitleManager />
-      <Routes>
-        {/* 독립된 블루 테마 기술 블로그 공간 (/blog, /blog/:slug) */}
-        <Route path={paths.blog} element={<BlogLayout />}>
-          <Route index element={<BlogListPage />} />
-          <Route path=":slug" element={<BlogPostPage />} />
-          <Route
-            path="*"
-            element={
-              <NotFoundPage
-                message="요청한 블로그 페이지를 찾을 수 없습니다."
-                backTo={paths.blog}
-                backLabel="글 목록으로 돌아가기"
-              />
-            }
-          />
-        </Route>
-
-        {/* 메인 포트폴리오 공간 (/ 원페이지 포스터 스트림 + /resume 인쇄용 이력서) */}
-        <Route element={<PortfolioLayout />}>
-          <Route path={paths.home} element={<HomePage />} />
-          <Route path={paths.resume} element={<ResumePage />} />
-          <Route path="/projects/:slug" element={<ProjectLegacyRedirect />} />
-
-          {/* 통합 전 개별 메뉴 경로 및 옛 경로로 들어온 방문자를 해당 포스터 섹션으로 연결 */}
-          {legacyRedirects.map((redirect) => (
+      <Suspense
+        fallback={
+          <p className="loading-status" role="status">페이지를 불러오는 중입니다.</p>
+        }
+      >
+        <Routes>
+          {/* 독립된 블루 테마 기술 블로그 공간 (/blog, /blog/:slug) */}
+          <Route path={paths.blog} element={<BlogLayout />}>
+            <Route index element={<BlogListPage />} />
+            <Route path=":slug" element={<BlogPostPage />} />
             <Route
-              key={redirect.from}
-              path={redirect.from}
-              element={<Navigate to={redirect.to} replace />}
+              path="*"
+              element={
+                <NotFoundPage
+                  message="요청한 블로그 페이지를 찾을 수 없습니다."
+                  backTo={paths.blog}
+                  backLabel="글 목록으로 돌아가기"
+                />
+              }
             />
-          ))}
+          </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+          {/* 메인 포트폴리오 공간 (/ 원페이지 포스터 스트림 + /resume 인쇄용 이력서) */}
+          <Route element={<PortfolioLayout />}>
+            <Route path={paths.home} element={<HomePage />} />
+            <Route path={paths.resume} element={<ResumePage />} />
+            <Route path="/projects/:slug" element={<ProjectLegacyRedirect />} />
+
+            {/* 통합 전 개별 메뉴 경로 및 옛 경로로 들어온 방문자를 해당 포스터 섹션으로 연결 */}
+            {legacyRedirects.map((redirect) => (
+              <Route
+                key={redirect.from}
+                path={redirect.from}
+                element={<Navigate to={redirect.to} replace />}
+              />
+            ))}
+
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </Router>
   );
 }
@@ -105,12 +111,18 @@ function ScrollAndTitleManager() {
   return null;
 }
 
+const SECTION_IDS = portfolioSections.map((section) => section.id);
+
 function PortfolioLayout() {
   const location = useLocation();
+  const [activeSection, navigateToSection] = useScrollSpy(
+    SECTION_IDS,
+    location.pathname === paths.home,
+  );
 
   return (
     <div className="app-shell portfolio-shell">
-      <Header />
+      <Header activeSection={activeSection} navigateToSection={navigateToSection} />
 
       {/* pathname이 바뀔 때만 진입 애니메이션 재생 (해시 스크롤 시에는 끊김 없이 유지) */}
       <main className="app-main page-enter" key={location.pathname}>
@@ -120,51 +132,7 @@ function PortfolioLayout() {
       <Footer />
 
       {/* 모바일(768px 이하) 전용 포트폴리오 하단 탭바 */}
-      <BottomNav />
-    </div>
-  );
-}
-
-function BlogLayout() {
-  const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [location.pathname, location.search]);
-
-  useEffect(() => {
-    if (!sidebarOpen) {
-      return undefined;
-    }
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setSidebarOpen(false);
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [sidebarOpen]);
-
-  return (
-    <div className="app-shell blog-shell">
-      <BlogHeader
-        sidebarOpen={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-      />
-
-      <div className="blog-container">
-        <BlogSidebar
-          drawerOpen={sidebarOpen}
-          onCloseDrawer={() => setSidebarOpen(false)}
-        />
-
-        <main className="blog-main page-enter" key={location.pathname}>
-          <Outlet />
-        </main>
-      </div>
-
-      <BlogFooter />
+      <BottomNav activeSection={activeSection} navigateToSection={navigateToSection} />
     </div>
   );
 }

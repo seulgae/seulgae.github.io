@@ -63,6 +63,7 @@ const profile = {
   phone: "010-3933-3763",
   email: "r1605866@gmail.com",
   profileImage: "giltaehyeong.jpg",
+  profileThumbnail: "giltaehyeong-thumbnail.jpg",
   links: {
     portfolio: "https://seulgae.github.io",
     github: "https://github.com/seulgae",

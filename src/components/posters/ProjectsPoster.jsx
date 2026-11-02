@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useMemo, useRef, useState } from "react";
 import { getCareerGroups } from "../../data/projects";
 import { paths } from "../../routes";
-import ArchitectureModal from "../ArchitectureModal";
 import PosterHeading from "./PosterHeading";
+
+const ArchitectureModal = lazy(() => import("../ArchitectureModal"));
 
 function splitSkillTokens(skills) {
   return skills.flatMap((group) =>
@@ -214,10 +215,12 @@ function ProjectsPoster() {
       </div>
 
       {modalState.project ? (
-        <ArchitectureModal
-          project={modalState.project}
-          onClose={handleCloseArchitecture}
-        />
+        <Suspense fallback={<p role="status">아키텍처를 불러오는 중입니다.</p>}>
+          <ArchitectureModal
+            project={modalState.project}
+            onClose={handleCloseArchitecture}
+          />
+        </Suspense>
       ) : null}
     </section>
   );
