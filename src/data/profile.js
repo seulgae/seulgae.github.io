@@ -60,7 +60,6 @@ const profile = {
   birthDate: "1996-08-16",
   careerSummary: "3년+",
   keywords: "성능 최적화, 데이터 정합성, 운영 자동화",
-  phone: "010-3933-3763",
   email: "r1605866@gmail.com",
   profileImage: "backend-mark.svg",
   links: {

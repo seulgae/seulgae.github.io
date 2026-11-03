@@ -79,7 +79,7 @@ function ResumePage() {
     ["직무", profile.role],
     ["경력", profile.careerSummary],
     ["핵심 키워드", profile.keywords],
-    ["연락처", `${profile.phone} / ${profile.email}`],
+    ["이메일", profile.email],
     [
       "링크",
       [profile.links.portfolio, profile.links.blog, profile.links.github]

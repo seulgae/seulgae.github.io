@@ -424,6 +424,13 @@
   font-size: 0.85rem;
 }
 
+.blog-footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: 1.6;
+}
+
 .blog-footer-links {
   display: flex;
   flex-wrap: wrap;
