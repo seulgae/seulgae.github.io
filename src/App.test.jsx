@@ -130,14 +130,15 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(screen.getByText("개발·운영")).toBeInTheDocument();
   expect(screen.getByText("SI 프로젝트")).toBeInTheDocument();
 
-  const transcriptBtn = screen.getByRole("button", { name: "성적증명서" });
-  await userEvent.click(transcriptBtn);
+  expect(screen.queryByRole("button", { name: "성적증명서" })).not.toBeInTheDocument();
+  const educationImageBtn = screen.getByRole("button", { name: "EZEN ACADEMY 이미지 크게 보기" });
+  await userEvent.click(educationImageBtn);
   const lightboxDialog = screen.getByRole("dialog", {
-    name: "한양사이버대학교 성적증명서",
+    name: "EZEN ACADEMY",
   });
   expect(within(lightboxDialog).getByRole("img")).toHaveAttribute(
     "src",
-    "/HYSCORE.jpg",
+    "/Ezen2.png",
   );
   await userEvent.click(within(lightboxDialog).getByRole("button", { name: "닫기" }));
 

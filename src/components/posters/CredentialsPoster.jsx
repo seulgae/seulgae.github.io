@@ -52,24 +52,6 @@ function CredentialsPoster() {
                 {edu.curriculum?.length ? (
                   <p className="credential-extra">{edu.curriculum.join(", ")}</p>
                 ) : null}
-                {edu.proofImages?.length ? (
-                  <div className="external-links">
-                    <div className="external-links-row">
-                      {edu.proofImages.map((doc) => (
-                        <button
-                          key={doc.image}
-                          type="button"
-                          className="external-link"
-                          onClick={() =>
-                            open(assetUrl(doc.image), doc.alt || doc.label)
-                          }
-                        >
-                          {doc.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
                 {/* <ExternalLinks links={edu.links} label="관련 산출물" /> */}
               </div>
             </article>

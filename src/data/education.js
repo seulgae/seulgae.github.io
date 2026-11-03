@@ -34,13 +34,6 @@ const education = [
     summary: "평점 4.05 / 4.5",
     image: "HYLOGO.jpg",
     imageLink: "https://www.hycu.ac.kr/user/maSnEx/goMain/30003/loadMap.do",
-    proofImages: [
-      {
-        label: "성적증명서",
-        image: "HYSCORE.jpg",
-        alt: "한양사이버대학교 성적증명서",
-      },
-    ],
     /*
     links: [
       {
