@@ -20,7 +20,7 @@ export default function BillingArchitecture() {
           <summary>이벤트 순서가 뒤바뀌면 어떻게 처리할까?</summary>
           <div className="billing-columns">
             <div><h4>매핑이 있는 경우</h4><p>변경 이벤트 수신 → Redis에서 업무키 해석 → 대상 DB 반영</p></div>
-            <div><h4>매핑이 아직 없는 경우</h4><p>키 해석 실패 → 재처리 대상으로 보관 → 매핑 생성 후 다시 처리</p></div>
+            <div><h4>매핑이 아직 없는 경우</h4><p>키 해석 실패 → 재처리 대상으로 보관 → 매핑 생성 후 다시 처리 (저장소·실행 방식 확인 필요)</p></div>
           </div>
         </details>
         <details className="billing-details">
@@ -39,7 +39,7 @@ export default function BillingArchitecture() {
         <div className="billing-operations">
           <h4>운영에서 정합성을 확인하는 방법</h4>
           <div className="billing-columns">
-            <div className="billing-dependency"><span className="billing-label">GW 모니터링 · 대사</span><h4>원천과 구독 데이터 비교</h4><p>same · mismatch · 재연동 대기</p><small>발행 누락 / 순서 역전 / 변환 오류 / 수기 변경으로 원인 구분</small></div>
+            <div className="billing-dependency"><span className="billing-label">GW 모니터링 · 대사</span><h4>원천과 구독 데이터 비교</h4><p>same · mismatch · 재연동 대기</p><small>발행 누락 / 순서 역전 / 인코딩 초과 / 컬럼·매핑 누락으로 원인 구분</small></div>
             <div className="billing-dependency"><span className="billing-label">보정 후 재검증</span><h4>불일치가 해소됐는지 확인</h4><p>불일치 키 추출 → DML 작성 → 대상 SELECT 검증 → 반영 → 재대사</p><small>일회성은 엑셀 DML · 반복 유형은 스크립트 정비</small></div>
           </div>
         </div>

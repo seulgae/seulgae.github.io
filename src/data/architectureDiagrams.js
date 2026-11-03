@@ -8,7 +8,7 @@ const edge = (from, to, d, label, x, y, type = "data", both = false) =>
 const diagrams = {
   "lgu-billing-gw": {
     theme: "event",
-    intro: "이벤트가 도착한 뒤, 서로 다른 키와 데이터 구조를 맞춰 구독 DB에 반영하는 흐름입니다.",
+    intro: "원문 경험을 재구성한 논리도입니다. Kafka 이벤트 전달과 Redis 키 조회를 구분하며, 실제 서버 배치·offset 커밋 설정은 확인되지 않았습니다.",
     figures: [{
       id: "gw-events", title: "01 / 이벤트 연동과 업무키 변환", height: 450,
       summary: "발행 시스템 → Kafka → Spring Boot GW → 구독 DB. GW는 Redis에서 업무키를 해석하고 메타데이터로 변환하며, 매핑이 없으면 재처리합니다.",
@@ -31,11 +31,11 @@ const diagrams = {
         edge("gw", "retry", "M514 206 V246 H340 V296", "키 해석 실패", 398, 238, "retry"),
         edge("retry", "gw", "M255 350 H226 V70 H540 V98", "매핑 생성 후 재처리", 358, 62, "retry"),
       ],
-      notes: ["실선: 이벤트·데이터 반영", "점선: 키·규칙 조회", "주황선: 재처리"],
+      notes: ["Kafka 구간: 비동기 전달", "점선: 키·규칙 조회", "주황선: 재처리 · 구현 방식 확인 필요"],
       guide: [
         ["①–② 이벤트 수신", "새 UUID 구조로 온 이벤트를 Kafka에서 구독합니다. GW가 사업 구분과 payload 형상에 맞는 처리 경로를 선택합니다."],
         ["③ 업무키 해석", "Redis에서 기존 업무키를 찾고, 메타데이터로 컬럼·join 조건을 맞춥니다. 매핑이 없으면 재처리 경로로 보냅니다."],
-        ["④ 구독 DB 반영", "과금·청구·정산 테이블에 작업 유형별 DML을 반영합니다. Redis와 DB는 서로 다른 책임을 가집니다."],
+        ["④ 구독 DB 반영", "과금·청구·정산 테이블에 작업 유형별 DML을 반영합니다. DB 반영 후 대사로 일치를 확인합니다. offset 커밋·DB 커밋 순서는 확인 필요하며 exactly-once를 뜻하지 않습니다."],
       ],
     }],
     supporting: [
@@ -46,7 +46,7 @@ const diagrams = {
   },
   "cloudxper-billing": {
     theme: "cloud",
-    intro: "화면 요청을 처리하는 API를 중심으로, 권한 캐시 경로와 업무 데이터 조회 경로를 나눴습니다.",
+    intro: "원문 경험을 기준으로 권한 캐시와 업무 조회 책임을 나눈 논리도입니다. 모든 API의 인증·인가 호출 순서나 외부 인증 제공자 배치를 확정한 그림은 아닙니다.",
     providers: [["AWS", "amazonwebservices"], ["GCP", "googlecloud"], ["Azure", "azure"], ["Kakao", null]],
     figures: [{
       id: "cloud-request", title: "01 / 요청·권한·업무 데이터의 분기", height: 605,
@@ -55,24 +55,24 @@ const diagrams = {
       nodes: [
         node("react", 24, 90, 172, "React 관리 화면", ["가입 · 상품 · 청구", "사용자별 권한에 맞춘 표시"], "react", "React 화면이 REST API를 호출하고 DTO 응답을 받습니다. 담당 범위는 플랫폼 백엔드 개발이며 프런트엔드 전체 개발로 표시하지 않았습니다."),
         node("controller", 280, 90, 260, "Controller · DTO", ["HTTP 요청·응답 / 입력 검증", "API 계약과 DB Model 분리"], "spring", "HTTP 처리와 검증을 Controller에 두고, 비즈니스 규칙과 데이터 조립은 ServiceImpl로 모았습니다.", true),
-        node("permission", 280, 255, 260, "인증·권한 서비스", ["사용자 + 코드 그룹별 캐시", "로그아웃·권한 변경 시 삭제"], "java", "OAuth 인증·권한 조회 모듈을 Redis 캐싱 구조로 개선했습니다. TTL은 만료 정책에 맞추고 사용자별 키를 무효화합니다.", true),
-        node("redis", 704, 255, 212, "Redis", ["인증·권한 캐시", "Cache hit → 권한 반환"], "redis", "반복되는 권한 조회를 메모리에서 처리합니다. 캐시가 없으면 애플리케이션이 DB에서 조회해 캐시를 채웁니다. Redis가 DB를 직접 조회하는 구조는 아닙니다.", false, "database"),
+        node("permission", 280, 255, 260, "권한 조회 서비스", ["사용자 + 코드 그룹별 캐시", "로그아웃·권한 변경 시 삭제"], "java", "권한 조회 결과를 Redis에 캐싱했습니다. 고정 TTL과 토큰 만료 시각은 다릅니다. 실제 로그인 선적재·그룹별 삭제·인가 지점은 확인 필요입니다.", true),
+        node("redis", 704, 255, 212, "Redis", ["권한 조회 결과 캐시", "Cache hit → 권한 반환"], "redis", "반복되는 권한 조회를 메모리에서 처리합니다. 캐시가 없으면 애플리케이션이 DB에서 조회해 캐시를 채웁니다. Redis가 DB를 직접 조회하는 구조는 아닙니다.", false, "database"),
         node("service", 280, 440, 260, "ServiceImpl · MyBatis", ["공통 조회·데이터 조립", "연관 리스트 병렬 조회"], "spring", "화면마다 흩어진 로직을 모으고 parallelStream으로 연관 조회의 대기 시간을 겹쳤습니다. SQL 호출 수 자체는 유지됩니다.", true),
         node("mysql", 704, 440, 212, "MySQL", ["가입 · 상품 · 청구 데이터", "권한 원본 테이블"], "mysql", "DAO가 MyBatis로 업무 데이터를 조회합니다. 캐시 미스 시 권한 원본도 여기에서 조회하며, 캐시는 DB 왕복을 줄이는 별도 경로입니다.", false, "database"),
       ],
       edges: [
         edge("react", "controller", "M196 144 H280", "① REST / JSON", 238, 123, "data", true),
-        edge("controller", "permission", "M410 198 V255", "② 권한 확인", 410, 229),
+        edge("controller", "permission", "M410 198 V255", "② 권한 조회", 410, 229),
         edge("permission", "redis", "M540 307 H704", "③ 캐시 저장·조회", 622, 289, "lookup", true),
         edge("permission", "mysql", "M540 335 H626 V469 H704", "Cache miss", 626, 399, "lookup"),
-        edge("permission", "service", "M410 363 V440", "권한 확인 후 업무 처리", 410, 403),
+        edge("controller", "service", "M280 144 H260 V494 H280", "업무 조회", 260, 403),
         edge("service", "mysql", "M540 514 H704", "④ SQL / 조회 결과", 622, 540, "data", true),
       ],
-      notes: ["실선: 요청·업무 데이터", "점선: 캐시 조회 / 미스 경로"],
+      notes: ["실선: 요청·응답을 기다리는 논리 흐름", "점선: 캐시 조회 / 미스 경로", "인증·인가 필터의 실제 배치 확인 필요"],
       guide: [
         ["① API 진입", "관리 화면의 요청을 검증하고, DTO로 입출력 계약을 분리합니다. 실제 인증 제공자의 외부 배치는 생략했습니다."],
         ["②–③ 권한 캐시", "캐시가 있으면 Redis에서 권한을 읽습니다. 없으면 권한 서비스가 MySQL을 조회해 다시 캐싱합니다."],
-        ["④ 업무 조회", "권한 확인을 거친 조회·조립 로직은 공통 ServiceImpl을 사용합니다. 응답은 Controller를 통해 화면으로 돌아갑니다."],
+        ["④ 업무 조회", "업무 조회·조립은 ServiceImpl에서 처리하고 응답은 Controller를 통해 화면으로 돌아갑니다. 오류 응답·Redis 장애 폴백 구현은 기록에 없습니다."],
       ],
     }, {
       id: "cloud-performance", title: "02 / 성능 개선 지점 · 순차 대기를 병렬 대기로", height: 325,
@@ -85,7 +85,7 @@ const diagrams = {
         node("afterdb", 770, 80, 146, "MySQL", ["SQL 수는 동일", "반복 호출은 유지"], "mysql", "반복 호출 횟수 자체를 제거한 개선은 아닙니다. 집합 조회(IN 절)와 EXPLAIN 분석은 회고에서 정리한 다음 단계입니다.", false, "database"),
       ],
       edges: [edge("sequential", "beforedb", "M224 134 H270", "SQL", 247, 121), edge("parallel", "afterdb", "M718 110 H770", "", 744, 98), edge("parallel", "afterdb", "M718 140 H770", "", 744, 98), edge("parallel", "afterdb", "M718 170 H770", "", 744, 98)],
-      notes: ["동일한 100만 건 테스트 조건에서 비교 · 시간 축 비례 도표 아님"],
+      notes: ["원문: 100만 건 테스트 · 최종 수치 저자 확인 · 동시 부하 조건 확인 필요"],
       guide: [["이 그림의 핵심", "병렬화로 DB 대기 시간을 겹친 성과입니다. 쿼리 수 감소나 무제한 확장으로 해석하지 않도록 SQL 수와 남은 한계를 함께 표시했습니다."]],
     }],
     supporting: [
@@ -95,7 +95,7 @@ const diagrams = {
   },
   "jeonse-support-system": {
     theme: "public",
-    intro: "대민 인터넷망과 내부 업무망을 구분하고, 데이터 동기화와 운영 수집을 별도의 그림으로 읽을 수 있게 구성했습니다.",
+    intro: "대민·내부 업무의 논리 계층과 동기화·운영 수집을 구분했습니다. 장비 배치·실제 망 경로를 나타내지 않으며, 주기 수집은 실시간 스트리밍과 다릅니다.",
     figures: [{
       id: "public-network", title: "01 / 망 분리 환경과 데이터 동기화", height: 605,
       summary: "인터넷망과 업무망 각각의 WEB, WAS, CUBRID DB 계층. 두 DB의 게시물·첨부 데이터를 MyBatis 정적 SELECT/MERGE 동기화 로직으로 맞춥니다.",
@@ -111,9 +111,9 @@ const diagrams = {
         node("security", 364, 206, 232, "보안 개선 지점", ["CodeRay SAST → 재검증", "SQL 바인딩 · Jasypt · Damo"], null, "CodeRay 358→4건, 웹 취약점과 SQL Injection 개선, 계정 정보 보호 및 개인정보 암호화를 수행했습니다. 운영 데이터 흐름과 구분된 개선 범위입니다.", true),
       ],
       edges: [
-        edge("publicweb", "publicwas", "M155 192 V266", "① HTTP 요청", 155, 232),
+        edge("publicweb", "publicwas", "M155 192 V266", "① HTTP 요청·응답", 155, 232, "data", true),
         edge("publicwas", "publicdb", "M155 374 V446", "② MyBatis / SQL", 155, 415, "data", true),
-        edge("internalweb", "internalwas", "M805 192 V266", "① HTTP 요청", 805, 232),
+        edge("internalweb", "internalwas", "M805 192 V266", "① HTTP 요청·응답", 805, 232, "data", true),
         edge("internalwas", "internaldb", "M805 374 V446", "② MyBatis / SQL", 805, 415, "data", true),
         edge("publicdb", "sync", "M264 500 H364", "③ 동기화", 314, 484, "data", true),
         edge("sync", "internaldb", "M596 500 H696", "③ 동기화", 646, 484, "data", true),
@@ -122,7 +122,7 @@ const diagrams = {
       notes: ["실선: 업무·동기화 흐름", "점선: 보안 개선 적용", "WEB/WAS/DB는 논리 계층 · 장비 대수·물리 배치 생략"],
       guide: [
         ["①–② 각 망의 업무 처리", "WEB을 거친 요청을 eGovFrame·JSP 서비스가 처리하고 MyBatis로 CUBRID에 접근합니다. 각 망의 서버·DB를 나눠 표시했습니다."],
-        ["③ 망간 데이터 동기화", "게시물·첨부 데이터는 테이블별 SELECT/MERGE로 맞춥니다. 중간 박스는 논리 연계 기능이며 직접 DB 간 통신을 뜻하지 않습니다."],
+        ["③ 망간 데이터 동기화", "원본을 SELECT하고 있으면 대상 MERGE, 없으면 skip과 로그를 남깁니다. 누락은 차이 데이터 보정 후 재대사했습니다. 실행 주기·재시도·망간 전송 방식은 확인 필요입니다."],
         ["담당 개선 범위", "동적 SQL의 문자열 조립을 제거하고, 개인정보·계정 암호화와 취약점 재검증을 수행했습니다. 다음 그림은 별도 개발한 운영 수집 기능입니다."],
       ],
     }, {
@@ -144,8 +144,8 @@ const diagrams = {
         edge("connections", "ssh", "M135 320 V258 H354 V200", "접속 정보 조회", 234, 249, "lookup"),
         edge("history", "admin", "M545 374 H690", "④ 최신 이력 조회", 617, 355, "data", true),
       ],
-      notes: ["실선: 주기 실행·수집·조회", "점선: 수집 대상·접속 설정"],
-      guide: [["①–② 수집", "대표 WAS가 4시간마다 SSH로 명령을 실행하고 결과를 받습니다. 별도 에이전트 설치 없이 수집하도록 구현했습니다."], ["③–④ 활용", "CUBRID에 누적한 이력에서 서버별 최신 상태를 조회합니다. 수동 접속·기록 업무를 화면 조회와 월말 데이터 정리로 전환했습니다."]],
+      notes: ["스케줄 수집과 화면 요청은 별도", "SSH: 요청 후 결과 대기", "점선: 접속 설정 조회"],
+      guide: [["①–② 수집", "대표 WAS가 4시간마다 SSH로 명령을 실행하고 결과를 받습니다. 별도 에이전트 설치 없이 수집하도록 구현했습니다."], ["③–④ 활용", "CUBRID의 서버별 최신 이력을 조회해 응답합니다. 수집 실패 시 최신 성공 시각·실패 상태를 어떻게 표시하는지는 확인 필요이며 대표 1대 활성화가 자동 장애 인계는 아닙니다."]],
     }],
     supporting: [
       { title: "공통 서비스 스택", tools: [["Tomcat 9", "tomcat"], ["JBoss", null], ["eGovFrame 4.1", null], ["JSP · JSTL", "java"], ["Fedora", "linux"]], text: "제품별 망·서버 배치는 공개 자료에서 구분되지 않아 공통 사용 기술로 표시" },

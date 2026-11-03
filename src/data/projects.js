@@ -106,7 +106,7 @@ const projects = [
       {
         title: "운영 행정망 Slow Query 분석 및 인덱스 튜닝",
         detail:
-          "DBeaver 실행계획(EXPLAIN)을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
+          "실행계획을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
         result: "53초 소요 Slow Query 개선 및 월간 운영 점검 특이사항 0건 유지",
         relatedPosts: [
           { slug: "cubrid-query-plan-index-tuning", label: "53초 조회 CUBRID 복합 인덱스 설계" },
@@ -182,7 +182,7 @@ const projects = [
       {
         title: "이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증",
         detail:
-          "Oracle ↔ MySQL 인코딩 차이 이슈를 Java 바이트 변환 로직(SUBSTRB)·Subscriber 로직 수정으로 근본 해결, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
+          "Oracle ↔ MySQL 연동의 문자셋·바이트 길이 문제를 Java 변환 로직과 Subscriber 검증으로 개선, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
         result: "인코딩 오류 95% 감소, 신규 연동 실패율 5% 미만 유지",
         relatedPosts: [
           { slug: "kafka-gw-data-integrity", label: "원천 분할·PK 변환 및 대사 보정" },
@@ -242,7 +242,7 @@ const projects = [
       {
         title: "대용량 데이터 조회 성능 최적화",
         detail:
-          "Java Parallel Stream 기반 병렬 처리 구조를 소스 전역 집계 로직에 적용하여 대용량 데이터 처리 성능 개선",
+          "반복되는 연관 조회·조립을 ServiceImpl로 모으고 병렬 스트림으로 DB 대기 시간을 중첩해 응답 시간 단축. SQL 호출 수는 유지되며 집합 조회는 후속 개선안",
         result: "API 응답 시간 95% 단축 (10분 → 30초 이내)",
         relatedPosts: [
           { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 병렬화와 한계 회고" },
@@ -251,11 +251,11 @@ const projects = [
       {
         title: "Redis 기반 인증 아키텍처 최적화",
         detail:
-          "OAuth 인증·권한 정보를 Redis에 캐싱하는 권한 모듈을 신규 개발하고 토큰 만료와 Redis TTL을 자동 동기화",
+          "OAuth 로그인 사용자의 권한 조회를 Redis로 캐싱하고 세션 정책을 참고한 TTL 및 로그아웃·권한 변경 시 무효화 적용. 토큰 만료 시각 자동 동기화 구현은 확인 필요",
         result:
           "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
         relatedPosts: [
-          { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 세션 TTL 동기화" },
+          { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 TTL·무효화" },
         ],
       },
       {

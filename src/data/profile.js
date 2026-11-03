@@ -20,7 +20,7 @@ const skillCompetencies = [
       "Jasypt",
     ],
     evidence:
-      "백엔드 패키지·계층 표준화(Request·Response DTO/Model/Builder), SSH 비동기 타임아웃 제어 및 도메인 GW 변환 설계",
+      "백엔드 패키지·계층 표준화(Request·Response DTO/Model/Builder), SSH 단계별 타임아웃 제어 및 도메인 GW 변환 설계",
   },
   {
     category: "Database & Performance",
@@ -29,7 +29,7 @@ const skillCompetencies = [
     items: ["Oracle", "MySQL", "CUBRID", "Redis", "SQLD"],
     evidence:
       // "CUBRID 53초→1초 미만 복합 인덱스, Oracle 묵시적 형변환 튜닝, Redis 세션 TTL 동기화 캐싱(10초→0.1초)",
-      "CUBRID 53초→1초 미만 복합 인덱스, 이기종 DB(Oracle·MySQL) 정합성 검증, Redis 세션 TTL 동기화 캐싱(10초→0.10초)",
+      "CUBRID 53초→1초 미만 복합 인덱스, 이기종 DB(Oracle·MySQL) 정합성 검증, Redis 권한 캐싱·만료 정책(10초→0.10초)",
   },
   {
     category: "Messaging · Infra · Security",
@@ -70,7 +70,7 @@ const profile = {
   intro:
     "Kafka, Redis, 병렬 처리 등 다양한 기술을 활용해 시스템의 연계 안정성과 데이터 처리 성능을 개선하고, 소스코드 보안 취약점까지 지속적으로 개선하며 운영 품질을 높여 왔습니다.",
   strengths: [
-    "실행계획(EXPLAIN) 기반 복합 인덱스 설계(53초 → 1초 미만)와 Redis 세션 TTL 동기화 캐싱(10초 → 0.10초 이내) 등 근거 중심의 성능 최적화를 수행합니다.",
+    "실행계획(EXPLAIN) 기반 복합 인덱스 설계(53초 → 1초 미만)와 Redis 권한 캐싱·만료 정책(10초 → 0.10초 이내) 등 근거 중심의 성능 최적화를 수행합니다.",
     // "Kafka 도메인 GW의 업무키 매핑·대사 표준화(주간 오류 93% 감소)와 384만 건 무중단 분할 패치 등 운영 데이터 정합성을 끝까지 책임집니다.",
     "Kafka 도메인 GW의 업무키 매핑·대사 표준화(주간 오류 93% 감소)와 이기종 DB 인코딩 검증 모듈화(오류 95% 감소) 등 운영 데이터 정합성을 끝까지 책임집니다.",
     "SAST 취약점 358건 → 4건 감축, 망간 동기화 정적 SQL 재설계, SSH 기반 인프라 점검 자동화 등 레거시의 잠재 리스크를 구조적으로 제거합니다.",

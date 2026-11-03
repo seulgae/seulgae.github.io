@@ -1,6 +1,17 @@
 # 기존 블로그 글 목록
 
-2026-09-21 main 기준 19개. 아래는 원문 메타데이터의 색인이다. 작업할 때 관련 본문을 다시 읽는다.
+2026-11-03 로컬 검토 기준 24개. 메타데이터 색인이며 실제 경험의 검증 자료가 아니다. 작업할 때 관련 본문과 감사 보고서를 다시 읽는다.
+
+CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 → 30초 이내다. 과거 1분 15초 기록은 최신 확인값으로 대체한다.
+
+## backend-code-convention-standardization
+
+원문: [글 파일](src/posts/backend-code-convention-standardization.md)
+
+- title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 사원급에서 PDF 컨벤션을 만들어 표준화하기까지
+- date: 2024-12-12
+- tags: Java, Spring, MyBatis, Architecture
+- summary: PM을 겸임하던 팀장님을 대신해 사원급 정규직으로서 백엔드 실무 기준을 맡아, 4명이 각자 다른 스타일로 작성하던 List 자료형 기반 selectList 코드를 Request/Response DTO·Model·Builder 패턴으로 리팩토링하고 PDF 가이드로 표준화한 기록
 
 ## csql-nohup-mass-patch
 
@@ -63,7 +74,7 @@
 - title: CWE-615 주석 속 민감정보 — 주석 처리했다고 사라지는 게 아니다
 - date: 2026-08-12
 - tags: Security, Java, SAST
-- summary: 주석 처리된 코드에 남아 있던 인증 URL·계정 파라미터·하드코딩 password를 삭제한 기록 — 주석은 배포 산출물에도 그대로 실린다
+- summary: 주석에 남은 인증 관련 정보 제거 기록 — 소스·형상관리와 HTML/JS 산출물의 노출 경로를 구분하고, 이력에 남은 비밀정보는 별도 조치해야 한다
 
 ## cwe-676-dangerous-api
 
@@ -110,6 +121,33 @@
 - tags: Guide
 - summary: DB 없이 마크다운 파일로 운영되는 이 블로그의 글 작성·수정·배포 방법 정리
 
+## interview-cloudxper-billing
+
+원문: [글 파일](src/posts/interview-cloudxper-billing.md)
+
+- title: 면접 정리 2 — CloudXper의 병렬 조회·권한 캐시·코드 표준화
+- date: 2026-10-23
+- tags: Interview, Retrospective, Spring, MyBatis, Redis, Performance
+- summary: 실제 개선 경험과 기술 원리·후속 설계를 구분해 정리한 CloudXper 면접 자료 — 병렬 처리의 한계, 캐시 만료·무효화, DTO와 팀 표준화
+
+## interview-jeonse-support-system
+
+원문: [글 파일](src/posts/interview-jeonse-support-system.md)
+
+- title: 면접 정리 1 — 전세사기 피해자 지원관리시스템의 보안·성능·운영 개선
+- date: 2026-10-24
+- tags: Interview, Retrospective, CUBRID, Security, Infra, Java
+- summary: 정적 SQL 전환의 누락 사고, CUBRID 튜닝, 대량 패치와 SSH 수집을 실제 경험·기술 원리·확인 항목으로 나눈 면접 준비 자료
+
+## interview-lgu-billing-gw
+
+원문: [글 파일](src/posts/interview-lgu-billing-gw.md)
+
+- title: 면접 정리 3 — 빌링 GW의 키 매핑·데이터 정합성·Oracle 튜닝
+- date: 2026-10-22
+- tags: Interview, Retrospective, Kafka, Oracle, POI, Spring
+- summary: Kafka와 Redis의 역할, 메타데이터 연계, 대사·보정·재대사, Oracle 튜닝을 근거 중심으로 정리하고 POI 개발 경험과 학습 질문을 보완한 면접 자료
+
 ## jsch-to-mina-sshd
 
 원문: [글 파일](src/posts/jsch-to-mina-sshd.md)
@@ -117,7 +155,7 @@
 - title: JSch가 WEB 서버 앞에서 멈춘 날 — Apache MINA SSHD로 서버 용량 모니터링 만들기
 - date: 2026-01-05
 - tags: Java, SSH, Infra, Spring
-- summary: 월말마다 수기로 정리하던 서버 메모리·디스크 현황을 SSH 기반 실시간 화면으로 자동화한 과정 — JSch의 암호화 협상 실패, MINA SSHD 교체, 그리고 함수 하나하나의 선택 이유
+- summary: 월말마다 수기로 정리하던 서버 메모리·디스크 현황을 SSH 기반 주기 수집 화면으로 자동화한 과정 — JSch의 암호화 협상 실패, MINA SSHD 교체, 그리고 함수 하나하나의 선택 이유
 
 ## kafka-gw-data-integrity
 
@@ -132,10 +170,10 @@
 
 원문: [글 파일](src/posts/mybatis-builder-parallel-refactoring.md)
 
-- title: 10분짜리 API를 1분 15초로 — 100만 건에서 드러난 N+1과 MyBatis 구조 리팩토링
+- title: 10분짜리 API를 30초 이내로 — 100만 건 대용량 조회 성능 개선과 병렬 스트림
 - date: 2024-11-27
 - tags: Java, Spring, MyBatis, Performance
-- summary: 1만 건에서는 드러나지 않던 목록 + 연관 리스트 조회의 N+1 문제가 100만 건 테스트 데이터에서 10분짜리 API가 된 사건 — 흩어진 Map 기반 로직을 계층화하고 병렬 처리로 응답 시간을 줄인 뒤, 그 해결의 한계까지 돌아본 기록
+- summary: 1만 건에서는 드러나지 않던 청구·가입 목록 조회의 MyBatis selectList 반복 호출 지연이 100만 건 테스트 데이터에서 10분짜리 API가 된 사건 — 병렬 스트림 처리로 응답 시간을 30초 이내로 단축한 과정과 그 해결의 한계까지 돌아본 기록
 
 ## oracle-hint-subquery-fullscan
 
@@ -145,6 +183,15 @@
 - date: 2023-01-10
 - tags: SQL, Oracle, Performance
 - summary: 스칼라 서브쿼리가 행마다 TABLE ACCESS FULL을 반복하던 조회 쿼리 — Trusted Orange로 플랜을 열고, 묵시적 형변환이라는 원인을 찾고, 인덱스 접근과 쿼리 재작성으로 고쳐간 기록. 그리고 그 과정을 기존 소스와 DBA 보고서에서 배웠다는 이야기
+
+## portfolio-blog-audit-report
+
+원문: [글 파일](src/posts/portfolio-blog-audit-report.md)
+
+- title: 포트폴리오·기술 블로그·면접 자료 정합성 검토 보고서
+- date: 2026-10-25
+- tags: Review, Retrospective, Portfolio, Interview
+- summary: 2026-11-03 기준 경력 프로젝트 3개·블로그 24편·활성 도식 5개를 재검토한 결과 — 완료 항목, 수정한 기술 설명, 구현 근거 확인 과제를 구분한 현행 보고서
 
 ## portfolio-refactoring
 
@@ -159,10 +206,10 @@
 
 원문: [글 파일](src/posts/redis-permission-cache-ttl.md)
 
-- title: 화면마다 권한을 DB에 묻던 시스템 — Redis 캐시와 "세션과 같은 TTL"
+- title: 화면마다 권한을 DB에 묻던 시스템 — Redis 캐시의 TTL과 무효화 정책
 - date: 2025-01-07
 - tags: Java, Spring, Redis, Performance
-- summary: 셀렉트 박스 하나 그릴 때마다 권한 테이블을 조회하던 구조를 Redis 캐시로 바꾸고, TTL을 로그아웃(세션 만료) 시간과 일치시켜 정합성과 속도를 함께 잡은 기록
+- summary: 반복되는 권한 조회를 Redis 캐시로 바꾼 기록 — 고정 TTL과 세션 만료 시각의 차이, 로그아웃·권한 변경 시 무효화의 역할과 남은 검증 과제
 
 ## sxssf-vs-xssf-excel-download
 
@@ -172,4 +219,3 @@
 - date: 2025-11-20
 - tags: Java, POI, Excel, Performance
 - summary: 운영자가 매번 DB를 조회해 손으로 만들던 추출 대장·통계 엑셀을 다운로드 기능으로 구현한 기록 — 건수에 따라 XSSF와 SXSSF를 가르는 기준과 스트리밍 방식의 함정들
-

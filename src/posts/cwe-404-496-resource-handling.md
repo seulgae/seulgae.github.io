@@ -57,7 +57,7 @@ public void setLocations(Resource[] locations) {
 }
 ```
 
-배열을 복사해서 저장하면 외부 변조가 내부에 닿지 않는다. getter로 배열을 내줄 때도
+배열 clone은 배열 컨테이너의 얕은 복사다. 호출자가 배열 원소를 바꾸는 영향은 막지만, 가변 Resource 객체 자체는 공유될 수 있다. getter로 배열을 내줄 때도
 같은 원리(복사본 반환)가 적용된다.
 
 ## 배운 점
