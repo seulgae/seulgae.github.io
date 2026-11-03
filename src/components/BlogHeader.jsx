@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { blogNavigation, paths } from "../routes";
 import profile from "../data/profile";
+import { assetUrl } from "../utils/text";
 import "../styles/blogLayout.css";
 
 /**
@@ -29,9 +30,13 @@ function BlogHeader({ sidebarOpen = false, onToggleSidebar }) {
           </button>
 
           <Link to={paths.blog} className="blog-brand">
-            <span className="blog-brand-mark" aria-hidden="true">
-              DEV
-            </span>
+            <img
+              src={assetUrl(profile.profileImage)}
+              alt=""
+              className="blog-brand-mark"
+              width="32"
+              height="32"
+            />
             <span className="blog-brand-name">{profile.name} 기술 블로그</span>
           </Link>
         </div>

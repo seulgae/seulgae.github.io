@@ -81,27 +81,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: 42px;
+  min-height: 44px;
   color: #ffffff;
   text-decoration: none;
 }
 
 .blog-brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: #3b82f6;
-  color: #ffffff;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 .blog-brand-name {
-  font-size: 1.06rem;
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #f8fafc;
@@ -491,6 +485,15 @@
 }
 
 @media (max-width: 640px) {
+  .blog-brand {
+    gap: 8px;
+  }
+
+  .blog-brand-mark {
+    width: 26px;
+    height: 26px;
+  }
+
   .blog-toggle-text {
     display: none;
   }

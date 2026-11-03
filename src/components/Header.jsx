@@ -91,7 +91,7 @@ function Header({ activeSection, navigateToSection }) {
           onClick={(event) => handleSectionClick(event, "about")}
         >
           <img
-            src={assetUrl(profile.profileThumbnail || profile.profileImage)}
+            src={assetUrl(profile.profileImage)}
             alt=""
             className="site-brand-avatar"
           />

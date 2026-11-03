@@ -16,9 +16,12 @@ function AboutPoster() {
         </span>
         */}
         <h1 className="hero-title">
-          성능과 안정성을 실질적인 개선으로 증명하는
-          <br />
-          백엔드 개발자 {profile.name}입니다.
+          <span className="hero-title-line">
+            성능과 안정성을 실질적인 개선으로 증명하는
+          </span>{" "}
+          <span className="hero-title-line">
+            백엔드 개발자 {profile.name}입니다.
+          </span>
         </h1>
         <p className="hero-subtitle">{profile.intro}</p>
 

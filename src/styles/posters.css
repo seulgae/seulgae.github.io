@@ -141,6 +141,13 @@
   line-height: 1.24;
   letter-spacing: -0.03em;
   color: var(--text);
+  max-width: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.hero-title-line {
+  display: block;
 }
 
 .hero-subtitle {
@@ -470,9 +477,6 @@
   flex-direction: column;
   gap: 1.25rem;
   min-width: 0;
-}
-
-.project-track-card.is-grouped {
   padding: clamp(1.25rem, 2.2vw, 1.75rem);
   border-radius: var(--radius-block);
   background: #ffffff;
@@ -987,7 +991,7 @@
     display: none;
   }
 
-  .project-track-card.is-grouped {
+  .project-track-card {
     padding: 0;
     border: none;
     border-radius: 0;
@@ -1001,8 +1005,9 @@
   }
 
   .hero-title {
-    font-size: 1.42rem;
-    line-height: 1.32;
+    font-size: clamp(1.3rem, 4.6vw, 1.42rem);
+    line-height: 1.45;
+    text-wrap: balance;
   }
 
   .kpi-grid {

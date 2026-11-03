@@ -62,8 +62,7 @@ const profile = {
   keywords: "성능 최적화, 데이터 정합성, 운영 자동화",
   phone: "010-3933-3763",
   email: "r1605866@gmail.com",
-  profileImage: "giltaehyeong.jpg",
-  profileThumbnail: "giltaehyeong-thumbnail.jpg",
+  profileImage: "backend-mark.svg",
   links: {
     portfolio: "https://seulgae.github.io",
     github: "https://github.com/seulgae",
