@@ -348,14 +348,57 @@
   grid-template-rows: subgrid;
   row-gap: 0;
   min-width: 0;
-  padding: 22px;
+  padding: 24px;
   border-radius: var(--radius-block);
-  background: var(--surface);
+  background: linear-gradient(160deg, var(--accent-wash), var(--surface) 25%);
   border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 5px 16px rgba(15, 36, 71, 0.04);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.skill-matrix-card:hover,
+.skill-matrix-card:focus-within {
+  border-color: var(--accent-border);
+  border-top-color: var(--accent);
+  box-shadow: 0 10px 26px rgba(15, 118, 110, 0.09);
+}
+
+.skill-card-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.skill-card-heading > div {
+  min-width: 0;
+}
+
+.skill-card-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.skill-card-eyebrow {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--accent-ink);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
 }
 
 .skill-matrix-card h3 {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 1.06rem;
   color: var(--text);
   line-height: 1.5;
@@ -369,6 +412,10 @@
   line-height: 1.6;
   color: var(--muted);
   word-break: keep-all;
+}
+
+.project-achievement-card[id] {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
 }
 
 .skill-tech-stack {
@@ -396,8 +443,10 @@
   padding: 3px 9px;
   font-size: 0.76rem;
   font-weight: 600;
-  background: var(--accent-wash);
-  border-color: var(--accent-border);
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--text);
+  border-radius: 7px;
 }
 
 .tech-grid {
@@ -421,9 +470,14 @@
 }
 
 .skill-matrix-evidence {
+  display: flex;
+  flex-direction: column;
   margin: 0;
-  padding-top: 12px;
-  border-top: 1px dashed var(--line);
+  padding: 16px;
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent-wash);
   font-size: 0.84rem;
   line-height: 1.6;
   color: var(--muted);
@@ -444,6 +498,39 @@
 
 .skill-matrix-evidence > p {
   margin: 0;
+}
+
+.skill-blog-links {
+  margin-top: 14px;
+}
+
+.skill-blog-links .evidence-chip {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.skill-matrix-evidence .skill-blog-links {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.skill-matrix-evidence .skill-blog-links .evidence-chip {
+  width: 100%;
+  border-radius: 8px;
+  line-height: 1.65;
+  text-decoration: none;
+}
+
+.skill-blog-links .evidence-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-matrix-card {
+    transition: none;
+  }
 }
 
 

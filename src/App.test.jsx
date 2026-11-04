@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, expect, test } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
 import App from "./App";
 import projects from "./data/projects";
 import { getAllPosts, getCategoryTree } from "./lib/posts";
@@ -24,6 +24,28 @@ beforeEach(() => {
     writable: true,
     configurable: true,
   });
+});
+
+test("성과 링크는 대상 카드로 스크롤한 뒤 강조하고 재클릭하면 효과를 다시 재생한다", async () => {
+  await renderAt(paths.home);
+  const target = document.getElementById("achievement-query-index-tuning");
+  const scroll = vi.fn();
+  const cancel = vi.fn();
+  const animate = vi.fn(() => ({ cancel }));
+  target.scrollIntoView = scroll;
+  target.animate = animate;
+  const link = screen.getByRole("link", { name: /조회 성능 개선 사례/ });
+
+  await userEvent.click(link);
+  expect(scroll).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+  expect(animate).not.toHaveBeenCalled();
+  fireEvent(document, new Event("scrollend"));
+  expect(animate).toHaveBeenCalledTimes(1);
+
+  await userEvent.click(link);
+  expect(cancel).toHaveBeenCalledTimes(1);
+  fireEvent(document, new Event("scrollend"));
+  expect(animate).toHaveBeenCalledTimes(2);
 });
 
 test("출력용 이력서는 자격 날짜의 의미를 함께 표시한다", async () => {
@@ -141,7 +163,10 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   const dbAchievement = within(combinedCard).getByText("이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증").closest("li");
   expect(within(dbAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
   expect(within(dbAchievement.nextElementSibling).getByRole("button", { name: /Kafka GW 시스템 아키텍처/ })).toBeInTheDocument();
-  const refactoringAchievement = within(combinedCard).getByText("코드 리팩토링 및 개발 컨벤션 표준화").closest("li");
+  expect(within(combinedCard).queryByText("코드 리팩토링 및 개발 컨벤션 표준화")).not.toBeInTheDocument();
+  const apiCard = screen.getByRole("heading", { name: "비즈니스 로직 구현 및 API 개발" }).closest("article");
+  expect(within(apiCard).getByRole("link", { name: /코드 표준화 회고/ })).toHaveAttribute("href", "/blog/backend-code-convention-standardization");
+  const refactoringAchievement = within(combinedCard).getByText("Redis 권한 조회 캐시 구현 및 응답 개선").closest("li");
   expect(within(refactoringAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
   expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
 

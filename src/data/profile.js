@@ -4,9 +4,9 @@
 
 const skillCompetencies = [
   {
-    category: "요구사항을 API로 구현하는 개발",
+    category: "비즈니스 로직 구현 및 API 개발",
     resumeLabel: "Back-End",
-    relatedPosts: [{ slug: "backend-code-convention-standardization", label: "팀 코드 구조·개발 규칙 표준화" }],
+    blogLinks: [{ slug: "backend-code-convention-standardization", label: "코드 표준화 회고" }],
     summary: "업무 요구에 맞춰 도메인별 조회 SQL과 API를 구현하고, 팀이 함께 수정하기 쉬운 코드 구조를 정리합니다.",
     items: [
       "Java",
@@ -25,6 +25,7 @@ const skillCompetencies = [
   },
   {
     category: "조회 병목을 분석하는 성능 개선",
+    detailAnchor: "achievement-query-index-tuning",
     resumeLabel: "Database / Cache",
     relatedPosts: [
       { slug: "cubrid-query-plan-index-tuning" },
@@ -38,6 +39,7 @@ const skillCompetencies = [
   },
   {
     category: "운영 문제를 해결하는 안정성 개선",
+    categoryLink: { category: "sast-cwe", label: "보안 취약점 개선 기록" },
     resumeLabel: "Infra / Tools",
     relatedPosts: [
       { slug: "cwe-476-null-dereference" },

@@ -59,7 +59,7 @@ function ProjectWorkScope({ project, onOpenArchitecture }) {
 
               return (
                 <Fragment key={ach.title}>
-                <li className="project-achievement-card">
+                <li className="project-achievement-card" id={ach.anchorId}>
                   <div className="project-achievement-header">
                     <strong className="project-achievement-title">{ach.title}</strong>
                     {ach.result ? (

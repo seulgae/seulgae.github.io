@@ -105,6 +105,7 @@ const projects = [
       */
       {
         title: "운영 행정망 Slow Query 분석 및 인덱스 튜닝",
+        anchorId: "achievement-query-index-tuning",
         detail:
           "실행계획을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
         result: "조회 53초 → 1초 미만, 이후 월간 점검에서 해당 화면의 Slow Query 관련 특이사항 0건",
@@ -255,6 +256,7 @@ const projects = [
       },
       {
         title: "Redis 권한 조회 캐시 구현 및 응답 개선",
+        architectureSlug: "cloudxper-billing",
         detail:
           "Redis 권한 캐싱으로 반복 DB 조회 감소, TTL 설정 및 로그아웃·권한 변경 시 캐시 무효화 처리",
         result:
@@ -263,6 +265,7 @@ const projects = [
           { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 TTL·무효화" },
         ],
       },
+      /*
       {
         title: "코드 리팩토링 및 개발 컨벤션 표준화",
         architectureSlug: "cloudxper-billing",
@@ -274,6 +277,7 @@ const projects = [
           { slug: "backend-code-convention-standardization", label: "4인 백엔드 코드 표준화 & PDF 컨벤션 공유기" },
         ],
       },
+      */
     ],
   },
 ];
