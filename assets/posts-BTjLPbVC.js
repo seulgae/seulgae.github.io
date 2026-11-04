@@ -1,19 +1,19 @@
 var e=`---
-title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 사원급에서 PDF 컨벤션을 만들어 표준화하기까지
+title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 예제 코드와 PDF 가이드로 개발 기준 맞추기
 date: 2024-12-12
 tags: Java, Spring, MyBatis, Architecture
-summary: PM을 겸임하던 팀장님을 대신해 사원급 정규직으로서 백엔드 실무 기준을 맡아, 4명이 각자 다른 스타일로 작성하던 List 자료형 기반 selectList 코드를 Request/Response DTO·Model·Builder 패턴으로 리팩토링하고 PDF 가이드로 표준화한 기록
+summary: 4명이 서로 다른 방식으로 작성하던 조회 코드를 Request/Response DTO·Model·Builder 구조로 정리하고, 예제 코드와 PDF 가이드를 공유해 팀의 개발 기준을 맞춘 기록
 ---
 
 클라우드 빌링 플랫폼 고도화 프로젝트에서는 **백엔드 개발자 4명**이 가입, 청구, 상품, 공통 조회 등의 도메인을 나누어 동시에 REST API를 개발하고 있었다.
 
-당시 팀의 인력 구성에는 특수한 사정이 있었다. 백엔드 4명 중 **소속 정규직은 사원급이던 나 한 명**이었고, 나머지 분들은 프로젝트에 파견 투입된 **프리랜서 개발자분들**과 기존 레거시 **시스템 운영 위주로 경력을 쌓아 신규 API 개발 패턴에는 아직 익숙하지 않았던 선임 인력**으로 구성되어 있었다. 게다가 함께 방향을 잡아주시던 **팀장님은 프로젝트 PM 역할까지 대행**하시느라 전체 일정 조율과 대외 업무만으로도 여력이 없는 상황이었다.
+당시 팀은 프로젝트에 참여한 외부 개발자와 기존 시스템의 운영 경험을 쌓아온 동료 등 **서로 다른 경험을 가진 백엔드 개발자 4명**으로 구성되어 있었다. 나는 프로젝트 종료 후에도 코드를 운영·유지보수할 내부 개발자로 참여했다. **팀장님은 PM 업무도 함께 맡고 있어** 일정 조율과 대외 업무를 병행하고 있었다.
 
-결국 프로젝트가 끝난 뒤에도 남아서 이 코드를 계속 운영·유지보수해야 할 내부 인력으로서, **백엔드 실무 단에서는 사원급인 내게 사실상 PL(파트 리드)에 준하는 역할과 책임이 분담**되어 있었다. 가장 기본이 되는 단일 \`selectList\` 조회 API조차 4명의 코드 모양이 제각각으로 갈라지는 상황에서, 직접 패턴을 정립하고 **PDF 가이드 문서로 만들어 팀 회의에서 주도적으로 공유·통일했던 과정**을 기록해 둔다.
+프로젝트 이후의 유지보수를 고려해 **백엔드 코드 구조와 작성 규칙의 초안을 정리하는 역할**을 맡았다. 같은 \`selectList\` 조회 API도 개발자마다 작성 방식이 달라, 공통 패턴을 제안하고 **PDF 가이드로 정리해 팀 회의에서 공유·조율했던 과정**을 기록해 둔다.
 
 ## 배경 — 서로 다른 배경의 4명, 네 가지 모양의 \`selectList\` 코드
 
-당시 프로젝트는 Spring Boot 3.x와 MyBatis 기반이었는데, 각자 일해온 현장 스타일(빠른 진도 위주의 SI 프리랜서 방식, 기존 유지보수·운영 중심 방식 등)이 다르다 보니 합의된 패키지 규칙이나 객체 작성 표준이 없었다. 똑같이 MyBatis \`selectList\`로 \`List<자료형>\` 목록을 조회해 프론트엔드(React)로 내려주는 기능 하나를 만들어도 작성자마다 구조가 완전히 달랐다.
+당시 프로젝트는 Spring Boot 3.x와 MyBatis 기반이었다. 각자 익숙한 개발 방식이 달랐고, 팀에서 합의한 패키지 규칙이나 객체 작성 표준은 아직 없었다. 같은 MyBatis \`selectList\` 결과를 \`List<자료형>\`으로 받아 프론트엔드(React)에 내려주는 기능도 작성자마다 구조가 달랐다.
 
 | 구분 | 현장에서 섞여 있던 작성 방식들 | 겪었던 문제 |
 | --- | --- | --- |
@@ -22,7 +22,7 @@ summary: PM을 겸임하던 팀장님을 대신해 사원급 정규직으로서 
 | **객체 생성·조립** | 기본 생성자(\`new\`) 후 \`setter\` 수십 줄 나열로 \`List\` 원소 복사·가공 | 불필요한 가변 상태 노출, 메서드마다 똑같은 \`setter\` 조립 코드가 반복되며 가독성 저하 |
 | **입력값 검증 및 명명** | 컨트롤러 \`if (vo.get...() == null)\` 수동 분기 vs MyBatis XML \`<if>\`에만 의존, 메서드명(\`get/select/find\`) 혼용 | 필수 파라미터 누락 시 에러 응답 형태와 메서드 규칙이 API마다 달라짐 |
 
-팀장님은 PM 업무로 바쁘시고 외부 투입 인력분들은 각자 익숙한 방식으로 빠르게 화면을 개발해 나가는 상황에서, 지금 기준을 세우지 않으면 프로젝트 종료 후 남겨진 코드를 유지보수할 때 감당하기 어려운 부채가 될 것이 분명했다.
+각자 맡은 기능 개발을 진행하는 동안 코드 작성 방식의 차이가 쌓이고 있었다. 프로젝트 종료 후에도 코드를 함께 수정하고 유지보수하려면 공통 기준을 정리할 필요가 있다고 느꼈다.
 
 ## AS-IS — 표준 없는 단일 \`selectList\`가 만들던 비용
 
@@ -64,7 +64,7 @@ public ResponseEntity<List<ProductVO>> getProductList(ProductVO searchParam) {
 
 ## 먼저 코드로 증명하기 — 패키지 재정립과 Request/Response · Model · Builder 패턴화
 
-아무리 백엔드 실무 책임이 내게 넘어와 있었다 해도, 직급상 사원급인 내가 연차가 높은 프리랜서·선임 개발자분들께 구두로만 "앞으로 이렇게 짜주세요"라고 요청하면 번거로운 규칙 강요로 느껴지기 쉬웠다. 특히 운영 업무 위주였던 동료분도 큰 어려움 없이 바로 따라 쓸 수 있으려면 **기준이 명확하면서도 예시 코드가 직관적**이어야 했다.
+익숙한 작성 방식을 바꾸자고 제안하려면 구두 설명만으로는 부족했다. 동료들이 변경 이유를 이해하고 바로 적용할 수 있도록 **명확한 기준과 실제 동작하는 예제 코드**가 필요했다.
 
 그래서 가이드를 만들기 전에 **내가 맡고 있던 가입·상품·공통 조회 API에 먼저 표준 구조를 적용해 동작하는 레퍼런스 코드부터 완성**했다. 핵심 기준은 세 가지였다.
 
@@ -148,9 +148,9 @@ public class ProductServiceImpl implements ProductService {
 
 이렇게 정리하자 컨트롤러는 서너 줄로 얇아졌고, Swagger 문서에는 해당 API에 실제로 필요한 요청 파라미터와 응답 필드만 깔끔하게 분리되어 나타났다.
 
-## PDF 가이드 제작과 팀 회의 공유 — 사원급 PL 역할로서 합의를 이끌어내기까지
+## PDF 가이드 제작과 팀 회의 공유 — 예제를 바탕으로 개발 기준 합의하기
 
-레퍼런스 리팩토링을 마친 뒤, 함께 일하는 프리랜서 개발자분들과 신규 개발 패턴이 낯선 선임 동료분까지 내 소스를 일일이 찾아보지 않고도 옆에 띄워두고 그대로 작성할 수 있도록 **핵심 규칙과 예제를 압축한 PDF 컨벤션 가이드**를 직접 제작했다.
+레퍼런스 리팩토링을 마친 뒤, 동료들이 내 소스를 일일이 찾아보지 않고도 참고할 수 있도록 **핵심 규칙과 예제를 담은 PDF 컨벤션 가이드**를 직접 제작했다.
 
 추상적인 원칙 나열 대신 실무에서 바로 복사해 참고할 수 있는 구성으로 채웠다.
 
@@ -158,16 +158,16 @@ public class ProductServiceImpl implements ProductService {
 - **단일 \`selectList\` / 단건 조회 / 등록·수정 Before → After 비교 코드** (단일 VO + \`setter\` 나열 구조를 \`List<Model>\` → \`List<ResponseDTO>\` + \`@Builder\`로 전환하는 실전 템플릿)
 - **검증·예외·어노테이션 기준** (\`@Valid\` 적용 위치, 무분별한 \`@Setter\` 지양 이유, 생성자 레벨 \`@Builder\` 권장 패턴)
 
-준비한 PDF 파일을 들고 팀 회의 시간에 발표를 요청해 백엔드 개발자 전원에게 공유했다. PM 업무까지 도맡아 분주하셨던 팀장님께도 백엔드 코드 품질 기준을 대신 챙겨 정리해 간 결과물이 되었고, 연차가 높은 외부·선임 개발자분들 앞에서는 사원급으로서 조심스러우면서도 꽤 당돌한 제안이었다.
+팀 회의에서 발표 시간을 요청해 준비한 PDF 가이드를 백엔드 개발자 전원에게 공유했다. 내가 정리한 초안을 바탕으로 각자의 경험과 의견을 듣고, 함께 적용할 기준을 맞추고자 했다.
 
 그래서 발표의 초점을 **"누구의 방식이 맞고 틀리다"가 아니라 "배경이 다른 우리가 서로의 코드를 5분 안에 읽고 교차 수정할 수 있도록 틀을 맞추자"**에 두었다. 말로만 규칙을 요구한 것이 아니라 실제 동작하는 템플릿 코드와 한눈에 들어오는 PDF 가이드를 함께 제시해 전환 허들을 낮추자, 동료분들 모두 열린 마음으로 제안을 받아들여 주셨다.
 
-특히 정말 다행이고 감사했던 점은, **내가 사원급으로서 기술 역량이나 경험 면에서 미처 챙기지 못했던 부분들을 함께 일하던 고년차 프리랜서 개발자분들께서 적극적으로 도와주시고 실무 가이드를 보태주셨다는 것**이다. 내가 내부 정규직으로서 프로젝트의 패키지 구조와 컨벤션 초안을 잡아 오면, 고년차 분들께서는 현업에서 겪어본 예외 처리 노하우나 복잡한 쿼리·트랜잭션 경계에서 주의할 점들을 짚어주시며 기준을 훨씬 단단하게 다듬어 주셨다. 어느 한 사람이 일방적으로 끌고 간 것이 아니라, 서로의 강점을 보태어 다 같이 좋은 결과를 만들어낼 수 있었다.
+**초안에서 놓친 부분은 경험이 풍부한 동료들의 조언으로 보완했다.** 내가 패키지 구조와 컨벤션 초안을 정리하면, 동료들은 예외 처리나 복잡한 쿼리·트랜잭션 경계에서 주의할 점을 짚어주었다. 제안을 구체화하고 서로의 경험을 더하는 과정에서 팀이 함께 사용할 기준을 다듬을 수 있었다.
 
 ## 결과
 
-- **4인 백엔드 코드베이스 일원화 및 온보딩·적응 시간 단축**: 이후 작성되는 단일 \`selectList\` 조회부터 신규 도메인 API까지 모두 동일한 패키지 계층과 \`Request/Response DTO · Model · @Builder\` 구조를 따르게 되었다. 외부 투입 인력이나 기존 운영 중심이던 동료분도 PDF 템플릿을 보며 일관된 품질로 API를 작성할 수 있게 되었고, 도메인 간 교차 수정 및 온보딩 시간이 눈에 띄게 줄었다.
-- **객체 생성 중복 제거 및 프론트엔드 협업 효율 향상**: 메서드마다 길게 늘어지던 \`setter\` 나열 코드가 \`@Builder\`와 정적 변환 메서드로 일원화되어 코드 가독성과 유지보수성이 크게 높아졌다. 또한 만능 VO 대신 요청과 응답 DTO가 분리되면서 Swagger 명세가 정확해져 프론트엔드와의 필드 확인 커뮤니케이션 비용도 눈에 띄게 줄었다.
+- **4인 백엔드 코드 구조와 작성 기준 통일**: 이후 작성되는 단일 \`selectList\` 조회부터 신규 도메인 API까지 모두 동일한 패키지 계층과 \`Request/Response DTO · Model · @Builder\` 구조를 따르게 되었다. 팀원들이 PDF 템플릿을 참고해 같은 구조로 API를 작성하고, 다른 도메인의 코드를 수정할 때도 공통 기준을 참고할 수 있게 됐다. 온보딩 시간의 전후 측정 기록은 남기지 않아 시간 단축을 정량 성과로 제시하지 않는다.
+- **객체 생성 중복 제거 및 프론트엔드 협업 효율 향상**: 메서드마다 길게 늘어지던 \`setter\` 나열 코드가 \`@Builder\`와 정적 변환 메서드로 일원화되어 객체 생성·조립 위치와 방식을 파악하기 쉬워졌다. 또한 만능 VO 대신 요청과 응답 DTO가 분리되면서 Swagger에서 요청과 응답 필드를 구분해 확인할 수 있었다. 협업 비용 감소는 정성적으로 관찰한 변화이며 별도 측정한 수치는 없다.
 - **후속 성능 개선의 발판 마련**: 화면별로 흩어져 있던 조회·조립 코드를 \`ServiceImpl\`과 명확한 \`List<Model>\` / \`List<DTO>\` 구조로 정돈해 둔 덕분에, 뒤이어 터진 [100만 건 대용량 조회 성능 병목 개선 작업](/blog/mybatis-builder-parallel-refactoring)에서도 컨트롤러 곳곳을 헤매지 않고 서비스 계층에서 신속하게 병렬 처리를 적용할 수 있었다.
 
 ## 한계 회고 — 지금 다시 한다면
@@ -182,10 +182,10 @@ public class ProductServiceImpl implements ProductService {
 
 ## 배운 점
 
-- **역할은 직급이 아니라 '누가 이 코드의 내일을 책임지는가'에서 나온다.**  
-  팀장님이 PM 역할까지 겸임하며 바쁘신 상황에서 사원급 정규직이던 내가 백엔드 실무 기준의 초안을 잡아야 했는데, 부담스럽더라도 먼저 움직여 틀을 제안한 덕분에 프로젝트 후반부의 유지보수 비용을 크게 아낄 수 있었다.
-- **표준화는 혼자 완성하는 영웅담이 아니라 '서로의 빈곳을 채우는 협업'이다.**  
-  신규 패턴이 낯선 동료를 위해서는 바로 참고할 수 있는 PDF 예제 템플릿으로 장벽을 낮추고, 사원급이던 내게 부족했던 기술적 깊이들은 고년차 프리랜서 분들의 조언과 가이드로 채워 넣었기에 백엔드 4명 모두가 만족하는 좋은 결과로 이어질 수 있었다.
+- **유지보수를 맡을 개발자의 관점에서 필요한 기준을 먼저 제안할 수 있다.**
+  프로젝트 이후에도 코드를 관리해야 했기에 작성 방식의 차이를 그대로 두기 어려웠다. 직접 예제와 가이드 초안을 준비해 논의를 시작했고, 이후 팀이 서로의 코드를 수정할 때 참고할 기준을 마련했다.
+- **표준화는 초안을 제안하고 동료의 경험으로 보완하는 과정이다.**
+  PDF 예제는 공통 구조를 적용하는 데 도움을 주었고, 내가 놓친 기술적 고려사항은 동료들의 조언으로 보완했다. 문서를 작성하는 것만큼 함께 검토하고 적용할 수 있는 기준으로 만드는 과정이 중요했다.
 `,t=`---
 title: csql과 nohup — 운영 중인 DB에 수백만 건 패치를 조용히 밀어 넣는 법
 date: 2026-07-08
@@ -762,7 +762,7 @@ public static void main(String[] args) {
 title: CWE-676 위험한 API 사용 — eval을 지우기 전에 해야 하는 일
 date: 2026-08-12
 tags: Security, JavaScript, Java, SAST
-summary: 레거시 JS의 eval 두 종류를 호출부 전수조사 후 안전한 문법으로 대체하고, deprecated API를 정리한 기록
+summary: 레거시 JS의 eval 호출부를 조사해 문자열 평가를 제거하고 deprecated API를 정리한 기록 — 동적 콜백 허용 범위는 추가 확인 과제로 구분
 ---
 
 **CWE-676(잠재적으로 위험한 함수 사용)** 검출의 주인공은 예상대로 JavaScript의
@@ -1332,7 +1332,7 @@ summary: 실제 개선 경험과 기술 원리·후속 설계를 구분해 정�
 
 ## 프로젝트 개요와 설명 범위
 
-[CloudXper 클라우드 빌링 플랫폼 고도화](/#project-cloudxper-billing)는 AWS·GCP·Azure·Kakao의 대여·청구 정보를 통합 관리하는 플랫폼이다. (주)애버커스 빌링시스템팀에서 2024.10~2025.02 플랫폼 백엔드 개발을 담당했다. 가입·청구·상품·공통 조회 API, 권한 조회 캐시, 조회·객체 조립 구조와 팀 컨벤션 개선이 설명할 범위다.
+[CloudXper 클라우드 빌링 플랫폼 고도화](/#project-cloudxper-billing)는 AWS·GCP·Azure·Kakao의 대여·청구 정보를 통합 관리하는 플랫폼이다. (주)애버커스 빌링시스템팀에서 2024.10~2025.02 플랫폼 백엔드 개발을 담당했다. 가입·청구·상품·공통 조회 API, 권한 조회 캐시, 조회·객체 조립 구조와 팀 컨벤션 개선이 설명할 범위다. 청구 업무에서는 산정 쿼리를 작성해 결과를 제공하는 도메인별 API 구현을 수행했다(2026-11-04 저자 확인). 이 경험은 조회 SQL과 API 구현 범위로 설명한다.
 
 주요 기술은 Spring Boot 3.x, Java, REST API, MyBatis, MySQL, Redis, Gradle이다. React는 연동 화면의 기술이며 프런트엔드 전체를 개발했다고 주장하지 않는다. Jenkins·GitLab·SonarQube는 사용 기술 목록에 있으나 구체적인 CI 단계나 품질 개선율은 확인되지 않았다.
 
@@ -2775,6 +2775,177 @@ P0은 사실관계·보안, P1은 경험 설명·면접 근거, P2는 추가 학
 
 사이트 테스트·빌드는 문서 렌더링과 기존 화면의 회귀 확인이며 업무 시스템 Java/SQL의 실행 검증이 아니다. 구체적인 검증 결과와 파일 목록은 저장소 루트 DOCUMENTATION_REVIEW_20261103.md에 기록한다. 커밋·배포·업무 서버 접속·기존 참고 코드 삭제는 수행하지 않는다.
 `,x=`---
+title: 포트폴리오를 다시 읽으며 — 소개·핵심 역량·프로젝트·블로그 사이의 설명 맞추기
+date: 2026-11-04
+tags: Portfolio, Review, Retrospective, Career
+summary: 소개·역량·프로젝트·이력서의 표현 차이를 점검하고 권한 캐시·조회 성과·자격 날짜·공유 설명을 보완했다. 도메인 API·청구 산정 SQL 구현 범위와 남은 확인 과제를 정리한 기록
+---
+
+포트폴리오의 첫 화면을 여러 번 고쳤다. 운영과 성능 개선의 성과를 나열하던 소개에서, 어떤 방식으로 문제를 해결하고 어떤 개발을 하고 싶은지 설명하는 소개로 바꿨다. 핵심 역량은 수행 업무와 사용 기술로 정리했고, 수치와 상세 글은 프로젝트 경험에서 확인하도록 했다.
+
+하지만 첫 화면을 고쳤다고 모든 설명이 함께 정리되는 것은 아니었다. 같은 데이터를 쓰는 이력서도 출력하는 항목이 달랐고, 블로그 본문에서 조심스럽게 설명한 경험이 프로젝트 카드에서는 더 넓은 성과로 읽히는 부분이 남아 있었다.
+
+**현재 가장 필요한 보완은 성과를 더 크게 표현하는 일이 아니라, 이미 한 일을 같은 범위와 근거로 설명하는 일이다.** 이 글은 2026년 11월 4일 로컬 작업본을 기준으로 확인한 결과다.
+
+## 무엇을 기준으로 점검했나
+
+- 홈 소개와 01 핵심 역량: \`profile.js\`, \`AboutPoster.jsx\`, \`SkillsPoster.jsx\`.
+- 경력 프로젝트 3개와 구성도: \`projects.js\`, \`projectArchitecture.js\`, \`architectureDiagrams.js\`, \`BillingArchitecture.jsx\`.
+- 출력용 이력서와 기본 정보: \`ResumePage.jsx\`, 학력·수상·자격 데이터.
+- 검색·공유 설명: \`index.html\`의 description, Open Graph, Twitter 메타데이터.
+- 기존 게시글 24편의 제목·요약·주제와 관련 수치·역할 표현. 주요 경험 글, 면접 자료 3편, 이전 검토 보고서를 대조했다.
+
+검토는 **문서와 화면 출력 코드의 일관성 점검**이다. 회사 업무 원본 소스, 운영 로그, 실제 DB, 외부 증빙·PDF 본문을 새로 검증한 것은 아니다. 기술별 전체 실행 검증이나 모든 화면 크기의 시각 검증도 포함하지 않는다.
+
+[이전 기술 검토 보고서](/blog/portfolio-blog-audit-report)는 11월 3일 기준의 기술 설명과 구현 확인 과제를 다룬다. 이번 글은 그 이후 소개·역량 카드·컨벤션 글을 수정한 상태에서, 채용 담당자와 개발자가 읽는 설명이 이어지는지 살핀 후속 기록이다. 이전 보고서의 검토일과 당시 게시글 수는 과거 시점의 기록으로 남긴다.
+
+초기 검토의 발견 사항과 2026-11-04 반영 결과를 함께 기록했다. 표현·출력 수정은 아래 적용 내역에서 구분하고, 측정 원본과 실제 구현 확인이 필요한 항목은 후속 과제로 남겼다.
+
+## 먼저, 서로 다르다고 볼 필요가 없는 부분
+
+### 소개의 ‘고도화 프로젝트’와 상세의 정식 명칭
+
+소개와 01번에서 쓰는 ‘시스템 고도화 프로젝트’는 익숙한 말로 요약한 표현이다. 상세의 [CloudXper 프로젝트](/#project-cloudxper-billing)는 해당 경험을 식별하는 정식 명칭이다. 모든 곳의 프로젝트 이름을 지울 필요는 없다.
+
+다만 공공 시스템도 고도화 경험이므로, 상세로 넘어갈 때 어느 프로젝트의 이야기인지 연결되어야 한다. 소개는 넓게 쓰고, 프로젝트 카드와 블로그에서는 이름·기간·담당 업무를 분명히 쓰는 구성이 적절하다.
+
+### 약 3년 7개월의 경력과 겹치는 프로젝트 기간
+
+초기 검토 당시 소개에는 약 3년 7개월, 이력서에는 \`3년+\`가 표시됐다. 이번 보완에서 이력서도 ‘약 3년 7개월’로 맞췄다.
+
+회사 기간은 2022.11~2025.05와 2025.09~2026.08이다. 시작·종료 월을 포함한 월 단위 계산으로는 31개월과 12개월, 총 43개월이다. 정확한 일 단위 경력은 입·퇴사일을 기준으로 계산해야 한다. 2024.10~2025.02 고도화 프로젝트는 첫 회사 재직 기간 안에 있으므로 경력에 별도로 더하지 않는다.
+
+### 병렬 조회 성과와 후속 개선안
+
+[병렬 조회 글](/blog/mybatis-builder-parallel-refactoring), 프로젝트 카드, 면접 자료의 최종 성과는 **10분 → 30초 이내**로 맞춰져 있다. 이전 1분 15초는 최신 사용자 확인으로 대체된 과거 기록이다. 병렬화 성과를 쿼리 호출 수 감소나 N+1 제거 성과로 바꾸지 않은 점도 유지해야 한다.
+
+저장소의 \`AGENTS.md\`에 남았던 1분 15초 메모도 최종 확인값인 30초 이내로 갱신했다. 당시 성과는 병렬화이며 집합 조회는 후속안이라는 구분은 유지했다.
+
+### 숨겨둔 성과와 공개 블로그
+
+POI 엑셀 다운로드는 빌링 업무 중 개발한 일반 기능으로 확인된 경험이다. 블로그에 설명하면서 핵심 성과 카드에는 표시하지 않는 것은 의도된 선택이다. 대량 암호화나 다른 참고 항목의 주석도 복원·삭제 대상으로 간주하지 않았다.
+
+01번의 블로그 블록을 제거한 것도 의도된 화면 구성이다. 그 자리에 링크나 수치를 다시 넣는 것을 개선 과제로 삼지 않는다. 상세 근거는 프로젝트 경험과 관련 글에서 제공하면 된다.
+
+## 초기 검토에서 확인한 표현 차이
+
+우선순위 ‘높음’은 읽는 사람이 사실 범위를 다르게 이해할 수 있는 항목, ‘중간’은 설명의 구체성과 연결을 보완할 항목이다. 운영 시스템의 장애 등급을 뜻하지 않는다.
+
+| 우선순위 | 위치 | 현재 발견한 차이 | 권장 방향 |
+| --- | --- | --- | --- |
+| 높음 | \`projects.js\` Redis 업무·성과 제목 ↔ 권한 캐시 글·구성도 | 카드에는 ‘OAuth 사용자 인증 정보’, ‘인증 아키텍처 최적화’가 있으나 상세 근거의 중심은 사용자별 권한 조회 결과 캐시다 | 확인된 범위에 맞춰 ‘권한 조회 캐시 구현 및 응답 개선’으로 좁힌다. 인증 체계 전체를 설계한 인상을 피한다 |
+| 높음 | \`licenses.js\` ↔ \`ResumePage.jsx\` | 데이터에는 ‘합격자 발표일 기준’이 있지만 이력서는 설명을 출력하지 않고 모든 날짜를 ‘취득일’ 열에 넣는다 | 이력서에도 날짜의 기준을 표시한다. 합격 상태에 대한 사용자 확인과 날짜 표시 문제를 구분한다 |
+| 높음 | \`profile.strengths\` ↔ 현재 홈 소개 | 홈에서 제외한 ‘정합성을 끝까지 책임집니다’, ‘잠재 리스크를 구조적으로 제거합니다’가 이력서 핵심 요약에는 남아 있다 | 수행한 행동과 확인 범위로 표현을 좁힌다. 홈에서 보이지 않는다고 미사용 데이터로 삭제하면 안 된다 |
+| 중간 | \`index.html\` ↔ 홈 인사말 | 검색·공유 설명은 운영 안정화·자동화 중심이고 홈은 요구사항 분석·설계·구현을 앞세운다 | 공유 설명도 개발과 고도화 방향을 포함하도록 정리한다 |
+| 중간 | 공공 프로젝트의 쿼리 성과 ↔ CUBRID 글 | 카드는 ‘53초 소요 Slow Query 개선’까지만 적고, 글의 ‘1초 미만’ 결과는 빠져 있다 | 측정 결과를 쓰려면 전후를 함께 적는다. 서로 다른 수치가 아니라 요약에서 결과가 누락된 경우다 |
+| 중간 | 같은 카드의 ‘월간 운영 점검 특이사항 0건’ ↔ CUBRID 글 | 글은 해당 화면의 Slow Query 특이사항을 말하지만 카드 문장은 전체 운영 점검 결과처럼 읽힐 수 있다 | ‘해당 화면의 Slow Query 관련 특이사항’으로 대상을 한정한다 |
+| 중간 | SSH 프로젝트 성과 ↔ SSH 글 | 카드는 ‘사용률 30% 이하 관리’를 강조하고 글은 4시간 주기 수집·화면 조회·월말 보고 개선을 설명한다 | 기능 개발 결과와 운영 상태 지표를 분리한다. 수집 기능이 용량 감소의 원인인 것처럼 연결하지 않는다 |
+| 중간 | 컨벤션 글 결과 ↔ 면접 자료 | 글에는 온보딩 시간이 ‘눈에 띄게 줄었다’고 적혀 있지만 면접 자료는 측정 기록이 없음을 명시한다 | 정성적으로 관찰한 변화임을 밝히고, 예제 재사용·코드 탐색 등 구체적인 작업 변화로 설명한다 |
+| 중간 | 01 사용 기술 목록 ↔ 프로젝트별 담당 범위 | SQLD 자격이 DB 기술과 섞여 있고 React·Jenkins 등은 사용 깊이가 구분되지 않는다 | 자격과 기술의 분류를 구분하고, 개발·연동·도구 사용 범위를 상세 프로젝트에서 설명한다 |
+
+정보처리기사의 합격 상태와 발표일이라는 의미는 사용자 확인을 받았다. 여기서 지적하는 것은 합격 여부가 아니라 **이력서에 날짜의 의미가 전달되지 않는 출력 차이**다. 외부 자격 증명을 검증했다는 뜻도 아니다.
+
+## 반영한 내용과 실제 업무 범위
+
+| 항목 | 반영 결과 |
+| --- | --- |
+| Redis | 주요 업무·성과 제목을 권한 조회 캐시 범위로 수정했다. 응답 수치에는 원문 기록과 측정 구간 확인 필요를 표시했다 |
+| 자격 날짜 | 정보처리기사에 날짜 기준 필드를 두고 이력서의 ‘일자·기준’ 열에도 합격자 발표일을 출력했다 |
+| 이력서 핵심 요약 | API·SQL 구현, 코드 표준화, 성능 개선, 대사·보정·재검증 등 수행 행동으로 정리했다 |
+| 검색·공유 소개 | API 구현과 시스템 고도화 방향을 description·Open Graph·Twitter에 맞췄다 |
+| 공공 조회 성과 | 53초 → 1초 미만을 함께 적고, 점검 특이사항 0건의 대상을 해당 화면의 Slow Query로 한정했다 |
+| 서버 점검 | 사용률 자체 대신 4시간 주기 수집·화면 조회·월말 보고 개선을 성과로 설명했다 |
+| 컨벤션 | 온보딩 단축을 정량 성과처럼 강조하던 표현을 예제·문서 공유와 공통 기준 마련으로 바꿨다 |
+| 기술 분류 | SQLD는 자격 영역에서 제공하고 DB 기술 태그에서는 제외했다. 고도화 프로젝트의 React 연동 화면과 Jenkins·GitLab·SonarQube 사용 도구를 구분했다 |
+| 참고·기술 글 | 과거 성능 메모를 갱신하고 CWE-676 요약을 eval 제거라는 실제 조치 범위로 좁혔다 |
+
+### 도메인 API 구현은 어느 정도 설명하면 되는가
+
+2026-11-04 저자 확인에 따르면 청구 업무는 **도메인에 맞는 산정 쿼리를 작성해 결과를 제공하는 API 구현**이었다. 이를 별도의 큰 설계 사례로 확장하거나 모든 요청·응답 필드를 공개 글에서 풀어 쓸 필요는 없다.
+
+소개·역량·프로젝트·면접 자료에는 ‘도메인별 API·조회 SQL 구현’, ‘청구 산정 결과 조회 SQL 작성’으로 역할을 구체화했다. 구조와 규칙을 정리한 경험은 DTO·계층 분리·예제 코드·PDF 가이드에 연결했다.
+
+추가 설명이 필요할 때는 실제 조회 조건과 산정 기준, 쿼리 선택 이유를 면접 질문에 맞춰 답하면 된다. 확인되지 않은 정책 설계·트랜잭션 경계·테스트 범위·배포 책임은 덧붙이지 않았다. 상세 기능 사례를 새 글로 작성하는 일은 이번 보완의 필수 과제에서 제외했다.
+
+## 추상적인 표현은 행동과 범위로 좁히기
+
+아래는 이번 보완에 사용한 표현 원칙이다. 개별 화면에는 주변 문맥에 맞춰 반영했다.
+
+| 현재 표현 | 수정안 | 수정 이유 |
+| --- | --- | --- |
+| 운영 데이터 정합성을 끝까지 책임집니다 | 원천·대상 데이터를 대사하고 불일치를 보정한 뒤 결과를 다시 확인했습니다 | 책임의 범위를 행동으로 보여준다 |
+| 레거시의 잠재 리스크를 구조적으로 제거합니다 | 보안 검출 유형별로 공통 원인을 수정하고, 망간 동기화와 서버 점검 절차를 개선했습니다 | 모든 위험을 제거한 것처럼 읽히지 않는다 |
+| Redis 기반 인증 아키텍처 최적화 | Redis 권한 조회 캐시 구현 및 응답 개선 | 실제 근거가 있는 조회 범위에 맞춘다 |
+| 메모리·시스템 용량 사용률 30% 이하 관리 | 서버 용량 정보를 주기 수집하고 화면에서 조회하도록 점검 업무를 개선했습니다 | 구현한 기능과 운영 상태 수치를 분리한다 |
+| 온보딩 시간 단축 | 패키지·객체 작성 규칙과 예제 코드를 PDF로 공유해 공통 개발 기준을 마련했습니다 | 측정하지 않은 시간을 대신해 실제 산출물을 설명한다 |
+
+소개 문장은 모든 구현을 담을 필요가 없다. ‘문제가 생기면 처리 흐름과 데이터를 따라 원인을 찾는다’는 소개 아래에 구체적인 프로젝트가 연결되면 충분하다. 반대로 상세 프로젝트까지 같은 추상 문장만 반복하면 근거가 약해진다.
+
+## 성과 수치는 같아도 측정 범위는 더 필요하다
+
+| 성과 | 현재 문서에서 확인한 상태 | 추가로 필요한 설명 |
+| --- | --- | --- |
+| 조회 10분 → 30초 이내 | 최종 수치는 사용자 확인 완료. 원문은 100만 건 테스트 데이터·Swagger 반복 측정을 기록 | 해당 API, 응답 측정 구간, 반복 횟수, 동시 요청, 서버·DB 조건 |
+| 조회 53초 → 1초 미만 | CUBRID 글에 전후 수치가 있음 | 같은 조회 조건·데이터 범위인지, 반복 측정과 실행계획 원본 |
+| 화면 전환 10초 → 0.10초 이내 | 권한 캐시 글·프로젝트에 기록 | 화면 전체인지 권한 API인지, 캐시 hit/miss 조건, 측정 시작·종료 지점 |
+| 주간 연동 오류 약 70건 → 5건 미만 | GW 글·프로젝트에 같은 방향의 수치가 있음 | 비교한 주수, 처리량, 중복 오류 집계 기준 |
+| 인코딩 오류 95% 감소·신규 연동 실패율 5% 미만 | GW 글과 프로젝트에 기록 | 각각의 분모·관찰 기간·전후 건수. 주간 오류 지표와 합쳐 계산하지 않기 |
+| SAST 358건 → 4건 | 프로젝트와 면접 자료에 기록 | 동일 검사 범위인지, 잔여 4건의 사유와 조치 판단 |
+| 웹 취약점 16건·SQL Injection 14건·계정 설정 17건 | 경력 데이터와 면접 자료에 기록 | 검사 간 중복 여부와 집계 대상. SAST 건수와 단순 합산하지 않기 |
+
+숫자가 일치한다는 것은 문서끼리 맞는다는 뜻이다. 원본 측정 자료까지 확보했다는 뜻은 아니다. 기록이 없는 조건은 ‘당시 확인하지 못했다’고 남기는 편이 설명의 신뢰를 지킨다.
+
+## 기술 글과 면접 자료에서 유지할 내용, 더 확인할 내용
+
+### 유지할 내용
+
+- [팀 컨벤션 글](/blog/backend-code-convention-standardization)은 직급보다 초안 작성·예제 적용·PDF 공유·동료 피드백을 중심으로 바뀌었다. 공식 리더 직책을 붙이지 않아도 협업 경험이 전달된다.
+- [망간 동기화 글](/blog/dynamic-to-static-sync-query)은 대상 테이블을 누락한 사고와 대사·복구를 함께 남겼다. 실패를 감춘 요약으로 바꾸지 않는다.
+- [Oracle 튜닝 글](/blog/oracle-hint-subquery-fullscan)은 기존 코드와 DBA 보고서를 통해 배운 과정, 당시 이해의 한계를 남긴다.
+- [GW 글](/blog/kafka-gw-data-integrity)은 업무키 매핑과 대사·보정·재대사를 중심으로 설명한다. Redis를 권한 캐시로 쓰는 고도화 프로젝트와 용도를 섞지 않는다.
+- [POI 글](/blog/sxssf-vs-xssf-excel-download)은 빌링 업무 중 개발한 기능과 나중에 작성한 게시일을 구분한다.
+- 면접 자료의 후속 실습은 아직 수행하지 않은 학습안으로 표시되어 있다. 실무 성과와 합치지 않는다.
+
+### 이전 검토에서 남은 확인 과제
+
+기술적 쟁점은 이번에 새로 해결됐다고 판정하지 않았다. 자세한 근거와 U01~U12 목록은 [이전 보고서](/blog/portfolio-blog-audit-report)에 있다.
+
+| 영역 | 남은 확인 과제 | 관련 글 |
+| --- | --- | --- |
+| 권한 캐시 | 실제 TTL 계산, 사용자별 코드 그룹 삭제 범위, 변경·조회 경합, 장애 시 권한 확인 | [Redis 권한 캐시](/blog/redis-permission-cache-ttl) |
+| XSS | raw 출력 통로 정리 이후의 서버 정화 구현과 출력 문맥별 검증 | [CWE-79](/blog/cwe-79-xss-remediation) |
+| 예외·콜백·공통 유틸 | 로그 민감정보 처리, 허용 콜백 범위, 빈 문자열 등 입력 계약 | [CWE-209](/blog/cwe-209-error-message-exposure), [CWE-676](/blog/cwe-676-dangerous-api), [CWE-476](/blog/cwe-476-null-dereference) |
+| 대량 암호화 | 실제 완료 판정, 커밋과 재실행 조건, 중간 오류 복구 | [csql·nohup](/blog/csql-nohup-mass-patch) |
+| 이벤트 연동 | offset과 DB 커밋, 키 매핑 복구, 재처리 저장소와 실행 방식 | [Kafka GW](/blog/kafka-gw-data-integrity) |
+| 서버 점검 | CPU 지표 정의, 종료 상태 처리, 실패·마지막 성공 시각 표시 | [MINA SSHD](/blog/jsch-to-mina-sshd) |
+| 엑셀 | 당시 POI 버전, 임시파일 정리, 동시 다운로드 측정 | [XSSF·SXSSF](/blog/sxssf-vs-xssf-excel-download) |
+
+글의 첫 요약과 마지막 결론도 본문의 한계를 따라가야 한다. 예를 들어 CWE-676 요약의 ‘안전한 문법으로 대체’는 본문의 확인 과제보다 단정적으로 읽혔다. 이번에는 ‘eval 호출부를 조사해 문자열 평가를 제거한 기록’으로 바꿔 **완료한 조치 자체**를 요약하고, 콜백 허용 범위는 확인 과제로 표시했다.
+
+## 화면 구성에서 남은 점검
+
+01번은 ‘역량 → 주요 수행 업무 → 사용 기술’로 정리되어 있다. 블로그 블록을 제거한 현재 구성을 유지하면서, 프로젝트 경험에서 역할과 결과를 읽을 수 있게 하면 된다.
+
+다만 출력용 이력서는 별도로 확인해야 한다. 홈 소개 전체를 출력하던 방식에서 별도의 짧은 이력서 소개로 바꿨다. 기존 A4 2장 안내와 고정 프로젝트 배분은 유지하고 있다. 소스에 두 개의 페이지 영역이 있다는 사실만으로 실제 인쇄가 2장에 들어간다고 단정할 수 없다. **최종 문구로 인쇄 미리보기와 페이지 넘침을 확인하는 작업이 남아 있다.**
+
+학력·수상은 데이터와 출력 경로를 확인했지만 외부 증빙을 다시 검증하지 않았다. 교육 기술의 버전 표기와 수상 설명의 근거는 증빙 원문을 기준으로 별도 확인할 대상이다. 회사 홈페이지 링크만으로 수상 사유까지 입증된 것으로 보지는 않는다.
+
+## 다음 수정의 우선순위
+
+- [x] **표현 범위 통일:** 권한 캐시·해당 화면 점검·이력서 핵심 요약의 범위를 맞췄다.
+- [x] **출력 누락 보완:** 이력서에 자격 날짜 기준을 표시하고 검색·공유 설명을 현재 소개와 맞췄다.
+- [x] **개발 경험 구체화:** 저자 확인에 따라 도메인별 API·청구 산정 결과 조회 SQL 구현으로 정리했다. 상세 사례 글의 추가는 필수 과제에서 제외했다.
+- [ ] **측정 근거 정리:** 이미 있는 수치의 대상·기간·측정 조건을 확인한다. 없는 로그나 수치를 만들어 채우지 않는다.
+- [ ] **문서와 화면 최종 확인:** 본문뿐 아니라 제목·요약·이력서·공유 설명을 함께 읽고 A4 출력과 모바일 화면을 확인한다.
+
+이번 보완에서는 포트폴리오 데이터·이력서·공유 메타데이터·관련 게시글과 참고 문서를 수정했다. 완료 표시가 없는 항목은 후속 과제다. 기존 참고 주석과 숨긴 성과는 보존했다.
+
+## 배운 점
+
+포트폴리오를 간결하게 만드는 일은 설명을 짧게 자르는 것만으로 끝나지 않았다. 소개는 일하는 방식과 방향을, 역량 카드는 맡을 수 있는 업무를, 프로젝트와 블로그는 실제 선택과 결과를 보여줘야 했다.
+
+운영 경험을 줄여야 개발자로 보이는 것도 아니었다. 느린 조회를 진단하고 데이터 불일치를 복구한 경험은 설계와 구현에서 고려할 조건을 보여준다. 도메인별 조회 SQL과 API 구현, 코드 구조 정리라는 실제 역할을 그에 맞는 깊이로 설명하는 것이 중요했다.
+`,S=`---
 title: 포트폴리오 사이트 구조 리팩터링 기록
 date: 2026-08-11
 tags: React, Refactoring
@@ -2819,7 +2990,7 @@ summary: 콘텐츠와 화면을 분리하고, 페이지 파일 복제를 단일 
   돌아온다. 운영 시스템에서 겪던 데이터 정합성 문제와 본질이 같았다.
 - 구조를 고치기 전에 커밋 로그를 훑어보면 어디가 아픈지 보인다. 같은 종류의
   커밋 메시지가 반복되는 지점이 리팩터링 대상이었다.
-`,S=`---
+`,C=`---
 title: 화면마다 권한을 DB에 묻던 시스템 — Redis 캐시의 TTL과 무효화 정책
 date: 2025-01-07
 tags: Java, Spring, Redis, Performance
@@ -2928,7 +3099,7 @@ public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
   요구 수준을 먼저 따져보면 권한/코드성 데이터가 1순위로 나온다. 반대로
   실시간성이 필요한 데이터에 같은 패턴을 쓰면 사고가 된다.
 - **만료와 무효화는 다른 책임이다.** 고정 TTL, 명시적 로그아웃, 세션 자연 만료, 관리자 권한 변경을 나눠 검증해야 한다. 권한을 확인할 수 없는 장애 상황에서 허용으로 처리해서는 안 된다.
-`,C=`---
+`,w=`---
 title: XSSFWorkbook vs SXSSFWorkbook — 수작업 엑셀 업무를 기능으로 만들며 정리한 선택 기준
 date: 2025-11-20
 tags: Java, POI, Excel, Performance
@@ -3071,4 +3242,4 @@ XSSF로 대량을 쓰면 행 수에 비례해 used가 우상향하는 그래프�
 - **성능 주장은 로그로 증명한다.** 힙 로깅 몇 줄이 "아마 괜찮을 것"을
   "측정해서 평평한 것"으로 바꿔줬다. 대용량 기능은 열기 전에 최악 케이스를
   눈으로 봐야 한다.
-`,w=Object.assign({"../posts/backend-code-convention-standardization.md":e,"../posts/csql-nohup-mass-patch.md":t,"../posts/cubrid-query-plan-index-tuning.md":n,"../posts/cwe-209-error-message-exposure.md":r,"../posts/cwe-330-489-dead-code-removal.md":i,"../posts/cwe-404-496-resource-handling.md":a,"../posts/cwe-476-null-dereference.md":o,"../posts/cwe-615-sensitive-comments.md":s,"../posts/cwe-676-dangerous-api.md":c,"../posts/cwe-754-exception-handling.md":l,"../posts/cwe-79-xss-remediation.md":u,"../posts/dynamic-to-static-sync-query.md":d,"../posts/how-to-write-posts.md":f,"../posts/interview-cloudxper-billing.md":p,"../posts/interview-jeonse-support-system.md":m,"../posts/interview-lgu-billing-gw.md":h,"../posts/jsch-to-mina-sshd.md":g,"../posts/kafka-gw-data-integrity.md":_,"../posts/mybatis-builder-parallel-refactoring.md":v,"../posts/oracle-hint-subquery-fullscan.md":y,"../posts/portfolio-blog-audit-report.md":b,"../posts/portfolio-refactoring.md":x,"../posts/redis-permission-cache-ttl.md":S,"../posts/sxssf-vs-xssf-excel-download.md":C}),T=[{groupId:`backend`,groupLabel:`Backend & Architecture`,subs:[{id:`spring-mybatis`,label:`Spring · 아키텍처`},{id:`kafka-di`,label:`Kafka · 데이터 정합성`}]},{groupId:`database`,groupLabel:`Database & Performance`,subs:[{id:`sql-tuning`,label:`SQL · 실행계획 튜닝`},{id:`redis-cache`,label:`Redis · 캐시 설계`}]},{groupId:`security-infra`,groupLabel:`Security & Infra`,subs:[{id:`sast-cwe`,label:`SAST · 시큐어코딩 (CWE)`},{id:`linux-ops`,label:`Linux · 운영 자동화`}]},{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subs:[{id:`project-review`,label:`프로젝트 심층 회고`},{id:`dev-notes`,label:`개발 기록 · 가이드`}]}];function E(e,t,n){if(n){for(let e of T)for(let t of e.subs)if(n.includes(t.id)||n.includes(t.label))return{groupId:e.groupId,groupLabel:e.groupLabel,subId:t.id,subLabel:t.label}}let r=e.toLowerCase(),i=new Set(t.map(e=>e.toLowerCase()));return r.startsWith(`cwe-`)||i.has(`sast`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`sast-cwe`,subLabel:`SAST · 시큐어코딩 (CWE)`}:r.startsWith(`interview-`)||i.has(`interview`)||i.has(`review`)?{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subId:`project-review`,subLabel:`프로젝트 심층 회고`}:i.has(`guide`)||i.has(`react`)||i.has(`refactoring`)?{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subId:`dev-notes`,subLabel:`개발 기록 · 가이드`}:i.has(`kafka`)?{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`kafka-di`,subLabel:`Kafka · 데이터 정합성`}:i.has(`redis`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`redis-cache`,subLabel:`Redis · 캐시 설계`}:i.has(`sql`)&&i.has(`performance`)||i.has(`cubrid`)||i.has(`oracle`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`sql-tuning`,subLabel:`SQL · 실행계획 튜닝`}:i.has(`ssh`)||i.has(`linux`)||i.has(`infra`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`linux-ops`,subLabel:`Linux · 운영 자동화`}:{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`spring-mybatis`,subLabel:`Spring · 아키텍처`}}function D(e){let t=e.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);if(!t)return{meta:{},body:e};let n={};return t[1].split(/\r?\n/).forEach(e=>{let t=e.indexOf(`:`);if(t===-1)return;let r=e.slice(0,t).trim(),i=e.slice(t+1).trim();r&&(n[r]=i)}),{meta:n,body:e.slice(t[0].length)}}function O(e,t){let n=e.split(`/`).pop().replace(/\.md$/,``),{meta:r,body:i}=D(t),a=r.tags?r.tags.split(`,`).map(e=>e.trim()).filter(Boolean):[],o=E(n,a,r.category);return{slug:n,title:r.title||n,date:r.date||``,tags:a,summary:r.summary||``,category:o,body:i}}var k=Object.entries(w).map(([e,t])=>O(e,t)).sort((e,t)=>t.date.localeCompare(e.date));function A(){return k}function j(e){return k.find(t=>t.slug===e)}function M(){let e=new Map;return k.forEach(t=>{t.tags.forEach(t=>e.set(t,(e.get(t)||0)+1))}),[...e.entries()].map(([e,t])=>({name:e,count:t})).sort((e,t)=>t.count-e.count||e.name.localeCompare(t.name))}function N(){return T.map(e=>{let t=e.subs.map(e=>{let t=k.filter(t=>t.category.subId===e.id).length;return{...e,count:t}}),n=t.reduce((e,t)=>e+t.count,0);return{groupId:e.groupId,groupLabel:e.groupLabel,count:n,subs:t}})}export{N as a,M as i,j as n,A as r,T as t};
+`,T=Object.assign({"../posts/backend-code-convention-standardization.md":e,"../posts/csql-nohup-mass-patch.md":t,"../posts/cubrid-query-plan-index-tuning.md":n,"../posts/cwe-209-error-message-exposure.md":r,"../posts/cwe-330-489-dead-code-removal.md":i,"../posts/cwe-404-496-resource-handling.md":a,"../posts/cwe-476-null-dereference.md":o,"../posts/cwe-615-sensitive-comments.md":s,"../posts/cwe-676-dangerous-api.md":c,"../posts/cwe-754-exception-handling.md":l,"../posts/cwe-79-xss-remediation.md":u,"../posts/dynamic-to-static-sync-query.md":d,"../posts/how-to-write-posts.md":f,"../posts/interview-cloudxper-billing.md":p,"../posts/interview-jeonse-support-system.md":m,"../posts/interview-lgu-billing-gw.md":h,"../posts/jsch-to-mina-sshd.md":g,"../posts/kafka-gw-data-integrity.md":_,"../posts/mybatis-builder-parallel-refactoring.md":v,"../posts/oracle-hint-subquery-fullscan.md":y,"../posts/portfolio-blog-audit-report.md":b,"../posts/portfolio-content-consistency-review.md":x,"../posts/portfolio-refactoring.md":S,"../posts/redis-permission-cache-ttl.md":C,"../posts/sxssf-vs-xssf-excel-download.md":w}),E=[{groupId:`backend`,groupLabel:`Backend & Architecture`,subs:[{id:`spring-mybatis`,label:`Spring · 아키텍처`},{id:`kafka-di`,label:`Kafka · 데이터 정합성`}]},{groupId:`database`,groupLabel:`Database & Performance`,subs:[{id:`sql-tuning`,label:`SQL · 실행계획 튜닝`},{id:`redis-cache`,label:`Redis · 캐시 설계`}]},{groupId:`security-infra`,groupLabel:`Security & Infra`,subs:[{id:`sast-cwe`,label:`SAST · 시큐어코딩 (CWE)`},{id:`linux-ops`,label:`Linux · 운영 자동화`}]},{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subs:[{id:`project-review`,label:`프로젝트 심층 회고`},{id:`dev-notes`,label:`개발 기록 · 가이드`}]}];function D(e,t,n){if(n){for(let e of E)for(let t of e.subs)if(n.includes(t.id)||n.includes(t.label))return{groupId:e.groupId,groupLabel:e.groupLabel,subId:t.id,subLabel:t.label}}let r=e.toLowerCase(),i=new Set(t.map(e=>e.toLowerCase()));return r.startsWith(`cwe-`)||i.has(`sast`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`sast-cwe`,subLabel:`SAST · 시큐어코딩 (CWE)`}:r.startsWith(`interview-`)||i.has(`interview`)||i.has(`review`)?{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subId:`project-review`,subLabel:`프로젝트 심층 회고`}:i.has(`guide`)||i.has(`react`)||i.has(`refactoring`)?{groupId:`retrospective`,groupLabel:`Retrospective & Notes`,subId:`dev-notes`,subLabel:`개발 기록 · 가이드`}:i.has(`kafka`)?{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`kafka-di`,subLabel:`Kafka · 데이터 정합성`}:i.has(`redis`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`redis-cache`,subLabel:`Redis · 캐시 설계`}:i.has(`sql`)&&i.has(`performance`)||i.has(`cubrid`)||i.has(`oracle`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`sql-tuning`,subLabel:`SQL · 실행계획 튜닝`}:i.has(`ssh`)||i.has(`linux`)||i.has(`infra`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`linux-ops`,subLabel:`Linux · 운영 자동화`}:{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`spring-mybatis`,subLabel:`Spring · 아키텍처`}}function O(e){let t=e.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);if(!t)return{meta:{},body:e};let n={};return t[1].split(/\r?\n/).forEach(e=>{let t=e.indexOf(`:`);if(t===-1)return;let r=e.slice(0,t).trim(),i=e.slice(t+1).trim();r&&(n[r]=i)}),{meta:n,body:e.slice(t[0].length)}}function k(e,t){let n=e.split(`/`).pop().replace(/\.md$/,``),{meta:r,body:i}=O(t),a=r.tags?r.tags.split(`,`).map(e=>e.trim()).filter(Boolean):[],o=D(n,a,r.category);return{slug:n,title:r.title||n,date:r.date||``,tags:a,summary:r.summary||``,category:o,body:i}}var A=Object.entries(T).map(([e,t])=>k(e,t)).sort((e,t)=>t.date.localeCompare(e.date));function j(){return A}function M(e){return A.find(t=>t.slug===e)}function N(){let e=new Map;return A.forEach(t=>{t.tags.forEach(t=>e.set(t,(e.get(t)||0)+1))}),[...e.entries()].map(([e,t])=>({name:e,count:t})).sort((e,t)=>t.count-e.count||e.name.localeCompare(t.name))}function P(){return E.map(e=>{let t=e.subs.map(e=>{let t=A.filter(t=>t.category.subId===e.id).length;return{...e,count:t}}),n=t.reduce((e,t)=>e+t.count,0);return{groupId:e.groupId,groupLabel:e.groupLabel,count:n,subs:t}})}export{P as a,N as i,M as n,j as r,E as t};
