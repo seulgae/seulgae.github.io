@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { blogNavigation, paths } from "../routes";
 import profile from "../data/profile";
-import { assetUrl } from "../utils/text";
+import BrandSignature from "./BrandSignature";
 import "../styles/blogLayout.css";
 
 /**
@@ -29,15 +29,8 @@ function BlogHeader({ sidebarOpen = false, onToggleSidebar }) {
             <span className="blog-toggle-text">카테고리</span>
           </button>
 
-          <Link to={paths.blog} className="blog-brand">
-            <img
-              src={assetUrl(profile.profileImage)}
-              alt=""
-              className="blog-brand-mark"
-              width="32"
-              height="32"
-            />
-            <span className="blog-brand-name">{profile.name} 기술 블로그</span>
+          <Link to={paths.blog} className="blog-brand" aria-label="길태형 기술 블로그">
+            <BrandSignature blog />
           </Link>
         </div>
 

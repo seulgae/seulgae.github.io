@@ -33,9 +33,14 @@ describe("projects", () => {
     expect(groups).toHaveLength(2);
     expect(groups[0].affiliation).toBe("(주)마이크로 서비스 | SI 본부");
     expect(groups[1].affiliation).toBe("(주)애버커스 | 빌링시스템팀");
-    expect(groups[1].projects).toHaveLength(2);
+    expect(groups[1].projects).toHaveLength(1);
+    expect(groups[1].projects[0].workScopes).toHaveLength(2);
+    const skillTokens = groups[1].projects[0].skills.flatMap((skill) => skill.value.split(",").map((token) => token.trim()));
+    expect(skillTokens.filter((token) => token.startsWith("Spring Boot"))).toEqual(["Spring Boot(3.x.x)"]);
+    expect(skillTokens.filter((token) => token.startsWith("Linux"))).toEqual(["Linux(CentOS·Ubuntu)"]);
+    expect(new Set(skillTokens).size).toBe(skillTokens.length);
 
-    const total = groups.reduce((sum, group) => sum + group.projects.length, 0);
+    const total = groups.reduce((sum, group) => sum + group.projects.reduce((count, project) => count + (project.workScopes?.length || 1), 0), 0);
     expect(total).toBe(projects.length);
   });
 

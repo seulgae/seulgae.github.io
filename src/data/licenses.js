@@ -5,6 +5,7 @@ const licenses = [
     id: "engineer-information-processing",
     title: "정보처리기사",
     date: "2026.12.18",
+    dateLabel: "합격자 발표일",
     description: "한국산업인력공단 · 합격 (합격자 발표일 기준)",
   },
   {

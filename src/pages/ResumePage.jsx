@@ -1,5 +1,5 @@
 import profile, { getBirthLabel } from "../data/profile";
-import projects from "../data/projects";
+import { getCareerGroups } from "../data/projects";
 import education from "../data/education";
 import awards from "../data/awards";
 import licenses from "../data/licenses";
@@ -12,7 +12,8 @@ import "../styles/resume.css";
  */
 
 // A4 한 장에 들어가는 분량 기준으로 정한 값입니다. 내용이 늘면 이 숫자만 조정하세요.
-const PROJECTS_ON_FIRST_PAGE = 2;
+const PROJECTS_ON_FIRST_PAGE = 1;
+const projects = getCareerGroups().flatMap((group) => group.projects);
 
 const pages = [
   projects.slice(0, PROJECTS_ON_FIRST_PAGE),
@@ -35,9 +36,7 @@ function ProjectEntry({ project }) {
             <th scope="row">주요 업무</th>
             <td>
               <ul className="resume-doc-list compact">
-                {project.mainTasks.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
+                {project.mainTasks.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </td>
           </tr>
@@ -120,7 +119,7 @@ function ResumePage() {
             <h1>{profile.name}</h1>
             <p className="resume-doc-role">{profile.role}</p>
           </div>
-          <p className="resume-doc-intro">{profile.intro}</p>
+          <p className="resume-doc-intro">{profile.resumeIntro}</p>
         </header>
 
         <section className="resume-doc-section">
@@ -208,14 +207,14 @@ function ResumePage() {
             <thead>
               <tr>
                 <th>항목</th>
-                <th>취득일</th>
+                <th>일자·기준</th>
               </tr>
             </thead>
             <tbody>
               {licenses.map((item) => (
                 <tr key={item.id}>
                   <th scope="row">{item.title}</th>
-                  <td>{item.date}</td>
+                  <td>{item.date}{item.dateLabel ? ` (${item.dateLabel})` : ""}</td>
                 </tr>
               ))}
             </tbody>

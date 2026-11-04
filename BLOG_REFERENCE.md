@@ -1,6 +1,6 @@
 # 기존 블로그 글 목록
 
-2026-11-03 로컬 검토 기준 24개. 메타데이터 색인이며 실제 경험의 검증 자료가 아니다. 작업할 때 관련 본문과 감사 보고서를 다시 읽는다.
+2026-11-04 로컬 검토 기준 25개. 메타데이터 색인이며 실제 경험의 검증 자료가 아니다. 작업할 때 관련 본문과 감사 보고서를 다시 읽는다.
 
 CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 → 30초 이내다. 과거 1분 15초 기록은 최신 확인값으로 대체한다.
 
@@ -8,10 +8,10 @@ CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 �
 
 원문: [글 파일](src/posts/backend-code-convention-standardization.md)
 
-- title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 사원급에서 PDF 컨벤션을 만들어 표준화하기까지
+- title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 예제 코드와 PDF 가이드로 개발 기준 맞추기
 - date: 2024-12-12
 - tags: Java, Spring, MyBatis, Architecture
-- summary: PM을 겸임하던 팀장님을 대신해 사원급 정규직으로서 백엔드 실무 기준을 맡아, 4명이 각자 다른 스타일로 작성하던 List 자료형 기반 selectList 코드를 Request/Response DTO·Model·Builder 패턴으로 리팩토링하고 PDF 가이드로 표준화한 기록
+- summary: 4명이 서로 다른 방식으로 작성하던 조회 코드를 Request/Response DTO·Model·Builder 구조로 정리하고, 예제 코드와 PDF 가이드를 공유해 팀의 개발 기준을 맞춘 기록
 
 ## csql-nohup-mass-patch
 
@@ -83,7 +83,7 @@ CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 �
 - title: CWE-676 위험한 API 사용 — eval을 지우기 전에 해야 하는 일
 - date: 2026-08-12
 - tags: Security, JavaScript, Java, SAST
-- summary: 레거시 JS의 eval 두 종류를 호출부 전수조사 후 안전한 문법으로 대체하고, deprecated API를 정리한 기록
+- summary: 레거시 JS의 eval 호출부를 조사해 문자열 평가를 제거하고 deprecated API를 정리한 기록 — 동적 콜백 허용 범위는 추가 확인 과제로 구분
 
 ## cwe-754-exception-handling
 
@@ -219,3 +219,12 @@ CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 �
 - date: 2025-11-20
 - tags: Java, POI, Excel, Performance
 - summary: 운영자가 매번 DB를 조회해 손으로 만들던 추출 대장·통계 엑셀을 다운로드 기능으로 구현한 기록 — 건수에 따라 XSSF와 SXSSF를 가르는 기준과 스트리밍 방식의 함정들
+
+## portfolio-content-consistency-review
+
+원문: [글 파일](src/posts/portfolio-content-consistency-review.md)
+
+- title: 포트폴리오를 다시 읽으며 — 소개·핵심 역량·프로젝트·블로그 사이의 설명 맞추기
+- date: 2026-11-04
+- tags: Portfolio, Review, Retrospective, Career
+- summary: 소개·역량·프로젝트·이력서의 표현 차이를 점검하고 권한 캐시·조회 성과·자격 날짜·공유 설명을 보완했다. 도메인 API·청구 산정 SQL 구현 범위와 남은 확인 과제를 정리한 기록

@@ -2,7 +2,7 @@
 title: CWE-676 위험한 API 사용 — eval을 지우기 전에 해야 하는 일
 date: 2026-08-12
 tags: Security, JavaScript, Java, SAST
-summary: 레거시 JS의 eval 두 종류를 호출부 전수조사 후 안전한 문법으로 대체하고, deprecated API를 정리한 기록
+summary: 레거시 JS의 eval 호출부를 조사해 문자열 평가를 제거하고 deprecated API를 정리한 기록 — 동적 콜백 허용 범위는 추가 확인 과제로 구분
 ---
 
 **CWE-676(잠재적으로 위험한 함수 사용)** 검출의 주인공은 예상대로 JavaScript의

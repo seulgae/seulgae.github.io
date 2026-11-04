@@ -133,6 +133,60 @@
 /* ── 00. About Poster (Hero + KPI) ── */
 .hero-poster {
   padding-bottom: 34px;
+  background: linear-gradient(125deg, var(--surface) 58%, var(--accent-wash));
+  border-top: 3px solid var(--accent);
+}
+
+.hero-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 28px 0;
+}
+
+.hero-story {
+  min-width: 0;
+  padding: clamp(18px, 2.5vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  background: var(--surface);
+}
+
+.hero-story-direction {
+  background: var(--accent-wash);
+  border-color: var(--accent-border);
+}
+
+.hero-story-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--accent-ink);
+}
+
+.hero-story h2 {
+  margin: 10px 0 12px;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: var(--text);
+  word-break: keep-all;
+}
+
+.hero-story p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.85;
+  color: var(--muted);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .hero-story-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 22px 0;
+  }
 }
 
 .hero-title {
@@ -157,6 +211,23 @@
   margin: 0 0 16px;
   max-width: 65ch;
   word-break: keep-all;
+}
+
+.hero-background {
+  max-width: 100%;
+  text-wrap: pretty;
+}
+
+.hero-intro-sentence {
+  display: block;
+}
+
+.hero-intro-sentence + .hero-intro-sentence {
+  margin-top: 6px;
+}
+
+.hero-intro-unit {
+  white-space: nowrap;
 }
 
 .hero-strength-list {
@@ -272,8 +343,11 @@
 }
 
 .skill-matrix-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  min-width: 0;
   padding: 22px;
   border-radius: var(--radius-block);
   background: var(--surface);
@@ -284,6 +358,9 @@
   margin: 0 0 8px;
   font-size: 1.06rem;
   color: var(--text);
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .skill-matrix-summary {
@@ -292,6 +369,35 @@
   line-height: 1.6;
   color: var(--muted);
   word-break: keep-all;
+}
+
+.skill-tech-stack {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.skill-tech-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.skill-tech-stack .tech-grid {
+  gap: 6px;
+  margin: 0;
+}
+
+.skill-tech-stack .tech-item {
+  min-height: 26px;
+  padding: 3px 9px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: var(--accent-wash);
+  border-color: var(--accent-border);
 }
 
 .tech-grid {
@@ -315,7 +421,7 @@
 }
 
 .skill-matrix-evidence {
-  margin: auto 0 0;
+  margin: 0;
   padding-top: 12px;
   border-top: 1px dashed var(--line);
   font-size: 0.84rem;
@@ -325,8 +431,22 @@
 }
 
 .skill-matrix-evidence strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
   color: var(--text);
 }
+
+.project-anchor-alias {
+  display: block;
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
+}
+
+.skill-matrix-evidence > p {
+  margin: 0;
+}
+
+
 
 /* ── 02. Projects Poster (소속 회사·팀 그룹 + 수행 프로젝트 트랙 구조) ── */
 .career-group-list {
@@ -695,6 +815,15 @@
 /* 아키텍처 인라인 펼침 드로어 */
 .project-arch-toggle-wrap {
   margin-top: 4px;
+}
+
+.project-architecture-item {
+  list-style: none;
+  min-width: 0;
+}
+
+.project-architecture-item .project-arch-toggle-wrap {
+  margin: 0;
 }
 
 .project-arch-toggle-btn {

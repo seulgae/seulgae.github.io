@@ -107,7 +107,7 @@ const projects = [
         title: "운영 행정망 Slow Query 분석 및 인덱스 튜닝",
         detail:
           "실행계획을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
-        result: "53초 소요 Slow Query 개선 및 월간 운영 점검 특이사항 0건 유지",
+        result: "조회 53초 → 1초 미만, 이후 월간 점검에서 해당 화면의 Slow Query 관련 특이사항 0건",
         relatedPosts: [
           { slug: "cubrid-query-plan-index-tuning", label: "53초 조회 CUBRID 복합 인덱스 설계" },
         ],
@@ -125,7 +125,7 @@ const projects = [
         detail:
           "Apache SSHD 의존성을 적용하여 SSH 기반 서버 접속 기능을 구현하고, CPU·메모리·디스크 사용률 정보를 주기 수집해 화면에서 시각적으로 확인 가능한 기능 개발",
         result:
-          "CLI 수동 점검 화면 기반 모니터링으로 전환, 메모리·시스템 용량 사용률 30% 이하 관리",
+          "서버 용량 정보를 4시간마다 수집하고 화면에서 조회하도록 구현해 수동 점검·월말 보고 업무 개선",
         relatedPosts: [
           { slug: "jsch-to-mina-sshd", label: "JSch 협상 실패와 MINA SSHD 전환" },
         ],
@@ -181,6 +181,7 @@ const projects = [
       },
       {
         title: "이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증",
+        architectureSlug: "lgu-billing-gw",
         detail:
           "Oracle ↔ MySQL 연동의 문자셋·바이트 길이 문제를 Java 변환 로직과 Subscriber 검증으로 개선, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
         result: "인코딩 오류 95% 감소, 신규 연동 실패율 5% 미만 유지",
@@ -222,46 +223,51 @@ const projects = [
     skills: [
       {
         label: "기술",
-        value: "Spring Boot(3.x.x), REST API, React, Swagger, MyBatis, Gradle",
+        value: "Spring Boot(3.x.x), REST API, Swagger, MyBatis, Gradle",
       },
       {
         label: "인프라",
-        value: "Redis, MySQL, SonarQube, Linux(Ubuntu), Jenkins, GitLab",
+        value: "Redis, MySQL, Linux(Ubuntu)",
+      },
+      {
+        label: "연동 화면",
+        value: "React 관리 화면과 REST API 연동",
       },
       {
         label: "사용 툴",
-        value: "DBeaver, IntelliJ, VSCode",
+        value: "DBeaver, IntelliJ, VSCode, Jenkins, GitLab, SonarQube",
       },
     ],
     mainTasks: [
-      "가입, 청구, 상품 및 공통 조회 등 주요 REST API 설계·개발",
+      "가입·청구·상품·공통 조회 REST API 구현 및 청구 산정 결과 조회 SQL 작성",
       "프로젝트 구조 표준 정의 및 코드 리팩토링 후 팀 공유 및 적용",
-      "OAuth 사용자 인증 정보 Redis 캐싱 기반 저장·조회 권한 모듈 신규 개발",
+      "로그인 사용자별 권한 조회 결과를 Redis에 캐싱하는 모듈 개발",
     ],
     achievements: [
       {
         title: "대용량 데이터 조회 성능 최적화",
         detail:
-          "반복되는 연관 조회·조립을 ServiceImpl로 모으고 병렬 스트림으로 DB 대기 시간을 중첩해 응답 시간 단축. SQL 호출 수는 유지되며 집합 조회는 후속 개선안",
+          "서비스 계층으로 연관 조회·결과 조립 로직 통합, 병렬 스트림 적용으로 조회 대기 시간 및 API 응답 속도 개선",
         result: "API 응답 시간 95% 단축 (10분 → 30초 이내)",
         relatedPosts: [
           { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 병렬화와 한계 회고" },
         ],
       },
       {
-        title: "Redis 기반 인증 아키텍처 최적화",
+        title: "Redis 권한 조회 캐시 구현 및 응답 개선",
         detail:
-          "OAuth 로그인 사용자의 권한 조회를 Redis로 캐싱하고 세션 정책을 참고한 TTL 및 로그아웃·권한 변경 시 무효화 적용. 토큰 만료 시각 자동 동기화 구현은 확인 필요",
+          "Redis 권한 캐싱으로 반복 DB 조회 감소, TTL 설정 및 로그아웃·권한 변경 시 캐시 무효화 처리",
         result:
-          "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
+          "권한 캐시 적용 후 화면 전환 응답 10초 → 0.10초 이내로 개선",
         relatedPosts: [
           { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 TTL·무효화" },
         ],
       },
       {
         title: "코드 리팩토링 및 개발 컨벤션 표준화",
+        architectureSlug: "cloudxper-billing",
         detail:
-          "Builder Pattern 도입으로 객체 생성 중복 제거, 패키지 구조 재정립과 코딩 컨벤션 문서를 직접 작성·팀에 공유하여 온보딩 시간 단축",
+          "Builder Pattern과 변환 메서드로 객체 생성·조립 방식 정리, 패키지 구조와 작성 규칙을 예제 코드·PDF 가이드로 정리해 팀에 공유",
         // result: "유지보수성·협업 효율 향상, SonarQube 코드 품질 지표 개선",
         result: "객체 생성 중복 제거 및 유지보수성·협업 효율 향상",
         relatedPosts: [
@@ -295,7 +301,38 @@ export function getCareerGroups() {
     group.projects.push(project);
   });
 
-  return groups;
+  return groups.map((group) => {
+    if (group.companyId !== "abacus") return group;
+    const workScopes = group.projects;
+    const combined = {
+      ...workScopes[0],
+      title: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수",
+      shortTitle: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수",
+      description: "청구·요금 관리 등 빌링 비즈니스 기능과 공통 모듈 개발, 대내외 데이터 연계 및 운영 안정화 수행",
+      period: group.period,
+      role: "백엔드 개발·운영",
+      trackBadge: null,
+      workScopes,
+      skills: [{
+        label: "사용 기술",
+        value: [...new Set(workScopes.flatMap((scope) => scope.skills)
+          .flatMap((skill) => skill.value.split(","))
+          .map((token) => token.trim())
+          .filter(Boolean)
+          .map((token) => {
+            if (/^Spring Boot\(/.test(token)) return "Spring Boot(3.x.x)";
+            if (/^Linux\(/.test(token)) return "Linux(CentOS·Ubuntu)";
+            return token;
+          }))].join(", "),
+      }],
+      mainTasks: [
+        "빌링 시스템 주요 비즈니스 기능 및 공통 모듈 설계·개발",
+        "대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응",
+      ],
+      achievements: workScopes.flatMap((scope) => scope.achievements),
+    };
+    return { ...group, projects: [combined] };
+  });
 }
 
 export function findProjectBySlug(slug) {

@@ -1,8 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { paths, portfolioSections } from "../routes";
-import profile from "../data/profile";
-import { assetUrl } from "../utils/text";
+import BrandSignature from "./BrandSignature";
 import "../styles/header.css";
 
 
@@ -88,15 +87,10 @@ function Header({ activeSection, navigateToSection }) {
         <Link
           to={paths.home}
           className="site-brand"
+          aria-label="길태형 포트폴리오"
           onClick={(event) => handleSectionClick(event, "about")}
         >
-          <img
-            src={assetUrl(profile.profileImage)}
-            alt=""
-            className="site-brand-avatar"
-          />
-          <span className="site-brand-name">{profile.name}</span>
-          <span className="site-brand-role">{profile.role}</span>
+          <BrandSignature />
         </Link>
 
         <nav

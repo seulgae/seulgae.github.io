@@ -26,6 +26,18 @@ beforeEach(() => {
   });
 });
 
+test("출력용 이력서는 자격 날짜의 의미를 함께 표시한다", async () => {
+  await renderAt(paths.resume);
+
+  const licenseRow = screen.getByRole("row", { name: /정보처리기사/ });
+  expect(within(licenseRow).getByRole("cell")).toHaveTextContent(
+    "2026.12.18 (합격자 발표일)",
+  );
+  const sqldRow = screen.getByRole("row", { name: /SQLD/ });
+  expect(within(sqldRow).getByRole("cell")).toHaveTextContent("2025.06.27");
+  expect(sqldRow).not.toHaveTextContent("합격자 발표일");
+});
+
 test("메인(/) 상단 헤더는 4개 포스터 메뉴(About·Skills·Projects·Credentials)와 Resume 버튼을 렌더링하고 Blog 탭은 노출하지 않는다", async () => {
   await renderAt(paths.home);
 
@@ -117,18 +129,21 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(document.getElementById("projects")).toBeInTheDocument();
   expect(document.getElementById("credentials")).toBeInTheDocument();
 
-  projects.forEach((project) => {
-    expect(
-      screen.getByRole("heading", { level: 3, name: project.title }),
-    ).toBeInTheDocument();
-  });
-
-  expect(screen.getByText("(주)마이크로 서비스")).toBeInTheDocument();
-  expect(screen.getByText("SI 본부")).toBeInTheDocument();
-  expect(screen.getByText("(주)애버커스")).toBeInTheDocument();
-  expect(screen.getByText("빌링시스템팀")).toBeInTheDocument();
-  expect(screen.getByText("개발·운영")).toBeInTheDocument();
-  expect(screen.getByText("SI 프로젝트")).toBeInTheDocument();
+  expect(screen.getByRole("heading", { level: 3, name: projects[0].title })).toBeInTheDocument();
+  const combinedHeading = screen.getByRole("heading", { level: 3, name: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수" });
+  const combinedCard = combinedHeading.closest("article");
+  expect(within(combinedCard).queryByRole("heading", { name: projects[1].title })).not.toBeInTheDocument();
+  expect(within(combinedCard).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
+  expect(within(combinedCard).getByText("빌링 시스템 주요 비즈니스 기능 및 공통 모듈 설계·개발")).toBeInTheDocument();
+  expect(within(combinedCard).getByText("대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응")).toBeInTheDocument();
+  expect(combinedCard.querySelector("#project-cloudxper-billing")).toBeInTheDocument();
+  expect(within(combinedCard).getAllByRole("button", { name: /시스템 아키텍처/ })).toHaveLength(2);
+  const dbAchievement = within(combinedCard).getByText("이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증").closest("li");
+  expect(within(dbAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
+  expect(within(dbAchievement.nextElementSibling).getByRole("button", { name: /Kafka GW 시스템 아키텍처/ })).toBeInTheDocument();
+  const refactoringAchievement = within(combinedCard).getByText("코드 리팩토링 및 개발 컨벤션 표준화").closest("li");
+  expect(within(refactoringAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
+  expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
 
   expect(screen.queryByRole("button", { name: "성적증명서" })).not.toBeInTheDocument();
   const educationImageBtn = screen.getByRole("button", { name: "EZEN ACADEMY 이미지 크게 보기" });
@@ -145,7 +160,7 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   const popupButtons = screen.getAllByRole("button", {
     name: /시스템 아키텍처 & 데이터 흐름 다이어그램/,
   });
-  expect(popupButtons).toHaveLength(projects.length);
+  expect(popupButtons).toHaveLength(3);
 
   await userEvent.click(popupButtons[0]);
   const modal = await screen.findByRole("dialog", { name: projects[0].title });
@@ -174,7 +189,7 @@ test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 
   await userEvent.hover(helpBtn);
   const tooltip = screen.getByRole("tooltip");
   expect(tooltip).toHaveTextContent(
-    "실무 프로젝트에서 직접 문제를 진단하고 수치로 개선을 증명한 핵심 기술 역량입니다.",
+    "담당할 수 있는 업무와 프로젝트 경험, 사용 기술을 정리했습니다.",
   );
   expect(helpBtn).toHaveAttribute("aria-expanded", "true");
 

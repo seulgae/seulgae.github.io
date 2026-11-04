@@ -1,46 +1,38 @@
-import { lazy, Suspense, useMemo, useRef, useState } from "react";
-import { getCareerGroups } from "../../data/projects";
+import { Fragment, lazy, Suspense, useMemo, useState } from "react";
+import { findProjectBySlug, getCareerGroups } from "../../data/projects";
 import { paths } from "../../routes";
 import PosterHeading from "./PosterHeading";
 
 const ArchitectureModal = lazy(() => import("../ArchitectureModal"));
 
 function splitSkillTokens(skills) {
-  return skills.flatMap((group) =>
+  return [...new Set(skills.flatMap((group) =>
     group.value
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean),
+  ))];
+}
+
+function ArchitectureButton({ project, label, onOpenArchitecture }) {
+  return (
+    <div className="project-arch-toggle-wrap">
+      <button
+        type="button"
+        className="project-arch-toggle-btn"
+        aria-haspopup="dialog"
+        onClick={(event) => onOpenArchitecture(project, event.currentTarget)}
+      >
+        <span>📊 {label ? label + " " : ""}시스템 아키텍처 &amp; 데이터 흐름 다이어그램</span>
+        <span className="toggle-hint">팝업으로 보기 ↗</span>
+      </button>
+    </div>
   );
 }
 
-function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
-  const triggerRef = useRef(null);
+function ProjectWorkScope({ project, onOpenArchitecture }) {
   const skillTokens = splitSkillTokens(project.skills);
-  const isSiTrack = project.trackBadge === "SI 프로젝트";
-
   return (
-    <article
-      className={`project-track-card ${isGrouped ? "is-grouped" : ""}`}
-      id={`project-${project.slug}`}
-    >
-      <header className="project-track-header">
-        <div className="project-track-badges">
-          {project.trackBadge ? (
-            <span
-              className={`project-track-badge ${isSiTrack ? "parallel" : "primary"}`}
-            >
-              {project.trackBadge}
-            </span>
-          ) : null}
-          <span className="project-track-period">{project.period}</span>
-          <span className="project-role-badge">{project.role}</span>
-        </div>
-
-        <h3 className="project-title-heading">{project.title}</h3>
-        <p className="project-track-desc">{project.description}</p>
-      </header>
-
       <div className="project-poster-content">
         <div className="project-skill-pills" aria-label="사용 기술">
           {skillTokens.map((token) => (
@@ -66,7 +58,8 @@ function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
               const relatedPosts = ach.relatedPosts || [];
 
               return (
-                <li key={ach.title} className="project-achievement-card">
+                <Fragment key={ach.title}>
+                <li className="project-achievement-card">
                   <div className="project-achievement-header">
                     <strong className="project-achievement-title">{ach.title}</strong>
                     {ach.result ? (
@@ -104,24 +97,40 @@ function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
                     </div>
                   ) : null}
                 </li>
+                  {ach.architectureSlug && (
+                    <li className="project-architecture-item">
+                    <ArchitectureButton
+                      project={findProjectBySlug(ach.architectureSlug)}
+                      label={ach.architectureSlug === "lgu-billing-gw" ? "Kafka GW" : "플랫폼 고도화"}
+                      onOpenArchitecture={onOpenArchitecture}
+                    />
+                    </li>
+                  )}
+                </Fragment>
               );
             })}
           </ul>
         </div>
 
-        <div className="project-arch-toggle-wrap">
-          <button
-            ref={triggerRef}
-            type="button"
-            className="project-arch-toggle-btn"
-            aria-haspopup="dialog"
-            onClick={() => onOpenArchitecture(project, triggerRef.current)}
-          >
-            <span>📊 시스템 아키텍처 &amp; 데이터 흐름 다이어그램</span>
-            <span className="toggle-hint">팝업으로 보기 ↗</span>
-          </button>
-        </div>
+        {!project.workScopes && <ArchitectureButton project={project} onOpenArchitecture={onOpenArchitecture} />}
       </div>
+  );
+}
+
+function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
+  return (
+    <article className={`project-track-card ${isGrouped ? "is-grouped" : ""}`} id={`project-${project.slug}`}>
+      <header className="project-track-header">
+        <div className="project-track-badges">
+          {project.trackBadge && <span className="project-track-badge primary">{project.trackBadge}</span>}
+          <span className="project-track-period">{project.period}</span>
+          <span className="project-role-badge">{project.role}</span>
+        </div>
+        <h3 className="project-title-heading">{project.title}</h3>
+        <p className="project-track-desc">{project.description}</p>
+      </header>
+      {project.workScopes && <span id="project-cloudxper-billing" className="project-anchor-alias" aria-hidden="true" />}
+      <ProjectWorkScope project={project} onOpenArchitecture={onOpenArchitecture} />
     </article>
   );
 }
