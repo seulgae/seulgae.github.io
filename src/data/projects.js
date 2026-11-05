@@ -155,7 +155,7 @@ const projects = [
         title: "GW 연동 오류 분석 및 대응 체계 개선",
         detail:
           "WhaTap 히트맵 기반 실패 패턴 분석, 오류 유형별 대응 시나리오 매뉴얼화 및 데이터 보정 스크립트 정비로 즉시 대응 절차 마련. 파트별 오류를 종합·공유하는 일일 메일 보고 체계 구축으로 운영자 대응·PM 검토 지원",
-        result: "주간 Kafka 연동 오류 70건 → 5건 (약 93% 감소)",
+        result: "주간 Kafka 연동 오류 약 70건 → 5건",
         relatedPosts: [
           { slug: "kafka-gw-data-integrity", label: "Kafka 도메인 GW 데이터 정합성 지키기" },
         ],
@@ -213,7 +213,7 @@ const projects = [
     ],
     achievements: [
       {
-        title: "플랫폼 대용량 조회 API 성능 개선",
+        title: "대용량 데이터 조회 병렬화 및 응답 시간 단축",
         detail:
           "서비스 계층으로 연관 조회·결과 조립 로직 통합, 병렬 스트림 적용으로 조회 대기 시간 및 API 응답 속도 개선",
         result: "API 응답 시간 약 98% 단축 (약 480,000ms → 10,000ms 이내)",

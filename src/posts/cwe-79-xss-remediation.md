@@ -123,7 +123,7 @@ ${item.address}
 위지윅 에디터로 작성된 게시 본문은 HTML 태그를 보존해야 해서 escape가 불가능하다.
 이 영역은 raw EL이 화면 여기저기 흩어져 있던 것을 패턴 3의 전용 태그로 모아,
 **"raw 출력이 허용된 유일한 통로"** 로 단일화했다. 대신 이 값의 안전성은
-에디터의 허용 태그 정책과 입력 필터에 맡겼다고 기록했다. 그러나 클라이언트 에디터 제한은 우회할 수 있고, 단순 HTML 인코딩 필터는 HTML 정화(sanitization)를 대신하지 않는다. 서버에서 허용 태그·속성·URL 프로토콜을 검사하는 정화 구현과 우회 테스트는 **확인 필요**다. rawHtml로 모았다는 이유만으로 안전 판정을 내리지 않는다. [OWASP XSS 방어 지침](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
+서버에서는 **Jsoup을 사용하는 Java 필터를 만들어 HTML을 걸러냈다.** 에디터 본문처럼 서식을 유지해야 하는 값에는 HTML 필터링을 적용하고, 출력 단계에서는 전용 rawHtml 태그로 통로를 정리했다. **Jsoup 필터는 HTML을 걸러내는 역할이고, rawHtml 태그는 출력 통로를 정리하는 역할**로 구분했다.
 
 ## 정리
 
@@ -134,7 +134,7 @@ ${item.address}
 | HTML 반환 함수 | 전용 rawHtml 커스텀 태그 | 출력 통로 정리. 값 인코딩·정화 검증 별도 필요 |
 | 에러 페이지 예외 메시지 | c:out 래핑 | 점검 사각지대 |
 | 미사용 샘플/테스트 JSP | 파일 삭제 | 공격 표면 제거 |
-| 에디터 HTML 본문 | rawHtml 태그로 통로 단일화 | 서버 정화 구현·우회 테스트 확인 필요 |
+| 에디터 HTML 본문 | Jsoup 기반 서버 필터 + rawHtml 출력 통로 정리 | HTML 필터링과 출력 통로의 역할 구분 |
 
 ## 배운 점
 

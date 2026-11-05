@@ -19,9 +19,13 @@ const modules = import.meta.glob("../posts/*.md", {
 
 export const CATEGORY_DEFINITIONS = [
   {
-    groupId: "review",
-    groupLabel: "AI 검수",
-    subs: [{ id: "ai-review", label: "포트폴리오 검수" }],
+    groupId: "practice",
+    groupLabel: "실습 과제",
+    subs: [
+      { id: "redis-practice", label: "Redis · 캐시 실습" },
+      { id: "backend-practice", label: "백엔드 재현 실습" },
+      { id: "website-practice", label: "웹사이트 품질 개선" },
+    ],
   },
   {
     groupId: "backend",

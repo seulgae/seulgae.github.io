@@ -162,8 +162,9 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   const combinedCard = combinedHeading.closest("article");
   expect(within(combinedCard).queryByRole("heading", { name: projects[1].title })).not.toBeInTheDocument();
   expect(within(combinedCard).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
-  expect(within(combinedCard).getByText("빌링 시스템 주요 비즈니스 기능 및 공통 모듈 설계·개발")).toBeInTheDocument();
-  expect(within(combinedCard).getByText("대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응")).toBeInTheDocument();
+  expect(within(combinedCard).getByText("Kafka 기반 GW 연동 시스템 모니터링 및 장애 대응, 로그 분석을 통한 원인 분석 및 조치")).toBeInTheDocument();
+  expect(within(combinedCard).getByText("SI 프로젝트 모듈 설계 및 백엔드 기반 서비스 개발")).toBeInTheDocument();
+  expect(within(combinedCard).getByText("도메인(빌링-청구) 시스템, Spring 기반 배치, API 서비스 개발 및 유지보수")).toBeInTheDocument();
   expect(combinedCard.querySelector("#project-cloudxper-billing")).toBeInTheDocument();
   expect(within(combinedCard).getAllByRole("button", { name: /시스템 아키텍처/ })).toHaveLength(2);
   const dbAchievement = within(combinedCard).getByText("GW 연동 데이터 검증 공통화 및 정합성 대응").closest("li");

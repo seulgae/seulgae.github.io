@@ -99,8 +99,8 @@ const profile = {
       postSlug: "mybatis-builder-parallel-refactoring",
     },
     {
-      value: "70건 → 5건",
-      label: "주간 Kafka 오류 93% 감소",
+      value: "약 70건 → 5건",
+      label: "주간 Kafka 연동 오류 감소",
       detail: "대응 절차 표준화 · 일일 보고 체계 구축",
       postSlug: "kafka-gw-data-integrity",
     },
