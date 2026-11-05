@@ -36,7 +36,7 @@ describe("projects", () => {
     expect(groups[1].projects).toHaveLength(1);
     expect(groups[1].projects[0].workScopes).toHaveLength(2);
     const skillTokens = groups[1].projects[0].skills.flatMap((skill) => skill.value.split(",").map((token) => token.trim()));
-    expect(skillTokens.filter((token) => token.startsWith("Spring Boot"))).toEqual(["Spring Boot(3.x.x)"]);
+    expect(skillTokens.filter((token) => token.startsWith("Spring Boot"))).toEqual(["Spring Boot"]);
     expect(skillTokens.filter((token) => token.startsWith("Linux"))).toEqual(["Linux(CentOS·Ubuntu)"]);
     expect(new Set(skillTokens).size).toBe(skillTokens.length);
 

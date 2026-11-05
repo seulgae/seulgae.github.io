@@ -17,6 +17,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { findProjectBySlug } from "./data/projects";
 import { legacyRedirects, paths, portfolioSections } from "./routes";
 import { useScrollSpy } from "./hooks/useScrollSpy";
+import { getHashTarget } from "./utils/text";
 
 const BlogLayout = lazy(() => import("./pages/BlogLayout"));
 const BlogListPage = lazy(() => import("./pages/BlogListPage"));
@@ -94,7 +95,7 @@ function ScrollAndTitleManager() {
     }
 
     if (hash) {
-      const targetId = decodeURIComponent(hash.slice(1));
+      const targetId = getHashTarget(hash);
       const frame = window.requestAnimationFrame(() => {
         const element = document.getElementById(targetId);
         if (element && typeof element.scrollIntoView === "function") {

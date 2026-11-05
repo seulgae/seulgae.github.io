@@ -2,7 +2,7 @@
 
 2026-11-04 로컬 검토 기준 25개. 메타데이터 색인이며 실제 경험의 검증 자료가 아니다. 작업할 때 관련 본문과 감사 보고서를 다시 읽는다.
 
-CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 → 30초 이내다. 과거 1분 15초 기록은 최신 확인값으로 대체한다.
+CloudXper 병렬 조회 최종 수치는 저자가 2026-11-05 정정한 약 480,000ms → 10,000ms 이내다(약 8분 → 10초 이내). DB 전체 테스트 데이터 100만 건 환경에서 API 호출 후 응답 완료까지의 시간이다. 이전 수치는 과거 기록으로 대체한다.
 
 ## backend-code-convention-standardization
 
@@ -164,16 +164,16 @@ CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 �
 - title: 쪼개진 원천 테이블과 달라진 PK 사이 — Kafka 서비스 도메인 GW에서 데이터 정합성 지키기
 - date: 2025-02-10
 - tags: Kafka, Java, Spring, Operations
-- summary: 차세대 전환으로 원천 테이블이 쪼개지고 PK 체계가 바뀌면서 pub/sub 데이터가 어긋나기 시작했다 — 중간에서 형상을 맞춰주는 GW의 구조, 이벤트 토픽 등록 절차, 업무키 매핑, 그리고 엑셀로 DML을 만들어 불일치를 보정하던 운영 기록
+- summary: 원부·응용 파트의 키와 컬럼을 맞추는 Kafka GW 구조와, 누적 오류 해소를 위해 오류 대응 절차와 일일 메일 보고 체계를 만든 운영 경험
 
 ## mybatis-builder-parallel-refactoring
 
 원문: [글 파일](src/posts/mybatis-builder-parallel-refactoring.md)
 
-- title: 10분짜리 API를 30초 이내로 — 100만 건 대용량 조회 성능 개선과 병렬 스트림
+- title: API 응답 약 480,000ms → 10,000ms 이내 — 병렬 조회 개선과 한계
 - date: 2024-11-27
 - tags: Java, Spring, MyBatis, Performance
-- summary: 1만 건에서는 드러나지 않던 청구·가입 목록 조회의 MyBatis selectList 반복 호출 지연이 100만 건 테스트 데이터에서 10분짜리 API가 된 사건 — 병렬 스트림 처리로 응답 시간을 30초 이내로 단축한 과정과 그 해결의 한계까지 돌아본 기록
+- summary: DB 적재 규모를 1만 건에서 운영 데이터 테스트를 위한 100만 건으로 늘리자 드러난 청구·가입 조회 병목 — 병렬 스트림으로 API 응답을 약 480,000ms에서 10,000ms 이내로 줄인 과정과 한계
 
 ## oracle-hint-subquery-fullscan
 
@@ -206,10 +206,10 @@ CloudXper 병렬 조회 최종 수치는 저자가 2026-11-03 확인한 10분 �
 
 원문: [글 파일](src/posts/redis-permission-cache-ttl.md)
 
-- title: 화면마다 권한을 DB에 묻던 시스템 — Redis 캐시의 TTL과 무효화 정책
+- title: 화면마다 권한 API를 호출하던 시스템 — Redis 캐시의 TTL과 무효화 정책
 - date: 2025-01-07
 - tags: Java, Spring, Redis, Performance
-- summary: 반복되는 권한 조회를 Redis 캐시로 바꾼 기록 — 고정 TTL과 세션 만료 시각의 차이, 로그아웃·권한 변경 시 무효화의 역할과 남은 검증 과제
+- summary: 권한 API에서 가져온 사용자 권한을 Redis에 저장해 반복 호출을 줄인 기록 — 로그인·재로그인 시 권한 갱신, 캐시 재사용과 보관 기간 정리
 
 ## sxssf-vs-xssf-excel-download
 

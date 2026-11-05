@@ -3,9 +3,9 @@ import { expect, test } from "vitest";
 import ArchitectureDiagrams from "./ArchitectureDiagrams";
 
 test.each([
-  ["lgu-billing-gw", "Redis · 키 매핑", "INS 이벤트에서 UUID와 업무키 매핑을 저장합니다."],
-  ["cloudxper-billing", "Redis", "Redis가 DB를 직접 조회하는 구조는 아닙니다."],
-  ["jeonse-support-system", "동기화 Service / DAO", "기존 연계 Service 인터페이스를 유지하면서"],
+  ["lgu-billing-gw", "Redis · 키 매핑", "토픽 내용에 매핑되는 컬럼 key를 조회해 원부·응용 파트 데이터를 연계합니다."],
+  ["cloudxper-billing", "Redis", "이후 요청에서 재사용해 권한 API 반복 호출을 줄입니다."],
+  ["jeonse-support-system", "업무망 연계 · sync 매핑", "기존 연계 Service 인터페이스를 유지하면서"],
 ])("%s의 노드를 키보드로 선택해 역할을 확인하고 해제한다", (slug, name, explanation) => {
   const { container } = render(<ArchitectureDiagrams slug={slug} />);
   const figure = container.querySelector(".arch-figure");

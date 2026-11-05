@@ -7,6 +7,16 @@ import {
 } from "./posts";
 
 describe("블로그 글 로더", () => {
+  test("검수 글은 기존 태그보다 명시한 AI 검수 분류를 우선한다", () => {
+    const slugs = ["portfolio-blog-audit-report", "portfolio-content-consistency-review", "portfolio-website", "ai-portfolio-review-notes"];
+    slugs.forEach((slug) => {
+      expect(findPostBySlug(slug).category.subId).toBe("ai-review");
+    });
+    const group = getCategoryTree().find((item) => item.groupId === "review");
+    expect(group.count).toBe(slugs.length);
+    expect(group.groupLabel).toBe("AI 검수");
+  });
+
   test("모든 글이 필수 frontmatter(title, date)와 분류 카테고리를 갖는다", () => {
     const posts = getAllPosts();
 

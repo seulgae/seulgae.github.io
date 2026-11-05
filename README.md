@@ -5,7 +5,7 @@
 - **포트폴리오 주소**: https://seulgae.github.io
   - 4개 포스터 컴포넌트(`About` · `Skills` · `Projects` · `Credentials`)로 조립되는 원페이지 스트림 구조
   - 스크롤 위치에 따라 상단 헤더·모바일 하단바의 슬라이딩 커서가 해당 섹션으로 자동 이동 (Scrollspy)
-  - 각 프로젝트 카드 내 인라인 시스템 아키텍처 다이어그램 드로어 탑재
+  - 프로젝트 성과와 연결된 시스템 아키텍처 팝업 및 다이어그램 확대 보기
 - **기술 블로그 주소**: https://seulgae.github.io/blog
   - 포트폴리오 네비게이션과 분리된 전용 헤더·푸터 레이아웃
   - 태그 필터, 본문 검색, 페이징 지원 (DB 없이 마크다운 파일 기반 운영)
@@ -37,9 +37,9 @@ src/
   data/                       콘텐츠 단일 출처(SSOT: profile, projects, education, awards, licenses)
   components/
     posters/                  원페이지 포트폴리오를 구성하는 4대 포스터 컴포넌트
-      AboutPoster.jsx         소개·핵심 강점·KPI 지표
+      AboutPoster.jsx         인사말·일하는 방식·개발 방향 소개
       SkillsPoster.jsx        역량 매트릭스 (profile.js 단일 출처 공유)
-      ProjectsPoster.jsx      프로젝트 타임라인 + 인라인 아키텍처 다이어그램 토글
+      ProjectsPoster.jsx      프로젝트 타임라인 + 성과·관련 글·아키텍처 팝업
       CredentialsPoster.jsx   학력·수상·자격 통합 (이미지 확대 Lightbox 및 산출물 링크 포함)
     Header.jsx / BottomNav.jsx / Footer.jsx       포트폴리오 전용 셸 (스크롤 스파이 커서)
     BlogHeader.jsx / BlogFooter.jsx               블로그 전용 독립 셸

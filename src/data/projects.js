@@ -16,27 +16,17 @@ const projects = [
     affiliation: "(주)마이크로 서비스 | SI 본부",
     companyPeriod: "2025.09 ~ 2026.08",
     companySummary:
-      "공공 행정 시스템 레거시 고도화, 성능·보안 아키텍처 개선 및 서버 인프라 운영 자동화 수행",
+      "공공 행정 시스템 기능 개선, 조회 성능·보안 취약점 조치 및 서버 점검 자동화 수행",
     title: "전세사기 피해자 지원관리시스템 운영·고도화",
     shortTitle: "전세사기 피해자 지원관리시스템 운영·고도화",
     description:
-      "전세사기 피해자 관리 시스템 레거시 고도화, 성능 최적화, 보안 강화, 운영 안정화 및 신규 기능개발",
+      "전세사기 피해자 관리 시스템 레거시 고도화, 성능 최적화, 보안 강화, 운영 안정화 및 신규 기능 개발",
     period: "2025.09 ~ 2026.08",
     role: "시스템 운영·기능 개발",
     skills: [
-      {
-        label: "기술",
-        value:
-          "eGovFrame 4.1.0, JSP, JSTL, jQuery, CSS, MyBatis, Jasypt, Apache SSHD, Maven",
-      },
-      {
-        label: "인프라",
-        value: "Apache Tomcat 9.0.31, JBOSS, Linux(Fedora), CUBRID, SVN",
-      },
-      {
-        label: "사용 툴",
-        value: "Cursor IDE, Claude AI, STS4, DBeaver",
-      },
+      { label: "핵심 기술", value: "Java, Spring, eGovFrame 4.1, MyBatis, CUBRID" },
+      { label: "개발 환경", value: "JSP/JSTL, JavaScript/jQuery, Apache Tomcat 9, JBoss, Linux(Fedora)" },
+      { label: "개발 도구", value: "Maven, SVN" },
     ],
     mainTasks: [
       "요청 기반 개선 대응 및 오류 분석, 기능 유지보수·자동화 수행",
@@ -71,7 +61,7 @@ const projects = [
       },
       */
       {
-        title: "CodeRay SAST · KISA 표준 취약점 점검 대응 및 보안 아키텍처 강화",
+        title: "CodeRay SAST · 웹 취약점 조치 및 연계 SQL 개선",
         detail:
           "CodeRay SAST 결함의 CWE 유형별 시큐어코딩·미사용 코드 제거, KISA 표준 웹 취약점(HIGH 6·MEDIUM 7·LOW 3) 조치, 망간 동기화 동적 쿼리(9개 테이블·97개 컬럼)의 정적 SQL 재설계 및 Jasypt 기반 4개 환경 계정 설정 암호화 수행",
         result:
@@ -141,7 +131,7 @@ const projects = [
     affiliation: "(주)애버커스 | 빌링시스템팀",
     companyPeriod: "2022.11 ~ 2025.05",
     companySummary:
-      "통신·클라우드 청구·빌링 도메인 백엔드 개발·운영 및 클라우드 빌링 플랫폼(CloudXper) 고도화 수행",
+      "LG U+ 빌링·GW 연계 시스템 유지보수 및 CloudXper 기업별 청구 관리 기능 개선",
     trackBadge: "개발·운영",
     title: "빌링 GW 시스템 개발·운영 유지보수",
     shortTitle: "빌링 GW 시스템 개발·운영 유지보수",
@@ -150,20 +140,10 @@ const projects = [
     period: "2022.11 ~ 2025.05",
     role: "SM/SI 서비스 개발 및 연동 시스템 유지보수",
     skills: [
-      {
-        label: "기술",
-        value:
-          "Spring Boot(2.x.x), Batch(4.x.x), REST API, HTML5, CSS, JavaScript, Swagger, MyBatis, Maven",
-      },
-      {
-        label: "인프라",
-        value:
-          "Redis, Kafka, APIM, TMS, Jenkins, GitLab, WhaTap, JobPass, Linux(CentOs), Oracle",
-      },
-      {
-        label: "사용 툴",
-        value: "Trusted Orange, STS, SecureCRT, FileZilla(SFTP), VSCode",
-      },
+      { label: "핵심 기술", value: "Java, Spring Boot(2.x.x), Spring Batch(4.x.x), MyBatis, Oracle, Redis, Kafka" },
+      { label: "개발 환경", value: "Linux(CentOS)" },
+      { label: "개발 도구", value: "Maven, GitLab, Jenkins, Swagger" },
+      { label: "모니터링", value: "WhaTap" },
     ],
     mainTasks: [
       "Kafka Topic 기반 데이터 처리 로직 설계·구현 및 연동 시스템 모니터링·장애 대응",
@@ -172,16 +152,16 @@ const projects = [
     ],
     achievements: [
       {
-        title: "Kafka 연동 오류 모니터링 체계 구축 및 대응 시나리오 표준화",
+        title: "GW 연동 오류 분석 및 대응 체계 개선",
         detail:
-          "WhaTap 히트맵 기반 연동 실패 패턴을 분석해 오류 유형별 대응 시나리오를 매뉴얼화하고, 데이터 보정 스크립트 정비 및 장애 발생 시 동일한 절차로 즉시 대응 가능한 운영 체계 마련",
-        result: "주간 Kafka 오류 70건 → 5건 미만 (93% 감소)",
+          "WhaTap 히트맵 기반 실패 패턴 분석, 오류 유형별 대응 시나리오 매뉴얼화 및 데이터 보정 스크립트 정비로 즉시 대응 절차 마련. 파트별 오류를 종합·공유하는 일일 메일 보고 체계 구축으로 운영자 대응·PM 검토 지원",
+        result: "주간 Kafka 연동 오류 70건 → 5건 (약 93% 감소)",
         relatedPosts: [
           { slug: "kafka-gw-data-integrity", label: "Kafka 도메인 GW 데이터 정합성 지키기" },
         ],
       },
       {
-        title: "이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증",
+        title: "GW 연동 데이터 검증 공통화 및 정합성 대응",
         architectureSlug: "lgu-billing-gw",
         detail:
           "Oracle ↔ MySQL 연동의 문자셋·바이트 길이 문제를 Java 변환 로직과 Subscriber 검증으로 개선, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
@@ -213,31 +193,18 @@ const projects = [
     affiliation: "(주)애버커스 | 빌링시스템팀",
     companyPeriod: "2022.11 ~ 2025.05",
     companySummary:
-      "통신·클라우드 청구·빌링 도메인 백엔드 개발·운영 및 클라우드 빌링 플랫폼(CloudXper) 고도화 수행",
+      "LG U+ 빌링·GW 연계 시스템 유지보수 및 CloudXper 기업별 청구 관리 기능 개선",
     trackBadge: "SI 프로젝트",
     title: "CloudXper 클라우드 빌링 플랫폼 고도화",
     shortTitle: "CloudXper 클라우드 빌링 플랫폼 고도화",
     description:
-      "AWS · GCP · Azure · Kakao 저장소 대여·청구 통합 관리 플랫폼의 백엔드 아키텍처 개선 및 대용량 데이터 처리 최적화",
+      "클라우드 저장소 대여 내역과 기업별 청구 정보를 관리하는 서비스의 백엔드 기능 개선 및 대용량 조회 최적화",
     period: "2024.10 ~ 2025.02",
     role: "플랫폼 서버 백엔드 개발",
     skills: [
-      {
-        label: "기술",
-        value: "Spring Boot(3.x.x), REST API, Swagger, MyBatis, Gradle",
-      },
-      {
-        label: "인프라",
-        value: "Redis, MySQL, Linux(Ubuntu)",
-      },
-      {
-        label: "연동 화면",
-        value: "React 관리 화면과 REST API 연동",
-      },
-      {
-        label: "사용 툴",
-        value: "DBeaver, IntelliJ, VSCode, Jenkins, GitLab, SonarQube",
-      },
+      { label: "핵심 기술", value: "Java, Spring Boot(3.x.x), MyBatis, MySQL, Redis, React" },
+      { label: "개발 환경", value: "Linux(Ubuntu)" },
+      { label: "개발 도구", value: "Gradle, GitLab, Jenkins, Swagger, SonarQube" },
     ],
     mainTasks: [
       "가입·청구·상품·공통 조회 REST API 구현 및 청구 산정 결과 조회 SQL 작성",
@@ -246,21 +213,21 @@ const projects = [
     ],
     achievements: [
       {
-        title: "대용량 데이터 조회 성능 최적화",
+        title: "플랫폼 대용량 조회 API 성능 개선",
         detail:
           "서비스 계층으로 연관 조회·결과 조립 로직 통합, 병렬 스트림 적용으로 조회 대기 시간 및 API 응답 속도 개선",
-        result: "API 응답 시간 95% 단축 (10분 → 30초 이내)",
+        result: "API 응답 시간 약 98% 단축 (약 480,000ms → 10,000ms 이내)",
         relatedPosts: [
-          { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 병렬화와 한계 회고" },
+          { slug: "mybatis-builder-parallel-refactoring", label: "DB 100만 건 환경의 조회 병렬화" },
         ],
       },
       {
-        title: "Redis 권한 조회 캐시 구현 및 응답 개선",
+        title: "로그인 권한 조회 캐시 구현 및 응답 개선",
         architectureSlug: "cloudxper-billing",
         detail:
-          "Redis 권한 캐싱으로 반복 DB 조회 감소, TTL 설정 및 로그아웃·권한 변경 시 캐시 무효화 처리",
+          "로그인·재로그인 시 권한 API 조회 결과를 Redis에 저장·갱신하고, 이후 요청에서 재사용해 반복 호출 감소",
         result:
-          "권한 캐시 적용 후 화면 전환 응답 10초 → 0.10초 이내로 개선",
+          "인증·권한 조회 병목을 제거하여 페이지 전환 및 렌더링 응답 속도 개선(10초 -> 0.10초 이내)",
         relatedPosts: [
           { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 TTL·무효화" },
         ],
@@ -310,25 +277,26 @@ export function getCareerGroups() {
     const workScopes = group.projects;
     const combined = {
       ...workScopes[0],
-      title: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수",
-      shortTitle: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수",
+      title: "빌링 서비스·GW 연계 시스템 유지보수",
+      shortTitle: "빌링 서비스·GW 연계 시스템 유지보수",
       description: "청구·요금 관리 등 빌링 비즈니스 기능과 공통 모듈 개발, 대내외 데이터 연계 및 운영 안정화 수행",
       period: group.period,
       role: "백엔드 개발·운영",
       trackBadge: null,
       workScopes,
-      skills: [{
-        label: "사용 기술",
+      skills: [...new Set(workScopes.flatMap((scope) => scope.skills.map((skill) => skill.label)))].map((label) => ({
+        label,
         value: [...new Set(workScopes.flatMap((scope) => scope.skills)
+          .filter((skill) => skill.label === label)
           .flatMap((skill) => skill.value.split(","))
           .map((token) => token.trim())
           .filter(Boolean)
           .map((token) => {
-            if (/^Spring Boot\(/.test(token)) return "Spring Boot(3.x.x)";
+            if (/^Spring Boot\(/.test(token)) return "Spring Boot";
             if (/^Linux\(/.test(token)) return "Linux(CentOS·Ubuntu)";
             return token;
           }))].join(", "),
-      }],
+      })),
       mainTasks: [
         "빌링 시스템 주요 비즈니스 기능 및 공통 모듈 설계·개발",
         "대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응",

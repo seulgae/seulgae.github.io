@@ -8,18 +8,7 @@ const skillCompetencies = [
     resumeLabel: "Back-End",
     blogLinks: [{ slug: "backend-code-convention-standardization", label: "코드 표준화 회고" }],
     summary: "업무 요구에 맞춰 도메인별 조회 SQL과 API를 구현하고, 팀이 함께 수정하기 쉬운 코드 구조를 정리합니다.",
-    items: [
-      "Java",
-      "Spring",
-      "Spring Boot",
-      "eGovFrame 4.1",
-      "Spring Batch",
-      "MyBatis",
-      "REST API",
-      "JSP/JSTL",
-      "Apache MINA SSHD",
-      "Jasypt",
-    ],
+    items: ["Java", "Spring Boot", "Spring Batch", "MyBatis"],
     evidence:
       "시스템 고도화 프로젝트에서 가입·청구·상품 API와 청구 산정 결과를 조회하는 SQL을 구현했습니다. 개발자마다 달랐던 코드 구조와 작성 규칙을 문서화해 팀에 공유했습니다.",
   },
@@ -49,14 +38,9 @@ const skillCompetencies = [
     items: [
       "Apache Kafka",
       "Linux",
+      "CodeRay SAST",
       "WhaTap",
       // "Damo",
-      "CodeRay SAST",
-      "Jenkins",
-      "Git / SVN",
-      "Maven / Gradle",
-      "React",
-      "JavaScript / jQuery",
     ],
     evidence:
       // "Kafka 주간 오류 93% 감소, 384만 건 무중단 암호화 패치, SAST 취약점 358건→4건 감축",
@@ -84,7 +68,7 @@ const profile = {
   strengths: [
     "가입·청구·상품 API와 청구 산정 결과 조회 SQL을 구현하고, 요청·응답 객체와 계층별 역할을 정리해 예제 코드·PDF 가이드로 팀에 공유했습니다.",
     // "Kafka 도메인 GW의 업무키 매핑·대사 표준화(주간 오류 93% 감소)와 384만 건 무중단 분할 패치 등 운영 데이터 정합성을 끝까지 책임집니다.",
-    "실행계획 기반 인덱스 적용으로 조회 53초 → 1초 미만, 연관 조회 병렬화로 10분 → 30초 이내 단축을 기록했습니다. 병렬화 시 SQL 호출 수는 유지됐습니다.",
+    "실행계획 기반 인덱스 적용으로 조회 53초 → 1초 미만, 연관 조회 병렬화로 약 480,000ms → 10,000ms 이내 단축을 기록했습니다. 병렬화 시 SQL 호출 수는 유지됐습니다.",
     "원천·대상 데이터를 대사·보정한 뒤 재검증하고, 보안 검출 유형별 공통 원인 수정과 망간 동기화·서버 점검 절차 개선을 수행했습니다.",
   ],
   kpiMetrics: [
@@ -109,24 +93,24 @@ const profile = {
       postSlug: "cwe-476-null-dereference",
     },
     {
-      value: "10분 → 30초 이내",
-      label: "100만 건 조회 응답 95% 단축",
+      value: "약 480,000ms → 10,000ms 이내",
+      label: "대용량 조회 응답 약 98% 단축",
       detail: "계층 분리 리팩토링 · 병렬 스트림 적용",
       postSlug: "mybatis-builder-parallel-refactoring",
     },
     {
-      value: "70건 → 5건 미만",
+      value: "70건 → 5건",
       label: "주간 Kafka 오류 93% 감소",
-      detail: "실패 패턴 분류 · 대사 보정 표준화",
+      detail: "대응 절차 표준화 · 일일 보고 체계 구축",
       postSlug: "kafka-gw-data-integrity",
     },
   ],
   skillCompetencies,
   // 출력용 이력서(/resume)의 기술 스택 표가 동일한 단일 출처에서 파생됩니다.
-  techStack: skillCompetencies.map((group) => ({
-    label: group.resumeLabel,
-    items: group.items,
-  })),
+  techStack: [
+    ...skillCompetencies.map((group) => ({ label: group.resumeLabel, items: group.items })),
+    { label: "개발 도구", items: ["Git / SVN", "Maven / Gradle", "Jenkins", "GitLab", "SonarQube", "Swagger"] },
+  ],
 };
 
 /** birthDate 기준 만 나이. 생일이 지나지 않았으면 1을 뺍니다. */

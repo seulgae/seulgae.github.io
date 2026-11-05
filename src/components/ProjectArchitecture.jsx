@@ -32,7 +32,7 @@ export default function ProjectArchitecture({ slug }) {
           </details>
         ))}
         <div className="billing-source">
-          <p>경험을 정리한 논리 구조입니다. 강조 영역은 담당 업무 범위를 나타냅니다.</p>
+          <p>관련 기술 블로그</p>
           <ul className="architecture-source-list">
             {data.sources.map((source) => (
               <li key={source.slug}>

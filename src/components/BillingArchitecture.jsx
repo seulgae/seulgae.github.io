@@ -12,15 +12,15 @@ export default function BillingArchitecture() {
           <span className="billing-label">강조 영역: 담당 업무</span>
         </div>
         <p className="billing-intro">달라진 데이터 구조를 연결하고, 청구 데이터의 정합성을 지키다</p>
-        <p className="billing-caption">차세대의 UUID 기반 데이터를 기존 업무키 기반 구조로 변환하는 서비스 도메인 GW</p>
+        <p className="billing-caption">원부·응용 파트의 PK와 컬럼을 매핑해 데이터를 연계하는 서비스 도메인 GW</p>
 
         <ArchitectureDiagrams slug="lgu-billing-gw" />
 
         <details className="billing-details" open>
-          <summary>이벤트 순서가 뒤바뀌면 어떻게 처리할까?</summary>
+          <summary>이벤트의 컬럼을 어떻게 맞춰 연계할까?</summary>
           <div className="billing-columns">
-            <div><h4>매핑이 있는 경우</h4><p>변경 이벤트 수신 → Redis에서 업무키 해석 → 대상 DB 반영</p></div>
-            <div><h4>매핑이 아직 없는 경우</h4><p>키 해석 실패 → 재처리 대상으로 보관 → 매핑 생성 후 다시 처리 (저장소·실행 방식 확인 필요)</p></div>
+            <div><h4>매핑 조회</h4><p>토픽 이벤트 수신 → Redis에서 매핑 컬럼 key 조회 → 양쪽 PK·컬럼 대응</p></div>
+            <div><h4>컬럼이 바로 맞지 않는 경우</h4><p>DTO 임시 필드로 맞춤 → 응용 테이블 적재 → 대사 확인</p></div>
           </div>
         </details>
         <details className="billing-details">
@@ -40,10 +40,10 @@ export default function BillingArchitecture() {
           <h4>운영에서 정합성을 확인하는 방법</h4>
           <div className="billing-columns">
             <div className="billing-dependency"><span className="billing-label">GW 모니터링 · 대사</span><h4>원천과 구독 데이터 비교</h4><p>same · mismatch · 재연동 대기</p><small>발행 누락 / 순서 역전 / 인코딩 초과 / 컬럼·매핑 누락으로 원인 구분</small></div>
-            <div className="billing-dependency"><span className="billing-label">보정 후 재검증</span><h4>불일치가 해소됐는지 확인</h4><p>불일치 키 추출 → DML 작성 → 대상 SELECT 검증 → 반영 → 재대사</p><small>일회성은 엑셀 DML · 반복 유형은 스크립트 정비</small></div>
+            <div className="billing-dependency"><span className="billing-label">일일 보고 체계</span><h4>오류 대응·일일 보고 체계 구축</h4><p>WhaTap 실패 패턴 분석 → 대응 매뉴얼·보정 스크립트 정비 → 파트별 일일 메일 공유</p><small>이상·특이 데이터 등 즉시 해결이 어려운 건은 별도 구분</small></div>
           </div>
         </div>
-        <p className="billing-source">경험을 정리한 논리 구조입니다. 강조 영역은 담당 업무 범위를 나타냅니다.<br />
+        <p className="billing-source">관련 기술 블로그<br />
           <a
             href={paths.blogPost("kafka-gw-data-integrity")}
             target="_blank"

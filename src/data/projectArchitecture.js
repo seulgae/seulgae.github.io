@@ -3,23 +3,23 @@
 const projectArchitecture = {
   "cloudxper-billing": {
     headline: "조회 대기 시간을 줄이고, 반복되는 권한 조회를 캐시로 전환하다",
-    caption: "멀티 클라우드 대여·청구 통합 관리 플랫폼의 백엔드 개선 영역",
+    caption: "클라우드 저장소 대여 내역과 기업별 청구 정보를 관리하는 서비스의 백엔드 개선 영역",
     details: [
       { title: "조회 성능은 어떻게 달라졌을까?", open: true, items: [
-        { title: "개선 전 · 순차 조회", body: "부모 목록 조회 후 항목별 연관 리스트를 하나씩 조회. 100만 건 테스트에서 약 10분 소요." },
-        { title: "개선 후 · 병렬 조회", body: "ServiceImpl로 조회·조립을 모으고 병렬 스트림 적용. 같은 테스트 조건에서 약 30초 이내로 단축." },
+        { title: "개선 전 · 순차 조회", body: "부모 목록 조회 후 항목별 연관 리스트를 하나씩 조회. DB 전체 테스트 데이터 100만 건 적재 환경에서 API 호출 후 응답 완료까지 약 480,000ms 소요." },
+        { title: "개선 후 · 병렬 조회", body: "ServiceImpl로 조회·조립을 모으고 병렬 스트림 적용. 같은 테스트 조건에서 10,000ms 이내로 단축." },
       ] },
       { title: "병렬 처리의 범위와 남은 과제", items: [
         { title: "당시 적용한 개선", body: "SQL 횟수는 그대로이며 반복 호출 자체를 제거한 것은 아닙니다. 여러 DB 조회의 대기 시간을 겹쳐 응답 시간을 줄였습니다." },
         { title: "회고에서 정리한 다음 단계", body: "EXPLAIN 확인과 집합 단위 조회로 쿼리 수를 줄이는 방향을 검토했습니다. 커넥션 풀 부하와 작업 스레드의 트랜잭션 경계도 고려 대상입니다." },
       ] },
       { title: "권한 캐시는 언제 갱신할까?", items: [
-        { title: "조회 · 만료", body: "사용자·코드 그룹별 캐시를 읽고, 없으면 DB에서 조회합니다. 고정 TTL은 세션 정책을 참고한 값이며 실제 토큰 만료 시각을 자동 추적하지 않습니다." },
-        { title: "로그아웃 · 권한 변경", body: "원문에는 사용자 캐시 무효화가 기록돼 있습니다. 코드 그룹 전체 삭제·삭제 실패·진행 중 조회와의 경합은 실제 구현 확인이 필요합니다." },
+        { title: "조회 · 만료", body: "로그인·재로그인 시 권한 API에서 사용자 권한을 조회해 Redis에 저장·갱신하고 이후 요청에서 재사용합니다." },
+        { title: "조회 목록 제공", body: "권한 정보에 보관 기간을 두고, 캐시된 사용자 권한을 기준으로 조회 가능한 업무 목록을 제공합니다." },
       ] },
     ],
     sources: [
-      { slug: "mybatis-builder-parallel-refactoring", label: "100만 건 대용량 조회 성능 개선과 병렬화" },
+      { slug: "mybatis-builder-parallel-refactoring", label: "DB 100만 건 환경의 조회 성능 개선" },
       { slug: "redis-permission-cache-ttl", label: "Redis 권한 캐시와 만료 정책" },
       { slug: "backend-code-convention-standardization", label: "4인 백엔드 코드 리팩토링과 PDF 컨벤션 표준화" },
     ],

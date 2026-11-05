@@ -26,6 +26,12 @@ beforeEach(() => {
   });
 });
 
+test.each(["/#%", "/#%E0%A4%A"])("잘못 인코딩된 해시 %s로 접속해도 홈을 표시한다", async (path) => {
+  await renderAt(path);
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("백엔드 개발자 길태형입니다.");
+  expect(screen.getByRole("heading", { name: "Core Skills & Competency" })).toBeInTheDocument();
+});
+
 test("성과 링크는 대상 카드로 스크롤한 뒤 강조하고 재클릭하면 효과를 다시 재생한다", async () => {
   await renderAt(paths.home);
   const target = document.getElementById("achievement-query-index-tuning");
@@ -152,7 +158,7 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(document.getElementById("credentials")).toBeInTheDocument();
 
   expect(screen.getByRole("heading", { level: 3, name: projects[0].title })).toBeInTheDocument();
-  const combinedHeading = screen.getByRole("heading", { level: 3, name: "LG U+ 빌링 서비스·GW 연계 시스템 유지보수" });
+  const combinedHeading = screen.getByRole("heading", { level: 3, name: "빌링 서비스·GW 연계 시스템 유지보수" });
   const combinedCard = combinedHeading.closest("article");
   expect(within(combinedCard).queryByRole("heading", { name: projects[1].title })).not.toBeInTheDocument();
   expect(within(combinedCard).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
@@ -160,13 +166,13 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(within(combinedCard).getByText("대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응")).toBeInTheDocument();
   expect(combinedCard.querySelector("#project-cloudxper-billing")).toBeInTheDocument();
   expect(within(combinedCard).getAllByRole("button", { name: /시스템 아키텍처/ })).toHaveLength(2);
-  const dbAchievement = within(combinedCard).getByText("이기종 DB 연동 유지보수 및 데이터 정합성 자동 검증").closest("li");
+  const dbAchievement = within(combinedCard).getByText("GW 연동 데이터 검증 공통화 및 정합성 대응").closest("li");
   expect(within(dbAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
   expect(within(dbAchievement.nextElementSibling).getByRole("button", { name: /Kafka GW 시스템 아키텍처/ })).toBeInTheDocument();
   expect(within(combinedCard).queryByText("코드 리팩토링 및 개발 컨벤션 표준화")).not.toBeInTheDocument();
   const apiCard = screen.getByRole("heading", { name: "비즈니스 로직 구현 및 API 개발" }).closest("article");
   expect(within(apiCard).getByRole("link", { name: /코드 표준화 회고/ })).toHaveAttribute("href", "/blog/backend-code-convention-standardization");
-  const refactoringAchievement = within(combinedCard).getByText("Redis 권한 조회 캐시 구현 및 응답 개선").closest("li");
+  const refactoringAchievement = within(combinedCard).getByText("로그인 권한 조회 캐시 구현 및 응답 개선").closest("li");
   expect(within(refactoringAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
   expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
 

@@ -31,14 +31,22 @@ function ArchitectureButton({ project, label, onOpenArchitecture }) {
 }
 
 function ProjectWorkScope({ project, onOpenArchitecture }) {
-  const skillTokens = splitSkillTokens(project.skills);
   return (
       <div className="project-poster-content">
-        <div className="project-skill-pills" aria-label="사용 기술">
-          {skillTokens.map((token) => (
-            <span key={token} className="project-skill-pill">
-              {token}
-            </span>
+        <div className="project-technology-groups" aria-label="사용 기술">
+          {project.skills.map((group) => (
+            <div key={group.label} className="project-technology-row">
+              <span className="project-technology-label">{group.label}</span>
+              {group.label === "핵심 기술" ? (
+                <div className="project-skill-pills">
+                  {splitSkillTokens([group]).map((token) => (
+                    <span key={token} className="project-skill-pill">{token}</span>
+                  ))}
+                </div>
+              ) : (
+                <p className="project-technology-context">{group.value.split(",").map((token) => token.trim()).join(" · ")}</p>
+              )}
+            </div>
           ))}
         </div>
 

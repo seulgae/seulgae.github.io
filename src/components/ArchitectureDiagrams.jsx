@@ -71,7 +71,7 @@ export default function ArchitectureDiagrams({ slug }) {
   if (!data) return null;
   return <div className="architecture-diagrams">
     <p className="arch-intro">{data.intro}</p>
-    {data.providers && <div className="arch-providers"><span>통합 관리 대상 클라우드</span><div>{data.providers.map(([name, logo]) => <Tech key={name} name={name} logo={logo} />)}</div><small>클라우드별 수집 API·실제 호스팅 배치 정보는 생략</small></div>}
+    {data.businessContext && <div className="arch-business-context"><span>{data.businessContext.label}</span><div>{data.businessContext.items.map((name) => <Tech key={name} name={name} />)}</div><small>{data.businessContext.description}</small></div>}
     {data.figures.map((figure) => <Diagram key={figure.id} figure={figure} theme={data.theme} />)}
     <div className="arch-tool-context"><h4>이 흐름을 개발·운영할 때 사용한 도구</h4><div className="arch-tool-groups">{data.supporting.map((group) => <section key={group.title}><h5>{group.title}</h5><div className="arch-tool-list">{group.tools.map(([name, logo]) => <Tech key={name} name={name} logo={logo} />)}</div><p>{group.text}</p></section>)}</div></div>
   </div>;

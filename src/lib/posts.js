@@ -19,6 +19,11 @@ const modules = import.meta.glob("../posts/*.md", {
 
 export const CATEGORY_DEFINITIONS = [
   {
+    groupId: "review",
+    groupLabel: "AI 검수",
+    subs: [{ id: "ai-review", label: "포트폴리오 검수" }],
+  },
+  {
     groupId: "backend",
     groupLabel: "Backend & Architecture",
     subs: [
@@ -44,10 +49,10 @@ export const CATEGORY_DEFINITIONS = [
   },
   {
     groupId: "retrospective",
-    groupLabel: "Retrospective & Notes",
+    groupLabel: "면접 준비 · 사이트 가이드",
     subs: [
-      { id: "project-review", label: "프로젝트 심층 회고" },
-      { id: "dev-notes", label: "개발 기록 · 가이드" },
+      { id: "project-review", label: "기업 면접 준비" },
+      { id: "dev-notes", label: "블로그 사이트 가이드" },
     ],
   },
 ];
@@ -90,18 +95,18 @@ function inferCategory(slug, tags, rawCategory) {
   ) {
     return {
       groupId: "retrospective",
-      groupLabel: "Retrospective & Notes",
+      groupLabel: "면접 준비 · 사이트 가이드",
       subId: "project-review",
-      subLabel: "프로젝트 심층 회고",
+      subLabel: "기업 면접 준비",
     };
   }
 
   if (tagSet.has("guide") || tagSet.has("react") || tagSet.has("refactoring")) {
     return {
       groupId: "retrospective",
-      groupLabel: "Retrospective & Notes",
+      groupLabel: "면접 준비 · 사이트 가이드",
       subId: "dev-notes",
-      subLabel: "개발 기록 · 가이드",
+      subLabel: "블로그 사이트 가이드",
     };
   }
 

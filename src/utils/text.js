@@ -24,3 +24,12 @@ export function assetUrl(fileName = "") {
 
   return `${import.meta.env.BASE_URL}${normalized}`;
 }
+
+/** 잘못 인코딩된 해시는 무시해 주소 입력만으로 화면이 중단되지 않도록 합니다. */
+export function getHashTarget(hash = "") {
+  try {
+    return decodeURIComponent(hash.replace(/^#/, ""));
+  } catch {
+    return "";
+  }
+}

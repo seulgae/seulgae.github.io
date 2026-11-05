@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getHashTarget } from "../utils/text";
 
 const SYNC_EVENT = "portfolio:section-change";
 
@@ -6,7 +7,7 @@ function resolveHashSection(hash, sectionIds) {
   if (!hash) {
     return null;
   }
-  const clean = decodeURIComponent(hash.replace(/^#/, ""));
+  const clean = getHashTarget(hash);
   if (sectionIds.includes(clean)) {
     return clean;
   }
