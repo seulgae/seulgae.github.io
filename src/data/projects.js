@@ -298,8 +298,9 @@ export function getCareerGroups() {
           }))].join(", "),
       })),
       mainTasks: [
-        "빌링 시스템 주요 비즈니스 기능 및 공통 모듈 설계·개발",
-        "대내외 시스템 데이터 연계 개발 및 모니터링·장애 대응",
+        "Kafka 기반 GW 연동 시스템 모니터링 및 장애 대응, 로그 분석을 통한 원인 분석 및 조치",
+        "SI 프로젝트 모듈 설계 및 백엔드 기반 서비스 개발",
+        "도메인(빌링-청구) 시스템, Spring 기반 배치, API 서비스 개발 및 유지보수",
       ],
       achievements: workScopes.flatMap((scope) => scope.achievements),
     };
