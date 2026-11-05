@@ -3,7 +3,7 @@ title: 정적 포트폴리오 품질 개선 실습 — 접근성·공유·공개
 date: 2026-11-05
 tags: React, Vite, GitHub Pages, Accessibility, Practice
 summary: 정적 포트폴리오의 모달 초점, 공개 리소스, 공유 메타와 배포 경로를 재현·개선하고 검증하는 단계별 과제
-category: website-practice
+category: practice-tasks
 ---
 
 현재 포트폴리오의 남은 품질 개선을 직접 구현하고 검증하는 과제다. 각 항목은 체크를 완료하기 전까지 구현 결과로 취급하지 않는다. 기존 콘텐츠·라우터·Markdown 처리 방식을 활용한다.

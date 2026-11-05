@@ -39,6 +39,23 @@
 }
 
 @media print {
+  .app-shell,
+  .app-main {
+    display: block;
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .portfolio-shell {
+    padding-bottom: 0;
+  }
+
+  .page-enter {
+    animation: none;
+    transform: none;
+  }
+
   .site-header,
   .site-footer,
   .blog-header,

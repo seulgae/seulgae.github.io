@@ -3,7 +3,7 @@ title: 백엔드 문제 해결 재현 과제 — 조회 병렬화·이벤트 연
 date: 2026-11-05
 tags: Java, Spring, SQL, Kafka, Jsoup, Practice
 summary: 실무에서 접한 문제를 별도 실험 환경에서 재현하고 병렬 조회·정합성·HTML 필터·엑셀 메모리의 개선 조건을 비교하는 과제
-category: backend-practice
+category: practice-tasks
 ---
 
 기술 글과 면접 자료에서 확장해 볼 실습을 모았다. 아래 내용은 앞으로 구현·측정할 과제이며 과거 운영 환경의 추가 성과가 아니다. 업무 원본 데이터 대신 생성한 테스트 데이터를 사용한다.

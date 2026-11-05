@@ -20,11 +20,10 @@ const modules = import.meta.glob("../posts/*.md", {
 export const CATEGORY_DEFINITIONS = [
   {
     groupId: "practice",
-    groupLabel: "실습 과제",
+    groupLabel: "AI 활용 기록",
     subs: [
-      { id: "redis-practice", label: "Redis · 캐시 실습" },
-      { id: "backend-practice", label: "백엔드 재현 실습" },
-      { id: "website-practice", label: "웹사이트 품질 개선" },
+      { id: "practice-tasks", label: "AI 성과별 실습 과제" },
+      { id: "ai-inspection", label: "AI 점검 기록" },
     ],
   },
   {

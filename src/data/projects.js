@@ -23,6 +23,7 @@ const projects = [
       "전세사기 피해자 관리 시스템 레거시 고도화, 성능 최적화, 보안 강화, 운영 안정화 및 신규 기능 개발",
     period: "2025.09 ~ 2026.08",
     role: "시스템 운영·기능 개발",
+    resumeKeyResult: "SAST 358건 → 4건 · 조회 53초 → 1초 미만 · 서버 점검 4시간 주기 자동화",
     skills: [
       { label: "핵심 기술", value: "Java, Spring, eGovFrame 4.1, MyBatis, CUBRID" },
       { label: "개발 환경", value: "JSP/JSTL, JavaScript/jQuery, Apache Tomcat 9, JBoss, Linux(Fedora)" },
@@ -139,6 +140,7 @@ const projects = [
       "Kafka 기반 청구·빌링 GW 시스템의 개발 및 운영, 이기종 시스템 연동 및 데이터 흐름 표준화",
     period: "2022.11 ~ 2025.05",
     role: "SM/SI 서비스 개발 및 연동 시스템 유지보수",
+    resumeKeyResult: "주간 연동 오류 약 70건 → 5건 · 인코딩 오류 95% 감소",
     skills: [
       { label: "핵심 기술", value: "Java, Spring Boot(2.x.x), Spring Batch(4.x.x), MyBatis, Oracle, Redis, Kafka" },
       { label: "개발 환경", value: "Linux(CentOS)" },

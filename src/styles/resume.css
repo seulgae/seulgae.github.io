@@ -41,6 +41,7 @@
 }
 
 .resume-paper {
+  position: relative;
   width: 210mm;
   min-height: 297mm;
   margin: 0 auto 18px;
@@ -48,6 +49,491 @@
   background: #fff;
   border: 1px solid var(--line);
   box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+}
+
+/* 표지: A4 비율 안에서 사진·소개·기술을 한눈에 읽는 구성. */
+.resume-cover {
+  padding: 15mm 14mm 18mm;
+  color: #0f172a;
+}
+
+.resume-cover-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42mm;
+  align-items: end;
+  gap: 10mm;
+  padding-bottom: 4.5mm;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.resume-cover-eyebrow {
+  margin: 0 0 6mm;
+  color: #087e80;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.36em;
+}
+
+.resume-cover-identity h1 {
+  margin: 0 0 6mm;
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.22em;
+}
+
+.resume-cover-tagline {
+  margin: 0 0 3mm;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.resume-cover-role {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.resume-cover-portrait {
+  display: block;
+  width: 42mm;
+  height: 56mm;
+  object-fit: cover;
+}
+
+.resume-cover-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 5.5mm 0 8mm;
+  font-size: 13px;
+}
+
+.resume-cover-meta > div {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.resume-cover-meta dt {
+  color: #087e80;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+}
+
+.resume-cover-meta dd,
+.resume-cover-stack dd {
+  margin: 0;
+}
+
+.resume-cover-meta a {
+  color: #0065cb;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.resume-cover-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 14mm;
+  margin: 0 0 5mm;
+  color: #087e80;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.28em;
+}
+
+.resume-cover-section h2::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background: #e2e8f0;
+}
+
+.resume-cover-section h3 {
+  margin: 0 0 3mm;
+  color: #087a75;
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.45;
+}
+
+.resume-cover-prose p {
+  margin: 0 0 2mm;
+  color: #26374d;
+  font-size: 14px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.resume-cover-stack {
+  margin-top: 12mm;
+}
+
+.resume-cover-stack dl {
+  margin: 0;
+  display: grid;
+  gap: 3.5mm;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.resume-cover-stack dl > div {
+  display: grid;
+  grid-template-columns: 27mm minmax(0, 1fr);
+  gap: 2.5mm;
+  break-inside: avoid;
+}
+
+.resume-cover-stack dt {
+  color: #087779;
+  font-weight: 650;
+}
+
+.resume-page-number {
+  position: absolute;
+  right: 14mm;
+  bottom: 7mm;
+  color: #64748b;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.resume-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #087e80;
+}
+
+.resume-detail-header span {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #087e80;
+}
+
+/* 경력 상세: 번호·소속·핵심 결과·수행 내용을 같은 읽기 순서로 정렬합니다. */
+.resume-career-page {
+  padding: 11mm 13mm 17mm;
+  color: #0f172a;
+}
+
+.resume-career-header {
+  border-bottom: 2px solid #172033;
+  padding-bottom: 3mm;
+}
+
+.resume-career-header > h2 {
+  margin: 0 0 3mm;
+  font-size: 33px;
+  line-height: 1.35;
+  letter-spacing: 0.24em;
+  font-weight: 800;
+}
+
+.resume-career-person {
+  display: flex;
+  align-items: baseline;
+  gap: 4mm;
+  margin: 0 0 1.5mm;
+  font-size: 13px;
+}
+
+.resume-career-person strong {
+  font-size: 20px;
+}
+
+.resume-career-person-meta {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.resume-career-person-meta > span {
+  padding: 0 4mm;
+}
+
+.resume-work-title {
+  margin: 2mm 0 1.5mm;
+  color: #087e80;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+}
+
+.resume-work-title > span {
+  margin-left: 4mm;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.resume-career-entry + .resume-career-entry {
+  margin-top: 3mm;
+  padding-top: 3mm;
+  border-top: 1.5px solid #e2e8f0;
+}
+
+.resume-career-title {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  margin-bottom: 2.5mm;
+}
+
+.resume-career-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 11mm;
+  height: 9mm;
+  background: #0f7d78;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.resume-career-title h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+
+.resume-career-meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 4mm;
+  row-gap: 1mm;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.resume-career-meta strong {
+  color: #172033;
+  font-weight: 700;
+}
+
+.resume-career-stack {
+  display: flex;
+  gap: 3mm;
+  margin: 1mm 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.resume-career-stack strong {
+  color: #087e80;
+  letter-spacing: 0.1em;
+}
+
+.resume-career-description {
+  margin: 1mm 0 3mm;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.resume-career-key-result {
+  display: flex;
+  align-items: baseline;
+  gap: 5mm;
+  margin-bottom: 4mm;
+  padding: 3mm 5mm;
+  border: 1px solid #b5e9df;
+  border-radius: 5px;
+  background: #f0fbf8;
+  font-size: 12px;
+  line-height: 1.6;
+  break-inside: avoid;
+}
+
+.resume-career-key-result > strong {
+  flex-shrink: 0;
+  color: #087e80;
+  letter-spacing: 0.07em;
+}
+
+.resume-career-key-result p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.resume-career-achievements {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.resume-career-achievements > li {
+  position: relative;
+  padding-left: 6mm;
+  break-inside: avoid;
+}
+
+.resume-career-achievements > li + li {
+  margin-top: 3mm;
+}
+
+.resume-career-achievements > li::before {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f7d78;
+  content: "";
+}
+
+.resume-career-achievements h4 {
+  margin: 0 0 1.5mm;
+  font-size: 14.5px;
+  font-weight: 750;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
+.resume-career-achievements p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.resume-career-achievements .resume-career-result {
+  margin-top: 2mm;
+  color: #087e80;
+  font-weight: 650;
+}
+
+.resume-credentials-page {
+  padding-bottom: 32mm;
+}
+
+.resume-record-section > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10mm;
+  margin: 0 0 5mm;
+  color: #087e80;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.25em;
+  line-height: 1.5;
+}
+
+.resume-awards {
+  margin-top: 12mm;
+}
+
+.resume-awards > h2::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background: #e2e8f0;
+}
+
+.resume-record-entry {
+  break-inside: avoid;
+}
+
+.resume-record-entry + .resume-record-entry {
+  margin-top: 5mm;
+}
+
+.resume-record-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 5mm;
+  row-gap: 1mm;
+  margin-bottom: 1mm;
+}
+
+.resume-record-title h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.resume-record-title > span {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.resume-record-entry > p {
+  margin: 0;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.resume-credentials-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  margin-top: 10mm;
+}
+
+.resume-credentials-grid > section:first-child {
+  padding-right: 8mm;
+}
+
+.resume-credentials-grid > section + section {
+  padding-left: 8mm;
+  border-left: 1.5px solid #e2e8f0;
+}
+
+.resume-credentials-grid .resume-record-title {
+  column-gap: 4mm;
+}
+
+.resume-credentials-grid .resume-record-title h3 {
+  font-size: 14px;
+}
+
+.resume-portfolio-footer {
+  position: absolute;
+  right: 13mm;
+  bottom: 19mm;
+  left: 13mm;
+  display: flex;
+  align-items: baseline;
+  gap: 5mm;
+  padding-top: 3mm;
+  border-top: 2px solid #172033;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.resume-portfolio-footer > strong {
+  color: #087e80;
+  letter-spacing: 0.18em;
+}
+
+.resume-portfolio-footer > a {
+  color: #0065cb;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .resume-doc-header {
@@ -207,6 +693,7 @@
     width: auto;
     margin: 0;
     padding: 0;
+    overflow: visible;
   }
 
   .resume-print-toolbar {
@@ -215,12 +702,36 @@
 
   .resume-paper {
     width: 210mm;
-    min-height: 297mm;
+    /* A4 경계의 소수점 반올림으로 다음 용지에 밀리는 것을 방지합니다. */
+    height: 296.8mm;
+    min-height: 0;
     margin: 0;
     padding: 10mm 12mm;
     border: none;
     box-shadow: none;
     box-sizing: border-box;
+    overflow: visible;
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .resume-paper:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .resume-paper.resume-cover {
+    padding: 15mm 14mm 18mm;
+  }
+
+  .resume-paper.resume-career-page {
+    padding: 11mm 13mm 17mm;
+  }
+
+  .resume-paper.resume-credentials-page {
+    padding-bottom: 32mm;
   }
 
   .page-break {
@@ -314,7 +825,7 @@
 }
 
 /* 모바일: A4 폭(210mm)은 유지하고 가로 스크롤로 열람합니다. 인쇄 결과에는 영향 없음. */
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .resume-print-page {
     overflow-x: auto;
     padding-bottom: 24px;

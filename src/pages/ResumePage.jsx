@@ -1,97 +1,64 @@
-import profile, { getBirthLabel } from "../data/profile";
-import { getCareerGroups } from "../data/projects";
+import profile from "../data/profile";
+import projects from "../data/projects";
 import education from "../data/education";
 import awards from "../data/awards";
 import licenses from "../data/licenses";
+import { assetUrl } from "../utils/text";
 import "../styles/resume.css";
 
 /**
- * A4 2장 출력용 이력서.
+ * A4 표지와 경력 상세로 구성한 출력용 이력서.
  * 모든 내용을 data/에서 가져오므로, 웹 화면과 이력서 내용이 어긋날 수 없습니다.
  * 성과 항목은 각 achievement의 result(결과 한 줄)를 그대로 사용합니다.
  */
 
 // A4 한 장에 들어가는 분량 기준으로 정한 값입니다. 내용이 늘면 이 숫자만 조정하세요.
-const PROJECTS_ON_FIRST_PAGE = 1;
-const projects = getCareerGroups().flatMap((group) => group.projects);
+const PROJECTS_ON_FIRST_PAGE = 2;
 
 const pages = [
   projects.slice(0, PROJECTS_ON_FIRST_PAGE),
   projects.slice(PROJECTS_ON_FIRST_PAGE),
 ];
 
-function ProjectEntry({ project }) {
+function CareerEntry({ project, number, includeTools = false }) {
+  const stack = project.skills
+    .filter((group) => includeTools || group.label !== "개발 도구")
+    .map((group) => group.value)
+    .join(", ")
+    .split(",")
+    .map((token) => token.trim())
+    .join(" · ");
   return (
-    <article className="resume-project-entry">
-      <div className="resume-project-title-row">
+    <article className="resume-career-entry">
+      <div className="resume-career-title">
+        <span className="resume-career-number">{String(number).padStart(2, "0")}</span>
         <h3>{project.title}</h3>
-        <span>
-          {project.affiliation ? `${project.affiliation} · ` : ""}
-          {project.period} / {project.role}
-        </span>
       </div>
-      <table className="resume-table resume-project-table">
-        <tbody>
-          <tr>
-            <th scope="row">주요 업무</th>
-            <td>
-              <ul className="resume-doc-list compact">
-                {project.mainTasks.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">주요 성과</th>
-            <td>
-              <ul className="resume-doc-list compact">
-                {project.achievements.map((achievement) => (
-                  <li key={achievement.title}>{achievement.result}</li>
-                ))}
-              </ul>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="resume-career-meta">
+        <strong>{project.company}</strong>
+        <span>{project.period}</span>
+        <span>{project.role}{project.team ? ` | ${project.team}` : ""}</span>
+      </div>
+      <p className="resume-career-stack"><strong>STACK</strong><span>{stack}</span></p>
+      <p className="resume-career-description">{project.description}</p>
+      <div className="resume-career-key-result">
+        <strong>KEY RESULT</strong><p>{project.resumeKeyResult || project.achievements[0]?.result}</p>
+      </div>
+      <ul className="resume-career-achievements">
+        {project.achievements.map((achievement) => (
+          <li key={achievement.title}>
+            <h4>{achievement.title}</h4>
+            <p>{achievement.detail}</p>
+            <p className="resume-career-result"><span aria-hidden="true">→ </span>{achievement.result}</p>
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }
 
-function LabelValueTable({ rows }) {
-  return (
-    <table className="resume-table">
-      <tbody>
-        {rows.map(([label, value]) => (
-          <tr key={label}>
-            <th scope="row">{label}</th>
-            <td>{value}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
 function ResumePage() {
-  const profileRows = [
-    ["이름", profile.name],
-    ["생년월일", getBirthLabel()],
-    ["직무", profile.role],
-    ["경력", profile.careerSummary],
-    ["핵심 키워드", profile.keywords],
-    ["이메일", profile.email],
-    [
-      "링크",
-      [profile.links.portfolio, profile.links.blog, profile.links.github]
-        .filter(Boolean)
-        .map((url) => url.replace(/^https?:\/\//, "").replace(/\/$/, ""))
-        .join(" / "),
-    ],
-  ];
-
-  const techRows = profile.techStack.map((group) => [
-    group.label,
-    group.items.join(", "),
-  ]);
+  const cover = profile.resumeCover;
 
   return (
     <div className="resume-print-page">
@@ -99,8 +66,8 @@ function ResumePage() {
         <div>
           <strong>출력용 이력서</strong>
           <span>
-            Ctrl+P 후 A4, 배율 기본값, 머리글/바닥글 끔 기준으로 2장 출력에 맞춰
-            구성했습니다.
+            소개 1장과 경력 상세 2장으로 구성했습니다. 인쇄 시 A4, 배율 기본값,
+            머리글/바닥글 끔을 선택해 주세요.
           </span>
         </div>
         <button
@@ -112,114 +79,100 @@ function ResumePage() {
         </button>
       </div>
 
-      <section className="resume-paper">
-        <header className="resume-doc-header">
-          <div>
-            <p className="resume-doc-eyebrow">Printable Resume</p>
+      <section className="resume-paper resume-cover" aria-label="이력서 첫 장">
+        <header className="resume-cover-header">
+          <div className="resume-cover-identity">
+            <p className="resume-cover-eyebrow">BACKEND DEVELOPER</p>
             <h1>{profile.name}</h1>
-            <p className="resume-doc-role">{profile.role}</p>
+            <p className="resume-cover-tagline">{cover.tagline}</p>
+            <p className="resume-cover-role">{cover.role}</p>
           </div>
-          <p className="resume-doc-intro">{profile.resumeIntro}</p>
+          <img className="resume-cover-portrait" src={assetUrl(cover.image)}
+            alt={`${profile.name} 증명사진`} width="160" height="214" />
         </header>
 
-        <section className="resume-doc-section">
-          <h2>기본 정보</h2>
-          <LabelValueTable rows={profileRows} />
+        <dl className="resume-cover-meta">
+          <div><dt>BIRTH</dt><dd>{profile.birthDate.replaceAll("-", ".")}</dd></div>
+          <div><dt>EXPERIENCE</dt><dd>{profile.careerSummary.replace(/^약\s*/, "")}</dd></div>
+          <div><dt>PORTFOLIO</dt><dd><a href={profile.links.portfolio}>{profile.links.portfolio.replace(/^https?:\/\//, "")}</a></dd></div>
+        </dl>
+
+        <section className="resume-cover-section" aria-labelledby="resume-about-title">
+          <h2 id="resume-about-title">ABOUT</h2>
+          <h3>{cover.heading}</h3>
+          <div className="resume-cover-prose">
+            {cover.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
         </section>
 
-        <section className="resume-doc-section">
-          <h2>핵심 요약</h2>
-          <ul className="resume-doc-list">
-            {profile.strengths.map((item) => (
-              <li key={item}>{item}</li>
+        <section className="resume-cover-section resume-cover-stack" aria-labelledby="resume-stack-title">
+          <h2 id="resume-stack-title">TECH STACK</h2>
+          <dl>
+            {cover.techStack.map(([label, value]) => (
+              <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
             ))}
-          </ul>
+          </dl>
         </section>
-
-        <section className="resume-doc-section">
-          <h2>경력 기술서</h2>
-          {pages[0].map((project) => (
-            <ProjectEntry key={project.slug} project={project} />
-          ))}
-        </section>
+        <footer className="resume-page-number" aria-label="1 / 3 페이지">1 / 3</footer>
       </section>
 
-      <section className="resume-paper page-break">
-        {pages[1].length ? (
-          <section className="resume-doc-section">
-            <h2>경력 기술서</h2>
-            {pages[1].map((project) => (
-              <ProjectEntry key={project.slug} project={project} />
+      <section className="resume-paper resume-career-page page-break" aria-label="이력서 두 번째 장">
+        <header className="resume-career-header">
+          <h2>경력기술서</h2>
+          <p className="resume-career-person"><strong>{profile.name}</strong><span>Java · Spring Boot Backend Developer</span></p>
+          <p className="resume-career-person-meta">생년월일 {profile.birthDate.replaceAll("-", ".")}<span aria-hidden="true"> | </span>총 경력 {profile.careerSummary.replace(/^약\s*/, "")}</p>
+        </header>
+        <section aria-labelledby="resume-work-title">
+          <h2 className="resume-work-title" id="resume-work-title">WORK EXPERIENCE <span>경력 사항</span></h2>
+          {pages[0].map((project, index) => (
+            <CareerEntry key={project.slug} project={project} number={index + 1} />
+          ))}
+        </section>
+        <footer className="resume-page-number" aria-label="2 / 3 페이지">2 / 3</footer>
+      </section>
+
+      <section className="resume-paper resume-career-page resume-credentials-page page-break" aria-label="이력서 세 번째 장">
+        {pages[1].map((project, index) => (
+          <CareerEntry key={project.slug} project={project} number={PROJECTS_ON_FIRST_PAGE + index + 1} includeTools />
+        ))}
+
+        <section className="resume-record-section resume-awards" aria-labelledby="resume-awards-title">
+          <h2 id="resume-awards-title">AWARDS</h2>
+          {awards.map((item) => (
+            <article className="resume-record-entry" key={item.id}>
+              <div className="resume-record-title"><h3>{item.title}</h3><span>{item.date}</span></div>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </section>
+
+        <div className="resume-credentials-grid">
+          <section className="resume-record-section" aria-labelledby="resume-certification-title">
+            <h2 id="resume-certification-title">CERTIFICATION</h2>
+            {licenses.map((item) => (
+              <article className="resume-record-entry" key={item.id}>
+                <div className="resume-record-title"><h3>{item.title}</h3><span>{item.date}</span></div>
+                <p>{item.description}</p>
+              </article>
             ))}
           </section>
-        ) : null}
+          <section className="resume-record-section" aria-labelledby="resume-education-title">
+            <h2 id="resume-education-title">EDUCATION</h2>
+            {education.map((item) => (
+              <article className="resume-record-entry" key={item.id}>
+                <div className="resume-record-title"><h3>{item.degree}</h3><span>{item.period}</span></div>
+                <p>{item.school} · {item.summary}</p>
+              </article>
+            ))}
+          </section>
+        </div>
 
-        <section className="resume-doc-section">
-          <h2>기술 스택</h2>
-          <LabelValueTable rows={techRows} />
-        </section>
-
-        <section className="resume-doc-section">
-          <h2>교육</h2>
-          <table className="resume-table">
-            <thead>
-              <tr>
-                <th>과정</th>
-                <th>기관</th>
-                <th>기간</th>
-              </tr>
-            </thead>
-            <tbody>
-              {education.map((item) => (
-                <tr key={item.id}>
-                  <th scope="row">{item.degree}</th>
-                  <td>{item.school}</td>
-                  <td>{item.period}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        <section className="resume-doc-section">
-          <h2>수상</h2>
-          <table className="resume-table">
-            <thead>
-              <tr>
-                <th>항목</th>
-                <th>일자</th>
-              </tr>
-            </thead>
-            <tbody>
-              {awards.map((item) => (
-                <tr key={item.id}>
-                  <th scope="row">{item.title}</th>
-                  <td>{item.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        <section className="resume-doc-section">
-          <h2>자격</h2>
-          <table className="resume-table">
-            <thead>
-              <tr>
-                <th>항목</th>
-                <th>일자·기준</th>
-              </tr>
-            </thead>
-            <tbody>
-              {licenses.map((item) => (
-                <tr key={item.id}>
-                  <th scope="row">{item.title}</th>
-                  <td>{item.date}{item.dateLabel ? ` (${item.dateLabel})` : ""}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+        <footer className="resume-portfolio-footer">
+          <strong>PORTFOLIO</strong>
+          <a href={profile.links.portfolio}>{profile.links.portfolio.replace(/^https?:\/\//, "")}</a>
+          <span>{profile.name} · {profile.role}</span>
+        </footer>
+        <div className="resume-page-number" aria-label="3 / 3 페이지">3 / 3</div>
       </section>
     </div>
   );

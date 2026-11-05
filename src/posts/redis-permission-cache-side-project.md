@@ -3,7 +3,7 @@ title: Redis 권한 캐시 실습 과제 — API 응답 캐싱부터 변경·장
 date: 2026-11-05
 tags: Java, Spring, Redis, SideProject, Cache
 summary: Java·Spring으로 권한 API 캐싱을 구현하고 TTL·권한 변경·동시 요청·장애를 단계별로 검증하는 Redis 실습 과제
-category: redis-practice
+category: practice-tasks
 ---
 
 권한 API에서 가져온 사용자 권한을 Redis에 저장하고, 이후 요청에서 재사용해 반복 호출을 줄인다. 로그인 시 권한 적재와 캐시 미스 시 재조회를 기본 흐름으로 두고, 만료·권한 변경·동시 요청·장애 처리까지 설계한다.

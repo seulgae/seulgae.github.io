@@ -3,6 +3,9 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, expect, test, vi } from "vitest";
 import App from "./App";
 import projects from "./data/projects";
+import awards from "./data/awards";
+import education from "./data/education";
+import licenses from "./data/licenses";
 import { getAllPosts, getCategoryTree } from "./lib/posts";
 import { paths } from "./routes";
 
@@ -54,15 +57,46 @@ test("성과 링크는 대상 카드로 스크롤한 뒤 강조하고 재클릭�
   expect(animate).toHaveBeenCalledTimes(2);
 });
 
-test("출력용 이력서는 자격 날짜의 의미를 함께 표시한다", async () => {
+test("출력용 이력서는 소개 표지와 경력 상세를 분리하고 자격 날짜의 의미를 표시한다", async () => {
   await renderAt(paths.resume);
+  expect(document.title).toBe("길태형_이력_경력기술서");
 
-  const licenseRow = screen.getByRole("row", { name: /정보처리기사/ });
-  expect(within(licenseRow).getByRole("cell")).toHaveTextContent(
-    "2026.12.18 (합격자 발표일)",
-  );
-  const sqldRow = screen.getByRole("row", { name: /SQLD/ });
-  expect(within(sqldRow).getByRole("cell")).toHaveTextContent("2025.06.27");
+  const cover = screen.getByRole("region", { name: "이력서 첫 장" });
+  expect(within(cover).getByRole("heading", { level: 1, name: "길태형" })).toBeInTheDocument();
+  expect(within(cover).getByRole("img", { name: "길태형 증명사진" })).toHaveAttribute("src", "/resume-portrait.jpg");
+  expect(within(cover).getByRole("heading", { name: "ABOUT", exact: true })).toBeInTheDocument();
+  expect(within(cover).getByRole("heading", { name: "TECH STACK", exact: true })).toBeInTheDocument();
+  expect(within(cover).queryByRole("heading", { name: "경력 기술서" })).not.toBeInTheDocument();
+  expect(document.querySelectorAll(".resume-paper")).toHaveLength(3);
+  const careerPage = screen.getByRole("region", { name: "이력서 두 번째 장" });
+  expect(within(careerPage).getAllByRole("article")).toHaveLength(2);
+  expect(within(careerPage).getByRole("heading", { name: projects[0].title })).toBeInTheDocument();
+  expect(within(careerPage).getByRole("heading", { name: projects[1].title })).toBeInTheDocument();
+  expect(within(careerPage).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
+  expect(within(careerPage).getByText(projects[1].achievements[0].result)).toBeInTheDocument();
+  expect(careerPage.querySelectorAll(".resume-career-key-result")).toHaveLength(2);
+
+  const lastPage = screen.getByRole("region", { name: "이력서 세 번째 장" });
+  expect(within(lastPage).getByRole("heading", { name: projects[2].title })).toBeInTheDocument();
+  projects[2].achievements.forEach((item) => {
+    expect(within(lastPage).getByText(item.detail)).toBeInTheDocument();
+    expect(within(lastPage).getAllByText(item.result).length).toBeGreaterThan(0);
+  });
+  awards.forEach((item) => {
+    expect(within(lastPage).getByRole("heading", { name: item.title })).toBeInTheDocument();
+    expect(within(lastPage).getByText(item.description)).toBeInTheDocument();
+  });
+  education.forEach((item) => {
+    expect(within(lastPage).getByRole("heading", { name: item.degree })).toBeInTheDocument();
+  });
+  licenses.forEach((item) => {
+    const entry = within(lastPage).getByRole("heading", { name: item.title, exact: true }).closest("article");
+    expect(entry).toHaveTextContent(item.date);
+    expect(entry).toHaveTextContent(item.description);
+  });
+  const licenseEntry = within(lastPage).getByRole("heading", { name: "정보처리기사", exact: true }).closest("article");
+  expect(licenseEntry).toHaveTextContent("합격자 발표일");
+  const sqldRow = within(lastPage).getByRole("heading", { name: "SQLD", exact: true }).closest("article");
   expect(sqldRow).not.toHaveTextContent("합격자 발표일");
 });
 

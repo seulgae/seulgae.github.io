@@ -57,6 +57,26 @@ const profile = {
   keywords: "API 설계·개발, 성능 개선, 데이터 정합성",
   email: "r1605866@gmail.com",
   profileImage: "backend-mark.svg",
+  resumeCover: {
+    image: "resume-portrait.jpg",
+    tagline: "데이터 처리와 성능 개선에 강한",
+    role: "Java · Spring Boot 백엔드 개발자",
+    heading: "문제를 해결하는 운영, 가치를 만드는 개선",
+    paragraphs: [
+      "운영은 장애를 처리하는 일을 넘어, 같은 문제가 반복되지 않는 시스템을 만들어 가는 과정이라고 생각합니다.",
+      "업무 중 발생하는 장애와 성능 저하의 원인을 처리 흐름과 데이터에서 찾고, 로직과 구조를 개선해 왔습니다. Kafka 연계 오류의 대응 절차와 일일 보고 체계를 만들고, 실행계획 기반 SQL 튜닝과 조회 병렬화, 권한 캐싱, 웹 취약점 조치를 통해 서비스의 안정성과 운영 효율을 높였습니다.",
+      "반복 업무를 자동화하고 확보한 시간을 품질 개선과 예방 활동에 쓰는 일을 중요하게 생각합니다. 운영에서 쌓은 문제 해결 경험을 바탕으로 요구사항을 구체화하고 기능을 완성하며, 안정성과 확장성을 함께 고려하는 백엔드 개발자로 성장하고자 합니다.",
+    ],
+    techStack: [
+      ["Language", "Java"],
+      ["Backend", "Spring Boot · Spring Batch · REST API · MyBatis · Jasypt · eGovFrame"],
+      ["Messaging", "Apache Kafka"],
+      ["Database", "MySQL · Oracle · CUBRID · Redis"],
+      ["DevOps", "Jenkins · GitLab · SonarQube · Linux (Ubuntu / CentOS) · Apache Tomcat"],
+      ["Tools", "IntelliJ · STS4 · DBeaver · WhaTap · Swagger"],
+      ["Frontend", "React · JSP · jQuery"],
+    ],
+  },
   links: {
     portfolio: "https://seulgae.github.io",
     github: "https://github.com/seulgae",

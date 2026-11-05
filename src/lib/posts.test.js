@@ -9,17 +9,23 @@ import {
 describe("블로그 글 로더", () => {
   test("검수 글 대신 실습 과제를 분류하고 기존 실무 글은 유지한다", () => {
     const expected = [
-      ["redis-permission-cache-side-project", "redis-practice"],
-      ["backend-reliability-practice", "backend-practice"],
-      ["portfolio-quality-practice", "website-practice"],
+      ["redis-permission-cache-side-project", "practice-tasks"],
+      ["backend-reliability-practice", "practice-tasks"],
+      ["portfolio-quality-practice", "practice-tasks"],
     ];
     expected.forEach(([slug, category]) => {
       expect(findPostBySlug(slug).category.subId).toBe(category);
     });
     expect(findPostBySlug("redis-permission-cache-ttl").category.subId).toBe("redis-cache");
     const group = getCategoryTree().find((item) => item.groupId === "practice");
-    expect(group.count).toBe(expected.length);
-    expect(group.groupLabel).toBe("실습 과제");
+    expect(group.count).toBe(expected.length + 1);
+    expect(group.groupLabel).toBe("AI 활용 기록");
+    expect(group.subs).toHaveLength(2);
+    expect(group.subs[0].label).toBe("AI 성과별 실습 과제");
+    expect(group.subs[0].count).toBe(3);
+    expect(group.subs[1].label).toBe("AI 점검 기록");
+    expect(group.subs[1].count).toBe(1);
+    expect(findPostBySlug("ai-portfolio-inspection-log").category.subId).toBe("ai-inspection");
     ["portfolio-blog-audit-report", "portfolio-content-consistency-review", "portfolio-website", "ai-portfolio-review-notes"].forEach((slug) => {
       expect(findPostBySlug(slug)).toBeUndefined();
     });

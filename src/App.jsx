@@ -90,6 +90,8 @@ function ScrollAndTitleManager() {
   useEffect(() => {
     if (pathname === paths.blog) {
       document.title = "길태형 기술 블로그 | Backend Engineering";
+    } else if (pathname === paths.resume) {
+      document.title = "길태형_이력_경력기술서";
     } else if (!pathname.startsWith(`${paths.blog}/`)) {
       document.title = "길태형 포트폴리오 | Backend Developer";
     }
