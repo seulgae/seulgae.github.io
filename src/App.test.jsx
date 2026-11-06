@@ -95,7 +95,7 @@ test("출력용 이력서는 소개 표지와 경력 상세를 분리하고 자�
     expect(entry).toHaveTextContent(item.description);
   });
   const licenseEntry = within(lastPage).getByRole("heading", { name: "정보처리기사", exact: true }).closest("article");
-  expect(licenseEntry).toHaveTextContent("합격자 발표일");
+  expect(licenseEntry).not.toHaveTextContent("합격자 발표일");
   const sqldRow = within(lastPage).getByRole("heading", { name: "SQLD", exact: true }).closest("article");
   expect(sqldRow).not.toHaveTextContent("합격자 발표일");
 });
@@ -212,16 +212,15 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
 
   expect(screen.queryByRole("button", { name: "성적증명서" })).not.toBeInTheDocument();
-  const educationImageBtn = screen.getByRole("button", { name: "EZEN ACADEMY 이미지 크게 보기" });
-  await userEvent.click(educationImageBtn);
-  const lightboxDialog = screen.getByRole("dialog", {
-    name: "EZEN ACADEMY",
+  const educationLogo = screen.getByRole("img", { name: "EZEN ACADEMY" });
+  expect(educationLogo).toHaveAttribute("src", "/EZEN.png");
+  expect(educationLogo.closest("a")).toHaveAttribute("href", "https://www.ezenac.co.kr/");
+  expect(screen.queryByRole("button", { name: "EZEN ACADEMY 이미지 크게 보기" })).not.toBeInTheDocument();
+  ["SQLD", "웹 디자인 개발기능사"].forEach((name) => {
+    const card = screen.getByRole("heading", { name, exact: true }).closest("article");
+    expect(card.querySelector(".credential-thumb-placeholder")).toHaveTextContent("📜");
+    expect(card.querySelector("img")).not.toBeInTheDocument();
   });
-  expect(within(lightboxDialog).getByRole("img")).toHaveAttribute(
-    "src",
-    "/Ezen2.png",
-  );
-  await userEvent.click(within(lightboxDialog).getByRole("button", { name: "닫기" }));
 
   const popupButtons = screen.getAllByRole("button", {
     name: /시스템 아키텍처 & 데이터 흐름 다이어그램/,

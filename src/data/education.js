@@ -24,7 +24,8 @@ const education = [
     curriculum: [
       "JAVA(JDK11), MYSQL, HTML, CSS, JavaScript(ES6), JSP, Spring Framework",
     ],
-    image: "Ezen2.png",
+    image: "EZEN.png",
+    imageLink: "https://www.ezenac.co.kr/",
   },
   {
     id: "hycu-bachelor",

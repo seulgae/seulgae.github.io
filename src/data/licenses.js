@@ -5,22 +5,19 @@ const licenses = [
     id: "engineer-information-processing",
     title: "정보처리기사",
     date: "2026.12.18",
-    dateLabel: "합격자 발표일",
-    description: "한국산업인력공단 · 합격 (합격자 발표일 기준)",
+    description: "한국산업인력공단",
   },
   {
     id: "sqld",
     title: "SQLD",
     date: "2025.06.27",
     description: "한국데이터산업진흥원",
-    image: "Licenses2.png",
   },
   {
     id: "web-design",
     title: "웹 디자인 개발기능사",
     date: "2014.06.24",
     description: "한국산업인력공단",
-    image: "Licenses1.png",
   },
 ];
 
