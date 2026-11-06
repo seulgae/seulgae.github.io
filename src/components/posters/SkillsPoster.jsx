@@ -59,7 +59,7 @@ function SkillsPoster() {
         index="01"
         titleId="skills-poster-title"
         title="Core Skills & Competency"
-        helpText="담당할 수 있는 업무와 프로젝트 경험, 사용 기술을 정리했습니다."
+        helpText="담당할 수 있는 업무와 프로젝트 경험을 정리했습니다."
       />
 
       <div className="skill-matrix-grid">
@@ -101,14 +101,6 @@ function SkillsPoster() {
                   ))}
                 </div>
               )}
-            </div>
-            <div className="skill-tech-stack">
-              <span className="skill-tech-label">사용 기술</span>
-              <div className="tech-grid">
-                {group.items.map((tag) => (
-                  <span key={tag} className="tech-item">{tag}</span>
-                ))}
-              </div>
             </div>
           </article>
           );

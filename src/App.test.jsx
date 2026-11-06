@@ -255,7 +255,7 @@ test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 
   await userEvent.hover(helpBtn);
   const tooltip = screen.getByRole("tooltip");
   expect(tooltip).toHaveTextContent(
-    "담당할 수 있는 업무와 프로젝트 경험, 사용 기술을 정리했습니다.",
+    "담당할 수 있는 업무와 프로젝트 경험을 정리했습니다.",
   );
   expect(helpBtn).toHaveAttribute("aria-expanded", "true");
 
@@ -307,6 +307,42 @@ test("/blog 접속 시 포트폴리오 레이아웃 없이 독립된 티스토�
   expect(
     screen.queryByRole("navigation", { name: "모바일 메뉴" }),
   ).not.toBeInTheDocument();
+});
+
+test("데스크톱 사이드바를 접으면 본문을 확장하고 다시 펼칠 수 있다", async () => {
+  await renderAt(paths.blog);
+  const toggle = screen.getByRole("button", { name: "카테고리 메뉴 닫기" });
+  expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await userEvent.click(toggle);
+  expect(toggle).toHaveAttribute("aria-expanded", "false");
+  expect(screen.queryByRole("complementary", { name: "블로그 사이드바" })).not.toBeInTheDocument();
+  expect(document.querySelector(".blog-container")).toHaveClass("sidebar-collapsed");
+  await userEvent.click(screen.getByRole("link", { name: "전체 글", exact: true }));
+  expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await userEvent.click(toggle);
+  expect(screen.getByRole("complementary", { name: "블로그 사이드바" })).toBeVisible();
+  expect(document.querySelector(".blog-container")).not.toHaveClass("sidebar-collapsed");
+  fireEvent.keyDown(document, { key: "Escape" });
+  expect(toggle).toHaveAttribute("aria-expanded", "false");
+  expect(toggle).toHaveFocus();
+});
+
+test("모바일 사이드바는 닫힌 상태로 시작하고 메뉴 이동 후 다시 닫힌다", async () => {
+  vi.stubGlobal("matchMedia", vi.fn(() => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+  try {
+    await renderAt(paths.blog);
+    const toggle = screen.getByRole("button", { name: "카테고리 메뉴 열기" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await userEvent.click(toggle);
+    expect(screen.getByRole("complementary", { name: "블로그 사이드바" })).toBeVisible();
+    expect(document.querySelector(".blog-sidebar-backdrop")).toBeInTheDocument();
+    const nav = screen.getByRole("navigation", { name: "블로그 카테고리" });
+    await userEvent.click(within(nav).getByRole("link", { name: /분류 전체보기/ }));
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(document.querySelector(".blog-sidebar-backdrop")).not.toBeInTheDocument();
+  } finally {
+    vi.unstubAllGlobals();
+  }
 });
 
 test("좌측 카테고리 소분류를 클릭하면 해당 카테고리 글만 필터링된다", async () => {

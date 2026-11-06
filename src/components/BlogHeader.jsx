@@ -8,13 +8,14 @@ import "../styles/blogLayout.css";
  * 독립 기술 블로그 전용 상단 마스트헤드 (딥 네이비·블루 테마).
  * 모바일·태블릿에서는 좌측 카테고리 사이드바를 여닫는 토글 버튼을 함께 제공합니다.
  */
-function BlogHeader({ sidebarOpen = false, onToggleSidebar }) {
+function BlogHeader({ sidebarOpen = false, onToggleSidebar, toggleRef }) {
   return (
     <header className="blog-header">
       <div className="blog-header-inner">
         <div className="blog-header-left">
           <button
             type="button"
+            ref={toggleRef}
             className="blog-sidebar-toggle"
             aria-label={sidebarOpen ? "카테고리 메뉴 닫기" : "카테고리 메뉴 열기"}
             aria-expanded={sidebarOpen}
@@ -26,7 +27,6 @@ function BlogHeader({ sidebarOpen = false, onToggleSidebar }) {
               <span />
               <span />
             </span>
-            <span className="blog-toggle-text">카테고리</span>
           </button>
 
           <Link to={paths.blog} className="blog-brand" aria-label="길태형 기술 블로그">

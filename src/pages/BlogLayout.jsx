@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import BlogHeader from "../components/BlogHeader";
 import BlogSidebar from "../components/BlogSidebar";
@@ -6,10 +6,26 @@ import BlogFooter from "../components/BlogFooter";
 
 export default function BlogLayout() {
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia?.("(max-width: 960px)").matches ?? false);
+  const [desktopOpen, setDesktopOpen] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const toggleRef = useRef(null);
+  const sidebarOpen = isMobile ? mobileOpen : desktopOpen;
 
   useEffect(() => {
-    setSidebarOpen(false);
+    const query = window.matchMedia?.("(max-width: 960px)");
+    if (!query) return undefined;
+    const update = () => {
+      setIsMobile(query.matches);
+      setMobileOpen(false);
+    };
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
   }, [location.pathname, location.search]);
 
   useEffect(() => {
@@ -18,24 +34,29 @@ export default function BlogLayout() {
     }
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        setSidebarOpen(false);
+        if (isMobile) setMobileOpen(false);
+        else setDesktopOpen(false);
+        toggleRef.current?.focus();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [sidebarOpen]);
+  }, [sidebarOpen, isMobile]);
 
   return (
     <div className="app-shell blog-shell">
       <BlogHeader
         sidebarOpen={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+        toggleRef={toggleRef}
+        onToggleSidebar={() => isMobile ? setMobileOpen((prev) => !prev) : setDesktopOpen((prev) => !prev)}
       />
 
-      <div className="blog-container">
+      <div className={`blog-container${!isMobile && !desktopOpen ? " sidebar-collapsed" : ""}`}>
         <BlogSidebar
-          drawerOpen={sidebarOpen}
-          onCloseDrawer={() => setSidebarOpen(false)}
+          hidden={isMobile && !mobileOpen}
+          collapsed={!sidebarOpen}
+          drawerOpen={isMobile && mobileOpen}
+          onCloseDrawer={() => setMobileOpen(false)}
         />
 
         <main className="blog-main page-enter" key={location.pathname}>

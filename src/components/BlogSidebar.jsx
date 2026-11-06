@@ -14,7 +14,7 @@ import { assetUrl } from "../utils/text";
  * 블로그 프로필, 계층형 카테고리 분류 트리(대분류 → 소분류 + 글 수), 인기 태그를 제공합니다.
  * 글 상세(/blog/:slug) 화면에서도 현재 읽고 있는 글의 카테고리가 자동으로 강조됩니다.
  */
-function BlogSidebar({ drawerOpen = false, onCloseDrawer }) {
+function BlogSidebar({ drawerOpen = false, onCloseDrawer, hidden = false, collapsed = false }) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
@@ -59,7 +59,13 @@ function BlogSidebar({ drawerOpen = false, onCloseDrawer }) {
         id="blog-sidebar"
         className={`blog-sidebar ${drawerOpen ? "open" : ""}`}
         aria-label="블로그 사이드바"
+        hidden={hidden}
+        aria-hidden={collapsed || hidden ? true : undefined}
+        inert={collapsed || hidden}
       >
+        <button type="button" className="blog-sidebar-close" onClick={onCloseDrawer}>
+          카테고리 닫기 <span aria-hidden="true">×</span>
+        </button>
         {/* 1. 블로그 프로필 카드 */}
         <div className="blog-profile-box">
           <div className="blog-profile-top">
