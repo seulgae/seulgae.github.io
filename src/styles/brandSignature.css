@@ -1,7 +1,7 @@
 .brand-signature {
   display: inline-flex;
   align-items: baseline;
-  gap: 10px;
+  white-space: nowrap;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: 1.65rem;
   font-weight: 700;
@@ -10,7 +10,7 @@
 }
 
 .brand-signature-brackets {
-  color: var(--accent, #0f766e);
+  color: var(--text, #191f28);
   letter-spacing: -0.1em;
 }
 
@@ -19,9 +19,11 @@
 }
 
 .brand-signature-context {
-  color: inherit;
-  opacity: 0.72;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  color: var(--accent, #0f766e);
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.blog-brand .brand-signature-context {
+  color: #93c5fd;
 }
