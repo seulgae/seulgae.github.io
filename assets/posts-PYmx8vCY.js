@@ -2040,6 +2040,52 @@ WhaTap 히트맵으로 실패 패턴을 분석하고 오류 유형별 대응 시
 
 - [ ] **Retry/DLQ 실험 · 하** — 후속 학습안. 핵심: 지연 재시도·격리·재투입·순서 영향. 꼬리 질문: DLQ에 보내면 해결된 것인가?
 `,v=`---
+title: 백엔드 개발자 1분 자기소개 — 협업을 묻는 면접과 직무를 묻는 면접
+date: 2026-11-06
+tags: Interview, Java, Spring, 협업, 성능 개선
+summary: 먼저 해결 방향을 고민하고 조언을 구하는 업무 태도와 조회 API 개선 경험을 자연형·직무형 자기소개로 정리했다.
+---
+
+“자기소개 부탁드립니다”라는 질문에 답할 수 있도록 두 가지 대본을 준비했다. 자연형에는 스스로 해결 방향을 고민하고 조언을 구하며 신뢰를 쌓아 온 업무 태도를, 직무형에는 청구 플랫폼에서 기능을 구현하고 느린 조회를 개선한 경험을 담았다.
+
+## 자연형 1분 자기소개
+
+> 안녕하십니까. 지원자 길태형입니다. 저의 장점은 상사가 믿고 일을 맡길 수 있도록 신뢰를 쌓는다는 점입니다.
+>
+> 공공 시스템을 운영할 때, 짧은 기간에 많은 웹 취약점을 조치해야 했던 적이 있습니다. 선임자도 충분히 도와주시기 어려운 상황이라, 주신 가이드를 바탕으로 제가 할 수 있는 부분부터 최대한 진행했습니다.
+>
+> 막히는 부분은 먼저 찾아보고, 제 생각을 정리한 뒤 “이렇게 진행하려고 하는데, 이 방향이 맞을까요?”라고 여쭤봤습니다. 꼭 필요한 부분에 조언을 구하면서도, 제가 맡은 일은 끝까지 챙기려고 노력했습니다.
+>
+> 저는 이런 태도가 일을 맡긴 분께 믿음을 준다고 생각합니다. 그보다 앞서 일했던 회사에서도 성실한 업무 수행을 인정받아 우수사원 표창을 받았습니다.
+>
+> 앞으로도 맡긴 일을 안심하고 기다릴 수 있는 사람, 함께 일할수록 믿음이 가는 구성원이 되겠습니다. 감사합니다.
+
+## 직무형 1분 자기소개
+
+> 안녕하십니까. Java와 Spring으로 통신사 청구 시스템과 공공 서비스를 개발하고 운영해 온 길태형입니다. 경력은 약 3년 7개월입니다.
+>
+> 가장 보람을 느낀 일은 기업별 청구 정보를 관리하는 플랫폼을 개선한 경험입니다. 청구 금액을 어떻게 산정하는지 파악하고, 그 기준에 맞춰 SQL과 조회 API를 구현했습니다.
+>
+> 같은 프로젝트에서 DB에 테스트 데이터 100만 건을 넣자 목록 조회에만 약 8분이 걸렸습니다. 요청 하나를 따라가 보니 항목마다 관련 데이터를 순서대로 불러오느라 대기 시간이 쌓이고 있었습니다. 서로 독립적인 조회를 병렬로 처리해 API 응답 시간을 10초 이내로 줄였습니다.
+>
+> 앞으로도 업무 요구사항을 이해하는 단계부터 설계와 구현에 참여하고 싶습니다. 운영하면서 배운 점을 살려, 데이터가 늘어났을 때도 사용자가 오래 기다리지 않는 서비스를 만들겠습니다. 감사합니다.
+
+## 초안을 다듬으며 남긴 것
+
+자연형의 중심은 **“상사가 믿고 일을 맡길 수 있는 사람”**이라는 장점이다. 도움이 충분하지 않은 상황에서도 할 수 있는 일을 먼저 진행하고, 스스로 검토한 뒤 필요한 조언을 구하는 모습으로 그 의미를 풀었다. 우수사원 표창은 이전 회사에서 성실한 업무 수행을 인정받은 경험으로 연결했다. 실제로 말할 때 입에 붙도록 질문하는 모습을 짧은 대화체로 담았다.
+
+직무형에서는 성과 두 개를 한 호흡에 나열하던 부분을 줄였다. 청구 기준을 코드로 옮기는 일에 왜 보람을 느꼈는지, 기능이 느려졌을 때 어디를 살폈는지가 함께 드러나야 앞으로 **설계와 개발에 더 참여하고 싶다**는 말도 자연스럽게 이어진다. Kafka 운영 경험은 다음 질문에 쓸 수 있도록 남겨 두었다.
+
+## 이어지는 질문에는 이렇게 답한다
+
+**“8분에서 10초라는 시간은 어떻게 확인했나요?”**
+
+DB에 전체 테스트 데이터 100만 건을 적재한 환경에서 API를 호출하고 응답이 끝날 때까지 걸린 시간을 비교했습니다. SQL 호출 횟수는 그대로였습니다. 여러 조회가 끝나기를 하나씩 기다리던 구간을 병렬로 바꾸면서 응답 시간이 줄었습니다. [병렬 조회 개선 과정](/blog/mybatis-builder-parallel-refactoring)
+
+**“운영하면서 팀의 일하는 방식을 개선한 경험도 있나요?”**
+
+청구 시스템을 운영할 때 연동 오류가 발생하면 응용 시스템 담당자가 데이터를 확인해야 하는 경우가 있었습니다. 저는 GW 모니터링 화면과 오류 내역을 대조해 어느 파트에서 무엇을 확인해야 하는지 정리하고, 매일 메일로 공유하는 보고 체계를 만들었습니다. 담당자가 당일 확인하고 PM도 처리 상황을 살필 수 있게 됐고, 주간 연동 오류는 약 70건에서 5건 수준으로 줄었습니다. [GW 연동 오류 대응 경험](/blog/kafka-gw-data-integrity)\r
+`,y=`---
 title: JSch가 WEB 서버 앞에서 멈춘 날 — Apache MINA SSHD로 서버 용량 모니터링 만들기
 date: 2026-01-05
 tags: Java, SSH, Infra, Spring
@@ -2255,7 +2301,7 @@ finally에서 빈 Map으로라도 보장했다.
 - **모니터링 코드는 감시 대상보다 튼튼해야 한다.** 전 단계 타임아웃, 명령 폴백,
   한 대 실패 시 계속 진행, 원본 예외 보존 — 장애 상황에 동작해야 하는 코드라서
   정상 경로보다 실패 경로에 더 많은 코드를 썼다.
-`,y=`---
+`,b=`---
 title: 쪼개진 원천 테이블과 달라진 PK 사이 — Kafka 서비스 도메인 GW에서 데이터 정합성 지키기
 date: 2025-02-10
 tags: Kafka, Java, Spring, Operations
@@ -2451,7 +2497,7 @@ WhaTap 히트맵으로 연동 실패 패턴을 분석하고, 오류 유형별 �
   → 보정 → 재대사의 사이클에서 보정은 한 단계일 뿐이고, 앞뒤의 검증이
   없으면 보정이 새로운 불일치를 만든다.
 - **오류를 발견한 뒤 담당 파트가 확인할 수 있게 전달해야 한다.** 응용 데이터의 처리는 각 파트의 확인과 대응이 필요했다. 일일 메일 공유로 운영자와 PM이 같은 현황을 볼 수 있게 한 것이 오류 감소에 기여했다.
-`,b=`---
+`,x=`---
 title: API 응답 약 480,000ms → 10,000ms 이내 — 병렬 조회 개선과 한계
 date: 2024-11-27
 tags: Java, Spring, MyBatis, Performance
@@ -2646,7 +2692,7 @@ return billings.stream()
   루프 안에서 DAO를 반복 호출하는 대신, 키 목록을 모아 한 번에 조회하고 \`groupingBy\`로 매핑하는 방식이 애플리케이션과 DB 모두를 지키는 구조다.
 - **과거의 해결을 솔직하게 복기하는 힘.**  
   당시의 병렬화 성과를 완벽한 정답으로 포장하기보다, "당시에는 대기 시간을 병렬로 중첩해 10,000ms 이내로 단축했고, 지금 다시 한다면 쿼리 횟수를 줄이는 집합 조회로 풀 것"이라고 한계와 대안을 명확히 구분해 설명할 수 있는 것이 엔지니어로서의 성장이라고 생각한다.
-`,x=`---
+`,S=`---
 title: 인덱스가 있는데 왜 안 타지 — 실행계획으로 좁혀간 슬로우 쿼리 튜닝기
 date: 2023-01-10
 tags: SQL, Oracle, Performance
@@ -2851,7 +2897,7 @@ SELECT /*+ FULL(p) PARALLEL(p 4) */
   DBA 보고서는 훌륭한 출발점이었지만, "왜"를 설명하지 못한 채 따라 쓴
   부분(병렬도 같은)은 당시 실력의 한계였다. 한계를 인정하고 나서야
   플랜을 근거로 스스로 검증하는 습관이 생겼다.
-`,S=`---
+`,C=`---
 title: 정적 포트폴리오 품질 개선 실습 — 접근성·공유·공개 파일 점검
 date: 2026-11-05
 tags: React, Vite, GitHub Pages, Accessibility, Practice
@@ -2922,7 +2968,7 @@ category: practice-tasks
 | 반응형·인쇄 | 미실행 | 미작성 | 미검증 | 미작성 |
 
 완료한 항목부터 결과를 기록하고, 구현 변경과 브라우저·배포 검증을 구분한다.
-`,C=`---
+`,w=`---
 title: 포트폴리오 사이트 구조 리팩터링 기록
 date: 2026-08-11
 tags: React, Refactoring
@@ -2967,7 +3013,7 @@ summary: 콘텐츠와 화면을 분리하고, 페이지 파일 복제를 단일 
   돌아온다. 운영 시스템에서 겪던 데이터 정합성 문제와 본질이 같았다.
 - 구조를 고치기 전에 커밋 로그를 훑어보면 어디가 아픈지 보인다. 같은 종류의
   커밋 메시지가 반복되는 지점이 리팩터링 대상이었다.
-`,w=`---
+`,T=`---
 title: Redis 권한 캐시 실습 과제 — API 응답 캐싱부터 변경·장애 검증까지
 date: 2026-11-05
 tags: Java, Spring, Redis, SideProject, Cache
@@ -3114,7 +3160,7 @@ L1 로컬 캐시는 기본형의 병목이 확인된 뒤 검토한다. L1을 추
 | Redis 메모리 사용량 | 해당 없음 | 미측정 | 미측정 |
 
 회고에는 관찰한 문제, 선택한 방법과 이유, 개선 전후 결과, 남은 한계를 정리한다.
-`,T=`---
+`,E=`---
 title: 화면마다 권한 API를 호출하던 시스템 — Redis 캐시의 TTL과 무효화 정책
 date: 2025-01-07
 tags: Java, Spring, Redis, Performance
@@ -3182,7 +3228,7 @@ TTL은 데이터가 남는 시간을 제한한다. 순간적인 대량 적재까
 - **권한 조회 경로와 업무 데이터 조회 경로를 구분한다.** 권한 API의 응답을 캐싱한 경험을 권한 테이블의 SQL 튜닝으로 설명하지 않는다.
 - **자주 재사용하는 결과를 캐싱하면 반복 호출을 줄일 수 있다.** 로그인·재로그인 시 권한을 갱신하고 이후 요청에서 저장된 정보를 재사용했다.
 - **조회 최적화와 권한 변경 반영은 함께 고려한다.** 보관 기간과 무효화 정책은 구분하며 실제 수행한 구현과 이후 개선안을 섞지 않는다.
-`,E=`---
+`,D=`---
 title: XSSFWorkbook vs SXSSFWorkbook — 수작업 엑셀 업무를 기능으로 만들며 정리한 선택 기준
 date: 2025-11-20
 tags: Java, POI, Excel, Performance
@@ -3325,4 +3371,4 @@ XSSF로 대량을 쓰면 행 수에 비례해 used가 우상향하는 그래프�
 - **성능 주장은 로그로 증명한다.** 힙 로깅 몇 줄이 "아마 괜찮을 것"을
   "측정해서 평평한 것"으로 바꿔줬다. 대용량 기능은 열기 전에 최악 케이스를
   눈으로 봐야 한다.
-`,D=Object.assign({"../posts/ai-portfolio-inspection-log.md":e,"../posts/backend-code-convention-standardization.md":t,"../posts/backend-reliability-practice.md":n,"../posts/csql-nohup-mass-patch.md":r,"../posts/cubrid-query-plan-index-tuning.md":i,"../posts/cwe-209-error-message-exposure.md":a,"../posts/cwe-330-489-dead-code-removal.md":o,"../posts/cwe-404-496-resource-handling.md":s,"../posts/cwe-476-null-dereference.md":c,"../posts/cwe-615-sensitive-comments.md":l,"../posts/cwe-676-dangerous-api.md":u,"../posts/cwe-754-exception-handling.md":d,"../posts/cwe-79-xss-remediation.md":f,"../posts/dynamic-to-static-sync-query.md":p,"../posts/how-to-write-posts.md":m,"../posts/interview-cloudxper-billing.md":h,"../posts/interview-jeonse-support-system.md":g,"../posts/interview-lgu-billing-gw.md":_,"../posts/jsch-to-mina-sshd.md":v,"../posts/kafka-gw-data-integrity.md":y,"../posts/mybatis-builder-parallel-refactoring.md":b,"../posts/oracle-hint-subquery-fullscan.md":x,"../posts/portfolio-quality-practice.md":S,"../posts/portfolio-refactoring.md":C,"../posts/redis-permission-cache-side-project.md":w,"../posts/redis-permission-cache-ttl.md":T,"../posts/sxssf-vs-xssf-excel-download.md":E}),O=[{groupId:`practice`,groupLabel:`AI 활용 기록`,subs:[{id:`practice-tasks`,label:`AI 성과별 실습 과제`},{id:`ai-inspection`,label:`AI 점검 기록`}]},{groupId:`backend`,groupLabel:`Backend & Architecture`,subs:[{id:`spring-mybatis`,label:`Spring · 아키텍처`},{id:`kafka-di`,label:`Kafka · 데이터 정합성`}]},{groupId:`database`,groupLabel:`Database & Performance`,subs:[{id:`sql-tuning`,label:`SQL · 실행계획 튜닝`},{id:`redis-cache`,label:`Redis · 캐시 설계`}]},{groupId:`security-infra`,groupLabel:`Security & Infra`,subs:[{id:`sast-cwe`,label:`SAST · 시큐어코딩 (CWE)`},{id:`linux-ops`,label:`Linux · 운영 자동화`}]},{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subs:[{id:`project-review`,label:`기업 면접 준비`},{id:`dev-notes`,label:`블로그 사이트 가이드`}]}];function k(e,t,n){if(n){for(let e of O)for(let t of e.subs)if(n.includes(t.id)||n.includes(t.label))return{groupId:e.groupId,groupLabel:e.groupLabel,subId:t.id,subLabel:t.label}}let r=e.toLowerCase(),i=new Set(t.map(e=>e.toLowerCase()));return r.startsWith(`cwe-`)||i.has(`sast`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`sast-cwe`,subLabel:`SAST · 시큐어코딩 (CWE)`}:r.startsWith(`interview-`)||i.has(`interview`)||i.has(`review`)?{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subId:`project-review`,subLabel:`기업 면접 준비`}:i.has(`guide`)||i.has(`react`)||i.has(`refactoring`)?{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subId:`dev-notes`,subLabel:`블로그 사이트 가이드`}:i.has(`kafka`)?{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`kafka-di`,subLabel:`Kafka · 데이터 정합성`}:i.has(`redis`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`redis-cache`,subLabel:`Redis · 캐시 설계`}:i.has(`sql`)&&i.has(`performance`)||i.has(`cubrid`)||i.has(`oracle`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`sql-tuning`,subLabel:`SQL · 실행계획 튜닝`}:i.has(`ssh`)||i.has(`linux`)||i.has(`infra`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`linux-ops`,subLabel:`Linux · 운영 자동화`}:{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`spring-mybatis`,subLabel:`Spring · 아키텍처`}}function A(e){let t=e.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);if(!t)return{meta:{},body:e};let n={};return t[1].split(/\r?\n/).forEach(e=>{let t=e.indexOf(`:`);if(t===-1)return;let r=e.slice(0,t).trim(),i=e.slice(t+1).trim();r&&(n[r]=i)}),{meta:n,body:e.slice(t[0].length)}}function j(e,t){let n=e.split(`/`).pop().replace(/\.md$/,``),{meta:r,body:i}=A(t),a=r.tags?r.tags.split(`,`).map(e=>e.trim()).filter(Boolean):[],o=k(n,a,r.category);return{slug:n,title:r.title||n,date:r.date||``,tags:a,summary:r.summary||``,category:o,body:i}}var M=Object.entries(D).map(([e,t])=>j(e,t)).sort((e,t)=>t.date.localeCompare(e.date));function N(){return M}function P(e){return M.find(t=>t.slug===e)}function F(){let e=new Map;return M.forEach(t=>{t.tags.forEach(t=>e.set(t,(e.get(t)||0)+1))}),[...e.entries()].map(([e,t])=>({name:e,count:t})).sort((e,t)=>t.count-e.count||e.name.localeCompare(t.name))}function I(){return O.map(e=>{let t=e.subs.map(e=>{let t=M.filter(t=>t.category.subId===e.id).length;return{...e,count:t}}),n=t.reduce((e,t)=>e+t.count,0);return{groupId:e.groupId,groupLabel:e.groupLabel,count:n,subs:t}})}export{I as a,F as i,P as n,N as r,O as t};
+`,O=Object.assign({"../posts/ai-portfolio-inspection-log.md":e,"../posts/backend-code-convention-standardization.md":t,"../posts/backend-reliability-practice.md":n,"../posts/csql-nohup-mass-patch.md":r,"../posts/cubrid-query-plan-index-tuning.md":i,"../posts/cwe-209-error-message-exposure.md":a,"../posts/cwe-330-489-dead-code-removal.md":o,"../posts/cwe-404-496-resource-handling.md":s,"../posts/cwe-476-null-dereference.md":c,"../posts/cwe-615-sensitive-comments.md":l,"../posts/cwe-676-dangerous-api.md":u,"../posts/cwe-754-exception-handling.md":d,"../posts/cwe-79-xss-remediation.md":f,"../posts/dynamic-to-static-sync-query.md":p,"../posts/how-to-write-posts.md":m,"../posts/interview-cloudxper-billing.md":h,"../posts/interview-jeonse-support-system.md":g,"../posts/interview-lgu-billing-gw.md":_,"../posts/interview-one-minute-introduction.md":v,"../posts/jsch-to-mina-sshd.md":y,"../posts/kafka-gw-data-integrity.md":b,"../posts/mybatis-builder-parallel-refactoring.md":x,"../posts/oracle-hint-subquery-fullscan.md":S,"../posts/portfolio-quality-practice.md":C,"../posts/portfolio-refactoring.md":w,"../posts/redis-permission-cache-side-project.md":T,"../posts/redis-permission-cache-ttl.md":E,"../posts/sxssf-vs-xssf-excel-download.md":D}),k=[{groupId:`practice`,groupLabel:`AI 활용 기록`,subs:[{id:`practice-tasks`,label:`AI 성과별 실습 과제`},{id:`ai-inspection`,label:`AI 점검 기록`}]},{groupId:`backend`,groupLabel:`Backend & Architecture`,subs:[{id:`spring-mybatis`,label:`Spring · 아키텍처`},{id:`kafka-di`,label:`Kafka · 데이터 정합성`}]},{groupId:`database`,groupLabel:`Database & Performance`,subs:[{id:`sql-tuning`,label:`SQL · 실행계획 튜닝`},{id:`redis-cache`,label:`Redis · 캐시 설계`}]},{groupId:`security-infra`,groupLabel:`Security & Infra`,subs:[{id:`sast-cwe`,label:`SAST · 시큐어코딩 (CWE)`},{id:`linux-ops`,label:`Linux · 운영 자동화`}]},{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subs:[{id:`project-review`,label:`기업 면접 준비`},{id:`dev-notes`,label:`블로그 사이트 가이드`}]}];function A(e,t,n){if(n){for(let e of k)for(let t of e.subs)if(n.includes(t.id)||n.includes(t.label))return{groupId:e.groupId,groupLabel:e.groupLabel,subId:t.id,subLabel:t.label}}let r=e.toLowerCase(),i=new Set(t.map(e=>e.toLowerCase()));return r.startsWith(`cwe-`)||i.has(`sast`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`sast-cwe`,subLabel:`SAST · 시큐어코딩 (CWE)`}:r.startsWith(`interview-`)||i.has(`interview`)||i.has(`review`)?{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subId:`project-review`,subLabel:`기업 면접 준비`}:i.has(`guide`)||i.has(`react`)||i.has(`refactoring`)?{groupId:`retrospective`,groupLabel:`면접 준비 · 사이트 가이드`,subId:`dev-notes`,subLabel:`블로그 사이트 가이드`}:i.has(`kafka`)?{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`kafka-di`,subLabel:`Kafka · 데이터 정합성`}:i.has(`redis`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`redis-cache`,subLabel:`Redis · 캐시 설계`}:i.has(`sql`)&&i.has(`performance`)||i.has(`cubrid`)||i.has(`oracle`)?{groupId:`database`,groupLabel:`Database & Performance`,subId:`sql-tuning`,subLabel:`SQL · 실행계획 튜닝`}:i.has(`ssh`)||i.has(`linux`)||i.has(`infra`)?{groupId:`security-infra`,groupLabel:`Security & Infra`,subId:`linux-ops`,subLabel:`Linux · 운영 자동화`}:{groupId:`backend`,groupLabel:`Backend & Architecture`,subId:`spring-mybatis`,subLabel:`Spring · 아키텍처`}}function j(e){let t=e.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);if(!t)return{meta:{},body:e};let n={};return t[1].split(/\r?\n/).forEach(e=>{let t=e.indexOf(`:`);if(t===-1)return;let r=e.slice(0,t).trim(),i=e.slice(t+1).trim();r&&(n[r]=i)}),{meta:n,body:e.slice(t[0].length)}}function M(e,t){let n=e.split(`/`).pop().replace(/\.md$/,``),{meta:r,body:i}=j(t),a=r.tags?r.tags.split(`,`).map(e=>e.trim()).filter(Boolean):[],o=A(n,a,r.category);return{slug:n,title:r.title||n,date:r.date||``,tags:a,summary:r.summary||``,category:o,body:i}}var N=Object.entries(O).map(([e,t])=>M(e,t)).sort((e,t)=>t.date.localeCompare(e.date));function P(){return N}function F(e){return N.find(t=>t.slug===e)}function I(){let e=new Map;return N.forEach(t=>{t.tags.forEach(t=>e.set(t,(e.get(t)||0)+1))}),[...e.entries()].map(([e,t])=>({name:e,count:t})).sort((e,t)=>t.count-e.count||e.name.localeCompare(t.name))}function L(){return k.map(e=>{let t=e.subs.map(e=>{let t=N.filter(t=>t.category.subId===e.id).length;return{...e,count:t}}),n=t.reduce((e,t)=>e+t.count,0);return{groupId:e.groupId,groupLabel:e.groupLabel,count:n,subs:t}})}export{L as a,I as i,F as n,P as r,k as t};
