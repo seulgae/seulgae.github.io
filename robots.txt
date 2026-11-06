@@ -1,3 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+# Keep award documents and the resume portrait out of search crawling.
+Disallow: /ABACUS.jpg
+Disallow: /UCAMP.jpg
+Disallow: /resume-portrait.jpg
