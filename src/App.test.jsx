@@ -31,7 +31,7 @@ beforeEach(() => {
 
 test.each(["/#%", "/#%E0%A4%A"])("잘못 인코딩된 해시 %s로 접속해도 홈을 표시한다", async (path) => {
   await renderAt(path);
-  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("백엔드 개발자 길태형입니다.");
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("개발자 길태형입니다.");
   expect(screen.getByRole("heading", { name: "Core Skills & Competency" })).toBeInTheDocument();
 });
 

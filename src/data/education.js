@@ -17,7 +17,7 @@ const education = [
   },
   {
     id: "ezen-academy",
-    degree: "빅데이터 기반 자바 백엔드 과정",
+    degree: "빅데이터 기반 자바 개발자 과정",
     school: "EZEN ACADEMY",
     period: "2021.06 - 2022.01",
     summary: "Full-Stack Web Application Development Program",

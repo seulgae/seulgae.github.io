@@ -76,7 +76,7 @@ function BlogSidebar({ drawerOpen = false, onCloseDrawer, hidden = false, collap
             />
             <div>
               <strong className="blog-profile-title">{profile.name} 개발 노트</strong>
-              <span className="blog-profile-handle">@seulgae · Backend</span>
+              <span className="blog-profile-handle">@seulgae · Developer</span>
             </div>
           </div>
           <p className="blog-profile-bio">

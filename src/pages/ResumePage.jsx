@@ -76,13 +76,13 @@ function ResumePage() {
           onClick={() => window.print()}
         >
           인쇄하기
-        </button>
+        </button>터
       </div>
 
       <section className="resume-paper resume-cover" aria-label="이력서 첫 장">
         <header className="resume-cover-header">
           <div className="resume-cover-identity">
-            <p className="resume-cover-eyebrow">BACKEND DEVELOPER</p>
+            <p className="resume-cover-eyebrow">Wise Developer</p>
             <h1>{profile.name}</h1>
             <p className="resume-cover-tagline">{cover.tagline}</p>
             <p className="resume-cover-role">{cover.role}</p>
@@ -119,7 +119,7 @@ function ResumePage() {
       <section className="resume-paper resume-career-page page-break" aria-label="이력서 두 번째 장">
         <header className="resume-career-header">
           <h2>경력기술서</h2>
-          <p className="resume-career-person"><strong>{profile.name}</strong><span>Java · Spring Boot Backend Developer</span></p>
+          <p className="resume-career-person"><strong>{profile.name}</strong><span>Developer</span></p>
           <p className="resume-career-person-meta">생년월일 {profile.birthDate.replaceAll("-", ".")}<span aria-hidden="true"> | </span>총 경력 {profile.careerSummary.replace(/^약\s*/, "")}</p>
         </header>
         <section aria-labelledby="resume-work-title">

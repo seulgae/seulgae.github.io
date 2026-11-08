@@ -283,7 +283,7 @@ export function getCareerGroups() {
       shortTitle: "빌링 서비스·GW 연계 시스템 유지보수",
       description: "청구·요금 관리 등 빌링 비즈니스 기능과 공통 모듈 개발, 대내외 데이터 연계 및 운영 안정화 수행",
       period: group.period,
-      role: "백엔드 개발·운영",
+      role: "시스템 운영·기능 개발",
       trackBadge: null,
       workScopes,
       skills: [...new Set(workScopes.flatMap((scope) => scope.skills.map((skill) => skill.label)))].map((label) => ({
@@ -301,7 +301,7 @@ export function getCareerGroups() {
       })),
       mainTasks: [
         "Kafka 기반 GW 연동 시스템 모니터링 및 장애 대응, 로그 분석을 통한 원인 분석 및 조치",
-        "SI 프로젝트 모듈 설계 및 백엔드 기반 서비스 개발",
+        "SI 프로젝트 모듈 설계 및 빌링 서비스 개발",
         "도메인(빌링-청구) 시스템, Spring 기반 배치, API 서비스 개발 및 유지보수",
       ],
       achievements: workScopes.flatMap((scope) => scope.achievements),
