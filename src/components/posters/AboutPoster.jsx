@@ -18,10 +18,10 @@ function AboutPoster() {
         */}
         <h1 className="hero-title">
           <span className="hero-title-line">
-            성능과 안정성을 실질적인 개선으로 증명하는
+            결과를 단순히 구현하는 데 그치지 않고,
           </span>{" "}
           <span className="hero-title-line">
-            슬기로운 개발자 {profile.name}입니다.
+            측정 가능한 성과로 검증하는 개발자 {profile.name}입니다.
           </span>
         </h1>
         <p className="hero-subtitle hero-background">
@@ -37,12 +37,12 @@ function AboutPoster() {
         </p>
         <div className="hero-story-grid">
           <div className="hero-story">
-            <span className="hero-story-label">HOW I WORK</span>
-            <h2>원인을 찾고, 함께 개선합니다.</h2>
+            <span className="hero-story-label">주요 작업 방식</span>
+            <h2>원인을 찾고, 주도적으로 개선합니다.</h2>
             <p>{strength}</p>
           </div>
           <div className="hero-story hero-story-direction">
-            <span className="hero-story-label">WHERE I’M HEADED</span>
+            <span className="hero-story-label">개발자 커리어 최종 목표</span>
             <h2>설계부터 완성까지 참여하는 개발자</h2>
             <p>{direction}</p>
           </div>
