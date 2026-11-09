@@ -74,7 +74,7 @@ const profile = {
       ["Database", "MySQL · Oracle · CUBRID · Redis"],
       ["DevOps", "Jenkins · GitLab · SonarQube · Linux (Ubuntu / CentOS) · Apache Tomcat"],
       ["Tools", "IntelliJ · STS4 · DBeaver · WhaTap · Swagger"],
-      ["Frontend", "React · JSP · jQuery"],
+      ["Frontend", "JSP · jQuery · HTML · CSS"],
     ],
   },
   links: {
