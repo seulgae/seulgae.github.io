@@ -12,37 +12,11 @@
 - **출력용 이력서 주소**: https://seulgae.github.io/resume
   - `src/data/` 단일 출처 데이터를 그대로 참조하는 A4 2장 인쇄용 레이아웃
 
-## 웹에서 블로그 글 관리
+## 블로그 글 수정과 배포
 
-개발 환경에서는 `http://localhost:5173/admin/`, 배포 후에는 `https://seulgae.github.io/admin/`에서 글을 관리합니다. 블로그 하단의 **글 관리** 링크로도 이동할 수 있습니다.
+게시글은 `src/posts/*.md`를 직접 수정합니다. 파일명이 글 주소가 되므로 기존 글의 파일명은 유지합니다.
 
-Sveltia CMS의 GitHub 접근 토큰 로그인을 사용합니다. 토큰은 관리자 화면에 직접 입력하고, 저장소 파일이나 채팅에 작성하지 않습니다. 로컬 관리자 화면도 로그인 후에는 GitHub의 `main`과 초안 브랜치를 읽고 수정합니다.
-
-### 처음 한 번 설정하기
-
-1. 이 변경을 GitHub에 반영합니다.
-2. 저장소 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 변경합니다.
-3. **Actions → Deploy portfolio and blog**의 실행 결과를 확인합니다. 수동 실행도 가능합니다.
-4. GitHub의 **Settings → Developer settings → Personal access tokens → Fine-grained tokens**에서 토큰을 만듭니다.
-   - Resource owner는 `seulgae`, 저장소는 `seulgae.github.io` 하나만 선택합니다.
-   - Repository permissions의 **Contents**, **Pull requests**에 **Read and write**를 지정합니다. Metadata 읽기 권한은 자동으로 포함됩니다.
-   - 만료일을 설정하고, 발급된 토큰은 `/admin/`의 접근 토큰 로그인에 입력합니다.
-
-### 작성부터 게시까지
-
-- **블로그 글**에서 기존 글을 선택하거나 새 글을 만듭니다.
-- 새 글의 주소는 `redis-permission-cache`처럼 영문 소문자·숫자·하이픈으로 입력합니다. 기존 글 주소는 편집기에서 변경할 수 없도록 설정했습니다.
-- 제목·작성일·태그·요약·카테고리·본문을 편집하고 미리보기를 확인합니다. 태그는 쉼표로 구분합니다.
-- 초안을 저장하면 `main`과 구분된 브랜치와 PR에 커밋됩니다. 준비되면 워크플로에서 게시합니다.
-- 게시로 `main`에 반영되면 자동으로 테스트·빌드를 실행하고 GitHub Pages에 배포합니다. 실제 공개는 Actions의 배포가 성공한 뒤 완료됩니다.
-- 관리자 화면에서 글 삭제는 비활성화했습니다. 이미지 업로드는 `public/uploads`에 저장됩니다.
-- 커밋 메시지는 `[블로그] 글주소 글 추가` 또는 `[블로그] 글주소 글 수정` 형태로 생성됩니다.
-
-기존의 단순 `key: value` Markdown 형식은 전용 저장 형식으로 유지합니다. 기존 게시글을 일괄 변환하지 않습니다. 관리자는 별도의 HTML 진입점으로 빌드되어 일반 포트폴리오에서 편집기를 로드하지 않습니다.
-
-로그인·실제 게시·GitHub Actions 배포는 계정 설정 완료 후 확인해야 합니다. 로컬 테스트에는 실제 저장소에 글을 게시하는 동작을 포함하지 않습니다.
-
-참고 문서 — [Sveltia GitHub 인증](https://sveltiacms.app/en/docs/backends/github), [GitHub Pages 자동 배포](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+로컬에서 `npm test`와 `npm run build`를 확인한 뒤 `main`에 반영하면 GitHub Actions가 테스트·빌드 후 GitHub Pages에 배포합니다. 배포 상태는 저장소의 Actions 탭에서 확인합니다.
 
 ## 사용 기술
 

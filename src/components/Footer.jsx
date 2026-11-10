@@ -23,7 +23,6 @@ function Footer({ isBlog = false }) {
             {isBlog ? <FaHome aria-hidden="true" /> : <FaBlog aria-hidden="true" />}
             {isBlog ? "Portfolio" : "Tech Blog"}
           </a>
-          {isBlog && <a href="/admin/">글 관리</a>}
         </div>
         <div className="site-footer-meta">
           <span>

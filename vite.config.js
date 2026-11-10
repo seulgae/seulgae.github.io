@@ -5,12 +5,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: "build",
-    rolldownOptions: {
-      input: {
-        site: "index.html",
-        admin: "admin/index.html",
-      },
-    },
   },
   test: {
     environment: "jsdom",
