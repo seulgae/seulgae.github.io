@@ -76,9 +76,19 @@ function BlogPostPage() {
             >
               {post.category.groupLabel} › {post.category.subLabel}
             </Link>
-            <Link to={paths.blog} className="blog-post-list-btn">
-              목록으로
-            </Link>
+            <div className="blog-post-actions">
+              <button
+                type="button"
+                className="blog-post-print-btn"
+                title="인쇄 창에서 PDF로 저장을 선택하세요"
+                onClick={() => window.print()}
+              >
+                PDF 저장
+              </button>
+              <Link to={paths.blog} className="blog-post-list-btn">
+                목록으로
+              </Link>
+            </div>
           </div>
 
           <h1>{post.title}</h1>

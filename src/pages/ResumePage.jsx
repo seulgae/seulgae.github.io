@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import profile from "../data/profile";
 import projects from "../data/projects";
 import education from "../data/education";
@@ -59,24 +61,44 @@ function CareerEntry({ project, number, includeTools = false }) {
 
 function ResumePage() {
   const cover = profile.resumeCover;
+  const [printMode, setPrintMode] = useState("color");
+
+  useEffect(() => {
+    const resetPrintMode = () => setPrintMode("color");
+    window.addEventListener("afterprint", resetPrintMode);
+    return () => window.removeEventListener("afterprint", resetPrintMode);
+  }, []);
+
+  const printResume = (mode) => {
+    flushSync(() => setPrintMode(mode));
+    window.print();
+  };
 
   return (
-    <div className="resume-print-page">
+    <div className="resume-print-page" data-print-mode={printMode}>
       <div className="resume-print-toolbar">
         <div>
           <strong>출력용 이력서</strong>
           <span>
-            소개 1장과 경력 상세 2장으로 구성했습니다. 인쇄 시 A4, 배율 기본값,
-            머리글/바닥글 끔을 선택해 주세요.
+            소개와 경력기술서를 A4 3장으로 정리했습니다. 인쇄하거나 PDF로 저장할 수 있습니다.
           </span>
         </div>
-        <button
-          type="button"
-          className="resume-print-button"
-          onClick={() => window.print()}
-        >
-          인쇄하기
-        </button>터
+        <div className="resume-print-actions">
+          <button
+            type="button"
+            className="resume-print-button"
+            onClick={() => printResume("color")}
+          >
+            인쇄하기
+          </button>
+          <button
+            type="button"
+            className="resume-print-button resume-print-button-monochrome"
+            onClick={() => printResume("monochrome")}
+          >
+            흑백으로 인쇄
+          </button>
+        </div>
       </div>
 
       <section className="resume-paper resume-cover" aria-label="이력서 첫 장">
@@ -84,11 +106,15 @@ function ResumePage() {
           <div className="resume-cover-identity">
             <p className="resume-cover-eyebrow">Wise Developer</p>
             <h1>{profile.name}</h1>
-            <p className="resume-cover-tagline">{cover.tagline}</p>
-            <p className="resume-cover-role">{cover.role}</p>
+            <div className="resume-cover-message">
+              <p className="resume-cover-tagline">{cover.tagline}</p>
+              <p className="resume-cover-role">{cover.role}</p>
+            </div>
           </div>
-          <img className="resume-cover-portrait" src={assetUrl(cover.image)}
-            alt={`${profile.name} 증명사진`} width="160" height="214" />
+          <div className="resume-cover-portrait-frame">
+            <img className="resume-cover-portrait" src={assetUrl(cover.image)}
+              alt={`${profile.name} 증명사진`} width="160" height="214" />
+          </div>
         </header>
 
         <dl className="resume-cover-meta">

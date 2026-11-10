@@ -42,7 +42,7 @@ function AboutPoster() {
             <p>{strength}</p>
           </div>
           <div className="hero-story hero-story-direction">
-            <span className="hero-story-label">개발자 커리어 최종 목표</span>
+            <span className="hero-story-label">커리어 최종 목표</span>
             <h2>설계부터 완성까지 참여하는 개발자</h2>
             <p>{direction}</p>
           </div>

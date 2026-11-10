@@ -197,7 +197,7 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(within(combinedCard).queryByRole("heading", { name: projects[1].title })).not.toBeInTheDocument();
   expect(within(combinedCard).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
   expect(within(combinedCard).getByText("Kafka 기반 GW 연동 시스템 모니터링 및 장애 대응, 로그 분석을 통한 원인 분석 및 조치")).toBeInTheDocument();
-  expect(within(combinedCard).getByText("SI 프로젝트 모듈 설계 및 백엔드 기반 서비스 개발")).toBeInTheDocument();
+  expect(within(combinedCard).getByText("SI 프로젝트 모듈 설계 및 빌링 서비스 개발")).toBeInTheDocument();
   expect(within(combinedCard).getByText("도메인(빌링-청구) 시스템, Spring 기반 배치, API 서비스 개발 및 유지보수")).toBeInTheDocument();
   expect(combinedCard.querySelector("#project-cloudxper-billing")).toBeInTheDocument();
   expect(within(combinedCard).getAllByRole("button", { name: /시스템 아키텍처/ })).toHaveLength(2);
@@ -445,6 +445,25 @@ test("/blog/:slug에서 마크다운 본문과 같은 카테고리 다른 글 �
   ).toBeInTheDocument();
 });
 
+test("이력서는 인쇄 직전에 색상 모드를 적용하고 인쇄 종료 후 초기화한다", async () => {
+  const modes = [];
+  const print = vi.spyOn(window, "print").mockImplementation(() => {
+    modes.push(document.querySelector(".resume-print-page").dataset.printMode);
+  });
+  try {
+    await renderAt(paths.resume);
+    const page = document.querySelector(".resume-print-page");
+    await userEvent.click(screen.getByRole("button", { name: "흑백으로 인쇄" }));
+    expect(modes).toEqual(["monochrome"]);
+    fireEvent(window, new Event("afterprint"));
+    expect(page).toHaveAttribute("data-print-mode", "color");
+    await userEvent.click(screen.getByRole("button", { name: "인쇄하기", exact: true }));
+    expect(modes).toEqual(["monochrome", "color"]);
+  } finally {
+    print.mockRestore();
+  }
+});
+
 test("없는 블로그 글 slug는 블로그 공간 내 404와 글 목록 복귀 링크를 보여준다", async () => {
   await renderAt(paths.blogPost("does-not-exist"));
 
@@ -453,4 +472,18 @@ test("없는 블로그 글 slug는 블로그 공간 내 404와 글 목록 복귀
     "href",
     paths.blog,
   );
+});
+
+test("블로그 상세의 A4 PDF 저장 버튼은 현재 글에서 인쇄 창을 연다", async () => {
+  const post = getAllPosts()[0];
+  const print = vi.spyOn(window, "print").mockImplementation(() => {});
+  try {
+    await renderAt(paths.blogPost(post.slug));
+    await userEvent.click(screen.getByRole("button", { name: "A4 PDF 저장" }));
+    expect(print).toHaveBeenCalledTimes(1);
+    expect(document.title).toBe(`${post.title} | 길태형 기술 블로그`);
+    expect(screen.getByRole("heading", { level: 1, name: post.title })).toBeInTheDocument();
+  } finally {
+    print.mockRestore();
+  }
 });
