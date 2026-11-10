@@ -170,7 +170,7 @@ const projects = [
           "Oracle ↔ MySQL 연동의 문자셋·바이트 길이 문제를 Java 변환 로직과 Subscriber 검증으로 개선, 연동 검증 로직을 공통 모듈로 표준화하여 신규 연동 추가 시 자동 적용",
         result: "인코딩 오류 95% 감소, 신규 연동 실패율 5% 미만 유지",
         relatedPosts: [
-          { slug: "kafka-gw-data-integrity", label: "원천 분할·PK 변환 및 대사 보정" },
+            { slug: "gw-encoding-byte-length-validation", label: "문자셋 차이와 Java 바이트 길이 보정" },
         ],
       },
       /*
