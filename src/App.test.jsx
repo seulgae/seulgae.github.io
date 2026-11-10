@@ -212,6 +212,8 @@ test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 �
   expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
 
   expect(screen.queryByRole("button", { name: "성적증명서" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "컴퓨터공학과 학사" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("img", { name: "한양사이버대학교" })).not.toBeInTheDocument();
   const educationLogo = screen.getByRole("img", { name: "EZEN ACADEMY" });
   expect(educationLogo).toHaveAttribute("src", "/EZEN.png");
   expect(educationLogo.closest("a")).toHaveAttribute("href", "https://www.ezenac.co.kr/");

@@ -27,7 +27,7 @@ function CredentialsPoster() {
       <div className="credentials-group">
         <h3 className="credentials-group-title">🎓 Education</h3>
         <div className="education-poster-grid">
-          {education.map((edu) => (
+          {education.filter((edu) => edu.showInPortfolio !== false).map((edu) => (
             <article key={edu.id} className="credential-rich-card">
               {edu.image ? (
                 <ZoomableImage

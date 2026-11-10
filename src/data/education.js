@@ -29,6 +29,8 @@ const education = [
   },
   {
     id: "hycu-bachelor",
+    // 포트폴리오 Education에서는 숨기고 출력용 이력서에만 표시합니다.
+    showInPortfolio: false,
     degree: "컴퓨터공학과 학사",
     school: "한양사이버대학교",
     period: "2016.03 - 2021.03",
