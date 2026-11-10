@@ -160,6 +160,7 @@ const projects = [
         result: "주간 Kafka 연동 오류 약 70건 → 5건",
         relatedPosts: [
           { slug: "kafka-gw-data-integrity", label: "Kafka 도메인 GW 데이터 정합성 지키기" },
+          { slug: "gw-daily-error-reporting-workflow", label: "일일 오류 보고와 담당 파트 조치 연결" },
         ],
       },
       {
