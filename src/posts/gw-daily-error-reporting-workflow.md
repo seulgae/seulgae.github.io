@@ -1,6 +1,6 @@
 ---
 title: 연동 오류를 담당자의 조치로 연결하기 — 일일 메일 보고 체계를 만든 이유
-date: 2026-11-11
+date: 2025-02-10
 tags: Kafka, Operations, Collaboration, Retrospective
 summary: Kafka GW의 미처리 오류를 파트별로 정리하고 PL·PM과 공유해, 운영 데이터의 책임 범위를 지키면서 일일 조치로 연결한 업무 방식
 category: kafka-di

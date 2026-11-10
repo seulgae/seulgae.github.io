@@ -1,6 +1,6 @@
 ---
 title: 같은 한글인데 왜 길이 초과가 날까 — GW 메타데이터와 Java 바이트 길이 보정
-date: 2026-11-11
+date: 2025-03-27
 tags: Kafka, Java, Oracle, MySQL, Encoding
 summary: 발행 데이터가 응용 DB의 바이트 제한을 넘는 문제를 Java 문자열 보정 함수와 GW 메타데이터의 변환 규칙으로 대응한 경험
 category: kafka-di
