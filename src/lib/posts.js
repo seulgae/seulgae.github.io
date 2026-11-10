@@ -162,7 +162,7 @@ function inferCategory(slug, tags, rawCategory) {
 }
 
 /** "key: value" 줄들로 이루어진 frontmatter 블록을 파싱합니다. */
-function parseFrontmatter(raw) {
+export function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
 
   if (!match) {

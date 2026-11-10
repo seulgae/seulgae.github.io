@@ -479,7 +479,7 @@ test("블로그 상세의 A4 PDF 저장 버튼은 현재 글에서 인쇄 창을
   const print = vi.spyOn(window, "print").mockImplementation(() => {});
   try {
     await renderAt(paths.blogPost(post.slug));
-    await userEvent.click(screen.getByRole("button", { name: "A4 PDF 저장" }));
+    await userEvent.click(screen.getByRole("button", { name: "PDF 저장" }));
     expect(print).toHaveBeenCalledTimes(1);
     expect(document.title).toBe(`${post.title} | 길태형 기술 블로그`);
     expect(screen.getByRole("heading", { level: 1, name: post.title })).toBeInTheDocument();
