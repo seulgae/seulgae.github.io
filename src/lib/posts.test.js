@@ -7,6 +7,20 @@ import {
 } from "./posts";
 
 describe("블로그 글 로더", () => {
+  test("객체지향 시리즈 7편을 Java 카테고리와 학습 날짜로 분류한다", () => {
+    const series = getAllPosts().filter((post) => /^java-oop-0[1-7]-/.test(post.slug));
+    expect(series).toHaveLength(7);
+    series.forEach((post) => {
+      expect(post.date).toBe("2022-06-07");
+      expect(post.category.subId).toBe("java");
+      expect(post.category.groupId).toBe("backend");
+    });
+    const backend = getCategoryTree().find((group) => group.groupId === "backend");
+    const java = backend.subs.find((category) => category.id === "java");
+    expect(java.label).toBe("Java");
+    expect(java.count).toBe(series.length);
+  });
+
   test("검수 글 대신 실습 과제를 분류하고 기존 실무 글은 유지한다", () => {
     const expected = [
       ["redis-permission-cache-side-project", "practice-tasks"],

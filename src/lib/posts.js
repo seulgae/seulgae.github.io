@@ -30,6 +30,7 @@ export const CATEGORY_DEFINITIONS = [
     groupId: "backend",
     groupLabel: "Backend & Architecture",
     subs: [
+      { id: "java", label: "Java" },
       { id: "spring-mybatis", label: "Spring · 아키텍처" },
       { id: "kafka-di", label: "Kafka · 데이터 정합성" },
     ],
