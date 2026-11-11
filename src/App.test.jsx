@@ -5,7 +5,7 @@ import App from "./App";
 import projects from "./data/projects";
 import awards from "./data/awards";
 import education from "./data/education";
-import licenses from "./data/licenses";
+import licenses, { getVisibleLicenses } from "./data/licenses";
 import { getAllPosts, getCategoryTree } from "./lib/posts";
 import { paths } from "./routes";
 
@@ -89,13 +89,14 @@ test("출력용 이력서는 소개 표지와 경력 상세를 분리하고 자�
   education.forEach((item) => {
     expect(within(lastPage).getByRole("heading", { name: item.degree })).toBeInTheDocument();
   });
-  licenses.forEach((item) => {
+  getVisibleLicenses().forEach((item) => {
     const entry = within(lastPage).getByRole("heading", { name: item.title, exact: true }).closest("article");
     expect(entry).toHaveTextContent(item.date);
     expect(entry).toHaveTextContent(item.description);
   });
-  const licenseEntry = within(lastPage).getByRole("heading", { name: "정보처리기사", exact: true }).closest("article");
-  expect(licenseEntry).not.toHaveTextContent("합격자 발표일");
+  licenses.filter((item) => !getVisibleLicenses().includes(item)).forEach((item) => {
+    expect(within(lastPage).queryByRole("heading", { name: item.title, exact: true })).not.toBeInTheDocument();
+  });
   const sqldRow = within(lastPage).getByRole("heading", { name: "SQLD", exact: true }).closest("article");
   expect(sqldRow).not.toHaveTextContent("합격자 발표일");
 });

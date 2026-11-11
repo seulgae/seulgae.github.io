@@ -5,6 +5,7 @@ const licenses = [
     id: "engineer-information-processing",
     title: "정보처리기사",
     date: "2026.12.18",
+    visibleFrom: "2026-12-18T10:00:00+09:00",
     description: "한국산업인력공단",
   },
   {
@@ -20,5 +21,12 @@ const licenses = [
     description: "한국산업인력공단",
   },
 ];
+
+export function getVisibleLicenses(now = Date.now()) {
+  const timestamp = Number(now);
+  return licenses.filter((license) =>
+    !license.visibleFrom || timestamp >= Date.parse(license.visibleFrom)
+  );
+}
 
 export default licenses;

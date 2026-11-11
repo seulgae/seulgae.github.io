@@ -1,6 +1,6 @@
 import education from "../../data/education";
 import awards from "../../data/awards";
-import licenses from "../../data/licenses";
+import { useVisibleLicenses } from "../../hooks/useVisibleLicenses";
 import ExternalLinks from "../ExternalLinks";
 import Lightbox from "../Lightbox";
 import ZoomableImage from "../ZoomableImage";
@@ -9,6 +9,7 @@ import { assetUrl } from "../../utils/text";
 import PosterHeading from "./PosterHeading";
 
 function CredentialsPoster() {
+  const licenses = useVisibleLicenses();
   const { zoomed, open, close } = useLightbox();
 
   return (

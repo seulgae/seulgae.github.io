@@ -4,7 +4,7 @@ import profile from "../data/profile";
 import projects from "../data/projects";
 import education from "../data/education";
 import awards from "../data/awards";
-import licenses from "../data/licenses";
+import { useVisibleLicenses } from "../hooks/useVisibleLicenses";
 import { assetUrl } from "../utils/text";
 import "../styles/resume.css";
 
@@ -60,6 +60,7 @@ function CareerEntry({ project, number, includeTools = false }) {
 }
 
 function ResumePage() {
+  const licenses = useVisibleLicenses();
   const cover = profile.resumeCover;
   const [printMode, setPrintMode] = useState("color");
 
