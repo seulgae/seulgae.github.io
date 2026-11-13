@@ -19,7 +19,7 @@ function CredentialsPoster() {
       aria-labelledby="credentials-poster-title"
     >
       <PosterHeading
-        index="03"
+        index="02"
         titleId="credentials-poster-title"
         title="Credentials"
         helpText="학력 및 교육 이수, 수상 증빙, 보유 자격증과 관련 프로젝트 산출물입니다. 이미지를 누르면 크게 볼 수 있습니다."

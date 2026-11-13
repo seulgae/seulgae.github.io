@@ -2,10 +2,10 @@ import { groupProjectTechnologies } from "../utils/projectTechnologies";
 import ProjectTechnologyItem from "./ProjectTechnologyItem";
 import "../styles/projectTechnologies.css";
 
-export default function ProjectTechnologies({ skills }) {
+export default function ProjectTechnologies({ skills, showHeading = true }) {
   return (
     <section className="project-technology-section" aria-label="사용 기술">
-      <h4>사용 기술</h4>
+      {showHeading && <h4>사용 기술</h4>}
       <div className="project-technology-groups-inline">
         {groupProjectTechnologies(skills).map((group) => (
           <div key={group.id} className="project-technology-group-inline">

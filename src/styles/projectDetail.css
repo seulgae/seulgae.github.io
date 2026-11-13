@@ -67,18 +67,18 @@
 .project-info-table td { color: var(--muted); padding-right: 0; }
 
 /* 전세사기 프로젝트: 요약 → 서비스 소개 → 문제 해결 사례 */
-.project-case-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 8px 0 28px; }
-.project-case-summary > section { min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--accent-wash); }
-.project-case-summary > section > svg { width: 24px; height: 24px; padding: 9px; box-sizing: content-box; border-radius: 10px; color: var(--accent-ink); background: var(--accent-soft); }
-.project-case-summary h2 { margin: 14px 0 18px; font-size: 1.03rem; }
-.project-case-summary ul { padding-left: 18px; margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.85; }
-.project-case-summary li + li { margin-top: 10px; }
-.project-case-metrics { display: grid; gap: 18px; margin: 0; }
-.project-case-metrics dt, .project-case-stack h3 { color: var(--muted); font-size: .78rem; font-weight: 500; margin: 0 0 5px; }
-.project-case-metrics dd { margin: 0; font-size: 1.16rem; font-weight: 750; color: var(--accent-ink); line-height: 1.6; }
-.project-case-metrics dd span { color: var(--muted); }
-.project-case-stack { display: grid; gap: 12px; }
-.project-case-stack p { margin: 0; font-size: .86rem; line-height: 1.65; }
+.project-overview-table { width: 100%; margin: 8px 0 28px; border-collapse: collapse; table-layout: fixed; text-align: left; }
+.project-overview-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.project-overview-label-column { width: 140px; }
+.project-overview-table th, .project-overview-table td { padding: 20px 0; border-top: 1px solid var(--line); vertical-align: top; }
+.project-overview-table th { width: 140px; padding-right: 24px; font-size: .88rem; font-weight: 650; line-height: 1.8; color: var(--text); }
+.project-overview-tasks { margin: 0; padding-left: 18px; color: var(--muted); font-size: .93rem; line-height: 1.85; }
+.project-overview-tasks li + li { margin-top: 6px; }
+.project-overview-metrics { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 0; }
+.project-overview-metrics dt { margin: 0 0 5px; color: var(--muted); font-size: .78rem; }
+.project-overview-metrics dd { margin: 0; color: var(--accent-ink); font-size: 1.05rem; font-weight: 700; line-height: 1.65; }
+.project-overview-table .project-technology-groups-inline { gap: 18px 28px; }
+.project-overview-table .project-technology-items { gap: 7px 13px; }
 .project-case-scope-periods { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 22px 0 0; padding: 18px; border-radius: 10px; background: var(--surface-soft); }
 .project-case-scope-periods dt { color: var(--muted); font-size: .85rem; margin-bottom: 6px; }
 .project-case-scope-periods dd { margin: 0; font-size: .92rem; font-weight: 600; }
@@ -121,8 +121,10 @@
 .project-case-related a:hover { background: var(--accent-soft); border-color: var(--accent-rule); }
 .project-case-related svg { flex-shrink: 0; width: 15px; height: 15px; }
 @media (max-width: 800px) {
-  .project-case-summary { grid-template-columns: 1fr; }
-  .project-case-summary > section { padding: 20px; }
+  .project-overview-table th { width: 95px; padding-right: 16px; font-size: .82rem; }
+  .project-overview-label-column { width: 95px; }
+  .project-overview-table th, .project-overview-table td { padding-top: 16px; padding-bottom: 16px; }
+  .project-overview-metrics { gap: 12px 24px; }
   .project-case-service-areas { grid-template-columns: 1fr; gap: 18px; }
   .project-case-study { padding: 18px; }
 }

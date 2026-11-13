@@ -32,29 +32,21 @@ beforeEach(() => {
 test.each(["/#%", "/#%E0%A4%A"])("잘못 인코딩된 해시 %s로 접속해도 홈을 표시한다", async (path) => {
   await renderAt(path);
   expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("개발자 길태형입니다.");
-  expect(screen.getByRole("heading", { name: "Core Skills & Competency" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "기술 인벤토리" })).toBeInTheDocument();
 });
 
-test("성과 링크는 대상 카드로 스크롤한 뒤 강조하고 재클릭하면 효과를 다시 재생한다", async () => {
+test("About에 기술 인벤토리를 표시하고 별도 Skills 메뉴와 카드는 제거한다", async () => {
   await renderAt(paths.home);
-  const target = document.getElementById("achievement-query-index-tuning");
-  const scroll = vi.fn();
-  const cancel = vi.fn();
-  const animate = vi.fn(() => ({ cancel }));
-  target.scrollIntoView = scroll;
-  target.animate = animate;
-  const link = screen.getByRole("link", { name: /조회 성능 개선 사례/ });
-
-  await userEvent.click(link);
-  expect(scroll).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
-  expect(animate).not.toHaveBeenCalled();
-  fireEvent(document, new Event("scrollend"));
-  expect(animate).toHaveBeenCalledTimes(1);
-
-  await userEvent.click(link);
-  expect(cancel).toHaveBeenCalledTimes(1);
-  fireEvent(document, new Event("scrollend"));
-  expect(animate).toHaveBeenCalledTimes(2);
+  const about = screen.getByRole("region", { name: "개발자 소개" });
+  const inventory = within(about).getByRole("region", { name: "기술 인벤토리" });
+  expect(within(inventory).getByText("Java")).toBeInTheDocument();
+  expect(within(inventory).getAllByText("Spring Boot")).toHaveLength(1);
+  expect(within(inventory).getByText("React")).toBeInTheDocument();
+  expect(within(inventory).getByText("Claude")).toBeInTheDocument();
+  expect(within(inventory).queryByRole("table")).not.toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "Core Skills & Competency" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: "Skills", exact: true })).not.toBeInTheDocument();
+  expect(document.querySelectorAll(".portfolio-posters > section")).toHaveLength(3);
 });
 
 test("출력용 이력서는 소개 표지와 경력 상세를 분리하고 자격 날짜의 의미를 표시한다", async () => {
@@ -101,12 +93,12 @@ test("출력용 이력서는 소개 표지와 경력 상세를 분리하고 자�
   expect(sqldRow).not.toHaveTextContent("합격자 발표일");
 });
 
-test("메인(/) 상단 헤더는 4개 포스터 메뉴(About·Skills·Projects·Credentials)와 Resume 버튼을 렌더링하고 Blog 탭은 노출하지 않는다", async () => {
+test("메인(/) 상단 헤더는 About·Projects·Credentials와 Resume 버튼을 표시한다", async () => {
   await renderAt(paths.home);
 
   const nav = screen.getByRole("navigation", { name: "주요 메뉴" });
 
-  ["About", "Skills", "Projects", "Credentials"].forEach((label) => {
+  ["About", "Projects", "Credentials"].forEach((label) => {
     expect(within(nav).getByRole("link", { name: label })).toBeInTheDocument();
   });
   expect(within(nav).getByRole("link", { name: /Resume/ })).toBeInTheDocument();
@@ -118,7 +110,6 @@ test("메인(/)에서 스크롤하면 상단바 메뉴의 활성 커서가 해�
 
   const nav = screen.getByRole("navigation", { name: "주요 메뉴" });
   const aboutLink = within(nav).getByRole("link", { name: "About" });
-  const skillsLink = within(nav).getByRole("link", { name: "Skills" });
   const projectsLink = within(nav).getByRole("link", { name: "Projects" });
   const credentialsLink = within(nav).getByRole("link", { name: "Credentials" });
 
@@ -127,12 +118,11 @@ test("메인(/)에서 스크롤하면 상단바 메뉴의 활성 커서가 해�
 
   const sectionOffsets = {
     about: -500,
-    skills: 80,
-    projects: 650,
+    projects: 80,
     credentials: 1400,
   };
 
-  ["about", "skills", "projects", "credentials"].forEach((id) => {
+  ["about", "projects", "credentials"].forEach((id) => {
     const el = document.getElementById(id);
     el.getBoundingClientRect = () => ({
       top: sectionOffsets[id],
@@ -144,23 +134,13 @@ test("메인(/)에서 스크롤하면 상단바 메뉴의 활성 커서가 해�
     });
   });
 
-  // Skills 포스터 구간으로 스크롤
+  // Projects 포스터 구간으로 스크롤
   act(() => {
     window.scrollY = 480;
     fireEvent.scroll(window);
   });
-  expect(skillsLink).toHaveAttribute("aria-current", "location");
-  expect(aboutLink).not.toHaveAttribute("aria-current");
-
-  // Projects 포스터 구간으로 스크롤
-  sectionOffsets.skills = -400;
-  sectionOffsets.projects = 60;
-  act(() => {
-    window.scrollY = 1050;
-    fireEvent.scroll(window);
-  });
   expect(projectsLink).toHaveAttribute("aria-current", "location");
-  expect(skillsLink).not.toHaveAttribute("aria-current");
+  expect(aboutLink).not.toHaveAttribute("aria-current");
 
   // Credentials 포스터 구간으로 스크롤
   sectionOffsets.projects = -600;
@@ -196,7 +176,7 @@ test("메인은 프로젝트를 요약하고 상세 보기에서 STAR 사례와 
   const platformSummary = screen.getByRole("heading", { level: 3, name: projects[2].title }).closest("article");
   expect(within(platformSummary).getByRole("link", { name: "상세 보기" })).toHaveAttribute("href", paths.projectDetail("cloudxper-billing"));
   expect(within(billingSummary).getByRole("link", { name: "상세 보기" })).toHaveAttribute("href", paths.projectDetail("lgu-billing-gw"));
-  expect(within(summary).getByRole("region", { name: "사용 기술" })).toBeInTheDocument();
+  expect(within(summary).queryByRole("region", { name: "사용 기술" })).not.toBeInTheDocument();
   expect(within(platformSummary).getByText("로그인 권한 조회 캐시 구현 및 응답 개선")).toBeInTheDocument();
   expect(within(billingSummary).queryByText("로그인 권한 조회 캐시 구현 및 응답 개선")).not.toBeInTheDocument();
   expect(within(summary).queryByText(projects[0].achievements[0].detail.replace(/\s+/g, " "))).not.toBeInTheDocument();
@@ -208,7 +188,9 @@ test("메인은 프로젝트를 요약하고 상세 보기에서 STAR 사례와 
   await userEvent.click(within(summary).getByRole("link", { name: "상세 보기" }));
   await screen.findByRole("heading", { level: 1, name: projects[0].title });
   expect(window.location.pathname).toBe(paths.projectDetail(projects[0].slug));
-  expect(screen.queryByRole("region", { name: "사용 기술" })).not.toBeInTheDocument();
+  const overviewTable = screen.getByRole("table", { name: "프로젝트 요약" });
+  expect(within(overviewTable).getByRole("region", { name: "사용 기술" })).toBeInTheDocument();
+  expect(within(overviewTable).getByRole("rowheader", { name: "주요 담당 업무" })).toBeInTheDocument();
   ["프로젝트 소개", "주요 기능", "시스템 아키텍처", "주요 문제 해결 사례", "결과 및 성과"].forEach((name) => {
     expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
   });
@@ -268,7 +250,7 @@ test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 
   await renderAt(paths.home);
 
   const helpBtn = screen.getByRole("button", {
-    name: "Core Skills & Competency 도움말",
+    name: "Project Experience 도움말",
   });
   expect(helpBtn).toHaveAttribute("aria-expanded", "false");
   expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
@@ -276,7 +258,7 @@ test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 
   await userEvent.hover(helpBtn);
   const tooltip = screen.getByRole("tooltip");
   expect(tooltip).toHaveTextContent(
-    "API·비즈니스 로직 개발, 조회 성능 개선, 운영 안정성·보안 개선의 세 가지 역량과 주요 수행 업무를 요약했습니다. 관련 사례는 각 카드의 링크에서 확인할 수 있습니다.",
+    "회사별 프로젝트의 담당 역할, 사용 기술과 대표 성과를 요약했습니다. 각 카드의 상세 보기에서 주요 기능, 아키텍처와 문제 해결 사례를 확인할 수 있습니다.",
   );
   expect(helpBtn).toHaveAttribute("aria-expanded", "true");
 

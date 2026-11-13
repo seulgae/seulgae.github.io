@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import profile, { getBirthLabel } from "../../data/profile";
 import { paths } from "../../routes";
+import TechnologyInventory from "../TechnologyInventory";
 
 function AboutPoster() {
   const [background, strength, direction] = profile.intro.split("\n\n");
@@ -68,7 +69,7 @@ function AboutPoster() {
           <span className="contact-meta">{getBirthLabel()}</span>
         </div>
       </div>
-
+      <TechnologyInventory />
     </section>
   );
 }

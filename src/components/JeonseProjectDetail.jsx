@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { FiBriefcase, FiTrendingUp, FiLayers, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight } from "react-icons/fi";
 import InlineProjectArchitecture from "./InlineProjectArchitecture";
 import PosterHeading from "./posters/PosterHeading";
 import ProjectRelatedPosts from "./ProjectRelatedPosts";
+import ProjectSummaryTable from "./ProjectSummaryTable";
 import { paths } from "../routes";
 
 const cases = [
@@ -35,26 +36,7 @@ export default function JeonseProjectDetail({ project }) {
         </dl>
       </header>
 
-      <div className="project-case-summary">
-        <section aria-labelledby="case-duties">
-          <FiBriefcase aria-hidden="true" /><h2 id="case-duties">주요 담당 업무</h2>
-          <ul>{project.mainTasks.map((task) => <li key={task}>{task}</li>)}</ul>
-        </section>
-        <section aria-labelledby="case-highlights">
-          <FiTrendingUp aria-hidden="true" /><h2 id="case-highlights">주요 성과</h2>
-          <dl className="project-case-metrics">
-            <div><dt>SAST 검출</dt><dd>358건 <span>→</span> 4건</dd></div>
-            <div><dt>목록 조회</dt><dd>53초 <span>→</span> 1초 미만</dd></div>
-            <div><dt>서버 점검</dt><dd>수동 <span>→</span> 4시간 주기 수집</dd></div>
-          </dl>
-        </section>
-        <section aria-labelledby="case-stack">
-          <FiLayers aria-hidden="true" /><h2 id="case-stack">기술 스택</h2>
-          <div className="project-case-stack">{project.skills.map((group) => (
-            <div key={group.label}><h3>{group.label}</h3><p>{group.value}</p></div>
-          ))}</div>
-        </section>
-      </div>
+      <ProjectSummaryTable project={project} metrics={[["SAST 검출", "358건 → 4건"], ["목록 조회", "53초 → 1초 미만"], ["서버 점검", "수동 → 4시간 주기 수집"]]} />
 
       <nav className="project-case-nav" aria-label="프로젝트 상세 목차">
         <a href="#overview">프로젝트 소개</a><a href="#features">주요 기능</a>

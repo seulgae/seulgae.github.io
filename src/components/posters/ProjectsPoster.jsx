@@ -2,7 +2,6 @@ import { Fragment, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getCareerGroups } from "../../data/projects";
 import InlineProjectArchitecture from "../InlineProjectArchitecture";
-import ProjectTechnologies from "../ProjectTechnologies";
 import { paths } from "../../routes";
 import PosterHeading from "./PosterHeading";
 
@@ -126,7 +125,6 @@ function ProjectTrackCard({ project, isGrouped }) {
         <p className="project-track-desc">{project.description}</p>
       </header>
       {project.workScopes && <span id="project-cloudxper-billing" className="project-anchor-alias" aria-hidden="true" />}
-      <ProjectTechnologies skills={project.skills} />
       <h4 className="project-summary-heading">요약 성과</h4>
       <ul className="project-summary-results" aria-label="대표 성과">
         {project.achievements.map((achievement) => (
@@ -153,7 +151,7 @@ function ProjectsPoster() {
       aria-labelledby="projects-poster-title"
     >
       <PosterHeading
-        index="02"
+        index="01"
         titleId="projects-poster-title"
         title="Project Experience"
         helpText="회사별 프로젝트의 담당 역할, 사용 기술과 대표 성과를 요약했습니다. 각 카드의 상세 보기에서 주요 기능, 아키텍처와 문제 해결 사례를 확인할 수 있습니다."

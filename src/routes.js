@@ -13,12 +13,11 @@ export const paths = {
 };
 
 /**
- * 메인 포트폴리오(/) 원페이지를 구성하는 4개 포스터 섹션.
+ * 메인 포트폴리오(/) 원페이지를 구성하는 3개 포스터 섹션.
  * 스크롤 위치에 따라 상단 헤더·모바일 하단바의 활성 커서가 이 순서대로 이동합니다.
  */
 export const portfolioSections = [
   { id: "about", label: "About", mobileLabel: "소개" },
-  { id: "skills", label: "Skills", mobileLabel: "역량" },
   { id: "projects", label: "Projects", mobileLabel: "프로젝트" },
   { id: "credentials", label: "Credentials", mobileLabel: "이력·자격" },
 ];
