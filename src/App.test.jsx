@@ -184,65 +184,84 @@ test("상단바 포스터 메뉴를 클릭하면 커서가 즉시 해당 메뉴�
   expect(window.location.hash).toBe("#projects");
 });
 
-test("메인(/)에 4개의 포스터 컴포넌트가 조립되고 프로젝트 아키텍처를 팝업 모달로 열고 닫을 수 있다", async () => {
+test("메인은 프로젝트를 요약하고 상세 보기에서 STAR 사례와 펼쳐진 아키텍처를 제공한다", async () => {
   await renderAt(paths.home);
-
-  expect(document.getElementById("about")).toBeInTheDocument();
-  expect(document.getElementById("skills")).toBeInTheDocument();
-  expect(document.getElementById("projects")).toBeInTheDocument();
-  expect(document.getElementById("credentials")).toBeInTheDocument();
-
-  expect(screen.getByRole("heading", { level: 3, name: projects[0].title })).toBeInTheDocument();
-  const combinedHeading = screen.getByRole("heading", { level: 3, name: "빌링 서비스·GW 연계 시스템 유지보수" });
-  const combinedCard = combinedHeading.closest("article");
-  expect(within(combinedCard).queryByRole("heading", { name: projects[1].title })).not.toBeInTheDocument();
-  expect(within(combinedCard).queryByRole("heading", { name: projects[2].title })).not.toBeInTheDocument();
-  expect(within(combinedCard).getByText("Kafka 기반 GW 연동 시스템 모니터링 및 장애 대응, 로그 분석을 통한 원인 분석 및 조치")).toBeInTheDocument();
-  expect(within(combinedCard).getByText("SI 프로젝트 모듈 설계 및 빌링 서비스 개발")).toBeInTheDocument();
-  expect(within(combinedCard).getByText("도메인(빌링-청구) 시스템, Spring 기반 배치, API 서비스 개발 및 유지보수")).toBeInTheDocument();
-  expect(combinedCard.querySelector("#project-cloudxper-billing")).toBeInTheDocument();
-  expect(within(combinedCard).getAllByRole("button", { name: /시스템 아키텍처/ })).toHaveLength(2);
-  const dbAchievement = within(combinedCard).getByText("GW 연동 데이터 검증 공통화 및 정합성 대응").closest("li");
-  expect(within(dbAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
-  expect(within(dbAchievement.nextElementSibling).getByRole("button", { name: /Kafka GW 시스템 아키텍처/ })).toBeInTheDocument();
-  expect(within(combinedCard).queryByText("코드 리팩토링 및 개발 컨벤션 표준화")).not.toBeInTheDocument();
-  const apiCard = screen.getByRole("heading", { name: "비즈니스 로직 구현 및 API 개발" }).closest("article");
-  expect(within(apiCard).getByRole("link", { name: /코드 표준화 회고/ })).toHaveAttribute("href", "/blog/backend-code-convention-standardization");
-  const refactoringAchievement = within(combinedCard).getByText("로그인 권한 조회 캐시 구현 및 응답 개선").closest("li");
-  expect(within(refactoringAchievement).queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
-  expect(within(refactoringAchievement.nextElementSibling).getByRole("button", { name: /플랫폼 고도화 시스템 아키텍처/ })).toBeInTheDocument();
-
-  expect(screen.queryByRole("button", { name: "성적증명서" })).not.toBeInTheDocument();
+  ["about", "skills", "projects", "credentials"].forEach((id) => {
+    expect(document.getElementById(id)).toBeInTheDocument();
+  });
+  const summary = screen.getByRole("heading", { level: 3, name: projects[0].title }).closest("article");
+  expect(within(within(summary).getByRole("list", { name: "대표 성과" })).getAllByRole("listitem")).toHaveLength(3);
+  const billingSummary = screen.getByRole("heading", { level: 3, name: "빌링 서비스·GW 연계 시스템 유지보수" }).closest("article");
+  expect(within(within(billingSummary).getByRole("list", { name: "대표 성과" })).getAllByRole("listitem")).toHaveLength(2);
+  const platformSummary = screen.getByRole("heading", { level: 3, name: projects[2].title }).closest("article");
+  expect(within(platformSummary).getByRole("link", { name: "상세 보기" })).toHaveAttribute("href", paths.projectDetail("cloudxper-billing"));
+  expect(within(billingSummary).getByRole("link", { name: "상세 보기" })).toHaveAttribute("href", paths.projectDetail("lgu-billing-gw"));
+  expect(within(summary).getByRole("region", { name: "사용 기술" })).toBeInTheDocument();
+  expect(within(platformSummary).getByText("로그인 권한 조회 캐시 구현 및 응답 개선")).toBeInTheDocument();
+  expect(within(billingSummary).queryByText("로그인 권한 조회 캐시 구현 및 응답 개선")).not.toBeInTheDocument();
+  expect(within(summary).queryByText(projects[0].achievements[0].detail.replace(/\s+/g, " "))).not.toBeInTheDocument();
+  expect(within(summary).queryByRole("link", { name: /技術|기술 블로그/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: /시스템 아키텍처/ })).not.toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: "컴퓨터공학과 학사" })).not.toBeInTheDocument();
-  expect(screen.queryByRole("img", { name: "한양사이버대학교" })).not.toBeInTheDocument();
-  const educationLogo = screen.getByRole("img", { name: "EZEN ACADEMY" });
-  expect(educationLogo).toHaveAttribute("src", "/EZEN.png");
-  expect(educationLogo.closest("a")).toHaveAttribute("href", "https://www.ezenac.co.kr/");
-  expect(screen.queryByRole("button", { name: "EZEN ACADEMY 이미지 크게 보기" })).not.toBeInTheDocument();
-  ["SQLD", "웹 디자인 개발기능사"].forEach((name) => {
-    const card = screen.getByRole("heading", { name, exact: true }).closest("article");
-    expect(card.querySelector(".credential-thumb-placeholder")).toHaveTextContent("📜");
-    expect(card.querySelector("img")).not.toBeInTheDocument();
+  expect(screen.getByRole("img", { name: "EZEN ACADEMY" })).toHaveAttribute("src", "/EZEN.png");
+
+  await userEvent.click(within(summary).getByRole("link", { name: "상세 보기" }));
+  await screen.findByRole("heading", { level: 1, name: projects[0].title });
+  expect(window.location.pathname).toBe(paths.projectDetail(projects[0].slug));
+  expect(screen.queryByRole("region", { name: "사용 기술" })).not.toBeInTheDocument();
+  ["프로젝트 소개", "주요 기능", "시스템 아키텍처", "주요 문제 해결 사례", "결과 및 성과"].forEach((name) => {
+    expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
   });
-
-  const popupButtons = screen.getAllByRole("button", {
-    name: /시스템 아키텍처 & 데이터 흐름 다이어그램/,
+  projects[0].achievements[0].detail.split("\n").forEach((line) => expect(screen.getByText(line)).toBeInTheDocument());
+  expect(screen.getAllByText(projects[0].achievements[0].result)).toHaveLength(2);
+  expect(screen.getByRole("link", { name: /Claude 세션 분리/ })).toHaveAttribute("href", paths.blogPost("claude-assisted-security-remediation"));
+  const overview = await screen.findByRole("region", { name: "전체 시스템 구성 시스템 아키텍처 및 데이터 흐름" });
+  expect(within(overview).getByRole("heading", { name: "01 / 망 분리 환경과 데이터 동기화" })).toBeInTheDocument();
+  expect(within(overview).queryByRole("heading", { name: "02 / SSH 기반 서버 점검과 이력 조회" })).not.toBeInTheDocument();
+  const infrastructure = screen.getByText(projects[0].achievements[2].detail).closest("article");
+  expect(within(infrastructure).getByRole("region", { name: "서버 점검 수집 시스템 아키텍처 및 데이터 흐름" })).toBeInTheDocument();
+  expect(screen.getByRole("img", { name: /전세사기피해자 지원관리시스템 공개 메인 화면/ })).toHaveAttribute("src", "/jeonse-service-preview.jpg");
+  expect(screen.getByRole("list", { name: "피해 신청 및 행정 처리 흐름" })).toBeInTheDocument();
+  expect(screen.queryByText("S · 상황")).not.toBeInTheDocument();
+  expect(screen.getAllByRole("heading", { name: "02 / SSH 기반 서버 점검과 이력 조회" })).toHaveLength(1);
+  expect(screen.queryByRole("button", { name: /크게 보기/ })).not.toBeInTheDocument();
+  expect(document.querySelector(".arch-help")).not.toBeInTheDocument();
+  const architectureHelp = screen.getByRole("button", { name: "시스템 아키텍처 도움말" });
+  fireEvent.click(architectureHelp);
+  expect(screen.getByRole("tooltip")).toHaveTextContent("구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다.");
+  fireEvent.click(architectureHelp);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  document.querySelectorAll(".project-inline-architecture details").forEach((detail) => {
+    expect(detail).toHaveAttribute("open");
   });
-  expect(popupButtons).toHaveLength(3);
+  await userEvent.click(screen.getByRole("link", { name: "← 프로젝트 목록" }));
+  expect(window.location.pathname).toBe("/");
+  expect(window.location.hash).toBe("#project-jeonse-support-system");
+});
 
-  await userEvent.click(popupButtons[0]);
-  const modal = await screen.findByRole("dialog", { name: projects[0].title });
-  expect(modal).toBeInTheDocument();
-  expect(
-    within(modal).getByRole("heading", { name: "시스템 한눈에 보기" }),
-  ).toBeInTheDocument();
+test("GW 상세 페이지는 해당 프로젝트의 성과와 아키텍처만 표시한다", async () => {
+  await renderAt(paths.projectDetail("lgu-billing-gw"));
+  expect(screen.getByRole("heading", { level: 1, name: "빌링 서비스·GW 연계 시스템 유지보수" })).toBeInTheDocument();
+  projects[1].achievements.forEach((item) => {
+    expect(screen.getAllByText(item.result)).toHaveLength(2);
+  });
+  expect(document.querySelectorAll(".project-case-study")).toHaveLength(2);
+  expect(screen.getByRole("heading", { name: "주요 기능" })).toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "Kafka GW 시스템 아키텍처 및 데이터 흐름" })).toBeInTheDocument();
+  expect(screen.queryByRole("region", { name: "플랫폼 고도화 시스템 아키텍처 및 데이터 흐름" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: /크게 보기/ })).not.toBeInTheDocument();
+  expect(screen.queryByText("S · 상황")).not.toBeInTheDocument();
+});
 
-  await userEvent.click(
-    within(modal).getByRole("button", { name: "아키텍처 팝업 닫기" }),
-  );
-  expect(
-    screen.queryByRole("dialog", { name: projects[0].title }),
-  ).not.toBeInTheDocument();
+test("CloudXper 상세 페이지는 플랫폼 성과와 아키텍처만 표시한다", async () => {
+  await renderAt(paths.projectDetail("cloudxper-billing"));
+  expect(screen.getByRole("heading", { level: 1, name: projects[2].title })).toBeInTheDocument();
+  expect(screen.getByRole("navigation", { name: "프로젝트 상세 목차" })).toBeInTheDocument();
+  expect(document.querySelectorAll(".project-case-study")).toHaveLength(2);
+  expect(screen.queryByRole("region", { name: "Kafka GW 시스템 아키텍처 및 데이터 흐름" })).not.toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "플랫폼 고도화 시스템 아키텍처 및 데이터 흐름" })).toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "조회 병렬화 시스템 아키텍처 및 데이터 흐름" })).toBeInTheDocument();
+  expect(screen.getByText("SQL 호출 수를 줄인 성과가 아니라, 당시 순차 조회를 병렬화한 결과입니다.")).toBeInTheDocument();
 });
 
 test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 안내 툴팁이 보이고 떼면 사라진다", async () => {
@@ -257,7 +276,7 @@ test("포스터 섹션 제목 옆 도움말(?) 버튼에 마우스를 올리면 
   await userEvent.hover(helpBtn);
   const tooltip = screen.getByRole("tooltip");
   expect(tooltip).toHaveTextContent(
-    "담당할 수 있는 업무와 프로젝트 경험을 정리했습니다.",
+    "API·비즈니스 로직 개발, 조회 성능 개선, 운영 안정성·보안 개선의 세 가지 역량과 주요 수행 업무를 요약했습니다. 관련 사례는 각 카드의 링크에서 확인할 수 있습니다.",
   );
   expect(helpBtn).toHaveAttribute("aria-expanded", "true");
 

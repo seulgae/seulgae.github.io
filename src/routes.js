@@ -6,6 +6,7 @@ export const paths = {
   home: "/",
   section: (id) => (id === "about" ? "/" : `/#${id}`),
   projectAnchor: (slug) => `/#project-${slug}`,
+  projectDetail: (slug) => `/projects/${slug}`,
   blog: "/blog",
   blogPost: (slug) => `/blog/${slug}`,
   resume: "/resume",

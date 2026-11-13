@@ -59,7 +59,7 @@ function SkillsPoster() {
         index="01"
         titleId="skills-poster-title"
         title="Core Skills & Competency"
-        helpText="담당할 수 있는 업무와 프로젝트 경험을 정리했습니다."
+        helpText="API·비즈니스 로직 개발, 조회 성능 개선, 운영 안정성·보안 개선의 세 가지 역량과 주요 수행 업무를 요약했습니다. 관련 사례는 각 카드의 링크에서 확인할 수 있습니다."
       />
 
       <div className="skill-matrix-grid">

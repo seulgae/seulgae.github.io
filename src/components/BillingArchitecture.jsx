@@ -3,7 +3,7 @@ import ArchitectureDiagrams from "./ArchitectureDiagrams";
 import "../styles/billingArchitecture.css";
 
 /** 블로그에 기록된 논리 구조. Redis는 메시지 큐가 아닌 업무키 매핑 저장소다. */
-export default function BillingArchitecture() {
+export default function BillingArchitecture({ expanded = false }) {
   return (
     <div className="billing-overview">
       <section className="project-block billing-architecture" aria-labelledby="billing-architecture-title">
@@ -14,7 +14,7 @@ export default function BillingArchitecture() {
         <p className="billing-intro">달라진 데이터 구조를 연결하고, 청구 데이터의 정합성을 지키다</p>
         <p className="billing-caption">원부·응용 파트의 PK와 컬럼을 매핑해 데이터를 연계하는 서비스 도메인 GW</p>
 
-        <ArchitectureDiagrams slug="lgu-billing-gw" />
+        <ArchitectureDiagrams slug="lgu-billing-gw" expandable={!expanded} />
 
         <details className="billing-details" open>
           <summary>이벤트의 컬럼을 어떻게 맞춰 연계할까?</summary>
@@ -23,7 +23,7 @@ export default function BillingArchitecture() {
             <div><h4>컬럼이 바로 맞지 않는 경우</h4><p>DTO 임시 필드로 맞춤 → 응용 테이블 적재 → 대사 확인</p></div>
           </div>
         </details>
-        <details className="billing-details">
+        <details className="billing-details" open={expanded}>
           <summary>GW 내부 처리 구조 보기</summary>
           <dl className="billing-steps">
             <div><dt>수신</dt><dd>Dispatcher가 헤더의 MNO/MVNO로 처리 경로를 분기하고, 도메인 이벤트는 domainEventHandler에서 처리합니다.</dd></div>
@@ -31,7 +31,7 @@ export default function BillingArchitecture() {
             <div><dt>반영</dt><dd>eventWorkCd에 따라 INS / UPD / MER / DEL을 실행합니다. MER는 join 조건 기준으로 존재하면 UPDATE, 없으면 INSERT합니다.</dd></div>
           </dl>
         </details>
-        <details className="billing-details">
+        <details className="billing-details" open={expanded}>
           <summary>신규 이벤트 연동을 추가하는 절차</summary>
           <p>토픽 등록 → 이벤트 필드 정의 → 원천·대상 매핑 및 join 조건 등록 → 공통 DTO 수정 → Nexus 배포 및 파트별 pom 의존성 갱신</p>
         </details>

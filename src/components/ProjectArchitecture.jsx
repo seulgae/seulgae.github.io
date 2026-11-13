@@ -3,7 +3,7 @@ import architectureBySlug from "../data/projectArchitecture";
 import ArchitectureDiagrams from "./ArchitectureDiagrams";
 import "../styles/billingArchitecture.css";
 
-export default function ProjectArchitecture({ slug }) {
+export default function ProjectArchitecture({ slug, expanded = false }) {
   const data = architectureBySlug[slug];
   if (!data) return null;
   const headingId = `${slug}-architecture-title`;
@@ -17,9 +17,9 @@ export default function ProjectArchitecture({ slug }) {
         </div>
         <p className="billing-intro">{data.headline}</p>
         <p className="billing-caption">{data.caption}</p>
-        <ArchitectureDiagrams slug={slug} />
+        <ArchitectureDiagrams slug={slug} expandable={!expanded} />
         {data.details.map((detail) => (
-          <details key={detail.title} className="billing-details" open={detail.open}>
+          <details key={detail.title} className="billing-details" open={expanded || detail.open}>
             <summary>{detail.title}</summary>
             <div className="billing-columns">
               {detail.items.map((item) => (

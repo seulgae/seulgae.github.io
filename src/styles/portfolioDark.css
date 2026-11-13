@@ -1,0 +1,52 @@
+/* 포트폴리오·프로젝트 상세 전용. 출력용 이력서는 기존 밝은 색상을 사용한다. */
+.portfolio-dark {
+  color-scheme: dark;
+  --bg: #0d141c;
+  --surface: #151f2a;
+  --surface-strong: #1c2936;
+  --surface-soft: #1b2835;
+  --text: #e8eef5;
+  --muted: #a5b4c4;
+  --line: #2b3948;
+  --line-soft: #233140;
+  --accent: #0f766e;
+  --accent-ink: #8de0d2;
+  --accent-soft: rgba(94, 234, 212, .10);
+  --accent-wash: rgba(94, 234, 212, .05);
+  --accent-tint: rgba(94, 234, 212, .14);
+  --accent-border: rgba(94, 234, 212, .24);
+  --accent-rule: rgba(94, 234, 212, .45);
+  --header-bg: rgba(13, 20, 28, .94);
+  --header-border: var(--line);
+  --overlay: rgba(0, 0, 0, .76);
+  --overlay-panel: #151f2a;
+  --overlay-ink: #e8eef5;
+  --shadow: 0 8px 26px rgba(0, 0, 0, .15);
+  --shadow-hover: 0 10px 30px rgba(0, 0, 0, .25);
+  --shadow-strong: 0 24px 60px rgba(0, 0, 0, .4);
+  color: var(--text);
+  background: radial-gradient(ellipse at 85% 0%, rgba(28, 70, 74, .2), transparent 38rem), var(--bg);
+}
+
+.portfolio-dark .project-track-card,
+.portfolio-dark .blog-chip,
+.portfolio-dark .news-chip { background: var(--surface); }
+
+.portfolio-dark .project-skill-pill {
+  background: var(--surface-soft);
+  color: #cbd8e5;
+  border: 1px solid var(--line);
+}
+
+.portfolio-dark .brand-signature-brackets { color: var(--text); }
+.portfolio-dark .brand-signature-context,
+.portfolio-dark .poster-index,
+.portfolio-dark .eyebrow,
+.portfolio-dark .bottom-nav-item.active { color: var(--accent-ink); }
+
+.portfolio-dark .project-detail-link:hover,
+.portfolio-dark .contact-pill.primary:hover,
+.portfolio-dark .blog-chip:hover { background: #0b625c; color: #fff; }
+
+.portfolio-dark .news-chip:hover { border-color: var(--accent-ink); }
+.portfolio-dark :focus-visible { outline-color: #8de0d2; }

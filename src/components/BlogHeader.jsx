@@ -2,13 +2,14 @@ import { Link, NavLink } from "react-router-dom";
 import { blogNavigation, paths } from "../routes";
 import profile from "../data/profile";
 import BrandSignature from "./BrandSignature";
+import ThemeToggle from "./ThemeToggle";
 import "../styles/blogLayout.css";
 
 /**
  * 독립 기술 블로그 전용 상단 마스트헤드 (딥 네이비·블루 테마).
  * 모바일·태블릿에서는 좌측 카테고리 사이드바를 여닫는 토글 버튼을 함께 제공합니다.
  */
-function BlogHeader({ sidebarOpen = false, onToggleSidebar, toggleRef }) {
+function BlogHeader({ sidebarOpen = false, onToggleSidebar, toggleRef, theme, toggleTheme }) {
   return (
     <header className="blog-header">
       <div className="blog-header-inner">
@@ -58,6 +59,7 @@ function BlogHeader({ sidebarOpen = false, onToggleSidebar, toggleRef }) {
             </li>
           </ul>
         </nav>
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
       </div>
     </header>
   );

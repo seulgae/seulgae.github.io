@@ -29,7 +29,7 @@ function PosterHeading({ index, titleId, title, helpText }) {
 
   return (
     <div className="poster-heading">
-      <span className="poster-index">{index}</span>
+      {index && <span className="poster-index">{index}</span>}
       <div className="poster-title-row">
         <h2 id={titleId}>{title}</h2>
 

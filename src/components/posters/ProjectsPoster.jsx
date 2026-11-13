@@ -1,9 +1,10 @@
-import { Fragment, lazy, Suspense, useMemo, useState } from "react";
-import { findProjectBySlug, getCareerGroups } from "../../data/projects";
+import { Fragment, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { getCareerGroups } from "../../data/projects";
+import InlineProjectArchitecture from "../InlineProjectArchitecture";
+import ProjectTechnologies from "../ProjectTechnologies";
 import { paths } from "../../routes";
 import PosterHeading from "./PosterHeading";
-
-const ArchitectureModal = lazy(() => import("../ArchitectureModal"));
 
 function splitSkillTokens(skills) {
   return [...new Set(skills.flatMap((group) =>
@@ -14,26 +15,10 @@ function splitSkillTokens(skills) {
   ))];
 }
 
-function ArchitectureButton({ project, label, onOpenArchitecture }) {
-  return (
-    <div className="project-arch-toggle-wrap">
-      <button
-        type="button"
-        className="project-arch-toggle-btn"
-        aria-haspopup="dialog"
-        onClick={(event) => onOpenArchitecture(project, event.currentTarget)}
-      >
-        <span>📊 {label ? label + " " : ""}시스템 아키텍처 &amp; 데이터 흐름 다이어그램</span>
-        <span className="toggle-hint">팝업으로 보기 ↗</span>
-      </button>
-    </div>
-  );
-}
-
-function ProjectWorkScope({ project, onOpenArchitecture }) {
+export function ProjectWorkScope({ project, showContext = true, showResults = true }) {
   return (
       <div className="project-poster-content">
-        <div className="project-technology-groups" aria-label="사용 기술">
+        {showContext && <div className="project-technology-groups" aria-label="사용 기술">
           {project.skills.map((group) => (
             <div key={group.label} className="project-technology-row">
               <span className="project-technology-label">{group.label}</span>
@@ -48,16 +33,16 @@ function ProjectWorkScope({ project, onOpenArchitecture }) {
               )}
             </div>
           ))}
-        </div>
+        </div>}
 
-        <div className="project-content-block">
+        {showContext && <div className="project-content-block">
           <h4 className="project-block-label">주요 담당 업무</h4>
           <ul className="project-task-list">
             {project.mainTasks.map((task) => (
               <li key={task}>{task}</li>
             ))}
           </ul>
-        </div>
+        </div>}
 
         <div className="project-content-block">
           <h4 className="project-block-label">핵심 기술 성과 및 트러블슈팅</h4>
@@ -67,10 +52,20 @@ function ProjectWorkScope({ project, onOpenArchitecture }) {
 
               return (
                 <Fragment key={ach.title}>
+                  {ach.architectureSlug && (
+                    <li className="project-architecture-item">
+                    <InlineProjectArchitecture
+                      slug={ach.architectureSlug}
+                      figureIds={ach.architectureFigures}
+                      label={ach.architectureLabel || (ach.architectureSlug === "lgu-billing-gw" ? "Kafka GW" : "플랫폼 고도화")}
+                    />
+                    </li>
+                  )}
+
                 <li className="project-achievement-card" id={ach.anchorId}>
                   <div className="project-achievement-header">
                     <strong className="project-achievement-title">{ach.title}</strong>
-                    {ach.result ? (
+                    {showResults && ach.result ? (
                       <span className="project-achievement-result">{ach.result}</span>
                     ) : null}
                   </div>
@@ -105,27 +100,20 @@ function ProjectWorkScope({ project, onOpenArchitecture }) {
                     </div>
                   ) : null}
                 </li>
-                  {ach.architectureSlug && (
-                    <li className="project-architecture-item">
-                    <ArchitectureButton
-                      project={findProjectBySlug(ach.architectureSlug)}
-                      label={ach.architectureSlug === "lgu-billing-gw" ? "Kafka GW" : "플랫폼 고도화"}
-                      onOpenArchitecture={onOpenArchitecture}
-                    />
-                    </li>
-                  )}
                 </Fragment>
               );
             })}
           </ul>
         </div>
 
-        {!project.workScopes && <ArchitectureButton project={project} onOpenArchitecture={onOpenArchitecture} />}
+        {!project.workScopes && !project.achievements.some((item) => item.architectureSlug === project.slug) && (
+          <InlineProjectArchitecture slug={project.slug} label="프로젝트" />
+        )}
       </div>
   );
 }
 
-function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
+function ProjectTrackCard({ project, isGrouped }) {
   return (
     <article className={`project-track-card ${isGrouped ? "is-grouped" : ""}`} id={`project-${project.slug}`}>
       <header className="project-track-header">
@@ -138,26 +126,25 @@ function ProjectTrackCard({ project, isGrouped, onOpenArchitecture }) {
         <p className="project-track-desc">{project.description}</p>
       </header>
       {project.workScopes && <span id="project-cloudxper-billing" className="project-anchor-alias" aria-hidden="true" />}
-      <ProjectWorkScope project={project} onOpenArchitecture={onOpenArchitecture} />
+      <ProjectTechnologies skills={project.skills} />
+      <h4 className="project-summary-heading">요약 성과</h4>
+      <ul className="project-summary-results" aria-label="대표 성과">
+        {project.achievements.map((achievement) => (
+          <li key={achievement.title} id={achievement.anchorId} className="project-achievement-card">
+            <strong>{achievement.title}</strong>
+            <span>{achievement.result}</span>
+          </li>
+        ))}
+      </ul>
+      <Link className="project-detail-link" to={paths.projectDetail(project.slug)}>
+        상세 보기 <span aria-hidden="true">→</span>
+      </Link>
     </article>
   );
 }
 
 function ProjectsPoster() {
-  const [modalState, setModalState] = useState({ project: null, trigger: null });
-  const careerGroups = useMemo(() => getCareerGroups(), []);
-
-  const handleOpenArchitecture = (project, trigger) => {
-    setModalState({ project, trigger });
-  };
-
-  const handleCloseArchitecture = () => {
-    const triggerEl = modalState.trigger;
-    setModalState({ project: null, trigger: null });
-    window.requestAnimationFrame(() => {
-      triggerEl?.focus();
-    });
-  };
+  const careerGroups = useMemo(() => getCareerGroups({ splitProjects: true }), []);
 
   return (
     <section
@@ -169,7 +156,7 @@ function ProjectsPoster() {
         index="02"
         titleId="projects-poster-title"
         title="Project Experience"
-        helpText="소속 회사·부서 기준으로 수행한 프로젝트 이력입니다. 시스템 아키텍처는 전용 팝업창에서 넓은 화면으로 확인할 수 있으며, 기술 블로그 버튼은 상세 회고(새 탭)로 연결됩니다."
+        helpText="회사별 프로젝트의 담당 역할, 사용 기술과 대표 성과를 요약했습니다. 각 카드의 상세 보기에서 주요 기능, 아키텍처와 문제 해결 사례를 확인할 수 있습니다."
       />
 
       <div className="career-group-list">
@@ -222,7 +209,6 @@ function ProjectsPoster() {
                     key={project.slug}
                     project={project}
                     isGrouped={isMultiTrack}
-                    onOpenArchitecture={handleOpenArchitecture}
                   />
                 ))}
               </div>
@@ -231,14 +217,6 @@ function ProjectsPoster() {
         })}
       </div>
 
-      {modalState.project ? (
-        <Suspense fallback={<p role="status">아키텍처를 불러오는 중입니다.</p>}>
-          <ArchitectureModal
-            project={modalState.project}
-            onClose={handleCloseArchitecture}
-          />
-        </Suspense>
-      ) : null}
     </section>
   );
 }

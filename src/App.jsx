@@ -6,34 +6,25 @@ import {
   Route,
   Routes,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import "./App.css";
+import "./styles/portfolioDark.css";
+import "./styles/lightTheme.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BottomNav from "./components/BottomNav";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
-import { findProjectBySlug } from "./data/projects";
 import { legacyRedirects, paths, portfolioSections } from "./routes";
 import { useScrollSpy } from "./hooks/useScrollSpy";
+import { useTheme } from "./hooks/useTheme";
 import { getHashTarget } from "./utils/text";
 
 const BlogLayout = lazy(() => import("./pages/BlogLayout"));
 const BlogListPage = lazy(() => import("./pages/BlogListPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const ResumePage = lazy(() => import("./pages/ResumePage"));
-
-function ProjectLegacyRedirect() {
-  const { slug } = useParams();
-  const project = findProjectBySlug(slug);
-
-  if (!project) {
-    return <NotFoundPage message="요청한 프로젝트를 찾을 수 없습니다." />;
-  }
-
-  return <Navigate to={paths.projectAnchor(project.slug)} replace />;
-}
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 
 function App() {
   return (
@@ -65,7 +56,7 @@ function App() {
           <Route element={<PortfolioLayout />}>
             <Route path={paths.home} element={<HomePage />} />
             <Route path={paths.resume} element={<ResumePage />} />
-            <Route path="/projects/:slug" element={<ProjectLegacyRedirect />} />
+            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
 
             {/* 통합 전 개별 메뉴 경로 및 옛 경로로 들어온 방문자를 해당 포스터 섹션으로 연결 */}
             {legacyRedirects.map((redirect) => (
@@ -118,14 +109,15 @@ const SECTION_IDS = portfolioSections.map((section) => section.id);
 
 function PortfolioLayout() {
   const location = useLocation();
+  const [theme, toggleTheme] = useTheme();
   const [activeSection, navigateToSection] = useScrollSpy(
     SECTION_IDS,
     location.pathname === paths.home,
   );
 
   return (
-    <div className="app-shell portfolio-shell">
-      <Header activeSection={activeSection} navigateToSection={navigateToSection} />
+    <div className={`app-shell portfolio-shell${location.pathname !== paths.resume ? ` portfolio-${theme}` : ""}`}>
+      <Header activeSection={activeSection} navigateToSection={navigateToSection} theme={theme} toggleTheme={toggleTheme} />
 
       {/* pathname이 바뀔 때만 진입 애니메이션 재생 (해시 스크롤 시에는 끊김 없이 유지) */}
       <main className="app-main page-enter" key={location.pathname}>

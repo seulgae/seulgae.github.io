@@ -1,0 +1,57 @@
+/* 포트폴리오 본문에 펼친 구성도도 페이지의 다크 팔레트에 맞춘다. */
+@media screen {
+  .portfolio-dark .project-inline-architecture .architecture-diagrams {
+    background: #111c27;
+    color: #e0eaf5;
+    border: 1px solid #2b3d4e;
+  }
+  .portfolio-dark .project-inline-architecture .arch-figure {
+    --arch-color: #80d6c5;
+    --arch-wash: #18362f;
+  }
+  .portfolio-dark .project-inline-architecture .arch-theme-event { --arch-color: #c7a8f1; --arch-wash: #2d263e; }
+  .portfolio-dark .project-inline-architecture .arch-theme-cloud { --arch-color: #92beff; --arch-wash: #1d324b; }
+  .portfolio-dark .project-inline-architecture .arch-theme-public { --arch-color: #7ed9c7; --arch-wash: #18362f; }
+
+  .portfolio-dark .project-inline-architecture .architecture-diagrams h4,
+  .portfolio-dark .project-inline-architecture .arch-reading-guide strong,
+  .portfolio-dark .project-inline-architecture .arch-tech,
+  .portfolio-dark .project-inline-architecture .arch-tool-groups h5 { color: #e0eaf5; }
+  .portfolio-dark .project-inline-architecture .arch-figure-heading h4 { color: var(--arch-color); }
+  .portfolio-dark .project-inline-architecture .arch-intro,
+  .portfolio-dark .project-inline-architecture .arch-legend,
+  .portfolio-dark .project-inline-architecture .arch-help,
+  .portfolio-dark .project-inline-architecture .arch-reading-guide p,
+  .portfolio-dark .project-inline-architecture .arch-tool-groups p,
+  .portfolio-dark .project-inline-architecture .architecture-diagrams small,
+  .portfolio-dark .project-inline-architecture .arch-business-context > span { color: #a8b9cc; }
+
+  .portfolio-dark .project-inline-architecture .arch-scroll { background: #0e1721; border-color: #34495e; }
+  .portfolio-dark .project-inline-architecture .arch-canvas pattern circle { fill: #273b4e; }
+  .portfolio-dark .project-inline-architecture .arch-zone rect { fill: #182534; stroke: #456079; }
+  .portfolio-dark .project-inline-architecture .arch-zone text { fill: #b7c9db; }
+  .portfolio-dark .project-inline-architecture .arch-zone-owned rect { fill: var(--arch-wash); stroke: var(--arch-color); }
+  .portfolio-dark .project-inline-architecture .arch-zone-owned text { fill: var(--arch-color); }
+  .portfolio-dark .project-inline-architecture .arch-node-bg { fill: #1b2b3b; stroke: #58728b; }
+  .portfolio-dark .project-inline-architecture .arch-node-owned .arch-node-bg { stroke: var(--arch-color); }
+  .portfolio-dark .project-inline-architecture .arch-node:hover .arch-node-bg,
+  .portfolio-dark .project-inline-architecture .arch-node:focus-visible .arch-node-bg,
+  .portfolio-dark .project-inline-architecture .arch-node[aria-pressed="true"] .arch-node-bg {
+    fill: var(--arch-wash); stroke: var(--arch-color);
+  }
+  .portfolio-dark .project-inline-architecture .arch-node-title { fill: #e9f1fa; }
+  .portfolio-dark .project-inline-architecture .arch-node-line { fill: #b4c6d8; }
+  .portfolio-dark .project-inline-architecture .arch-glyph { stroke: #a8bed4; }
+  .portfolio-dark .project-inline-architecture image[href$="/apachekafka.svg"],
+  .portfolio-dark .project-inline-architecture img[src$="/apachekafka.svg"] { filter: invert(1); }
+  .portfolio-dark .project-inline-architecture image[href$="/oracle.svg"],
+  .portfolio-dark .project-inline-architecture image[href$="/mysql.svg"] { filter: brightness(1.6); }
+  .portfolio-dark .project-inline-architecture .arch-edge text { fill: #c4d2e2; stroke: #0e1721; }
+  .portfolio-dark .project-inline-architecture .arch-edge.arch-lookup path { stroke: #8db6e4; }
+  .portfolio-dark .project-inline-architecture .arch-arrowhead.arch-lookup { fill: #8db6e4; }
+  .portfolio-dark .project-inline-architecture .arch-edge.arch-retry path { stroke: #f2bd70; }
+  .portfolio-dark .project-inline-architecture .arch-arrowhead.arch-retry { fill: #f2bd70; }
+  .portfolio-dark .project-inline-architecture .arch-selection { color: #e0eaf5; }
+  .portfolio-dark .project-inline-architecture .arch-reading-guide li { border-color: #34495e; }
+  .portfolio-dark .project-inline-architecture .arch-business-context { background: #1b2b3b; }
+}

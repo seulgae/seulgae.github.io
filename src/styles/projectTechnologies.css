@@ -1,0 +1,16 @@
+.project-technology-section { margin: 0; }
+.project-technology-section > h4 { margin: 0 0 22px; font-size: 1rem; }
+.project-technology-groups-inline { display: flex; flex-wrap: wrap; gap: 24px 36px; }
+.project-technology-group-inline { min-width: 0; }
+.project-technology-group-inline h5 { margin: 0 0 9px; font-size: .79rem; font-weight: 600; color: var(--accent-ink); }
+.project-technology-group-inline .project-technology-items { gap: 8px 15px; }
+.project-technology-group-inline .project-technology-item { gap: 6px; min-height: 25px; font-size: .86rem; color: var(--muted); }
+.project-technology-group-inline .technology-logo { width: 19px; height: 19px; }
+.project-technology-items { display: flex; flex-wrap: wrap; gap: 12px 22px; margin: 0; padding: 0; list-style: none; }
+.project-technology-item { display: inline-flex; align-items: center; gap: 8px; min-height: 30px; min-width: 0; }
+.project-technology-item .technology-logo { width: 22px; height: 22px; flex-shrink: 0; object-fit: contain; color: var(--accent-ink); }
+.project-technology-item .technology-icon-claude { color: #db9d7e; }
+.project-technology-item .technology-icon-gemini { color: #9abaff; }
+.portfolio-dark .project-technology-item .logo-apachekafka { filter: invert(1); }
+.portfolio-dark .project-technology-item .logo-mysql,
+.portfolio-dark .project-technology-item .logo-oracle { filter: brightness(1.5); }

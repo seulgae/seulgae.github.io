@@ -17,8 +17,8 @@ const projects = [
     companyPeriod: "2025.09 ~ 2026.08",
     companySummary:
       "공공 행정 시스템 기능 개선, 조회 성능·보안 취약점 조치 및 서버 점검 자동화 수행",
-    title: "전세사기 피해자 지원관리시스템 운영·고도화",
-    shortTitle: "전세사기 피해자 지원관리시스템 운영·고도화",
+    title: "전세사기 피해자 지원관리시스템 개발·운영 유지보수",
+    shortTitle: "전세사기 피해자 지원관리시스템 개발·운영 유지보수",
     description:
       "전세사기 피해자 관리 시스템 레거시 고도화, 성능 최적화, 보안 강화, 운영 안정화 및 신규 기능 개발",
     period: "2025.09 ~ 2026.08",
@@ -28,6 +28,7 @@ const projects = [
       { label: "핵심 기술", value: "Java, Spring, eGovFrame 4.1, MyBatis, CUBRID" },
       { label: "개발 환경", value: "JSP/JSTL, JavaScript/jQuery, Apache Tomcat 9, JBoss, Linux(Fedora)" },
       { label: "개발 도구", value: "Maven, SVN" },
+      { label: "AI 활용 도구", value: "Claude, ChatGPT, Gemini" },
     ],
     mainTasks: [
       "요청 기반 개선 대응 및 오류 분석, 기능 유지보수·자동화 수행",
@@ -64,10 +65,11 @@ const projects = [
       {
         title: "CodeRay SAST · 웹 취약점 조치 및 연계 SQL 개선",
         detail:
-          "CodeRay SAST 결함의 CWE 유형별 시큐어코딩·미사용 코드 제거, KISA 표준 웹 취약점(HIGH 6·MEDIUM 7·LOW 3) 조치, 망간 동기화 동적 쿼리(9개 테이블·97개 컬럼)의 정적 SQL 재설계 및 Jasypt 기반 4개 환경 계정 설정 암호화 수행",
+          "CodeRay 결과를 CWE 유형별로 분류하고 Claude 세션을 나눠 분석·조치안 검토·구현·디버깅에 활용.\n시큐어코딩·미사용 코드 정리, 망간 동기화 정적 SQL 재설계(9개 테이블·97개 컬럼) 및 Jasypt 기반 4개 환경 계정 설정 암호화 수행.\n브라우저 동작 확인 후 직접 재테스트·AS-IS 데이터 대조로 반영 여부 판단",
         result:
           "SAST 취약점 358건 → 4건 감축, 웹 취약점 16건·SQL Injection 14건 해소 및 계정정보 17건 암호화",
         relatedPosts: [
+          { slug: "claude-assisted-security-remediation", label: "Claude 세션 분리와 취약점 조치·검증 과정" },
           { slug: "dynamic-to-static-sync-query", label: "망간 동기화 정적 쿼리 전환기" },
           { slug: "cwe-79-xss-remediation", label: "CWE-79 XSS 200건 조치" },
           { slug: "cwe-476-null-dereference", label: "CWE-476 NPE 공통 유틸 해결" },
@@ -114,6 +116,9 @@ const projects = [
       */
       {
         title: "인프라 용량 관리 모니터링 자동화 및 점검 프로세스 표준화",
+        architectureSlug: "jeonse-support-system",
+        architectureFigures: ["public-monitoring"],
+        architectureLabel: "서버 점검 수집",
         detail:
           "Apache SSHD 의존성을 적용하여 SSH 기반 서버 접속 기능을 구현하고, CPU·메모리·디스크 사용률 정보를 주기 수집해 화면에서 시각적으로 확인 가능한 기능 개발",
         result:
@@ -134,8 +139,8 @@ const projects = [
     companySummary:
       "LG U+ 빌링·GW 연계 시스템 유지보수 및 CloudXper 기업별 청구 관리 기능 개선",
     trackBadge: "개발·운영",
-    title: "빌링 GW 시스템 개발·운영 유지보수",
-    shortTitle: "빌링 GW 시스템 개발·운영 유지보수",
+    title: "빌링 서비스·GW 연계 시스템 유지보수",
+    shortTitle: "빌링 서비스·GW 연계 시스템 유지보수",
     description:
       "Kafka 기반 청구·빌링 GW 시스템의 개발 및 운영, 이기종 시스템 연동 및 데이터 흐름 표준화",
     period: "2022.11 ~ 2025.05",
@@ -198,8 +203,8 @@ const projects = [
     companySummary:
       "LG U+ 빌링·GW 연계 시스템 유지보수 및 CloudXper 기업별 청구 관리 기능 개선",
     trackBadge: "SI 프로젝트",
-    title: "CloudXper 클라우드 빌링 플랫폼 고도화",
-    shortTitle: "CloudXper 클라우드 빌링 플랫폼 고도화",
+    title: "CloudXper 플랫폼 고도화 프로젝트",
+    shortTitle: "CloudXper 플랫폼 고도화 프로젝트",
     description:
       "클라우드 저장소 대여 내역과 기업별 청구 정보를 관리하는 서비스의 백엔드 기능 개선 및 대용량 조회 최적화",
     period: "2024.10 ~ 2025.02",
@@ -253,7 +258,7 @@ const projects = [
 ];
 
 /** 소속 회사·부서 단위로 프로젝트를 묶어서 반환합니다. */
-export function getCareerGroups() {
+export function getCareerGroups({ splitProjects = false } = {}) {
   const groups = [];
   const map = new Map();
 
@@ -276,7 +281,7 @@ export function getCareerGroups() {
   });
 
   return groups.map((group) => {
-    if (group.companyId !== "abacus") return group;
+    if (group.companyId !== "abacus" || splitProjects) return group;
     const workScopes = group.projects;
     const combined = {
       ...workScopes[0],

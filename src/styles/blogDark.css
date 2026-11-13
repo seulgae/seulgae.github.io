@@ -1,0 +1,67 @@
+/* 화면 전용 다크 스킨. 인쇄 시에는 기존 A4 라이트 스타일을 사용한다. */
+@media screen {
+  .blog-shell.blog-dark {
+    color-scheme: dark;
+    --blog-bg: #0d141c;
+    --blog-surface: #151f2a;
+    --blog-soft: #1b2c40;
+    --blog-tint: #223b59;
+    --blog-border: #355171;
+    --blog-line: #2b3948;
+    --blog-line-soft: #1d2a38;
+    --blog-ink: #e8eef5;
+    --blog-muted: #a5b4c4;
+    --blog-primary: #91bdff;
+    --blog-primary-dark: #b4d2ff;
+    --blog-navy: #122438;
+    --blog-navy-deep: #0d1723;
+  }
+
+  .blog-shell.blog-dark .blog-header {
+    background: rgba(13, 23, 35, .96);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--blog-line);
+  }
+
+  .blog-shell.blog-dark .site-footer {
+    --muted: var(--blog-muted);
+    --accent-ink: var(--blog-primary-dark);
+    background: var(--blog-surface);
+    border-top-color: var(--blog-line);
+    color: var(--blog-muted);
+  }
+
+  .blog-shell.blog-dark .blog-prose { color: #ced8e4; }
+  .blog-shell.blog-dark .blog-prose blockquote { color: #d6e3f3; }
+  .blog-shell.blog-dark .blog-prose code {
+    background: #213148;
+    border-color: #354b66;
+    color: #bfd8ff;
+  }
+  .blog-shell.blog-dark .blog-prose pre { background: #0b121b; border: 1px solid var(--blog-line); color: #dce6f2; }
+  .blog-shell.blog-dark .blog-prose pre code { background: none; border: none; color: inherit; }
+  .blog-shell.blog-dark .blog-prose thead th { background: var(--blog-soft); }
+
+  .blog-shell.blog-dark .blog-search input,
+  .blog-shell.blog-dark .blog-reset-btn,
+  .blog-shell.blog-dark .blog-page-button,
+  .blog-shell.blog-dark .blog-post-list-btn {
+    background: var(--blog-line-soft);
+  }
+  .blog-shell.blog-dark .blog-search input:focus-visible { background: var(--blog-surface); }
+  .blog-shell.blog-dark .blog-related-list a { color: #c8d9ee; }
+  .blog-shell.blog-dark .blog-related-list li { border-color: var(--blog-line); }
+
+  .blog-shell.blog-dark .blog-cat-sub-link.active,
+  .blog-shell.blog-dark .blog-profile-links a:hover,
+  .blog-shell.blog-dark .blog-reset-btn:hover,
+  .blog-shell.blog-dark .blog-page-button.active,
+  .blog-shell.blog-dark .blog-page-button:hover,
+  .blog-shell.blog-dark .blog-tag-chip:hover,
+  .blog-shell.blog-dark .blog-post-print-btn:hover {
+    background: #2563eb;
+    border-color: #3b82f6;
+    color: #fff;
+  }
+  .blog-shell.blog-dark :focus-visible { outline-color: #91bdff; }
+}

@@ -9,6 +9,8 @@ summary: 광범위한 catch, 무의미한 재던지기, 예외 삼키기, null �
 정리했다. 하나의 CWE지만 실제 코드에서는 네 가지 안티패턴으로 나타났고,
 각각 조치 방법이 달랐다.
 
+관련 코드를 유형별로 발췌해 Claude와 분석 결과·조치안을 검토하며 수정했다. 세션을 나눠 활용한 방식과 조치 전반의 재테스트·데이터 대조 과정은 [Claude를 활용한 취약점 조치·검증 기록](/blog/claude-assisted-security-remediation)에 정리했다.
+
 ## 안티패턴 1 — 광범위한 catch(Exception)
 
 ```java

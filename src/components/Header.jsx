@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { paths, portfolioSections } from "../routes";
 import BrandSignature from "./BrandSignature";
+import ThemeToggle from "./ThemeToggle";
 import "../styles/header.css";
 
 
@@ -10,7 +11,7 @@ import "../styles/header.css";
  * 메인(/) 스크롤 위치에 따라 활성 커서(슬라이딩 인디케이터)가 각 포스터 메뉴로 이동합니다.
  * 출력용 이력서(/resume)는 우측 별도 액션 버튼으로 구분해 배치합니다.
  */
-function Header({ activeSection, navigateToSection }) {
+function Header({ activeSection, navigateToSection, theme, toggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === paths.home;
@@ -138,6 +139,10 @@ function Header({ activeSection, navigateToSection }) {
             🖨️ Resume
           </NavLink>
         </nav>
+
+        {location.pathname !== paths.resume && (
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+        )}
 
         <button
           type="button"

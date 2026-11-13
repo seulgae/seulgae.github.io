@@ -6,7 +6,7 @@ function Tech({ name, logo }) {
   return <span className="arch-tech">{logo && <img src={`/tech-logos/${logo}.svg`} alt="" loading="lazy" width="22" height="22" />}<span>{name}</span></span>;
 }
 
-function Diagram({ figure, theme }) {
+function Diagram({ figure, theme, expandable, showHelp }) {
   const [selectedId, setSelectedId] = useState(null);
   const dialog = useRef(null);
   const trigger = useRef(null);
@@ -50,29 +50,29 @@ function Diagram({ figure, theme }) {
   }
 
   return <figure className={`arch-figure arch-theme-${theme}`}>
-    <div className="arch-figure-heading"><h4>{figure.title}</h4><button type="button" ref={trigger} onClick={() => dialog.current.showModal()}>크게 보기 ↗</button></div>
+    <div className="arch-figure-heading"><h4>{figure.title}</h4>{expandable && <button type="button" ref={trigger} onClick={() => dialog.current.showModal()}>크게 보기 ↗</button>}</div>
     <div className="arch-scroll" tabIndex={0} role="region" aria-label={`${figure.title} · 좁은 화면에서 좌우 스크롤 가능`}>{canvas("inline")}</div>
     <figcaption>
       <div className="arch-legend">{figure.notes.map((note) => <span key={note}>{note}</span>)}</div>
-      <p className="arch-help">구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 작은 화면에서는 그림을 좌우로 이동하거나 크게 보기를 이용하세요.</p>
+      {showHelp && <p className="arch-help">구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 작은 화면에서는 그림을 좌우로 이동{expandable ? "하거나 크게 보기를 이용하세요." : "해 확인하세요."}</p>}
       <div className="arch-selection" aria-live="polite"><strong>{selected ? selected.title : "그림 읽는 순서"}</strong><p>{selected ? selected.detail : figure.summary}</p></div>
       <ol className="arch-reading-guide">{figure.guide.map(([title, body]) => <li key={title}><strong>{title}</strong><p>{body}</p></li>)}</ol>
     </figcaption>
-    <dialog className={`arch-dialog arch-theme-${theme}`} ref={dialog} aria-label={`${figure.title} 확대`} onClose={() => trigger.current?.focus()} onClick={(event) => { if (event.target === dialog.current) dialog.current.close(); }}>
+    {expandable && <dialog className={`arch-dialog arch-theme-${theme}`} ref={dialog} aria-label={`${figure.title} 확대`} onClose={() => trigger.current?.focus()} onClick={(event) => { if (event.target === dialog.current) dialog.current.close(); }}>
       <div className="arch-dialog-heading"><strong>{figure.title}</strong><button type="button" onClick={() => dialog.current.close()}>닫기 ×</button></div>
       <div className="arch-scroll">{canvas("expanded")}</div>
       <div className="arch-selection" aria-live="polite"><strong>{selected ? selected.title : "구성 요소를 눌러 역할 확인"}</strong><p>{selected ? selected.detail : figure.summary}</p></div>
-    </dialog>
+    </dialog>}
   </figure>;
 }
 
-export default function ArchitectureDiagrams({ slug }) {
+export default function ArchitectureDiagrams({ slug, expandable = true, figureIds, showContext = true, showHelp = true }) {
   const data = diagramsBySlug[slug];
   if (!data) return null;
   return <div className="architecture-diagrams">
-    <p className="arch-intro">{data.intro}</p>
-    {data.businessContext && <div className="arch-business-context"><span>{data.businessContext.label}</span><div>{data.businessContext.items.map((name) => <Tech key={name} name={name} />)}</div><small>{data.businessContext.description}</small></div>}
-    {data.figures.map((figure) => <Diagram key={figure.id} figure={figure} theme={data.theme} />)}
-    <div className="arch-tool-context"><h4>이 흐름을 개발·운영할 때 사용한 도구</h4><div className="arch-tool-groups">{data.supporting.map((group) => <section key={group.title}><h5>{group.title}</h5><div className="arch-tool-list">{group.tools.map(([name, logo]) => <Tech key={name} name={name} logo={logo} />)}</div><p>{group.text}</p></section>)}</div></div>
+    {showContext && <p className="arch-intro">{data.intro}</p>}
+    {showContext && data.businessContext && <div className="arch-business-context"><span>{data.businessContext.label}</span><div>{data.businessContext.items.map((name) => <Tech key={name} name={name} />)}</div><small>{data.businessContext.description}</small></div>}
+    {data.figures.filter((figure) => !figureIds || figureIds.includes(figure.id)).map((figure) => <Diagram key={figure.id} figure={figure} theme={data.theme} expandable={expandable} showHelp={showHelp} />)}
+    {showContext && <div className="arch-tool-context"><h4>이 흐름을 개발·운영할 때 사용한 도구</h4><div className="arch-tool-groups">{data.supporting.map((group) => <section key={group.title}><h5>{group.title}</h5><div className="arch-tool-list">{group.tools.map(([name, logo]) => <Tech key={name} name={name} logo={logo} />)}</div><p>{group.text}</p></section>)}</div></div>}
   </div>;
 }

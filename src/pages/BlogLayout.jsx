@@ -3,9 +3,12 @@ import { Outlet, useLocation } from "react-router-dom";
 import BlogHeader from "../components/BlogHeader";
 import BlogSidebar from "../components/BlogSidebar";
 import BlogFooter from "../components/BlogFooter";
+import { useTheme } from "../hooks/useTheme";
+import "../styles/blogDark.css";
 
 export default function BlogLayout() {
   const location = useLocation();
+  const [theme, toggleTheme] = useTheme();
   const [isMobile, setIsMobile] = useState(() => window.matchMedia?.("(max-width: 960px)").matches ?? false);
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -44,8 +47,10 @@ export default function BlogLayout() {
   }, [sidebarOpen, isMobile]);
 
   return (
-    <div className="app-shell blog-shell">
+    <div className={`app-shell blog-shell${theme === "dark" ? " blog-dark" : ""}`}>
       <BlogHeader
+        theme={theme}
+        toggleTheme={toggleTheme}
         sidebarOpen={sidebarOpen}
         toggleRef={toggleRef}
         onToggleSidebar={() => isMobile ? setMobileOpen((prev) => !prev) : setDesktopOpen((prev) => !prev)}
