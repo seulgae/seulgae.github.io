@@ -21,6 +21,12 @@ const cases = [
   },
 ];
 
+const securityPostOrder = [
+  "claude-assisted-security-remediation", "cwe-79-xss-remediation", "cwe-476-null-dereference",
+  "cwe-330-489-dead-code-removal", "cwe-209-error-message-exposure",
+  "dynamic-to-static-sync-query", "cwe-615-sensitive-comments",
+];
+
 export default function JeonseProjectDetail({ project }) {
   return (
     <article className="project-detail-page project-case-page">
@@ -78,9 +84,8 @@ export default function JeonseProjectDetail({ project }) {
           </div>
         </div>
         <ol className="project-case-workflow" aria-label="피해 신청 및 행정 처리 흐름">
-          {["피해 신청", "광역시·도 접수·조사", "국토부 위원회 심의·의결", "결정문 조회·출력", "지원기관 진위확인·지원 활용"].map((step) => <li key={step}>{step}</li>)}
+          {["피해 신청", "광역시·도 접수·조사", "국토부 위원회 심의·의결", "결정문 조회·출력"].map((step) => <li key={step}>{step}</li>)}
         </ol>
-        <p className="project-case-note">서비스 기능 안내: <a href="https://jeonse.kgeop.go.kr/infoYard/victimSpRtMngSysIntrcn.do" target="_blank" rel="noopener noreferrer">공식 시스템 소개 ↗</a></p>
       </section>
 
       <section className="project-case-section" id="architecture" aria-labelledby="architecture-title">
@@ -97,10 +102,12 @@ export default function JeonseProjectDetail({ project }) {
             <header><span>CASE 0{index + 1}</span><h3>{cases[index].title}</h3></header>
             {achievement.architectureSlug && <InlineProjectArchitecture slug={achievement.architectureSlug} label={achievement.architectureLabel} figureIds={achievement.architectureFigures} showHelp={false} />}
             <div className="project-case-step"><h4>발생한 문제</h4>{cases[index].problem.map((line) => <p key={line}>{line}</p>)}</div>
-            <div className="project-case-step"><h4>해결 과정</h4>{achievement.detail.split("\n").map((line) => <p key={line}>{line}</p>)}</div>
+            <div className="project-case-step"><h4>해결 과정</h4>
+              <ProjectRelatedPosts layout="actions" featuredFirst={index === 0} posts={index === 0 ? [...achievement.relatedPosts].sort((a, b) => securityPostOrder.indexOf(a.slug) - securityPostOrder.indexOf(b.slug)) : achievement.relatedPosts} />
+              {achievement.detail.split("\n").map((line) => <p key={line}>{line}</p>)}
+            </div>
             {index === 2 && <p className="project-case-note">서버의 보안 설정을 낮추는 대신, 대상 환경과 호환되는 Apache MINA SSHD로 클라이언트를 교체했습니다.</p>}
             <div className="project-case-outcome"><h4>개선 결과</h4><p>{achievement.result}</p></div>
-            <ProjectRelatedPosts posts={achievement.relatedPosts} />
           </article>
         ))}</div>
       </section>

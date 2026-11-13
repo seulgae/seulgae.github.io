@@ -32,7 +32,6 @@ const caseContext = {
 
 export default function AbacusProjectDetail({ project }) {
   const platformOnly = project.slug === "cloudxper-billing";
-  const scopes = project.workScopes || [project];
   const metrics = platformOnly
     ? [["대용량 조회 API", "480,000ms → 10,000ms 이내"], ["권한 조회", "반복 호출 → Redis 재사용"]]
     : [["주간 연동 오류", "약 70건 → 5건"], ["인코딩 오류", "95% 감소"], ["신규 연동 실패율", "5% 미만 유지"]];
@@ -62,7 +61,6 @@ export default function AbacusProjectDetail({ project }) {
         {!platformOnly && <p>통신사 빌링 서비스와 GW 연계 시스템을 운영·유지보수하며, 청구·과금 데이터가 정상적으로 전달되도록 오류 분석과 담당 파트의 조치를 연결했습니다.</p>}
         {platformOnly && <p>기업별 클라우드 저장소 대여 내역과 청구 정보를 관리하는 CloudXper 플랫폼 고도화 프로젝트에 참여했습니다.</p>}
         <p>{platformOnly ? "도메인별 API와 청구 산정 결과 조회 SQL을 구현하고, 대용량 조회와 권한 처리의 병목을 개선했습니다." : "발행·응용 파트의 데이터 정합성을 확인하고, 미처리 오류를 담당 파트의 일일 조치로 연결하는 운영 체계를 만들었습니다."}</p>
-        <dl className="project-case-scope-periods">{scopes.map((scope) => <div key={scope.slug}><dt>{scope.slug === "lgu-billing-gw" ? "빌링 서비스·GW 연동" : "CloudXper 플랫폼 고도화"}</dt><dd>{scope.period}</dd></div>)}</dl>
       </section>
 
       <section className="project-case-section" id="features" aria-labelledby="features-title">
@@ -89,10 +87,12 @@ export default function AbacusProjectDetail({ project }) {
             <header><span>CASE 0{index + 1} · {index < 2 && !platformOnly ? "GW 연동" : "CloudXper 플랫폼 고도화"}</span><h3>{context.title}</h3></header>
             {achievement.title === "대용량 데이터 조회 병렬화 및 응답 시간 단축" && <InlineProjectArchitecture slug="cloudxper-billing" label="조회 병렬화" figureIds={["cloud-performance"]} showHelp={false} />}
             <div className="project-case-step"><h4>발생한 문제</h4>{context.problem.map((line) => <p key={line}>{line}</p>)}</div>
-            <div className="project-case-step"><h4>해결 과정</h4>{context.actions.map((line) => <p key={line}>{line}</p>)}</div>
+            <div className="project-case-step"><h4>해결 과정</h4>
+              <ProjectRelatedPosts layout="actions" posts={achievement.relatedPosts} />
+              {context.actions.map((line) => <p key={line}>{line}</p>)}
+            </div>
             {context.note && <p className="project-case-note">{context.note}</p>}
             <div className="project-case-outcome"><h4>개선 결과</h4><p>{achievement.result}</p></div>
-            <ProjectRelatedPosts posts={achievement.relatedPosts} />
           </article></Fragment>;
         })}</div>
       </section>

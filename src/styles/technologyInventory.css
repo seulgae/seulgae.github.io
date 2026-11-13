@@ -1,8 +1,11 @@
 .technology-inventory { margin-top: 20px; scroll-margin-top: 90px; }
 .technology-inventory h2 { margin: 0 0 18px; font-size: 1rem; color: var(--text); }
-.technology-inventory-groups { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px 30px; }
-.technology-inventory-group { min-width: 0; max-width: 100%; }
-.technology-inventory-group h3 { margin: 0 0 7px; font-size: .72rem; font-weight: 600; color: var(--muted); }
+.technology-inventory-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.technology-inventory-group { display: grid; grid-template-columns: 115px minmax(0, 1fr); align-items: start; gap: 12px; min-width: 0; }
+.technology-inventory-group h3 { margin: 0; font-size: .72rem; font-weight: 600; line-height: 23px; color: var(--muted); }
 .technology-inventory .project-technology-items { gap: 7px 13px; }
 .technology-inventory .project-technology-item { gap: 5px; min-height: 23px; font-size: .8rem; color: var(--text); }
 .technology-inventory .technology-logo { width: 17px; height: 17px; }
+@media (max-width: 640px) {
+  .technology-inventory-group { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+}

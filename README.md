@@ -89,21 +89,22 @@ npm run preview
 ```text
 .github/workflows/pages.yml    테스트·빌드·GitHub Pages 자동 배포
 src/
-  routes.js                   경로 및 포스터 섹션(About·Skills·Projects·Credentials) 정의
+  routes.js                   경로 및 포스터 섹션(About·Projects·Credentials) 정의
   data/                       콘텐츠 단일 출처(SSOT: profile, projects, education, awards, licenses)
   components/
-    posters/                  원페이지 포트폴리오를 구성하는 4대 포스터 컴포넌트
-      AboutPoster.jsx         인사말·일하는 방식·개발 방향 소개
-      SkillsPoster.jsx        역량 매트릭스 (profile.js 단일 출처 공유)
-      ProjectsPoster.jsx      프로젝트 타임라인 + 성과·관련 글·아키텍처 팝업
+    posters/                  원페이지 포트폴리오를 구성하는 3개 포스터 컴포넌트
+      AboutPoster.jsx         인사말·일하는 방식·개발 방향·기술 인벤토리
+      ProjectsPoster.jsx      프로젝트별 요약 성과와 상세 페이지 연결
       CredentialsPoster.jsx   학력·수상·자격 통합 (이미지 확대 Lightbox 및 산출물 링크 포함)
     Header.jsx / BottomNav.jsx / Footer.jsx       포트폴리오 전용 셸 (스크롤 스파이 커서)
     BlogHeader.jsx / BlogFooter.jsx               블로그 전용 독립 셸
     ArchitectureDiagrams.jsx / ProjectArchitecture.jsx / BillingArchitecture.jsx
+    TechnologyInventory.jsx   About의 분야별 기술 아이콘 인벤토리
+    ProjectSummaryTable.jsx   프로젝트 상세의 담당 업무·성과·사용 기술 요약 표
   pages/
-    HomePage.jsx              4개 포스터 조립 엔트리
+    HomePage.jsx              3개 포스터 조립 엔트리
+    ProjectDetailPage.jsx     프로젝트별 소개·기능·아키텍처·개선 사례
     ResumePage.jsx            A4 출력용 이력서
     BlogListPage.jsx / BlogPostPage.jsx
   posts/                      블로그 마크다운 원문 (*.md)
-  old/                        개편 전 구 다중 페이지·컴포넌트·스타일 보관 패키지
 ```
