@@ -13,6 +13,7 @@ import "./styles/lightTheme.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BottomNav from "./components/BottomNav";
+import ThemeProvider from "./components/ThemeProvider";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { legacyRedirects, paths, portfolioSections } from "./routes";
@@ -28,6 +29,7 @@ const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 
 function App() {
   return (
+    <ThemeProvider>
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollAndTitleManager />
       <Suspense
@@ -72,6 +74,7 @@ function App() {
         </Routes>
       </Suspense>
     </Router>
+    </ThemeProvider>
   );
 }
 

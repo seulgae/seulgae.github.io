@@ -29,6 +29,22 @@ beforeEach(() => {
   });
 });
 
+test("처음에는 어두운 화면으로 시작하고 전환한 테마는 페이지 이동 동안 유지된다", async () => {
+  const { unmount } = await renderAt(paths.home);
+  expect(document.querySelector(".portfolio-shell")).toHaveClass("portfolio-dark");
+  await userEvent.click(screen.getByRole("button", { name: "밝은 화면으로 전환" }));
+  expect(document.querySelector(".portfolio-shell")).toHaveClass("portfolio-light");
+  const project = screen.getByRole("heading", { name: projects[0].title }).closest("article");
+  await userEvent.click(within(project).getByRole("link", { name: "상세 보기" }));
+  expect(document.querySelector(".portfolio-shell")).toHaveClass("portfolio-light");
+  await userEvent.click(await screen.findByRole("link", { name: /Claude 세션 분리/ }));
+  await screen.findByRole("navigation", { name: "블로그 메뉴" });
+  expect(document.querySelector(".blog-shell")).not.toHaveClass("blog-dark");
+  unmount();
+  await renderAt(paths.blog);
+  expect(document.querySelector(".blog-shell")).toHaveClass("blog-dark");
+});
+
 test.each(["/#%", "/#%E0%A4%A"])("잘못 인코딩된 해시 %s로 접속해도 홈을 표시한다", async (path) => {
   await renderAt(path);
   expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("개발자 길태형입니다.");
@@ -219,6 +235,36 @@ test("메인은 프로젝트를 요약하고 상세 보기에서 STAR 사례와 
   await userEvent.click(screen.getByRole("link", { name: "← 프로젝트 목록" }));
   expect(window.location.pathname).toBe("/");
   expect(window.location.hash).toBe("#project-jeonse-support-system");
+});
+
+test("상세 목차는 스크롤 위치를 표시하고 클릭해도 현재 프로젝트 경로를 유지한다", async () => {
+  await renderAt(paths.projectDetail("jeonse-support-system"));
+  const navigation = screen.getByRole("navigation", { name: "프로젝트 상세 목차" });
+  ["overview", "features", "architecture", "cases", "results"].forEach((id, index) => {
+    document.getElementById(id).getBoundingClientRect = () => ({ top: index < 2 ? 80 : 2000 });
+  });
+  fireEvent.scroll(window);
+  await waitFor(() => expect(within(navigation).getByRole("link", { name: /주요 기능/ })).toHaveAttribute("aria-current", "location"));
+  const architecture = document.getElementById("architecture");
+  architecture.scrollIntoView = vi.fn();
+  await userEvent.click(within(navigation).getByRole("link", { name: /시스템 아키텍처/ }));
+  expect(architecture.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+  expect(window.location.pathname).toBe(paths.projectDetail("jeonse-support-system"));
+  expect(window.location.hash).toBe("#architecture");
+  expect(within(navigation).getByRole("link", { name: /시스템 아키텍처/ })).toHaveAttribute("aria-current", "location");
+});
+
+test("상세 하단 뒤로가기는 이전 화면으로 돌아가고 직접 접속 시에는 프로젝트 목록으로 이동한다", async () => {
+  const { unmount } = await renderAt(paths.home);
+  const project = screen.getByRole("heading", { name: projects[0].title }).closest("article");
+  await userEvent.click(within(project).getByRole("link", { name: "상세 보기" }));
+  await userEvent.click(await screen.findByRole("button", { name: "뒤로가기" }));
+  await waitFor(() => expect(window.location.pathname).toBe(paths.home));
+  unmount();
+  await renderAt(paths.projectDetail("cloudxper-billing"));
+  await userEvent.click(screen.getByRole("button", { name: "뒤로가기" }));
+  await waitFor(() => expect(window.location.pathname).toBe(paths.home));
+  expect(window.location.hash).toBe("#project-cloudxper-billing");
 });
 
 test("GW 상세 페이지는 해당 프로젝트의 성과와 아키텍처만 표시한다", async () => {

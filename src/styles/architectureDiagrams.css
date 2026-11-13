@@ -55,6 +55,33 @@
 .arch-dialog { width: min(1480px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 40px); border: 1px solid #dce4ed; border-radius: 16px; padding: 20px; background: #fff; color: #192d40; overflow: auto; }
 .arch-dialog::backdrop { background: rgba(15, 23, 42, .65); }
 .arch-dialog .arch-canvas { min-width: 880px; }
+.arch-mobile-layout { display: none; }
+@media screen and (max-width: 768px) {
+  .arch-figure > .arch-desktop-scroll { display: none; }
+  .arch-mobile-layout { display: block; color: var(--detail-copy, var(--text)); }
+  .arch-mobile-summary { font-size: .87rem; line-height: 1.85; margin: 0 0 20px; color: var(--detail-copy, var(--muted)); }
+  .arch-mobile-zones { display: grid; gap: 20px; }
+  .arch-mobile-zone { min-width: 0; }
+  .arch-mobile-zone h5, .arch-mobile-connections h5 { margin: 0 0 10px; font-size: .85rem; line-height: 1.6; color: var(--arch-color); }
+  .arch-mobile-component + .arch-mobile-component { margin-top: 8px; }
+  .arch-mobile-layout .arch-mobile-node { display: block; width: 100%; padding: 12px; min-height: 44px; background: var(--detail-panel, var(--surface-soft)); color: var(--detail-copy, var(--text)); border: 1px solid var(--detail-rule, var(--line)); border-radius: 8px; text-align: left; }
+  .arch-mobile-layout .arch-mobile-node:hover, .arch-mobile-layout .arch-mobile-node[aria-expanded="true"] { border-color: var(--arch-color); background: var(--arch-wash); }
+  .arch-mobile-node-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .arch-mobile-node-heading img { flex-shrink: 0; object-fit: contain; }
+  .arch-mobile-node-heading strong { font-size: .91rem; font-weight: 650; line-height: 1.6; color: var(--detail-title, var(--text)); }
+  .arch-mobile-node-heading small { font-size: .65rem; color: var(--arch-color); margin-left: auto; }
+  .arch-mobile-node-lines { display: block; font-size: .8rem; line-height: 1.8; color: var(--detail-label, var(--muted)); margin-top: 6px; }
+  .arch-mobile-detail { margin: 8px 0 12px; padding: 12px; border-left: 2px solid var(--arch-color); font-size: .87rem; line-height: 1.85; color: var(--detail-copy, var(--text)); background: var(--arch-wash); }
+  .arch-mobile-connections { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--detail-rule, var(--line)); }
+  .arch-mobile-connections ul { padding: 0; margin: 0; list-style: none; display: grid; gap: 8px; }
+  .arch-mobile-connections li { padding: 11px 12px; background: var(--detail-panel, var(--surface-soft)); border-radius: 6px; border: 1px solid var(--detail-rule, var(--line)); }
+  .arch-mobile-flow-label { display: block; font-size: .73rem; line-height: 1.6; color: var(--arch-color); margin-bottom: 6px; }
+  .arch-mobile-flow { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto; align-items: center; gap: 5px; font-size: .8rem; line-height: 1.7; }
+  .arch-mobile-flow b { color: var(--arch-color); text-align: center; }
+  .arch-mobile-flow small { color: var(--detail-label, var(--muted)); }
+  .arch-mobile-muted { opacity: .5; }
+  .arch-mobile-layout + figcaption .arch-selection { display: none; }
+}
 @media (max-width: 768px) {
   .arch-reading-guide { grid-template-columns: 1fr; gap: 8px; }
   .arch-figure-heading h4 { font-size: .94rem; }

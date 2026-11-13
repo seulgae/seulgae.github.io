@@ -4,6 +4,7 @@ import InlineProjectArchitecture from "./InlineProjectArchitecture";
 import PosterHeading from "./posters/PosterHeading";
 import ProjectRelatedPosts from "./ProjectRelatedPosts";
 import ProjectSummaryTable from "./ProjectSummaryTable";
+import ProjectDetailActions from "./ProjectDetailActions";
 import { paths } from "../routes";
 
 const caseContext = {
@@ -30,7 +31,7 @@ const caseContext = {
   },
 };
 
-export default function AbacusProjectDetail({ project }) {
+export default function AbacusProjectDetail({ project, showMobileBack = false }) {
   const platformOnly = project.slug === "cloudxper-billing";
   const metrics = platformOnly
     ? [["대용량 조회 API", "480,000ms → 10,000ms 이내"], ["권한 조회", "반복 호출 → Redis 재사용"]]
@@ -51,10 +52,6 @@ export default function AbacusProjectDetail({ project }) {
       </header>
 
       <ProjectSummaryTable project={project} metrics={metrics} />
-
-      <nav className="project-case-nav" aria-label="프로젝트 상세 목차">
-        <a href="#overview">프로젝트 소개</a><a href="#features">주요 기능</a><a href="#architecture">아키텍처·개선 사례</a><a href="#results">결과 및 성과</a>
-      </nav>
 
       <section className="project-case-section" id="overview" aria-labelledby="overview-title">
         <p className="project-case-kicker">01 · OVERVIEW</p><h2 id="overview-title">프로젝트 소개</h2>
@@ -77,7 +74,7 @@ export default function AbacusProjectDetail({ project }) {
 
       <section className="project-case-section" id="architecture" aria-labelledby="architecture-title">
         <p className="project-case-kicker">03 · ARCHITECTURE</p>
-        <div className="project-case-section-heading"><PosterHeading titleId="architecture-title" title="시스템 아키텍처 및 개선 사례" helpText="구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 작은 화면에서는 그림을 좌우로 이동해 확인하세요." /></div>
+        <div className="project-case-section-heading"><PosterHeading titleId="architecture-title" title="시스템 아키텍처 및 개선 사례" helpText="구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 모바일에서는 구성 요소와 연결 흐름을 세로로 확인할 수 있습니다." /></div>
         <div className="project-case-studies" id="cases">{project.achievements.map((achievement, index) => {
           const context = caseContext[achievement.title];
           return <Fragment key={achievement.title}>
@@ -101,7 +98,7 @@ export default function AbacusProjectDetail({ project }) {
         <p className="project-case-kicker">04 · RESULTS</p><h2 id="results-title">결과 및 성과</h2>
         <ul className="project-detail-results">{project.achievements.map((achievement) => <li key={achievement.title}><h3>{achievement.title}</h3><p>{achievement.result}</p></li>)}</ul>
       </section>
-      <Link className="project-detail-back" to={paths.section("projects")}>← 프로젝트 목록으로 돌아가기</Link>
+      {showMobileBack && <ProjectDetailActions slug={project.slug} />}
     </article>
   );
 }

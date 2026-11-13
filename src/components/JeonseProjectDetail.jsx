@@ -4,6 +4,7 @@ import InlineProjectArchitecture from "./InlineProjectArchitecture";
 import PosterHeading from "./posters/PosterHeading";
 import ProjectRelatedPosts from "./ProjectRelatedPosts";
 import ProjectSummaryTable from "./ProjectSummaryTable";
+import ProjectDetailActions from "./ProjectDetailActions";
 import { paths } from "../routes";
 
 const cases = [
@@ -27,7 +28,7 @@ const securityPostOrder = [
   "dynamic-to-static-sync-query", "cwe-615-sensitive-comments",
 ];
 
-export default function JeonseProjectDetail({ project }) {
+export default function JeonseProjectDetail({ project, showMobileBack = false }) {
   return (
     <article className="project-detail-page project-case-page">
       <Link className="project-detail-back" to={paths.projectAnchor(project.slug)}>← 프로젝트 목록</Link>
@@ -44,23 +45,17 @@ export default function JeonseProjectDetail({ project }) {
 
       <ProjectSummaryTable project={project} metrics={[["SAST 검출", "358건 → 4건"], ["목록 조회", "53초 → 1초 미만"], ["서버 점검", "수동 → 4시간 주기 수집"]]} />
 
-      <nav className="project-case-nav" aria-label="프로젝트 상세 목차">
-        <a href="#overview">프로젝트 소개</a><a href="#features">주요 기능</a>
-        <a href="#architecture">시스템 아키텍처</a><a href="#cases">문제 해결 사례</a><a href="#results">결과 및 성과</a>
-      </nav>
-
-      <figure className="project-case-preview">
-        <a href="https://jeonse.kgeop.go.kr/" target="_blank" rel="noopener noreferrer">
-          <img src="/jeonse-service-preview.jpg" alt="전세사기피해자 지원관리시스템 공개 메인 화면 — 결정신청 현황, 결정문 출력, 이의신청 메뉴" width="1265" height="712" fetchPriority="high" />
-        </a>
-        <figcaption>대민 서비스 공개 화면 <a href="https://jeonse.kgeop.go.kr/" target="_blank" rel="noopener noreferrer">서비스 바로가기 <FiArrowUpRight aria-hidden="true" /></a></figcaption>
-      </figure>
-
       <section className="project-case-section" id="overview" aria-labelledby="overview-title">
         <p className="project-case-kicker">01 · OVERVIEW</p><h2 id="overview-title">프로젝트 소개</h2>
         <p><strong>피해 신청부터 심의·의결, 결정문 발급과 진위확인까지 연결하는 공공 서비스입니다.</strong></p>
         <p>피해자는 온라인으로 신청하고 처리 현황과 결정 결과를 확인합니다.<br />행정기관은 접수된 피해 건을 조사·심의하고, 지원기관은 결정의 진위를 확인해 후속 지원에 활용합니다.</p>
         <p>이 시스템의 운영·유지보수를 담당하며 보안 점검 조치, 목록 조회 성능 개선과 서버 점검 자동화를 수행했습니다.</p>
+        <figure className="project-case-preview">
+          <a href="https://jeonse.kgeop.go.kr/" target="_blank" rel="noopener noreferrer">
+            <img src="/jeonse-service-preview.jpg" alt="전세사기피해자 지원관리시스템 공개 메인 화면 — 결정신청 현황, 결정문 출력, 이의신청 메뉴" width="1265" height="712" loading="lazy" />
+          </a>
+          <figcaption>대민 서비스 공개 화면 <a href="https://jeonse.kgeop.go.kr/" target="_blank" rel="noopener noreferrer">서비스 바로가기 <FiArrowUpRight aria-hidden="true" /></a></figcaption>
+        </figure>
       </section>
 
       <section className="project-case-section" id="features" aria-labelledby="features-title">
@@ -90,7 +85,7 @@ export default function JeonseProjectDetail({ project }) {
 
       <section className="project-case-section" id="architecture" aria-labelledby="architecture-title">
         <p className="project-case-kicker">03 · ARCHITECTURE</p>
-        <div className="project-case-section-heading"><PosterHeading titleId="architecture-title" title="시스템 아키텍처" helpText="구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 작은 화면에서는 그림을 좌우로 이동해 확인하세요." /></div>
+        <div className="project-case-section-heading"><PosterHeading titleId="architecture-title" title="시스템 아키텍처" helpText="구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 모바일에서는 구성 요소와 연결 흐름을 세로로 확인할 수 있습니다." /></div>
         <p>대민 서비스와 업무망을 구분하고, 망간 데이터 연계 흐름을 나타냈습니다.</p>
         <InlineProjectArchitecture slug={project.slug} label="전체 시스템 구성" figureIds={["public-network"]} showHelp={false} />
       </section>
@@ -116,7 +111,7 @@ export default function JeonseProjectDetail({ project }) {
         <p className="project-case-kicker">05 · RESULTS</p><h2 id="results-title">결과 및 성과</h2>
         <ul className="project-detail-results">{project.achievements.map((achievement) => <li key={achievement.title}><h3>{achievement.title}</h3><p>{achievement.result}</p></li>)}</ul>
       </section>
-      <Link className="project-detail-back" to={paths.section("projects")}>← 프로젝트 목록으로 돌아가기</Link>
+      {showMobileBack && <ProjectDetailActions slug={project.slug} />}
     </article>
   );
 }

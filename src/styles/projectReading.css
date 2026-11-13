@@ -1,0 +1,129 @@
+/* 상세 페이지의 두 테마는 같은 타이포그래피와 레이아웃을 공유한다. */
+@media screen {
+  .portfolio-light .project-case-page {
+    --detail-paper: #eef2f5;
+    --detail-panel: #e4ebf0;
+    --detail-inset: #dae3ea;
+    --detail-title: #22313e;
+    --detail-copy: #364b5a;
+    --detail-label: #526778;
+    --detail-rule: #cbd6de;
+    --detail-accent: #276759;
+    --detail-link-bg: #dce7e8;
+    --detail-link-hover: #cbdcdd;
+    --detail-result: #d7e7e1;
+    --detail-result-ink: #245447;
+  }
+  .portfolio-dark .project-case-page {
+    --detail-paper: #15212c;
+    --detail-panel: #1b2b38;
+    --detail-inset: #213442;
+    --detail-title: #edf3f8;
+    --detail-copy: #c3d0dc;
+    --detail-label: #a4b7c7;
+    --detail-rule: #344a5b;
+    --detail-accent: #8ed8ca;
+    --detail-link-bg: #243d45;
+    --detail-link-hover: #2e5055;
+    --detail-result: #203d3b;
+    --detail-result-ink: #a4e4d7;
+  }
+  .project-case-page {
+    background: var(--detail-paper);
+    color: var(--detail-copy);
+    border-color: var(--detail-rule);
+    padding: clamp(22px, 3vw, 40px);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: -.012em;
+    --line: var(--detail-rule);
+    --text: var(--detail-title);
+    --muted: var(--detail-label);
+    --accent-ink: var(--detail-accent);
+  }
+  .project-case-page .project-detail-header { padding: 30px 0 28px; }
+  .project-case-page .project-detail-eyebrow { font-size: .7rem; letter-spacing: .1em; font-weight: 650; }
+  .project-case-page .project-detail-header h1 { margin: 14px 0; color: var(--detail-title); font-size: clamp(1.65rem, 2.7vw, 2.15rem); font-weight: 750; line-height: 1.45; letter-spacing: -.035em; }
+  .project-case-page .project-detail-header > p:not(.project-detail-eyebrow) { margin: 0; font-size: 1rem; line-height: 1.85; color: var(--detail-copy); }
+  .project-case-page .project-detail-meta { gap: 16px 36px; margin-top: 24px; }
+  .project-case-page .project-detail-meta dt { color: var(--detail-label); font-size: .76rem; }
+  .project-case-page .project-detail-meta dd { color: var(--detail-title); font-size: .91rem; font-weight: 500; }
+
+  .project-case-page .project-overview-table { margin: 0 0 24px; }
+  .project-case-page .project-overview-table th,
+  .project-case-page .project-overview-table td { padding: 20px; border-top: 1px solid var(--detail-rule); border-bottom: 0; }
+  .project-case-page .project-overview-table th { background: var(--detail-inset); color: var(--detail-title); font-size: .84rem; font-weight: 650; }
+  .project-case-page .project-overview-table td { background: var(--detail-panel); }
+  .project-case-page .project-overview-tasks { color: var(--detail-copy); font-size: .95rem; line-height: 1.9; }
+  .project-case-page .project-overview-tasks li + li { margin-top: 4px; }
+  .project-case-page .project-overview-metrics { gap: 16px 30px; }
+  .project-case-page .project-overview-metrics dd { color: var(--detail-accent); font-size: 1.06rem; font-weight: 700; }
+  .project-case-page .project-overview-metrics dt { color: var(--detail-label); font-size: .78rem; }
+  .project-case-page .project-overview-table .project-technology-groups-inline { gap: 13px; }
+  .project-case-page .project-technology-item { color: var(--detail-copy); font-size: .88rem; }
+  .project-case-page .project-technology-group-inline h5 { color: var(--detail-label); font-size: .78rem; font-weight: 550; }
+
+  .project-case-page .project-case-nav { gap: 8px; padding: 14px 0; border-top: 0; }
+  .project-case-page .project-case-nav a { padding: 6px 12px; color: var(--detail-label); font-size: .85rem; border-radius: 5px; }
+  .project-case-page .project-case-nav a:hover { background: var(--detail-panel); color: var(--detail-title); }
+  .project-case-page .project-case-section { padding: 38px 0; }
+  .project-case-page .project-case-kicker { font-size: .68rem; font-weight: 650; letter-spacing: .09em; }
+  .project-case-page .project-case-section > h2,
+  .project-case-page .project-case-section-heading h2 { margin-bottom: 20px; color: var(--detail-title); font-size: 1.35rem; line-height: 1.5; font-weight: 700; letter-spacing: -.025em; }
+  .project-case-page .project-case-section-heading .poster-heading h2 { margin: 0; }
+  .project-case-page .project-case-section > p:not(.project-case-kicker) { color: var(--detail-copy); line-height: 1.95; margin: 12px 0; }
+  .project-case-page .project-case-service-areas { gap: 16px; }
+  .project-case-page .project-case-service-areas > div { padding: 20px; border: 1px solid var(--detail-rule); border-radius: 8px; background: var(--detail-panel); }
+  .project-case-page .project-case-service-areas h3 { color: var(--detail-title); font-size: 1rem; line-height: 1.6; margin-bottom: 10px; }
+  .project-case-page .project-case-service-areas p { color: var(--detail-copy); font-size: .95rem; line-height: 1.9; }
+  .project-case-page .project-case-workflow { background: var(--detail-inset); padding: 16px 20px; gap: 8px; color: var(--detail-copy); }
+
+  .project-case-page .project-case-studies { gap: 26px; }
+  .project-case-page .project-case-study { padding: 28px; background: var(--detail-panel); border-color: var(--detail-rule); border-radius: 10px; }
+  .project-case-page .project-case-study > header { padding-bottom: 18px; margin-bottom: 24px; }
+  .project-case-page .project-case-study > header > span { color: var(--detail-accent); font-size: .69rem; font-weight: 650; letter-spacing: .08em; }
+  .project-case-page .project-case-study h3 { color: var(--detail-title); font-size: 1.2rem; font-weight: 700; line-height: 1.6; letter-spacing: -.025em; }
+  .project-case-page .project-case-step { margin: 24px 0; padding: 0; background: transparent; border-radius: 0; }
+  .project-case-page .project-case-step h4 { margin-bottom: 12px; color: var(--detail-title); font-size: .87rem; font-weight: 700; }
+  .project-case-page .project-case-step p { margin: 10px 0; color: var(--detail-copy); font-size: 1rem; line-height: 1.95; }
+  .project-case-page .project-case-study > .project-case-step:first-of-type { padding: 18px 20px; background: var(--detail-inset); border-left: 2px solid var(--detail-rule); border-radius: 6px; }
+  .project-case-page .project-case-related-actions { margin: 0 0 22px; gap: 10px; }
+  .project-case-page .project-case-related a { background: var(--detail-link-bg); color: var(--detail-accent); border-color: var(--detail-rule); border-radius: 6px; font-size: .85rem; font-weight: 500; padding: 11px 14px; line-height: 1.65; }
+  .project-case-page .project-case-related a:hover { background: var(--detail-link-hover); border-color: var(--detail-accent); }
+  .project-case-page .project-case-note { color: var(--detail-label); font-size: .86rem; line-height: 1.85; }
+  .project-case-page .project-case-outcome,
+  .project-case-page .project-detail-results li { padding: 18px 20px; border-radius: 0 6px 6px 0; background: var(--detail-result); border-left: 3px solid var(--detail-accent); }
+  .project-case-page .project-case-outcome h4 { color: var(--detail-result-ink); font-size: .84rem; margin-bottom: 8px; }
+  .project-case-page .project-case-outcome p,
+  .project-case-page .project-detail-results p { color: var(--detail-result-ink); font-size: .98rem; font-weight: 650; line-height: 1.85; }
+  .project-case-page .project-detail-results h3 { color: var(--detail-title); font-size: .92rem; font-weight: 600; line-height: 1.7; }
+  .project-case-page .project-inline-architecture > h3 { font-size: 1rem; color: var(--detail-title); }
+  .portfolio-light .project-case-page .architecture-diagrams { background: #e3eaf0; border: 1px solid var(--detail-rule); }
+  .portfolio-light .project-case-page .arch-scroll { background: #eaf0f5; }
+  .portfolio-light .project-case-page .arch-node-bg { fill: #edf3f7; }
+  .portfolio-light .project-case-page .arch-reading-guide p,
+  .portfolio-light .project-case-page .arch-selection p { color: var(--detail-copy); }
+
+  @media (max-width: 800px) {
+    .project-case-page { padding: 24px 18px; }
+    .project-case-page .project-overview-table th,
+    .project-case-page .project-overview-table td { padding: 16px 12px; }
+    .project-case-page .project-overview-table th { font-size: .8rem; }
+    .project-case-page .project-case-study { padding: 20px 16px; }
+    .project-case-page .project-case-service-areas > div { padding: 18px; }
+  }
+  @media (max-width: 480px) {
+    .project-case-page .project-detail-header { padding: 24px 0; }
+    .project-case-page .project-detail-meta { gap: 14px 20px; }
+    .project-case-page .project-overview-label-column { width: 78px; }
+    .project-case-page .project-overview-table th { padding-left: 9px; padding-right: 9px; font-size: .76rem; }
+    .project-case-page .project-overview-tasks { font-size: .91rem; }
+    .project-case-page .project-overview-metrics dd { font-size: 1rem; }
+    .project-case-page .project-case-section { padding: 30px 0; }
+    .project-case-page .project-case-nav a { padding: 5px 8px; font-size: .8rem; }
+    .project-case-page .project-case-study h3 { font-size: 1.12rem; }
+    .project-case-page .project-case-step p { font-size: 1rem; }
+    .project-case-page .project-case-study > .project-case-step:first-of-type { padding: 16px; }
+    .project-case-page .project-case-related a { font-size: .83rem; padding: 10px 12px; }
+  }
+}

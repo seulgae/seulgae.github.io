@@ -20,3 +20,15 @@ test.each([
   expect(figure.querySelector("figcaption .arch-selection")).toHaveTextContent("그림 읽는 순서");
   expect(canvas.querySelector(".arch-dim")).toBeNull();
 });
+
+test("모바일 구성도는 망간 연계·보안 노드와 연결 방향을 보존하고 역할을 펼친다", () => {
+  const { container } = render(<ArchitectureDiagrams slug="jeonse-support-system" figureIds={["public-network"]} />);
+  const mobile = container.querySelector(".arch-mobile-layout");
+  const sync = within(mobile).getByRole("button", { name: "업무망 연계 · sync 매핑 역할 보기" });
+  expect(within(mobile).getByRole("button", { name: "보안 개선 지점 역할 보기" })).toBeInTheDocument();
+  expect(within(mobile).getByRole("region", { name: "구성 요소 연결 흐름" })).toHaveTextContent("④ 매핑·반영");
+  expect(within(mobile).getAllByLabelText("양방향").length).toBeGreaterThan(0);
+  fireEvent.click(sync);
+  expect(sync).toHaveAttribute("aria-expanded", "true");
+  expect(mobile.querySelector(".arch-mobile-detail")).toHaveTextContent("기존 연계 Service 인터페이스를 유지하면서");
+});

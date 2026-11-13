@@ -6,9 +6,11 @@ import { ProjectWorkScope } from "../components/posters/ProjectsPoster";
 import InlineProjectArchitecture from "../components/InlineProjectArchitecture";
 import JeonseProjectDetail from "../components/JeonseProjectDetail";
 import AbacusProjectDetail from "../components/AbacusProjectDetail";
+import ProjectDetailLayout from "../components/ProjectDetailLayout";
 import NotFoundPage from "./NotFoundPage";
 import { paths } from "../routes";
 import "../styles/projectDetail.css";
+import "../styles/projectReading.css";
 
 function ProjectDetailPage() {
   const { slug } = useParams();
@@ -23,8 +25,8 @@ function ProjectDetailPage() {
     return <NotFoundPage message="요청한 프로젝트를 찾을 수 없습니다." />;
   }
 
-  if (slug === "jeonse-support-system") return <JeonseProjectDetail project={project} />;
-  if (project.companyId === "abacus") return <AbacusProjectDetail project={project} />;
+  if (slug === "jeonse-support-system") return <ProjectDetailLayout key={slug} slug={slug}><JeonseProjectDetail project={project} /></ProjectDetailLayout>;
+  if (project.companyId === "abacus") return <ProjectDetailLayout key={slug} slug={slug}><AbacusProjectDetail project={project} /></ProjectDetailLayout>;
 
   return (
     <article className="project-detail-page">

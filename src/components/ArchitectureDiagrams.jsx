@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from "react";
 import diagramsBySlug from "../data/architectureDiagrams";
+import MobileArchitecture from "./MobileArchitecture";
 import "../styles/architectureDiagrams.css";
 
 function Tech({ name, logo }) {
@@ -51,10 +52,11 @@ function Diagram({ figure, theme, expandable, showHelp }) {
 
   return <figure className={`arch-figure arch-theme-${theme}`}>
     <div className="arch-figure-heading"><h4>{figure.title}</h4>{expandable && <button type="button" ref={trigger} onClick={() => dialog.current.showModal()}>크게 보기 ↗</button>}</div>
-    <div className="arch-scroll" tabIndex={0} role="region" aria-label={`${figure.title} · 좁은 화면에서 좌우 스크롤 가능`}>{canvas("inline")}</div>
+    <div className="arch-scroll arch-desktop-scroll" tabIndex={0} role="region" aria-label={`${figure.title} · 데스크톱 구성도`}>{canvas("inline")}</div>
+    <MobileArchitecture figure={figure} selectedId={selectedId} connected={connected} onSelect={select} uid={uid} />
     <figcaption>
       <div className="arch-legend">{figure.notes.map((note) => <span key={note}>{note}</span>)}</div>
-      {showHelp && <p className="arch-help">구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 작은 화면에서는 그림을 좌우로 이동{expandable ? "하거나 크게 보기를 이용하세요." : "해 확인하세요."}</p>}
+      {showHelp && <p className="arch-help">구성 요소를 누르면 연결된 흐름과 역할을 볼 수 있습니다. 모바일에서는 구성 요소와 연결 흐름을 세로로 확인할 수 있습니다.</p>}
       <div className="arch-selection" aria-live="polite"><strong>{selected ? selected.title : "그림 읽는 순서"}</strong><p>{selected ? selected.detail : figure.summary}</p></div>
       <ol className="arch-reading-guide">{figure.guide.map(([title, body]) => <li key={title}><strong>{title}</strong><p>{body}</p></li>)}</ol>
     </figcaption>

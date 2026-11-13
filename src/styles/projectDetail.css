@@ -11,6 +11,9 @@
   overflow-wrap: anywhere;
 }
 .project-detail-back { color: var(--accent-ink); font-size: .9rem; font-weight: 600; }
+.project-detail-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 26px; }
+.project-detail-actions button { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 18px; border: 1px solid var(--detail-rule, var(--line)); border-radius: 8px; background: var(--detail-panel, var(--surface-soft)); color: var(--detail-title, var(--text)); font-size: .9rem; font-weight: 600; cursor: pointer; }
+.project-detail-actions button:hover { border-color: var(--accent-ink); background: var(--detail-link-bg, var(--accent-soft)); }
 .project-detail-header { padding: 26px 0; }
 .project-detail-eyebrow { color: var(--accent-ink); font-size: .78rem; font-weight: 800; letter-spacing: .1em; }
 .project-detail-header h1 { margin: 12px 0; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.4; }
@@ -89,6 +92,7 @@
 .project-case-preview figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 14px 18px; color: var(--muted); font-size: .83rem; }
 .project-case-preview figcaption a { display: inline-flex; align-items: center; gap: 4px; color: var(--accent-ink); }
 .project-case-section { padding: 38px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
+.project-case-page #overview { border-top: 1px solid var(--detail-rule, var(--line)); }
 .project-case-kicker { margin: 0 0 8px; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--accent-ink); }
 .project-case-section > h2 { margin: 0 0 20px; font-size: 1.4rem; }
 .project-case-section-heading .poster-heading { margin: 0 0 20px; }
