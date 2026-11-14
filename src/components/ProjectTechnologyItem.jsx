@@ -1,4 +1,4 @@
-import { FaCode, FaDatabase, FaLayerGroup, FaServer, FaTools } from "react-icons/fa";
+import { FaCode, FaDatabase, FaLayerGroup, FaServer, FaShieldAlt, FaTools } from "react-icons/fa";
 import { SiClaude, SiOpenai, SiGooglegemini, SiSubversion, SiJavascript } from "react-icons/si";
 import { assetUrl } from "../utils/text";
 
@@ -15,7 +15,7 @@ export default function ProjectTechnologyItem({ name, category }) {
   const logo = logos.find(([pattern]) => pattern.test(name))?.[1];
   const namedIcon = { Claude: SiClaude, ChatGPT: SiOpenai, Gemini: SiGooglegemini, SVN: SiSubversion }[name]
     || (/^JavaScript/.test(name) ? SiJavascript : null);
-  const fallback = { backend: FaLayerGroup, database: FaDatabase, frontend: FaCode, runtime: FaServer }[category] || FaTools;
+  const fallback = { backend: FaLayerGroup, database: FaDatabase, frontend: FaCode, runtime: FaServer, quality: FaShieldAlt }[category] || FaTools;
   const Icon = namedIcon || fallback;
   return (
     <li className="project-technology-item">

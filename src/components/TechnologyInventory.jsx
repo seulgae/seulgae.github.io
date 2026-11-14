@@ -6,7 +6,7 @@ import "../styles/technologyInventory.css";
 
 const inventory = groupProjectTechnologies(projects.flatMap((project) => project.skills).map((group) => ({
   ...group,
-  value: group.value
+  value: group.value.split(",").map((token) => token.trim()).filter((token) => token !== "SonarQube").join(", ")
     .replace(/Spring Boot\([^)]*\)/g, "Spring Boot")
     .replace(/Spring Batch\([^)]*\)/g, "Spring Batch")
     .replace(/Linux\([^)]*\)/g, "Linux"),

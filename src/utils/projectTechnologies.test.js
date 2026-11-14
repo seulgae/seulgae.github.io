@@ -18,4 +18,15 @@ test("화면·서버·AI 도구를 백엔드 기술과 구분한다", () => {
   expect(items("frontend")).toEqual(["JSP/JSTL", "JavaScript/jQuery"]);
   expect(items("runtime")).toEqual(["Apache Tomcat 9", "JBoss", "Linux(Fedora)"]);
   expect(items("ai")).toEqual(["Claude", "ChatGPT", "Gemini"]);
+  expect(items("quality")).toEqual(["CodeRay"]);
+});
+
+test("품질·보안 분석 도구는 개발·배포 및 운영 모니터링과 구분한다", () => {
+  const groups = groupProjectTechnologies([
+    { label: "개발 도구", value: "Maven, Jenkins, CodeRay, SonarQube" },
+    { label: "모니터링", value: "WhaTap" },
+  ]);
+  expect(groups.find((group) => group.id === "tools").items).toEqual(["Maven", "Jenkins"]);
+  expect(groups.find((group) => group.id === "quality").items).toEqual(["CodeRay", "SonarQube"]);
+  expect(groups.find((group) => group.id === "monitoring").items).toEqual(["WhaTap"]);
 });

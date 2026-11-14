@@ -28,6 +28,7 @@ const projects = [
       { label: "핵심 기술", value: "Java, Spring, eGovFrame 4.1, MyBatis, CUBRID" },
       { label: "개발 환경", value: "JSP/JSTL, JavaScript/jQuery, Apache Tomcat 9, JBoss, Linux(Fedora)" },
       { label: "개발 도구", value: "Maven, SVN" },
+      { label: "품질·보안 분석", value: "CodeRay" },
       { label: "AI 활용 도구", value: "Claude, ChatGPT, Gemini" },
     ],
     mainTasks: [
@@ -212,7 +213,8 @@ const projects = [
     skills: [
       { label: "핵심 기술", value: "Java, Spring Boot(3.x.x), MyBatis, MySQL, Redis, React" },
       { label: "개발 환경", value: "Linux(Ubuntu)" },
-      { label: "개발 도구", value: "Gradle, GitLab, Jenkins, Swagger, SonarQube" },
+      { label: "개발 도구", value: "Gradle, GitLab, Jenkins, Swagger" },
+      { label: "품질·보안 분석", value: "SonarQube" },
     ],
     mainTasks: [
       "가입·청구·상품·공통 조회 REST API 구현 및 청구 산정 결과 조회 SQL 작성",

@@ -5,6 +5,7 @@ const categories = [
   ["frontend", "화면 기술"],
   ["runtime", "서버 환경"],
   ["tools", "개발 · 배포 도구"],
+  ["quality", "품질 · 보안 분석"],
   ["monitoring", "모니터링"],
   ["ai", "AI 활용 도구"],
 ];
@@ -22,7 +23,8 @@ export function groupProjectTechnologies(skills) {
       else if (/^(Oracle|MySQL|CUBRID|Redis)\b/i.test(token)) id = "database";
       else if (/^(React|JSP|JSTL|JavaScript|jQuery|HTML|CSS)\b/i.test(token)) id = "frontend";
       else if (/^(Linux|Apache Tomcat|Tomcat|JBoss)\b/i.test(token)) id = "runtime";
-      else if (/WhaTap|CodeRay|모니터링/i.test(token + group.label)) id = "monitoring";
+      else if (/^(CodeRay|SonarQube)\b/i.test(token)) id = "quality";
+      else if (/WhaTap|모니터링/i.test(token + group.label)) id = "monitoring";
       else if (/^(Java|Spring|eGovFrame|MyBatis|Jasypt)\b/i.test(token)) id = "backend";
       groups.get(id).items.push(token);
     });
