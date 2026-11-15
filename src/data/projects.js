@@ -102,7 +102,7 @@ const projects = [
         anchorId: "achievement-query-index-tuning",
         detail:
           "실행계획을 기반으로 Full Scan 및 병목 구간을 분석하고, 조회 패턴에 맞는 인덱스 설계와 SQL 조건 개선을 수행하여 반복 발생하는 Slow Query를 최적화",
-        result: "조회 53초 → 1초 미만, 이후 월간 점검에서 해당 화면의 Slow Query 관련 특이사항 0건",
+        result: "조회 53초 → 1초 미만, 이후 월간 점검에서 주요 업무 화면 조회 Slow Query 관련 특이사항 0건",
         relatedPosts: [
           { slug: "cubrid-query-plan-index-tuning", label: "53초 조회 CUBRID 복합 인덱스 설계" },
         ],
