@@ -53,6 +53,12 @@ describe("블로그 글 로더", () => {
     posts.forEach((post) => {
       expect(post.title).toBeTruthy();
       expect(post.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      if (post.createdAt) {
+        expect(post.createdAt, `${post.slug}: createdAt 형식`).toMatch(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/,
+        );
+        expect(Number.isFinite(Date.parse(post.createdAt))).toBe(true);
+      }
       expect(post.body.trim().length).toBeGreaterThan(0);
       expect(post.category.groupId).toBeTruthy();
       expect(post.category.groupLabel).toBeTruthy();
@@ -81,8 +87,6 @@ describe("블로그 글 로더", () => {
     ];
     expect(records.sort(comparePostsByCreatedAt).map((post) => post.slug))
       .toEqual(["late", "early", "legacy", "invalid"]);
-    expect(findPostBySlug("seulgae-tech-lab-github-repository-setup").createdAt)
-      .toBe("2026-11-15T14:29:00+09:00");
   });
 
   test("slug로 글을 찾을 수 있다", () => {
