@@ -19,6 +19,13 @@ const modules = import.meta.glob("../posts/*.md", {
 
 export const CATEGORY_DEFINITIONS = [
   {
+    groupId: "side-projects",
+    groupLabel: "사이드 프로젝트",
+    subs: [
+      { id: "seulgae-tech-lab", label: "슬개 기술 연구소" },
+    ],
+  },
+  {
     groupId: "practice",
     groupLabel: "AI 활용 기록",
     subs: [
@@ -202,6 +209,7 @@ function toPost(path, raw) {
     slug,
     title: meta.title || slug,
     date: meta.date || "",
+    createdAt: meta.createdAt || "",
     tags,
     summary: meta.summary || "",
     category,
@@ -209,9 +217,21 @@ function toPost(path, raw) {
   };
 }
 
+function postTimestamp(post) {
+  const createdAt = Date.parse(post.createdAt);
+  if (Number.isFinite(createdAt)) return createdAt;
+  // 날짜만 있는 기존 글은 한국 시간 자정을 기준으로 정렬합니다.
+  const date = Date.parse(`${post.date}T00:00:00+09:00`);
+  return Number.isFinite(date) ? date : 0;
+}
+
+export function comparePostsByCreatedAt(a, b) {
+  return postTimestamp(b) - postTimestamp(a) || a.slug.localeCompare(b.slug);
+}
+
 const posts = Object.entries(modules)
   .map(([path, raw]) => toPost(path, raw))
-  .sort((a, b) => b.date.localeCompare(a.date));
+  .sort(comparePostsByCreatedAt);
 
 export function getAllPosts() {
   return posts;

@@ -22,6 +22,7 @@ src/posts/redis-ttl.md   →   /blog/redis-ttl
 ---
 title: Redis TTL과 토큰 만료 동기화
 date: 2026-08-15
+createdAt: 2026-08-15T14:30:00+09:00
 tags: Redis, Spring
 summary: 목록 카드에 보여줄 한 줄 요약
 ---
@@ -37,9 +38,13 @@ GitHub 마크다운(GFM) 문법을 지원합니다.
 | 항목 | 필수 | 설명 |
 | --- | --- | --- |
 | title | O | 글 제목 |
-| date | O | YYYY-MM-DD — 목록 정렬 기준 |
+| date | O | YYYY-MM-DD — 목록에 표시할 날짜, createdAt이 없으면 정렬 기준으로 사용 |
+| createdAt | X | 작성 시각(예: 2026-08-15T14:30:00+09:00), 최신 시각부터 내림차순 정렬 |
 | tags | X | 쉼표로 구분 |
 | summary | X | 목록 카드에 표시되는 요약 |
+
+같은 날 여러 글을 작성한다면 `createdAt`을 입력해 작성 순서를 구분하세요.
+`+09:00`은 한국 시간이며, 기존 글을 수정할 때는 최초 작성 시각을 유지합니다.
 
 ## 수정과 삭제
 

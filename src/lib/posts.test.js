@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
+  comparePostsByCreatedAt,
   findPostBySlug,
   getAllPosts,
   getAllTags,
@@ -67,10 +68,21 @@ describe("블로그 글 로더", () => {
   });
 
   test("최신 글이 먼저 온다", () => {
-    const dates = getAllPosts().map((post) => post.date);
-    const sorted = [...dates].sort((a, b) => b.localeCompare(a));
+    const posts = getAllPosts();
+    expect(posts).toEqual([...posts].sort(comparePostsByCreatedAt));
+  });
 
-    expect(dates).toEqual(sorted);
+  test("작성 시각 내림차순으로 정렬하고 누락·잘못된 시각은 날짜로 대체한다", () => {
+    const records = [
+      { slug: "legacy", date: "2026-11-15" },
+      { slug: "early", date: "2026-11-15", createdAt: "2026-11-15T14:29:00+09:00" },
+      { slug: "late", date: "2026-11-15", createdAt: "2026-11-15T05:30:00Z" },
+      { slug: "invalid", date: "2026-11-14", createdAt: "invalid" },
+    ];
+    expect(records.sort(comparePostsByCreatedAt).map((post) => post.slug))
+      .toEqual(["late", "early", "legacy", "invalid"]);
+    expect(findPostBySlug("seulgae-tech-lab-github-repository-setup").createdAt)
+      .toBe("2026-11-15T14:29:00+09:00");
   });
 
   test("slug로 글을 찾을 수 있다", () => {
