@@ -25,7 +25,7 @@ export function groupProjectTechnologies(skills) {
       else if (/^(Linux|Apache Tomcat|Tomcat|JBoss)\b/i.test(token)) id = "runtime";
       else if (/^(CodeRay|SonarQube)\b/i.test(token)) id = "quality";
       else if (/WhaTap|모니터링/i.test(token + group.label)) id = "monitoring";
-      else if (/^(Java|Spring|eGovFrame|MyBatis|Jasypt)\b/i.test(token)) id = "backend";
+      else if (/^(Java|Spring|eGovFrame|MyBatis|JPA|Jasypt)\b/i.test(token)) id = "backend";
       groups.get(id).items.push(token);
     });
   });
