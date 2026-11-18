@@ -1,10 +1,10 @@
 ---
-title: "엠앤와이즈 TS팀 면접 준비"
-date: "2026-11-18"
-createdAt: "2026-11-18"
-tags: ["Interview"]
-summary: "엠앤와이즈 TS팀 직무를 분석하고, 빌링 GW 연동 오류 개선과 NURI2 메시지 자동 발송 개발 경험을 중심으로 면접을 준비한 기록."
-category: "기업 면접 준비"
+title: 엠앤와이즈 TS팀 면접 준비
+date: 2026-11-18
+createdAt: 2026-11-18T22:36:10+09:00
+tags: Interview
+summary: 엠앤와이즈 TS팀 직무를 분석하고, 빌링 GW 연동 오류 개선과 NURI2 메시지 자동 발송 개발 경험을 중심으로 면접을 준비한 기록.
+category: 기업 면접 준비
 ---
 
 ## 1. 기업 및 직무 분석
