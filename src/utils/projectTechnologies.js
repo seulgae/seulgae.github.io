@@ -15,6 +15,8 @@
  *      - 프로젝트 상세에 보여야 함 → src/data/projects.js 해당 프로젝트의 skills value에 추가
  *        예) { label: "핵심 기술", value: "Java, Spring, MyBatis, Jasypt" }
  *      - About 기술 인벤토리에만 보여야 함 → TechnologyInventory.jsx의 inventoryOnlySkills에 추가
+ *      - About 기술 인벤토리에서만 숨겨야 함 → TechnologyInventory.jsx의 inventoryExcludedSkills에 추가
+ *      - 두 기술을 한 항목으로 묶으려면 쉼표 대신 "/"로 적습니다. 예) "HTML/CSS", "JSP/JSTL"
  *   2. 이름이 아래 분류 규칙 정규식에 맞는지 확인합니다.
  *      - 어떤 규칙에도 맞지 않으면 경고 없이 "개발 · 배포 도구"(tools)로 들어갑니다.
  *        새 기술을 추가했는데 엉뚱한 그룹에 있다면 해당 분야 정규식에 이름을 추가하세요.

@@ -11,20 +11,48 @@ import "../styles/technologyInventory.css";
  */
 export const inventoryOnlySkills = [
   { label: "핵심 기술", value: "Jasypt" },
-  { label: "개발 환경", value: "HTML, CSS" },
+  // 쉼표로 나누면 별도 항목이 되므로, 한 항목으로 보이도록 "/"로 묶습니다. (JSP/JSTL과 같은 방식)
+  { label: "개발 환경", value: "HTML/CSS" },
 ];
 
+/**
+ * 프로젝트 skills에는 있지만 About 기술 인벤토리에서는 숨길 기술입니다.
+ * 프로젝트 상세의 "사용 기술"에는 그대로 표시됩니다.
+ */
+const inventoryExcludedSkills = new Set(["SonarQube", "React"]);
+
+/*
+ * [출력 순서] 분야(행) 순서는 projectTechnologies.js의 categories 배열 순서를 따릅니다.
+ * 같은 분야 안의 기술 순서는 아래 inventoryOrder로 고정합니다.
+ *   - 그대로 두면 "처음 등장한 순서"(projects.js의 프로젝트 순서 → inventoryOnlySkills)가 되어
+ *     Spring과 Spring Boot가 떨어지는 등 뒤섞여 보입니다.
+ *   - 목록에 없는 새 기술은 해당 분야의 맨 뒤에 등장한 순서대로 붙습니다.
+ *     원하는 위치가 있다면 이 목록에 이름을 추가하세요. (이름은 replace 적용 후 표기 기준)
+ */
+export const inventoryOrder = {
+  backend: ["Java", "Spring", "Spring Boot", "Spring Batch", "JPA", "MyBatis", "Jasypt"],
+  database: ["Oracle", "MySQL", "CUBRID", "Redis"],
+  frontend: ["JSP/JSTL", "JavaScript/jQuery", "HTML/CSS"],
+  runtime: ["Linux", "Apache Tomcat 9", "JBoss"],
+  tools: ["Maven", "Gradle", "GitLab", "SVN", "Jenkins", "Swagger"],
+  ai: ["Claude", "ChatGPT", "Gemini"],
+};
 const inventory = groupProjectTechnologies([...projects.flatMap((project) => project.skills), ...inventoryOnlySkills].map((group) => ({
   ...group,
-  value: group.value.split(",").map((token) => token.trim()).filter((token) => token !== "SonarQube").join(", ")
+  value: group.value.split(",").map((token) => token.trim()).filter((token) => !inventoryExcludedSkills.has(token)).join(", ")
     .replace(/eGovFrame 4\.1/g, "JPA")
     .replace(/Spring Boot\([^)]*\)/g, "Spring Boot")
     .replace(/Spring Batch\([^)]*\)/g, "Spring Batch")
     .replace(/Linux\([^)]*\)/g, "Linux"),
 })));
 
-const databaseOrder = ["Oracle", "MySQL", "CUBRID", "Redis"];
-inventory.find((group) => group.id === "database")?.items.sort((a, b) => databaseOrder.indexOf(a) - databaseOrder.indexOf(b));
+inventory.forEach((group) => {
+  const order = inventoryOrder[group.id];
+  if (!order) return;
+  const rank = (name) => (order.includes(name) ? order.indexOf(name) : order.length);
+  // sort는 안정 정렬이므로 목록에 없는 기술끼리는 등장 순서가 유지됩니다.
+  group.items.sort((a, b) => rank(a) - rank(b));
+});
 
 export default function TechnologyInventory() {
   return (
