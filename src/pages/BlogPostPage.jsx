@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import NotFoundPage from "./NotFoundPage";
 import profile from "../data/profile";
-import { getAllPosts } from "../lib/posts";
+import { getAllPosts, loadPostBody } from "../lib/posts";
 import { paths } from "../routes";
 import "../styles/blog.css";
 
@@ -41,10 +41,29 @@ function BlogPostPage() {
   const postIndex = allPosts.findIndex((item) => item.slug === slug);
   const post = postIndex !== -1 ? allPosts[postIndex] : undefined;
 
+  // 본문은 글마다 분리된 청크에서 내려받습니다. { slug, body | error } 형태로 현재 글의 결과만 사용합니다.
+  const [loaded, setLoaded] = useState(null);
+
   useEffect(() => {
     if (post) {
       document.title = `${post.title} | 길태형 기술 블로그`;
     }
+  }, [post]);
+
+  useEffect(() => {
+    if (!post) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    loadPostBody(post.slug).then(
+      (body) => !cancelled && setLoaded({ slug: post.slug, body }),
+      (error) => !cancelled && setLoaded({ slug: post.slug, error }),
+    );
+
+    return () => {
+      cancelled = true;
+    };
   }, [post]);
 
   if (!post) {
@@ -56,6 +75,8 @@ function BlogPostPage() {
       />
     );
   }
+
+  const current = loaded?.slug === post.slug ? loaded : null;
 
   const categorySiblings = allPosts
     .filter((item) => item.category.subId === post.category.subId)
@@ -101,12 +122,22 @@ function BlogPostPage() {
         </header>
 
         <div className="blog-prose">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={markdownComponents}
-          >
-            {post.body}
-          </ReactMarkdown>
+          {current?.body !== undefined ? (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}
+            >
+              {current.body}
+            </ReactMarkdown>
+          ) : current?.error ? (
+            <p role="alert">
+              본문을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.
+            </p>
+          ) : (
+            <p className="loading-status" role="status">
+              본문을 불러오는 중입니다.
+            </p>
+          )}
         </div>
 
         {post.tags.length > 0 ? (

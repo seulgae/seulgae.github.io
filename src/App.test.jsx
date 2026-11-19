@@ -6,7 +6,7 @@ import projects from "./data/projects";
 import awards from "./data/awards";
 import education from "./data/education";
 import licenses, { getVisibleLicenses } from "./data/licenses";
-import { getAllPosts, getCategoryTree } from "./lib/posts";
+import { getAllPosts, getCategoryTree, loadAllPostBodies, loadPostBody } from "./lib/posts";
 import { paths } from "./routes";
 
 async function renderAt(path) {
@@ -492,6 +492,46 @@ test("/blog/:slug에서 마크다운 본문과 같은 카테고리 다른 글 �
 
   expect(
     screen.getByRole("region", { name: "같은 카테고리의 다른 글" }),
+  ).toBeInTheDocument();
+
+  // 지연 로딩된 마크다운 본문의 첫 소제목이 렌더링된다.
+  const body = await loadPostBody(postWithSiblings.slug);
+  const firstHeading = body.match(/^##\s+(.+)$/m)?.[1].replace(/[*`]/g, "").trim();
+  if (firstHeading) {
+    expect(
+      await screen.findByRole("heading", { level: 2, name: firstHeading }),
+    ).toBeInTheDocument();
+  }
+  expect(screen.queryByText("본문을 불러오는 중입니다.")).not.toBeInTheDocument();
+});
+
+test("/blog 검색은 제목·요약·태그에 없는 본문 단어로도 글을 찾는다", async () => {
+  const posts = getAllPosts();
+  const bodies = await loadAllPostBodies();
+  const metaText = (post) => [post.title, post.summary, ...post.tags].join(" ").toLowerCase();
+  // 본문에만 있고, 다른 글의 제목·요약·태그 어디에도 없으며, 한 페이지(10건) 안에 결과가 들어오는 단어를 고른다.
+  let target;
+  let keyword;
+  for (const post of posts) {
+    keyword = bodies.get(post.slug).match(/[가-힣]{4,}/g)?.find((word) => {
+      const lower = word.toLowerCase();
+      const matches = posts.filter(
+        (item) => metaText(item).includes(lower) || bodies.get(item.slug).toLowerCase().includes(lower),
+      );
+      return posts.every((item) => !metaText(item).includes(lower)) && matches.length <= 10;
+    });
+    if (keyword) {
+      target = post;
+      break;
+    }
+  }
+  expect(keyword, "본문 전용 검색어").toBeTruthy();
+
+  await renderAt(paths.blog);
+  await userEvent.type(screen.getByRole("searchbox", { name: "블로그 글 검색" }), keyword);
+
+  expect(
+    await screen.findByRole("heading", { level: 2, name: target.title }),
   ).toBeInTheDocument();
 });
 

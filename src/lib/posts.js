@@ -11,10 +11,17 @@
  *   ---
  */
 
-const modules = import.meta.glob("../posts/*.md", {
-  query: "?raw",
+// 목록·사이드바용 frontmatter만 즉시 읽습니다. (scripts/postMetaPlugin.js가 `?meta`를 처리)
+const metaModules = import.meta.glob("../posts/*.md", {
+  query: "?meta",
   import: "default",
   eager: true,
+});
+
+// 본문은 글마다 별도 청크로 분리하여 해당 글을 열거나 본문 검색할 때만 내려받습니다.
+const bodyLoaders = import.meta.glob("../posts/*.md", {
+  query: "?raw",
+  import: "default",
 });
 
 export const CATEGORY_DEFINITIONS = [
@@ -197,9 +204,13 @@ function parseFrontmatter(raw) {
   return { meta, body: raw.slice(match[0].length) };
 }
 
-function toPost(path, raw) {
-  const slug = path.split("/").pop().replace(/\.md$/, "");
-  const { meta, body } = parseFrontmatter(raw);
+function slugFromPath(path) {
+  return path.split("/").pop().replace(/\.md$/, "");
+}
+
+function toPost(path, rawMeta) {
+  const slug = slugFromPath(path);
+  const { meta } = parseFrontmatter(rawMeta);
   const tags = meta.tags
     ? meta.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
     : [];
@@ -213,7 +224,6 @@ function toPost(path, raw) {
     tags,
     summary: meta.summary || "",
     category,
-    body,
   };
 }
 
@@ -229,9 +239,39 @@ export function comparePostsByCreatedAt(a, b) {
   return postTimestamp(b) - postTimestamp(a) || a.slug.localeCompare(b.slug);
 }
 
-const posts = Object.entries(modules)
-  .map(([path, raw]) => toPost(path, raw))
+const posts = Object.entries(metaModules)
+  .map(([path, rawMeta]) => toPost(path, rawMeta))
   .sort(comparePostsByCreatedAt);
+
+const bodyLoadersBySlug = new Map(
+  Object.entries(bodyLoaders).map(([path, load]) => [slugFromPath(path), load]),
+);
+const bodyCache = new Map();
+
+/** 글 본문(frontmatter 제외)을 지연 로딩합니다. 같은 글은 한 번만 내려받습니다. */
+export function loadPostBody(slug) {
+  const load = bodyLoadersBySlug.get(slug);
+
+  if (!load) {
+    return Promise.reject(new Error(`존재하지 않는 글입니다: ${slug}`));
+  }
+
+  if (!bodyCache.has(slug)) {
+    const pending = load().then((raw) => parseFrontmatter(raw).body);
+    pending.catch(() => bodyCache.delete(slug));
+    bodyCache.set(slug, pending);
+  }
+
+  return bodyCache.get(slug);
+}
+
+/** 본문 검색용으로 모든 글 본문을 읽어 slug → 본문 Map을 반환합니다. */
+export async function loadAllPostBodies() {
+  const entries = await Promise.all(
+    posts.map(async (post) => [post.slug, await loadPostBody(post.slug)]),
+  );
+  return new Map(entries);
+}
 
 export function getAllPosts() {
   return posts;
