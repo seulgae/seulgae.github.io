@@ -5,6 +5,8 @@ import {
   getAllPosts,
   getAllTags,
   getCategoryTree,
+  loadAllPostBodies,
+  loadPostBody,
 } from "./posts";
 
 describe("블로그 글 로더", () => {
@@ -59,11 +61,30 @@ describe("블로그 글 로더", () => {
         );
         expect(Number.isFinite(Date.parse(post.createdAt))).toBe(true);
       }
-      expect(post.body.trim().length).toBeGreaterThan(0);
       expect(post.category.groupId).toBeTruthy();
       expect(post.category.groupLabel).toBeTruthy();
       expect(post.category.subId).toBeTruthy();
       expect(post.category.subLabel).toBeTruthy();
+    });
+  });
+
+  test("목록용 메타데이터에는 본문이 없고 본문은 지연 로딩한다", async () => {
+    const [first] = getAllPosts();
+    expect(first).not.toHaveProperty("body");
+
+    const body = await loadPostBody(first.slug);
+    expect(body.trim().length).toBeGreaterThan(0);
+    expect(body.startsWith("---")).toBe(false);
+    expect(body).not.toMatch(/^title:/m);
+    expect(await loadPostBody(first.slug)).toBe(body);
+    await expect(loadPostBody("does-not-exist")).rejects.toThrow();
+  });
+
+  test("모든 글의 본문이 비어 있지 않다", async () => {
+    const bodies = await loadAllPostBodies();
+    expect(bodies.size).toBe(getAllPosts().length);
+    bodies.forEach((body, slug) => {
+      expect(body.trim().length, `${slug}: 본문`).toBeGreaterThan(0);
     });
   });
 

@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CATEGORY_DEFINITIONS, getAllPosts } from "../lib/posts";
+import {
+  CATEGORY_DEFINITIONS,
+  getAllPosts,
+  loadAllPostBodies,
+} from "../lib/posts";
 import { paths } from "../routes";
 import "../styles/blog.css";
 
@@ -62,6 +66,27 @@ function BlogListPage() {
     setPage(1);
   }, [groupParam, categoryParam, tagParam]);
 
+  // 본문 검색은 검색어를 처음 입력할 때 전체 본문 청크를 내려받아 수행합니다.
+  // 본문이 도착하기 전에는 제목·요약·태그로 먼저 걸러 보여줍니다.
+  const [bodies, setBodies] = useState(null);
+  const isSearching = query.trim() !== "";
+
+  useEffect(() => {
+    if (!isSearching || bodies) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    loadAllPostBodies().then(
+      (loadedBodies) => !cancelled && setBodies(loadedBodies),
+      () => {},
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isSearching, bodies]);
+
   const posts = getAllPosts();
   const heading = resolveFeedHeading(groupParam, categoryParam, tagParam);
 
@@ -89,10 +114,10 @@ function BlogListPage() {
         post.title.toLowerCase().includes(keyword) ||
         post.summary.toLowerCase().includes(keyword) ||
         post.tags.some((tag) => tag.toLowerCase().includes(keyword)) ||
-        post.body.toLowerCase().includes(keyword)
+        Boolean(bodies?.get(post.slug)?.toLowerCase().includes(keyword))
       );
     });
-  }, [posts, groupParam, categoryParam, tagParam, query]);
+  }, [posts, groupParam, categoryParam, tagParam, query, bodies]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -117,7 +142,6 @@ function BlogListPage() {
     window.scrollTo(0, 0);
   };
 
-  const isSearching = query.trim() !== "";
   const hasUrlFilter = Boolean(groupParam || categoryParam || tagParam);
 
   return (
