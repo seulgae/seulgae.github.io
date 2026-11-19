@@ -1,4 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
+import projects from "../data/projects";
+import { groupProjectTechnologies } from "../utils/projectTechnologies";
 import { expect, test } from "vitest";
 import TechnologyInventory, { inventoryOrder } from "./TechnologyInventory";
 
@@ -36,4 +38,12 @@ test("분야 안의 기술은 inventoryOrder에 정한 순서대로 표시한다
   Object.entries(inventoryOrder).forEach(([id, order]) => {
     expect(itemsOf(labels[id]), labels[id]).toEqual(order);
   });
+});
+
+test("인벤토리는 Spring Boot·Spring Batch를 Spring으로 합치고 프로젝트 상세 분류는 원래 이름을 유지한다", () => {
+  render(<TechnologyInventory />);
+  expect(itemsOf("백엔드")).toEqual(["Java", "Spring", "JPA", "MyBatis", "Jasypt"]);
+  const billing = projects.find((project) => project.skills.some((group) => /Spring Batch/.test(group.value)));
+  const backend = groupProjectTechnologies(billing.skills).find((group) => group.id === "backend").items;
+  expect(backend).toEqual(expect.arrayContaining([expect.stringMatching(/^Spring Boot/), expect.stringMatching(/^Spring Batch/)]));
 });
