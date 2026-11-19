@@ -1,11 +1,11 @@
 ---
 title: 빌링 GW 연동 오류 개선 경험 복기
 date: 2026-11-19
-tags: Backend, Kafka, Troubleshooting, Monitoring, Interview
-summary: 빌링 GW 연동 오류를 일일 집계와 유형별 분석, 담당 파트 협업 및 재검증으로 관리하여 주간 오류 수준을 약 70건에서 5건으로 개선한 경험 정리
-category: interview
+createdAt: 2026-11-19T16:00:00+09:00
+tags: Interview
+summary: 빌링 GW 연동 오류를 일일 집계와 유형별 분석, 담당 파트 협업 및 재검증으로 관리해 주간 오류 수준을 약 70건에서 5건으로 줄이는 데 기여한 경험을 정리한 면접 준비 기록.
+category: project-review
 ---
-
 
 # 빌링 GW 연동 오류 개선 경험 복기
 
