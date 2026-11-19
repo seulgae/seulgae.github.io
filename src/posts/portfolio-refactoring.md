@@ -3,6 +3,7 @@ title: 포트폴리오 사이트 구조 리팩터링 기록
 date: 2026-08-11
 tags: React, Refactoring
 summary: 콘텐츠와 화면을 분리하고, 페이지 파일 복제를 단일 라우트로 통합한 과정 정리
+category: dev-notes
 ---
 
 이 사이트를 만들고 1년 넘게 운영하면서 반복해서 겪은 문제가 있었다.

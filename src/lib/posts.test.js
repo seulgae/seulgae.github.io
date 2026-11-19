@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
+  CATEGORY_DEFINITIONS,
   comparePostsByCreatedAt,
   findPostBySlug,
   getAllPosts,
@@ -85,6 +86,18 @@ describe("블로그 글 로더", () => {
     expect(bodies.size).toBe(getAllPosts().length);
     bodies.forEach((body, slug) => {
       expect(body.trim().length, `${slug}: 본문`).toBeGreaterThan(0);
+    });
+  });
+
+  test("모든 글은 frontmatter에 유효한 category id를 명시한다", () => {
+    // category를 생략하면 태그로 추측하고, 맞는 규칙이 없으면 경고 없이 "Spring · 아키텍처"로 분류됩니다.
+    // 새 글을 쓸 때 이 테스트가 실패하면 frontmatter에 아래 id 중 하나를 category로 적으세요.
+    const validIds = CATEGORY_DEFINITIONS.flatMap((group) => group.subs.map((sub) => sub.id));
+    const metas = import.meta.glob("../posts/*.md", { query: "?meta", import: "default", eager: true });
+    Object.entries(metas).forEach(([path, meta]) => {
+      const category = meta.match(/^category:\s*(.+?)\s*$/m)?.[1];
+      expect(category, `${path}: category 누락`).toBeTruthy();
+      expect(validIds, `${path}: 알 수 없는 category "${category}"`).toContain(category);
     });
   });
 

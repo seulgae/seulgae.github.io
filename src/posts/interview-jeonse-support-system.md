@@ -3,6 +3,7 @@ title: 면접 정리 1 — 전세사기 피해자 지원관리시스템의 보�
 date: 2026-10-24
 tags: Interview, Retrospective, CUBRID, Security, Infra, Java
 summary: 정적 SQL 전환의 누락 사고, CUBRID 튜닝, 대량 패치와 SSH 수집을 실제 경험·기술 원리·확인 항목으로 나눈 면접 준비 자료
+category: project-review
 ---
 
 ## 프로젝트 개요와 담당 범위

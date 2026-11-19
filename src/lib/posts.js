@@ -5,7 +5,7 @@
  *   ---
  *   title: 글 제목
  *   date: 2026-08-11
- *   category: Database & Performance / SQL · 실행계획 튜닝   (선택 — 생략 시 태그·슬러그로 자동 분류)
+ *   category: sql-tuning   (필수 — CATEGORY_DEFINITIONS의 sub id. posts.test.js가 누락·오타를 검사합니다)
  *   tags: SQL, Oracle, Performance
  *   summary: 목록에 표시할 요약
  *   ---

@@ -3,6 +3,7 @@ title: 쪼개진 원천 테이블과 달라진 PK 사이 — Kafka 서비스 도
 date: 2025-02-10
 tags: Kafka, Java, Spring, Operations
 summary: 원부·응용 파트의 키와 컬럼을 맞추는 Kafka GW 구조와, 누적 오류 해소를 위해 오류 대응 절차와 일일 메일 보고 체계를 만든 운영 경험
+category: kafka-di
 ---
 
 서비스 도메인 연동 시스템을 운영하며 가장 오래 맡았던 업무 중 하나가 **GW(Gateway) 데이터
