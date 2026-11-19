@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import projects from "../data/projects";
+import profile from "../data/profile";
 import { groupProjectTechnologies } from "../utils/projectTechnologies";
 import { expect, test } from "vitest";
 import TechnologyInventory, { inventoryOrder } from "./TechnologyInventory";
@@ -46,4 +47,14 @@ test("인벤토리는 Spring Boot·Spring Batch를 Spring으로 합치고 프로
   const billing = projects.find((project) => project.skills.some((group) => /Spring Batch/.test(group.value)));
   const backend = groupProjectTechnologies(billing.skills).find((group) => group.id === "backend").items;
   expect(backend).toEqual(expect.arrayContaining([expect.stringMatching(/^Spring Boot/), expect.stringMatching(/^Spring Batch/)]));
+});
+
+test("출력용 이력서 TECH STACK은 기술 인벤토리와 같은 기술을 담는다", () => {
+  render(<TechnologyInventory />);
+  const inventoryItems = screen.getAllByRole("listitem").map((li) => li.textContent);
+  const resumeItems = profile.resumeCover.techStack.flatMap(([, value]) => value.split(" · ").map((item) => item.trim()));
+  // 실패하면 profile.js resumeCover.techStack과 TechnologyInventory.jsx 중 한쪽만 고친 것입니다.
+  expect(resumeItems.filter((item) => !inventoryItems.includes(item)), "이력서에만 있는 기술").toEqual([]);
+  expect(inventoryItems.filter((item) => !resumeItems.includes(item)), "인벤토리에만 있는 기술").toEqual([]);
+  expect(new Set(resumeItems).size, "이력서 중복 기술").toBe(resumeItems.length);
 });

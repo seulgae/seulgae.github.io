@@ -67,14 +67,19 @@ const profile = {
       "업무 중 발생하는 장애와 성능 저하의 원인을 처리 흐름과 데이터에서 찾고, 로직과 구조를 개선해 왔습니다. Kafka 연계 오류의 대응 절차와 일일 보고 체계를 만들고, 실행계획 기반 SQL 튜닝과 조회 병렬화, 권한 캐싱, 웹 취약점 조치를 통해 서비스의 안정성과 운영 효율을 높였습니다.",
       "반복 업무를 자동화하고 확보한 시간을 품질 개선과 예방 활동에 쓰는 일을 중요하게 생각합니다. 운영에서 쌓은 문제 해결 경험을 바탕으로 요구사항을 구체화하고 기능을 완성하며, 안정성과 확장성을 함께 고려하는 개발자로 성장하고자 합니다.",
     ],
+    // 출력용 이력서(/resume) 1장의 TECH STACK 표입니다.
+    // 기술 항목은 About 기술 인벤토리(TechnologyInventory.jsx)와 같아야 합니다. 행 이름(Language 등)과 묶는 방식은 이력서 전용입니다.
+    // 인벤토리 기술을 추가·삭제·이름 변경했다면 여기도 같이 고치세요. data.test.js가 두 목록의 차이를 검사합니다.
+    // 항목 구분자는 " · "입니다.
     techStack: [
       ["Language", "Java"],
-      ["Backend", "Spring Boot · Spring Batch · REST API · MyBatis · Jasypt · eGovFrame"],
-      ["Messaging", "Apache Kafka"],
-      ["Database", "MySQL · Oracle · CUBRID · Redis"],
-      ["DevOps", "Jenkins · GitLab · SonarQube · Linux (Ubuntu / CentOS) · Apache Tomcat"],
-      ["Tools", "IntelliJ · STS4 · DBeaver · WhaTap · Swagger"],
-      ["Frontend", "JSP · jQuery · HTML · CSS"],
+      ["Backend", "Spring · JPA · MyBatis · Jasypt"],
+      ["Messaging", "Kafka"],
+      ["Database", "Oracle · MySQL · CUBRID · Redis"],
+      ["DevOps", "Linux · Apache Tomcat 9 · JBoss · Jenkins · WhaTap"],
+      ["Tools", "Maven · Gradle · GitLab · SVN · Swagger · CodeRay"],
+      ["Frontend", "JSP/JSTL · JavaScript/jQuery · HTML/CSS"],
+      ["AI Tools", "Claude · ChatGPT · Gemini"],
     ],
   },
   links: {
