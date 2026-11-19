@@ -1,10 +1,9 @@
 ---
-title: "NURI2 알림톡 자동 발송 배치 개발 경험 복기 — 엠앤와이즈 TS 면접"
-date: "2026-11-19"
-createdAt: "2026-11-19"
-tags: ["Interview", "Java", "Batch", "MyBatis", "Messaging", "NURI2"]
-summary: "전세사기 피해자 심사 지연 안내를 위한 NURI2 메시징 연동 개발 경험을 개발 배경, DATA 적재, 상태 관리, LOG 이력 조회, 재처리 및 Java 기술 학습 관점에서 정리한 면접 노트."
-category: "기업 면접 준비"
+title: NURI2 알림톡 자동 발송 배치 개발 경험 복기
+date: 2026-11-19
+tags: Java, Batch, MyBatis, Messaging, NURI2, Interview
+summary: 전세사기 피해자 심사 지연 안내를 위한 NURI2 알림톡 자동 발송 배치 개발 경험과 발송 대상 관리, DATA 적재, LOG 이력 조회 및 재처리 기능 정리
+category: interview
 ---
 
 # NURI2 알림톡 자동 발송 배치 개발 경험 복기
