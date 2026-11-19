@@ -1,5 +1,5 @@
 // 인물 정보 및 핵심 역량의 단일 출처(SSOT).
-// 포트폴리오 각 포스터(About, Skills)와 출력용 이력서(/resume)가 모두 이 파일만 참조합니다.
+// 포트폴리오 About 포스터와 출력용 이력서(/resume)가 모두 이 파일만 참조합니다.
 // 만 나이는 birthDate에서 계산하므로 해가 바뀌어도 손댈 필요가 없습니다.
 
 const skillCompetencies = [

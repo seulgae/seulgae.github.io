@@ -3,6 +3,7 @@ title: JSch가 WEB 서버 앞에서 멈춘 날 — Apache MINA SSHD로 서버 �
 date: 2026-01-05
 tags: Java, SSH, Infra, Spring
 summary: 월말마다 수기로 정리하던 서버 메모리·디스크 현황을 SSH 기반 주기 수집 화면으로 자동화한 과정 — JSch의 암호화 협상 실패, MINA SSHD 교체, 그리고 함수 하나하나의 선택 이유
+category: linux-ops
 ---
 
 운영 업무 중에 매달 반복되는 일이 있었다. **월말이 되면 서버마다 접속해서

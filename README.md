@@ -3,7 +3,7 @@
 개인 포트폴리오 사이트(`https://seulgae.github.io`)와 마크다운 기반 기술 블로그(`https://seulgae.github.io/blog`)를 독립된 레이아웃으로 분리 운영하는 React + Vite 정적 웹 애플리케이션입니다.
 
 - **포트폴리오 주소**: https://seulgae.github.io
-  - 4개 포스터 컴포넌트(`About` · `Skills` · `Projects` · `Credentials`)로 조립되는 원페이지 스트림 구조
+  - 3개 포스터 컴포넌트(`About` · `Projects` · `Credentials`)로 조립되는 원페이지 스트림 구조 (기술 인벤토리는 About 하단)
   - 스크롤 위치에 따라 상단 헤더·모바일 하단바의 슬라이딩 커서가 해당 섹션으로 자동 이동 (Scrollspy)
   - 프로젝트 성과와 연결된 시스템 아키텍처 팝업 및 다이어그램 확대 보기
 - **기술 블로그 주소**: https://seulgae.github.io/blog
@@ -63,7 +63,7 @@ main에 push 또는 PR 병합
 
 - 기존 배포용 `gh-pages` 브랜치를 삭제했습니다. 현재 배포는 `main`의 소스와 Actions 빌드 결과물을 사용합니다.
 - 웹 글 관리 기능을 제거하고 `src/posts/*.md`를 직접 편집하는 방식으로 정리했습니다. CMS 의존성과 관리자 빌드 진입점도 제거했습니다.
-- `package.json`의 기존 `deploy`·`predeploy` 스크립트와 `gh-pages` 패키지는 남아 있지만, 현재 배포 절차에서는 사용하지 않습니다. 배포할 때는 `main`에 push합니다.
+- 2026-11-19: 사용하지 않던 `deploy`·`predeploy` 스크립트와 `gh-pages` 패키지를 제거했습니다. 배포할 때는 `main`에 push합니다.
 
 ## 사용 기술
 

@@ -3,6 +3,7 @@ title: csql과 nohup — 운영 중인 DB에 수백만 건 패치를 조용히 �
 date: 2026-07-08
 tags: DB, Linux, Security, Operations
 summary: 개인정보 컬럼 대량 암호화 패치를 서비스 중단 없이 처리한 기록 — nohup 백그라운드 실행, 분할 커밋, 로그 기반 모니터링까지 대량 DML 작업의 절차 정리
+category: linux-ops
 ---
 
 한 OTT 서비스의 본인확인 값(CI) 유출 사고가 보도된 적이 있다. 남의 일이 아니었다.

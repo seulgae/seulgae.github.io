@@ -3,6 +3,7 @@ title: 면접 정리 2 — CloudXper의 병렬 조회·권한 캐시·코드 표
 date: 2026-10-23
 tags: Interview, Retrospective, Spring, MyBatis, Redis, Performance
 summary: 실제 개선 경험과 기술 원리·후속 설계를 구분해 정리한 CloudXper 면접 자료 — 병렬 처리의 한계, 캐시 만료·무효화, DTO와 팀 표준화
+category: project-review
 ---
 
 ## 프로젝트 개요와 설명 범위

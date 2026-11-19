@@ -3,6 +3,7 @@ title: XSSFWorkbook vs SXSSFWorkbook — 수작업 엑셀 업무를 기능으로
 date: 2025-11-20
 tags: Java, POI, Excel, Performance
 summary: 운영자가 매번 DB를 조회해 손으로 만들던 추출 대장·통계 엑셀을 다운로드 기능으로 구현한 기록 — 건수에 따라 XSSF와 SXSSF를 가르는 기준과 스트리밍 방식의 함정들
+category: spring-mybatis
 ---
 
 운영 업무 중에 정기적으로 반복되는 일이 있었다. 담당자가 DB를 직접 조회해서

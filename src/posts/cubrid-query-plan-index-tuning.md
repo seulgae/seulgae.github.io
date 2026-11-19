@@ -3,6 +3,7 @@ title: 53초짜리 목록 조회 — CUBRID 실행계획 분석과 복합 인덱
 date: 2026-03-04
 tags: SQL, CUBRID, Performance
 summary: 운영 목록 조회의 실행계획을 분석하고 인덱스를 적용해 53초를 1초 미만으로 개선한 경험 — SQL·인덱스·플랜은 설계 원리를 설명하기 위한 재구성 예제
+category: sql-tuning
 ---
 
 운영 행정망 화면 중에 접수 목록을 조회하는 화면이 있었다. 대상 데이터는
