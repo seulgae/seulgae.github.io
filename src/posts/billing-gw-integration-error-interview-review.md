@@ -1,11 +1,11 @@
 ---
-title: "빌링 GW 연동 오류 개선 경험 복기 — 엠앤와이즈 TS 면접"
-date: "2026-11-19"
-createdAt: "2026-11-19"
-tags: ["Interview", "Backend", "Kafka", "Troubleshooting"]
-summary: "빌링 GW 연동 오류를 일일 집계·유형별 분류·파트별 협업·재검증으로 관리하며 주간 오류 수준을 약 70건에서 5건으로 낮춘 경험의 면접 답변 및 꼬리 질문 정리."
-category: "기업 면접 준비"
+title: 빌링 GW 연동 오류 개선 경험 복기
+date: 2026-11-19
+tags: Backend, Kafka, Troubleshooting, Monitoring, Interview
+summary: 빌링 GW 연동 오류를 일일 집계와 유형별 분석, 담당 파트 협업 및 재검증으로 관리하여 주간 오류 수준을 약 70건에서 5건으로 개선한 경험 정리
+category: interview
 ---
+
 
 # 빌링 GW 연동 오류 개선 경험 복기
 
