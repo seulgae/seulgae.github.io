@@ -13,7 +13,7 @@ category: project-review
 >
 > **358건 → 4건의 의미:** 정적 분석 도구의 **검출 건수 감소**다. 서비스에 남은 취약점이 없다는 뜻이 아니다.
 >
-> **함께 볼 글:** [Claude를 활용한 취약점 조치·검증 기록](/blog/claude-assisted-security-remediation), [CWE-79 JSP 출력 개선](/blog/cwe-79-xss-remediation), [CWE-754 예외 처리](/blog/cwe-754-exception-handling), [CWE-209 오류 메시지 노출](/blog/cwe-209-error-message-exposure), [CWE-476 null 역참조](/blog/cwe-476-null-dereference), [미사용 코드 삭제](/blog/cwe-330-489-dead-code-removal), [CWE-676 위험한 API](/blog/cwe-676-dangerous-api), [면접 정리 1 — 전세사기 피해자 지원관리시스템](/blog/interview-jeonse-support-system)
+> **함께 볼 글:** [성과 경험 면접 공통 정리](/blog/interview-achievement-stories-overview), [Claude를 활용한 취약점 조치·검증 기록](/blog/claude-assisted-security-remediation), [CWE-79 JSP 출력 개선](/blog/cwe-79-xss-remediation), [CWE-754 예외 처리](/blog/cwe-754-exception-handling), [CWE-209 오류 메시지 노출](/blog/cwe-209-error-message-exposure), [CWE-476 null 역참조](/blog/cwe-476-null-dereference), [미사용 코드 삭제](/blog/cwe-330-489-dead-code-removal), [CWE-676 위험한 API](/blog/cwe-676-dangerous-api), [면접 정리 1 — 전세사기 피해자 지원관리시스템](/blog/interview-jeonse-support-system)
 
 ## 1. 핵심 요약
 
@@ -29,6 +29,13 @@ category: project-review
 | 기능 검증 | 1차: Claude Chrome 확장으로 브라우저 동작 확인 / 2차: 직접 사용자 관점 재테스트, 전후 스크린샷 비교, **AS-IS 데이터와 DB 대조** | 기존 블로그 기록 + 실제 경험(기억) |
 | 잔여 항목 | 외부 첨부파일 컴포넌트 관련 **4건**. 업그레이드 영향 검토 후 조치 보류 사유·소명 자료를 작성해 보고 | 실제 경험(기억). 공식 위험 수용 승인 여부는 미확인 |
 | 별도 점검 | 웹 취약점 16건(HIGH 6·MEDIUM 7·LOW 3), SQL Injection 14건, 4개 환경 계정 설정 17건 암호화 | 기존 블로그 기록. **다른 점검의 수치이므로 358건에 합산하지 않음** |
+
+### 확정해서 말할 수 있는 문장
+
+- CodeRay 검출 **358건을 유형별로 묶어** 공통 원인 수정, 표준 조치, 미사용 코드 삭제로 처리했다.
+- Claude는 **분석·조치안 검토·구현 보조**에 썼고, 반영 여부는 재테스트와 데이터 대조 후 내가 판단했다.
+- 총 4회 재점검 끝에 **4건**이 남았고, 남은 건은 **보류 사유를 문서화해 보고**했다.
+- 358건 → 4건은 **도구의 검출 건수 감소**이지, 취약점이 모두 사라졌다는 뜻이 아니다.
 
 **가장 오래 걸린 일은 코드 수정이 아니라 기능 테스트였다.** AI로 분석 속도는 높였지만, 변경 범위를 나누고 기존 화면과 데이터가 유지되는지 확인하는 책임은 내가 졌다.
 
@@ -274,6 +281,12 @@ SAST는 실행하지 않고 소스 코드 패턴을 검사하고, DAST는 실행
 **Q15. 지금 다시 한다면 무엇을 바꾸겠나요?**
 유형별 원인·조치·재검사 결과를 짧은 공통 양식으로 남겨 세션 사이에 맥락이 빠지지 않게 하겠습니다. 직접 반복했던 화면 확인 중 자동화할 수 있는 부분도 검토하겠습니다. 당시 모두 구현한 체계가 아니라 이번 경험에서 정리한 개선 방향입니다.
 
+**Q16. 이 경험으로 무엇을 배웠나요?**
+검출 건수가 많아도 **분류하면 원인은 몇 가지 패턴으로 모인다**는 것을 배웠습니다. 그리고 보안 조치가 기능을 깨뜨리면 그것도 장애이기 때문에, 고치는 것만큼 기존 화면과 데이터가 그대로인지 확인하는 일이 중요했습니다. 고칠 수 없는 항목은 이유를 남기는 것까지가 조치라는 것도 배웠습니다.
+
+**Q17. 이 경험이 지원 직무와 어떻게 연결되나요?**
+운영 중인 레거시 시스템에서 영향 범위를 나눠 변경하고, 변경 후 기능과 데이터를 검증한 경험입니다. 점검 결과에 대응하면서 기존 서비스를 깨뜨리지 않아야 하는 운영·유지보수 업무에 그대로 적용할 수 있다고 생각합니다.
+
 ## 8. 주의할 표현과 확인할 내용
 
 ### 바꿔 말할 표현
@@ -297,7 +310,108 @@ SAST는 실행하지 않고 소스 코드 패턴을 검사하고, DAST는 실행
 - [ ] Jsoup 필터의 허용 태그·속성 설정
 - [ ] `throw` 이후 상위 계층이 사용자 오류 응답을 어떻게 구성했는지
 
-## 9. 기록 출처
+## 9. 이론 보충 — 기술 질문 대비
+
+> 아래는 면접 준비 중 공부한 일반 원리와 학습용 예시다. 당시 원본 코드가 아니다.
+
+### 9-1. 출력 문맥마다 인코딩이 다르다
+
+| 출력 위치 | 예시 | 맞는 처리 |
+| --- | --- | --- |
+| HTML 본문 | `<td>${name}</td>` | HTML 이스케이프 (`c:out`, `fn:escapeXml`) |
+| HTML 속성 | `<input value="${name}">` | 속성 값은 반드시 따옴표로 감싸고 HTML 이스케이프 |
+| JavaScript 문자열 | `var n = '${name}';` | JavaScript 문자열 인코딩 (HTML 이스케이프만으로는 부족) |
+| URL 파라미터 | `href="/view?q=${q}"` | URL 인코딩 후, 속성 값으로 HTML 이스케이프 |
+| HTML을 그대로 보여야 하는 본문 | 에디터 본문 | 허용 목록 기반 HTML 정화(sanitize) |
+
+```jsp
+<%-- 학습용 예시 --%>
+<td><c:out value="${item.name}"/></td>                 <%-- HTML 본문 --%>
+<input type="text" value="${fn:escapeXml(item.name)}"> <%-- HTML 속성 --%>
+```
+
+`c:out`은 `escapeXml`이 기본으로 켜져 있어 `<`, `>`, `&`, `'`, `"`를 엔티티로 바꾼다. 다만 JavaScript 문맥에 넣는 값은 별도 인코딩이 필요하다.
+
+### 9-2. Jsoup으로 허용 목록 정화하기
+
+```java
+// 학습용 예시: 허용한 태그·속성만 남기고 나머지는 제거
+Safelist safelist = Safelist.basic()          // b, i, p, ul, li, a 등 기본 서식
+        .addTags("span")
+        .addAttributes("span", "style");      // 허용 범위는 업무 요구로 결정
+
+String clean = Jsoup.clean(dirtyHtml, safelist);
+```
+
+- 차단 목록(blacklist)보다 **허용 목록(safelist)** 이 안전하다. 모르는 태그·속성은 기본으로 제거된다.
+- `style`이나 `a href`처럼 허용한 속성도 위험한 값(`javascript:` URL 등)이 들어올 수 있으므로 정책을 같이 검토한다.
+- Jsoup 1.14.x 이전에는 `Whitelist` 클래스였다. 당시 프로젝트의 버전과 허용 설정은 **미확인**이다.
+
+### 9-3. 예외 처리 — 원인 보존과 자원 정리
+
+```java
+// 학습용 예시: try-with-resources는 예외가 나도 close를 보장한다
+try (InputStream in = Files.newInputStream(path);
+     OutputStream out = response.getOutputStream()) {
+    in.transferTo(out);
+} catch (IOException e) {
+    LOGGER.error("파일 다운로드 처리 중 오류가 발생했습니다.", e);
+    throw new IOException("파일 다운로드 처리 중 오류가 발생했습니다.", e);
+}
+```
+
+| 개념 | 한 줄 |
+| --- | --- |
+| 예외 체이닝 | `new XxxException("메시지", e)`로 원인을 보존. 로그에서 `Caused by:`로 원인이 보인다 |
+| try-with-resources | `AutoCloseable` 자원을 자동으로 닫는다. close 중 예외는 suppressed로 남는다 |
+| `finally` | 대부분 실행되지만 JVM 종료(`System.exit`) 등에서는 실행되지 않는다 |
+| 최상위 예외 처리 | `@ControllerAdvice` 같은 곳에서 사용자 응답은 고정 문구로, 상세는 로그로 분리 |
+
+```java
+// 학습용 예시: 사용자에게는 고정 문구, 상세는 로그로
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public String handle(Exception e, Model model) {
+        LOGGER.error("요청 처리 중 오류가 발생했습니다.", e);
+        model.addAttribute("message", "요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        return "error/common";
+    }
+}
+```
+
+당시 프로젝트에서 최상위 오류 응답을 어떻게 구성했는지는 **미확인**이다.
+
+### 9-4. SAST와 DAST
+
+| 구분 | SAST (정적 분석) | DAST (동적 분석) |
+| --- | --- | --- |
+| 검사 대상 | 소스 코드·바이트코드 | 실행 중인 애플리케이션 |
+| 방식 | 코드 패턴과 데이터 흐름 분석 | 실제 요청을 보내 응답 관찰 |
+| 장점 | 개발 단계에서 위치까지 짚어 줌 | 실제 동작 기준이라 설정·환경 문제도 발견 |
+| 한계 | 오탐이 있고 실행 환경 문제는 못 봄 | 코드 위치를 알려 주지 않고 커버리지에 한계 |
+| 이번 경험 | CodeRay 358건 → 4건 | 해당 작업에서 수행했는지 미확인 |
+
+### 더 공부할 자료
+
+- [OWASP XSS 방지 치트 시트](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html): 출력 문맥별 인코딩 규칙
+- [OWASP 오류 처리 치트 시트](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html): 사용자 응답과 로그 분리
+- [OWASP 로깅 치트 시트](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html): 로그에 남기면 안 되는 정보
+- [jsoup — Safelist로 HTML 정화하기](https://jsoup.org/cookbook/cleaning-html/safelist-sanitizer)
+- [Java 튜토리얼 — try-with-resources](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html)
+- CWE 정의: [CWE-79](https://cwe.mitre.org/data/definitions/79.html), [CWE-209](https://cwe.mitre.org/data/definitions/209.html), [CWE-476](https://cwe.mitre.org/data/definitions/476.html), [CWE-754](https://cwe.mitre.org/data/definitions/754.html)
+
+## 10. 면접 직전 암기 카드
+
+| 구분 | 한 줄 |
+| --- | --- |
+| 문제 | CodeRay 최초 검출 358건, 유형이 섞여 있어 일괄 수정 시 기능이 깨질 위험 |
+| 행동 | 유형 분류 → 공통 원인·표준 조치·삭제·조치불가 판단 → Claude로 분석 보조 → 단계적 수정 → 두 단계 기능 확인 → 4회 재점검 |
+| 결과 | 검출 **358건 → 4건**. 남은 4건은 영향 검토 후 보류 사유 보고 |
+| 나의 기여 | 분류 기준과 변경 범위를 정하고, **기능·데이터가 그대로인지 직접 검증** |
+| 피할 말 | "취약점 100% 해결", "AI가 다 고쳤다", "잔여 4건은 승인됨", 다른 점검 수치 합산 |
+
+## 11. 기록 출처
 
 - **실제 경험(기억):** 이번 면접 복기에서 정리한 작업 흐름과 검증 방법 (4회 점검, 세션 4개, 스크린샷 비교, 잔여 4건 보고)
 - **기존 블로그 기록:** [Claude 활용 취약점 조치·검증](/blog/claude-assisted-security-remediation), [CWE-79](/blog/cwe-79-xss-remediation), [CWE-754](/blog/cwe-754-exception-handling), [CWE-209](/blog/cwe-209-error-message-exposure), [CWE-476](/blog/cwe-476-null-dereference), [CWE-330·489·497](/blog/cwe-330-489-dead-code-removal), [CWE-676](/blog/cwe-676-dangerous-api), [면접 정리 1](/blog/interview-jeonse-support-system)
