@@ -4,7 +4,7 @@ date: 2026-11-20
 createdAt: 2026-11-20T18:21:26+09:00
 tags: Interview, SQL, CUBRID, Performance, Index
 summary: 전세사기 피해자 관련 행정망 내부 시스템의 목록 조회 지연 개선 경험을 실제 수행 업무, 검증 과정, 사후 학습, 미확인 사항으로 구분해 정리한 면접 복기 노트.
-category: sql-tuning
+category: project-review
 ---
 
 > **문서 목적:** SQL 튜닝 경험을 실제로 수행한 만큼만 설명하고, 당시 이해가 부족했던 실행계획과 인덱스 원리는 사후 학습으로 보완한다. 답변을 외우기보다 **문제 → 접근 → 검증 → 결과**의 흐름을 이해하는 데 중점을 둔다.
