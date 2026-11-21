@@ -63,6 +63,7 @@ export const CATEGORY_DEFINITIONS = [
     subs: [
       { id: "sast-cwe", label: "SAST · 시큐어코딩 (CWE)" },
       { id: "linux-ops", label: "Linux · 운영 자동화" },
+      { id: "home-server", label: "홈서버 구축하기" },
     ],
   },
   {

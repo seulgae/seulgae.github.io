@@ -66,6 +66,7 @@ GitHub 마크다운(GFM) 문법을 지원합니다.
 | Database & Performance | `redis-cache` | Redis · 캐시 설계 |
 | Security & Infra | `sast-cwe` | SAST · 시큐어코딩 (CWE) |
 | Security & Infra | `linux-ops` | Linux · 운영 자동화 |
+| Security & Infra | `home-server` | 홈서버 구축하기 |
 | 면접 준비 · 사이트 가이드 | `project-review` | 기업 면접 준비 |
 | 면접 준비 · 사이트 가이드 | `dev-notes` | 블로그 사이트 가이드 |
 

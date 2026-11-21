@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:23:49+09:00
 tags: PostgreSQL, Docker Compose, Volumes, SSH, JDBC, Database
 summary: PostgreSQL 18 Compose 예시를 통해 데이터 경로·초기화·역할 권한과 SSH 터널 검증을 구분해 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

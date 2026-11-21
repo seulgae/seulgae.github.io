@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:21:56+09:00
 tags: Docker, Docker Compose, Ubuntu, Linux, Containers, Security
 summary: 공식 APT 저장소 설치와 hello-world 검증을 클라이언트·데몬·권한·컨테이너 수명으로 나눠 설명했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:11:24+09:00
 tags: Ubuntu, Hyper-V, Docker, Docker Compose, PostgreSQL, Spring Boot, SSH, DevOps
 summary: Windows 가상머신으로 시작한 홈서버의 계층과 통신 경로를 정리하고, 물리 서버 확장과 구분해 10편의 구축 로드맵을 세웠다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며 — 애플리케이션 실행 다음의 문제
@@ -187,5 +187,4 @@ docker compose version
 ---
 
 [전체 목차](/blog/home-server-architecture-hyper-v-ubuntu-docker) · [다음 글](/blog/home-server-hyper-v-ubuntu-install)
-
 

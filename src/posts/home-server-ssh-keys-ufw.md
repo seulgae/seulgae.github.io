@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:20:40+09:00
 tags: SSH, OpenSSH, Ubuntu, UFW, Windows, Security
 summary: ed25519 공개키와 Windows 에이전트, SSH 접근 제한을 인증·방화벽·검증 순서로 나눠 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

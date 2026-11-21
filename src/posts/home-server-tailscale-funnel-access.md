@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:31:29+09:00
 tags: Tailscale, Funnel, HTTPS, SSH, Nginx, WebSocket, Network
 summary: 관리용 사설 접속과 방문자용 공개 웹 경로를 분리하고, HTTPS 화면과 WebSocket 연결을 따로 검증하는 방법을 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

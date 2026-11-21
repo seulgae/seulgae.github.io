@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:18:24+09:00
 tags: Ubuntu, Hyper-V, Windows, Linux, Virtualization, APT
 summary: Windows Pro에서 Ubuntu VM을 준비하는 순서와 설치 옵션의 의미, OS·커널·패키지 상태를 구분하는 검증 방법을 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

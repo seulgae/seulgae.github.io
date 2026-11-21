@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:19:32+09:00
 tags: Hyper-V, Ubuntu, Netplan, NAT, Networking, PowerShell
 summary: 내부 스위치와 Windows 게이트웨이·NAT, Ubuntu 주소·경로·DNS를 나눠 구성하고 SSH 실패를 계층별로 확인하는 방법을 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

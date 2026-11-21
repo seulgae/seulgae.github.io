@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:25:32+09:00
 tags: Java, Spring Boot, Gradle, Docker, Eclipse Temurin, PostgreSQL
 summary: InvenCore의 실제 Gradle·Dockerfile을 읽고 실행 JAR·빌드 컨텍스트·환경변수·DB 권한 검증을 분리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

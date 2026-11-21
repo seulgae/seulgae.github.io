@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:33:53+09:00
 tags: Ubuntu, Home Server, Docker Compose, PostgreSQL, Migration, Tailscale, Deployment
 summary: 가상머신에서 물리 서버로 이동하며 달라진 네트워크·공유 인프라·최초 배포 조건을 실제 기록과 코드로 구분해 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며

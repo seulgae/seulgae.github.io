@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:27:10+09:00
 tags: Docker Compose, PostgreSQL, Backup, Rollback, Python, Operations
 summary: 두 프로젝트의 실제 운영 도구를 비교하고 상태 확인·설정 반영·데이터 복원·이미지 롤백의 경계를 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며
@@ -134,6 +134,4 @@ docker compose exec -T postgres pg_restore --exit-on-error -U example_admin -d e
 ---
 
 [전체 목차](/blog/home-server-architecture-hyper-v-ubuntu-docker) · [이전 글](/blog/home-server-java17-spring-boot-docker-build) · [다음 글](/blog/home-server-tailscale-funnel-access)
-
-
 

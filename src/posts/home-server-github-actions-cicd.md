@@ -4,7 +4,7 @@ date: 2026-11-21
 createdAt: 2026-11-21T23:32:40+09:00
 tags: GitHub Actions, CI/CD, Docker, GHCR, Tailscale, Flyway, Deployment
 summary: 테스트·이미지 게시·서버 배포를 분리하고 커밋·이미지 digest·스키마 호환성을 하나의 릴리스로 묶는 실제 운영 구조를 정리했다.
-category: linux-ops
+category: home-server
 ---
 
 ## 1. 들어가며
