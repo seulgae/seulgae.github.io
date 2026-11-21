@@ -11,7 +11,7 @@ category: project-review
 >
 > **경험 질문은 각 복기 글에서:** [빌링 GW 연동 오류 관리](/blog/billing-gw-integration-error-interview-review), [NURI2 알림톡 자동 발송 배치](/blog/nuri2-message-batch-interview-review). 두 글의 "지원 직무와 연결 — 엠앤와이즈 TS팀" 장에 이 회사에 맞춘 답변이 있다.
 >
-> **회사와 관계없는 인성 질문(성격의 장단점, 퇴사 사유)은:** [인성 면접 답변 정리](/blog/interview-personality-questions)
+> **회사와 관계없는 인성 질문은:** [인성면접 답변 정리](/blog/interview-personality-questions)
 
 ## 1. 기업과 직무 이해
 
@@ -70,7 +70,7 @@ category: project-review
 
 ## 4. 운영 업무 질문 — "저희도 운영 업무가 많은데 괜찮으시겠어요?"
 
-퇴사 사유 답변은 [인성 면접 답변 정리](/blog/interview-personality-questions)에 있다. TS팀도 운영과 고객사 대응 업무가 포함되는 직무라, 퇴사 사유를 들은 면접관이 이렇게 물을 수 있다.
+퇴사 사유 답변은 [인성면접 답변 정리](/blog/interview-personality-questions)에 있다. TS팀도 운영과 고객사 대응 업무가 포함되는 직무라, 퇴사 사유를 들은 면접관이 이렇게 물을 수 있다.
 
 > 운영 업무 자체가 싫었던 것은 아닙니다. 실제로 운영 중 발생한 문제를 분석하고 개선하는 과정에서 보람도 느꼈습니다.
 >
