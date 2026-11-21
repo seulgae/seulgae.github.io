@@ -175,7 +175,10 @@ category: project-review
 미발송·이력 미확인 건을 확인하고 재처리할 수 있게 했습니다. 다만 LOG 반영 지연을 어떻게 구분했는지, 자동 재처리의 상세 조건은 원본 로직을 확인해야 정확히 말씀드릴 수 있습니다.
 
 **Q7. 같은 대상에게 중복 발송되지 않도록 어떻게 했나요?**
-`SEND_YN`으로 이미 적재한 대상과 아직 적재하지 않은 대상을 구분했습니다. 동시 실행이나 재처리까지 막는 유일 제약·멱등 처리가 있었는지는 원본 코드를 확인해야 합니다. 지금 다시 설계한다면 대상과 발송 회차를 묶은 유일 키를 두고, LOG 반영을 기다리는 시간을 정해 재발송 조건을 명확히 하겠습니다.
+`SEND_YN`으로 이미 적재한 대상과 아직 적재하지 않은 대상을 구분했습니다. 동시 실행이나 재처리까지 막는 유일 제약·멱등 처리가 있었는지는 원본 코드를 확인해야 합니다. 지금 다시 설계한다면 대상과 발송 회차를 묶은 유일 키를 최종 방어선으로 두고, 조건부 UPDATE로 한 건씩 선점하고, 배치가 한 서버에서만 돌게 하겠습니다. 재발송은 LOG 반영 대기 시간이 지난 뒤 결과를 다시 확인하고 하겠습니다. *(방어층 정리: 11-1)*
+
+**Q7-1. 배치가 두 서버에서 동시에 돌면 어떻게 되나요?**
+`SEND_YN`만 보고 처리하면 두 실행이 같은 `N` 건을 동시에 읽어 둘 다 적재할 수 있습니다. 그래서 일반적으로는 ShedLock 같은 DB 락으로 한 서버만 실행하게 하고, 조건부 UPDATE로 선점하고, 유일 제약으로 마지막에 한 번 더 막습니다. 당시 서버 구성과 실행 제어 방식은 확인이 필요합니다.
 
 ### 데이터와 성과
 
@@ -220,6 +223,10 @@ category: project-review
 | `SEND_YN` Y/N으로 적재 여부만 관리 | `READY → QUEUED → DONE / FAIL`처럼 적재·결과 확인 단계를 나눠 관리 |
 | LOG 미확인 건을 운영자가 보고 재처리 | LOG 반영 대기 시간을 정하고, 지나도 이력이 없는 건만 재처리 대상으로 분류 |
 | 중복 방지 수단 미확인 | 대상 + 발송 회차(또는 기준일)로 유일 키를 두어 재실행 시에도 한 번만 적재 |
+| 메시지 키 생성 방식 미확인 | 업무 키(대상·회차)로 메시지 키를 만들어 같은 요청은 같은 키가 되게 함 |
+| 배치 단일 실행 여부 미확인 | DB 락(ShedLock 등)이나 Job 파라미터로 한 번에 하나만 실행 |
+| 수동 재발송 | 배치와 같은 선점·제약 조건을 거치게 하고, 직전 발송 이력을 화면에 표시 |
+| 중복 여부를 사후에 확인하지 않음 | 수신자·회차별 중복 탐지 쿼리로 주기 점검 |
 | 대상 선정 오류를 발송 후 발견 | 발송 전에 추출 결과를 건수·수신자 구분으로 점검 |
 | 성과를 민원 건수 전후로만 기억 | 집계 기간과 기준을 고정해 발송 건수·민원 건수를 같은 기간으로 비교 |
 
@@ -227,29 +234,130 @@ category: project-review
 
 > 아래는 면접 준비 중 공부한 일반 원리와 학습용 예시다. 실제 NURI2 연동 소스가 아니다.
 
-### 11-1. 상태 전이로 중복 적재 막기
+### 11-1. 중복 발송을 막는 방어층
 
-`SEND_YN`처럼 두 값만 있으면 "적재 중에 죽은 건"과 "아직 시작 안 한 건"을 구분하기 어렵다. 상태를 나누고 **조건부 UPDATE로 한 건을 선점**하면 두 배치가 동시에 돌아도 한쪽만 처리한다.
+> 당시 구현은 `SEND_YN`으로 적재 여부를 구분한 것까지다. 아래는 **일반적인 모범 방식**을 공부한 내용이며 당시 적용했다는 뜻이 아니다.
+
+**중복은 어디서 생기나**
+
+| 상황 | 예 |
+| --- | --- |
+| 배치가 두 번 실행됨 | WAS 이중화로 두 서버에서 같은 스케줄이 동시에 실행 |
+| 적재 도중 실패 후 재실행 | DATA INSERT는 됐는데 `SEND_YN` 갱신 전에 오류 → 다음 실행에서 다시 적재 |
+| 결과 미확인 상태에서 재발송 | LOG 반영이 늦을 뿐인데 실패로 보고 다시 보냄 |
+| 수동 재발송 | 운영자가 이력 화면에서 같은 건을 다시 보냄 |
+
+한 가지 장치로는 네 상황을 다 막기 어렵다. 그래서 **여러 층으로 방어**하고, 마지막 방어선은 DB 제약으로 둔다.
+
+| 층 | 방어 수단 | 막는 상황 |
+| --- | --- | --- |
+| ① 추출 | 이미 적재한 대상을 추출 쿼리에서 제외 | 재실행 |
+| ② 실행 | 배치를 한 번에 하나만 실행 | 동시 실행 |
+| ③ 선점 | 조건부 UPDATE로 한 건씩 선점 | 동시 실행, 재실행 |
+| ④ 원자성 | DATA 적재와 상태 변경을 한 트랜잭션으로 | 적재 도중 실패 |
+| ⑤ 제약 | 업무 키 유일 제약 + 결정적인 메시지 키 | 모든 상황의 최종 방어선 |
+| ⑥ 재발송 | 결과 미확인과 실패를 구분한 뒤에만 재발송 | 결과 미확인 재발송, 수동 재발송 |
+| ⑦ 점검 | 중복 탐지 쿼리로 사후 확인 | 놓친 경우 발견 |
+
+#### ① 추출 단계에서 이미 보낸 대상 제외
 
 ```sql
--- 학습용 예시: 대상 + 발송 기준일로 한 번만 존재하게
-ALTER TABLE notice_target
-  ADD CONSTRAINT uk_notice_target UNIQUE (applicant_id, notice_round);
+-- 학습용 예시: 같은 회차에 이미 적재한 대상은 뽑지 않는다
+SELECT a.applicant_id, a.receiver
+  FROM applicant a
+ WHERE a.decision_due_dt < CURRENT_DATE
+   AND NOT EXISTS (
+         SELECT 1 FROM notice_target t
+          WHERE t.applicant_id = a.applicant_id
+            AND t.notice_round = #{noticeRound}
+       );
+```
 
--- READY인 건만 QUEUED로 바꾼다. 영향받은 행이 1이면 내가 선점한 것
+#### ② 배치를 한 번에 하나만 실행
+
+WAS가 두 대면 같은 `@Scheduled` 작업이 두 서버에서 동시에 돌 수 있다. DB 락 테이블로 한 서버만 실행하게 하는 방법이 흔하다.
+
+```java
+// 학습용 예시: ShedLock — 락을 얻은 서버 한 대만 실행
+@Scheduled(cron = "0 0 5 * * *")
+@SchedulerLock(name = "reviewDelayNotice", lockAtMostFor = "PT30M")
+public void sendReviewDelayNotice() {
+    noticeService.enqueueTargets();
+}
+```
+
+Spring Batch를 쓴다면 같은 Job 파라미터(예: 기준일)로 이미 완료된 JobInstance는 다시 실행되지 않는다.
+
+#### ③ 조건부 UPDATE로 선점
+
+`SEND_YN`처럼 두 값만 있으면 "적재 중에 죽은 건"과 "아직 시작 안 한 건"을 구분하기 어렵다. 상태를 `READY → QUEUED → DONE / FAIL`로 나누고 **조건부 UPDATE로 한 건을 선점**하면, 두 배치가 동시에 돌아도 한쪽만 처리한다.
+
+```sql
+-- 학습용 예시: READY인 건만 QUEUED로 바꾼다. 영향받은 행이 1이면 내가 선점한 것
 UPDATE notice_target
    SET status = 'QUEUED', queued_at = CURRENT_TIMESTAMP
  WHERE target_id = #{targetId}
    AND status = 'READY';
 ```
 
+#### ④ 적재와 상태 변경을 한 트랜잭션으로
+
 ```java
-// 학습용 예시: 선점에 성공한 건만 DATA 테이블에 적재
-int claimed = targetMapper.markQueued(targetId);
-if (claimed == 1) {
-    nuriMapper.insertMessage(message);
+// 학습용 예시: 선점·적재가 함께 커밋되거나 함께 롤백된다
+@Transactional(rollbackFor = Exception.class)
+public void enqueue(NoticeTarget target) {
+    if (targetMapper.markQueued(target.getId()) != 1) {
+        return;                                   // 다른 실행이 이미 선점
+    }
+    nuriMapper.insertMessage(toMessage(target));  // DATA 적재
 }
 ```
+
+두 테이블이 **다른 DB**에 있으면 이 방식으로 원자성이 보장되지 않는다(11-2, 11-3 참고).
+
+#### ⑤ 업무 키 유일 제약과 결정적인 메시지 키
+
+"이 사람에게 이 회차 안내는 한 번"을 DB가 강제하게 한다. 코드에 실수가 있어도 두 번째 적재는 제약 위반으로 거부된다.
+
+```sql
+-- 학습용 예시
+ALTER TABLE notice_target
+  ADD CONSTRAINT uk_notice_target UNIQUE (applicant_id, notice_round);
+```
+
+메시지 키도 무작위 값 대신 **업무 키로 만들면** 같은 요청은 항상 같은 키가 된다. DATA 테이블의 키 컬럼에 유일 제약을 둘 수 있다면 그 단계에서도 중복이 바로 드러난다.
+
+```java
+// 학습용 예시: 같은 대상·회차면 항상 같은 메시지 키
+String msgKey = "RD-" + noticeRound + "-" + applicantId;
+```
+
+솔루션 테이블(NURI2 DATA)에 제약을 추가할 수 있는지는 솔루션 정책에 따라 다르므로, 보통은 **업무 쪽 대상 테이블**에 먼저 둔다.
+
+#### ⑥ 결과 미확인과 실패를 구분한 뒤에만 재발송
+
+| 상태 | 판단 | 재발송 |
+| --- | --- | --- |
+| 적재 후 대기 시간 이내, LOG 없음 | 결과 미확인 | 하지 않음 |
+| 대기 시간이 지나도 LOG 없음 | 확인 필요 | 솔루션 쪽 확인 후 결정 |
+| LOG에 실패 결과 | 실패 | 새 회차(또는 재발송 순번)로 보냄 |
+| LOG에 성공 결과 | 완료 | 하지 않음 |
+
+재발송 직전에 LOG를 **한 번 더 조회**한다. 운영자 화면의 수동 재발송도 같은 조건(③·⑤)을 거치게 하고, 화면에 직전 발송 이력을 함께 보여 준다.
+
+#### ⑦ 중복 탐지 쿼리로 사후 점검
+
+```sql
+-- 학습용 예시: 같은 수신자·회차로 두 번 이상 적재된 건
+SELECT receiver, notice_round, COUNT(*) AS cnt
+  FROM msg_data
+ GROUP BY receiver, notice_round
+HAVING COUNT(*) > 1;
+```
+
+막는 장치가 있어도 실제로 0건인지 주기적으로 확인한다.
+
+**면접용 한 문장:** “중복 발송은 코드 조건만으로 막기 어려워서, **DB 유일 키로 최종 방어선을 두고 상태 선점, 단일 실행, 결과 확인 후 재발송**을 함께 쓰는 것이 일반적입니다. 당시에는 `SEND_YN`으로 적재 여부를 구분했고, 지금 다시 한다면 대상과 회차로 유일 키부터 두겠습니다.”
 
 ### 11-2. `@Transactional` 기본 규칙
 
@@ -339,6 +447,8 @@ Message message = Message.builder()
 - [Spring 문서 — 선언적 트랜잭션의 롤백 규칙](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/rolling-back.html)
 - [MyBatis 문서 — Mapper XML 파일](https://mybatis.org/mybatis-3/sqlmap-xml.html)
 - [Transactional Outbox 패턴 (microservices.io)](https://microservices.io/patterns/data/transactional-outbox.html)
+- [Idempotent Consumer 패턴 (microservices.io)](https://microservices.io/patterns/communication-style/idempotent-consumer.html)
+- [ShedLock — 분산 환경 스케줄 작업 단일 실행](https://github.com/lukas-krecan/ShedLock)
 - [Java `Formatter` API (`String.format` 문법)](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Formatter.html)
 
 ## 12. 확인할 항목
@@ -350,6 +460,8 @@ Message message = Message.builder()
 - [ ] DATA/LOG 실제 테이블명과 결과 코드(`1001`, `1002` 등) 정의
 - [ ] LOG 미생성 조건: 대기·처리 실패·이력 지연 구분
 - [ ] 선택 재발송·일일 배치 재처리 조건과 중복 방지 여부
+- [ ] 메시지 키 생성 방식, 대상 테이블·DATA 테이블의 유일 제약 여부
+- [ ] WAS 이중화 여부와 배치 단일 실행 제어 방식
 - [ ] 민원 문의 44건 → 31건의 비교 기간·집계 기준
 - [ ] 새벽 배치·오전 10시 예약 발송·일평균 약 30건 기록의 근거
 - [ ] 대상 관리 테이블과 NURI2 DATA 테이블이 같은 DB에 있었는지
