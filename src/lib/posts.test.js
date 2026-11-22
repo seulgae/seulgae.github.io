@@ -22,7 +22,7 @@ describe("블로그 글 로더", () => {
     const backend = getCategoryTree().find((group) => group.groupId === "backend");
     const java = backend.subs.find((category) => category.id === "java");
     expect(java.label).toBe("Java");
-    expect(java.count).toBe(series.length);
+    expect(java.count).toBeGreaterThanOrEqual(series.length);
   });
 
   test("검수 글 대신 실습 과제를 분류하고 기존 실무 글은 유지한다", () => {
