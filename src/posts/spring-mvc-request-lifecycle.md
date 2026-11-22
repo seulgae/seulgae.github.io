@@ -7,8 +7,6 @@ summary: 서블릿 필터부터 DispatcherServlet·컨트롤러·메시지 변�
 category: spring-mybatis
 ---
 
-# HTTP 요청은 Spring MVC에서 어떻게 처리되는가
-
 ## 1. 학습 배경
 
 운영자 이력 조회를 개발한 기록은 있지만 당시 모든 내부 프레임워크 동작을 분석했다고 말할 수는 없다. 그 경험을 설명할 기반으로 Servlet 기반 Spring MVC의 일반 요청 흐름을 복습한다. WebFlux의 실행 모델은 이 글의 범위가 아니다.

@@ -7,8 +7,6 @@ summary: 엔티티의 네 상태와 변경 감지·flush·commit을 구분하고
 category: spring-mybatis
 ---
 
-# 영속성 컨텍스트와 엔티티 생명주기
-
 ## 1. 학습 배경
 
 저장 메서드 호출과 실제 SQL·커밋을 같은 시점으로 생각하지 않기 위해 JPA 상태 모델을 복습한다. Jakarta Persistence 3.1과 Hibernate 6.6을 참고한 일반 학습이며 실무 성과를 주장하지 않는다.

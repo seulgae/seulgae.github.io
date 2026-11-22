@@ -7,8 +7,6 @@ summary: 연결·문장·결과 처리와 Mapper 실행을 연결하고 파라�
 category: spring-mybatis
 ---
 
-# JDBC에서 MyBatis까지 — SQL은 어떻게 실행되는가
-
 ## 1. 학습 배경
 
 SQL 조회·적재와 MyBatis 관련 기존 기록을 이해할 기반을 정리한다. 구체적인 연결 풀·드라이버·캐시 설정은 프로젝트마다 다르므로 과거 업무의 설정으로 단정하지 않는다.

@@ -7,8 +7,6 @@ summary: 요청 수락·발송·결과 확인을 분리하고 NURI2 DB 큐 연�
 category: kafka-di
 ---
 
-# 동기·비동기와 UMS 발송 흐름 이해하기
-
 ## 1. 학습 배경
 
 NURI2 배치 경험을 UMS 연동 직무와 연결하려 한다. 직접 개발한 것은 대상 추출·관리·DATA 적재·조회 화면·재처리 경로다. 예약·실제 발송·채널 대체는 솔루션 제공 기능이었다. 이를 구분한 [기존 실무 복기](/blog/nuri2-message-batch-interview-review)를 경험 근거로 사용한다.

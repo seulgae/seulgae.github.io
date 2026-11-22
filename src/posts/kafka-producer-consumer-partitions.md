@@ -7,8 +7,6 @@ summary: 기록의 저장·소비 단위와 순서·offset·리밸런싱을 연�
 category: kafka-di
 ---
 
-# Kafka의 Topic·Partition·Consumer Group
-
 ## 1. 학습 배경
 
 빌링 GW 경험은 연동 오류를 분석하고 일일 집계·공유 체계를 만든 운영 경험이다. Kafka 클러스터 전체나 소비 프로토콜을 단독 설계했다는 뜻은 아니다. 이 글은 Apache Kafka 4.1 문서를 기준으로 기본 구조를 복습한다. 당시 버전·실제 설정은 확인 필요다.
