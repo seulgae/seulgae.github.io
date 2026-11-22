@@ -5,6 +5,8 @@ tags: Kafka, Java, Spring, Operations
 summary: 원부·응용 파트의 키와 컬럼을 맞추는 Kafka GW 구조와, 누적 오류 해소를 위해 오류 대응 절차와 일일 메일 보고 체계를 만든 운영 경험
 category: kafka-di
 ---
+> **면접 Q1~Q3 검증 안내 — 2026-11-22:** 이 글의 구조·메서드·SQL은 기존 경험을 설명한 기록이며, 당시 업무 원본 코드·DDL·운영 로그를 이번에 확인한 것은 아니다. “인코딩 오류 95% 감소”, “신규 실패율 5% 미만”, 공통 모듈·보정 스크립트의 구체 적용 범위는 원본 자료가 없어 추가 확인 대상으로 남긴다. 원문 수치는 보존하지만 면접 성과로 추가 확정하지 않는다. 운영 데이터 수정은 담당 파트가 했고, 본인은 분류·가이드·공유·재검증을 맡았다는 [최신 GW 복기](/blog/billing-gw-integration-error-interview-review)를 우선한다. [기업 Q&A 매핑](/blog/interview-mnwise-ts-prep), [Kafka Q3와 일반 원리](/blog/kafka-producer-consumer-partitions)를 함께 읽는다.
+
 
 서비스 도메인 연동 시스템을 운영하며 가장 오래 맡았던 업무 중 하나가 **GW(Gateway) 데이터
 연동**이다. 한 문장으로 정리하면 이렇다 — *Kafka pub/sub으로 연동되는
