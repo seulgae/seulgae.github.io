@@ -7,6 +7,8 @@ summary: 채용 NPC 역할별 화면과 게시판 페이지 이동을 연결해 
 category: seulgae-tech-lab
 ---
 
+> 후속 변경: 채용 기능은 PR #91에서 제거됐다. 이 글은 제거 전 설계와 구현을 기록한다. [기능 삭제와 V16 축소](/blog/seulgae-tech-lab-recruitment-removal-schema-contract)에서 이후 과정을 정리했다.
+
 한 공간의 세 담당자가 모두 같은 긴 화면을 보여 주면 사용자는 자기 작업에 필요한 부분을 찾기 어렵다. PR #74·#75는 목록의 양과 업무 책임을 각각 나눴다.
 
 ## 다섯 건씩 보여 주되 데이터 경계를 살핀다
