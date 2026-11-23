@@ -33,14 +33,6 @@ export const CATEGORY_DEFINITIONS = [
     ],
   },
   {
-    groupId: "practice",
-    groupLabel: "AI 활용 기록",
-    subs: [
-      { id: "practice-tasks", label: "AI 성과별 실습 과제" },
-      { id: "ai-inspection", label: "AI 점검 기록" },
-    ],
-  },
-  {
     groupId: "backend",
     groupLabel: "Backend & Architecture",
     subs: [

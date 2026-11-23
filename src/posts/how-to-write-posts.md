@@ -57,8 +57,6 @@ GitHub 마크다운(GFM) 문법을 지원합니다.
 | 대분류 | id | 소분류 |
 | --- | --- | --- |
 | 사이드 프로젝트 | `seulgae-tech-lab` | 슬개 기술 연구소 |
-| AI 활용 기록 | `practice-tasks` | AI 성과별 실습 과제 |
-| AI 활용 기록 | `ai-inspection` | AI 점검 기록 |
 | Backend & Architecture | `java` | Java |
 | Backend & Architecture | `spring-mybatis` | Spring · 아키텍처 |
 | Backend & Architecture | `kafka-di` | Kafka · 데이터 정합성 |
