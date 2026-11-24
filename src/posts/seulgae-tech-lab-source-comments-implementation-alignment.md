@@ -11,4 +11,4 @@ category: seulgae-tech-lab
 
 PR #130은 이 차이와 함께 회의 안건 편집 권한, 로컬 PostgreSQL, 업무 비용과 화면 이벤트 설명을 현재 구현에 맞추는 작업이다. Java 참조는 실제 대상에 연결하고, 한 줄에 섞여 있던 `@param`과 `@return`은 별도 줄로 나눴다. React·Phaser 소스에도 현재 화면과 게임 흐름에 맞는 설명을 붙였다.
 
-변경 범위는 소스 주석이다. PR에는 Maven Javadoc 생성 성공과 프런트 테스트 171개·빌드 통과가 기록돼 있으며 기존 주석 누락과 태그 경고는 남아 있다. 문서 생성이 성공해도 설명이 정확한지는 각 호출 경로와 권한 판단을 읽어 확인해야 한다. 확인 시점에 PR은 열려 있다. [소스 주석 현행화](https://github.com/seulgae/seulgae-tech-lab/pull/130)
+변경 범위는 소스 주석이다. PR에는 Maven Javadoc 생성 성공과 프런트 테스트 171개·빌드 통과가 기록돼 있으며 기존 주석 누락과 태그 경고는 남아 있다. 문서 생성이 성공해도 설명이 정확한지는 각 호출 경로와 권한 판단을 읽어 확인해야 한다. 이후 main 병합을 확인했다. [소스 주석 현행화](https://github.com/seulgae/seulgae-tech-lab/pull/130)
