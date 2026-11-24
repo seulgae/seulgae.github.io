@@ -9,6 +9,7 @@ import { paths } from "../routes";
 import "../styles/blog.css";
 
 const PAGE_SIZE = 10;
+const PAGE_GROUP_SIZE = 10;
 
 function resolveFeedHeading(groupParam, categoryParam, tagParam) {
   if (categoryParam) {
@@ -52,6 +53,11 @@ function resolveFeedHeading(groupParam, categoryParam, tagParam) {
  * 티스토리 스타일 블로그 글 목록.
  * 좌측 사이드바의 대분류(group)·소분류(category)·태그(tag) 쿼리 파라미터와
  * 키워드 실시간 검색 + 10개 단위 페이징을 연동합니다.
+ * 페이지 번호는 열 개씩 묶고 이전·다음 버튼으로 묶음 사이를 이동합니다.
+ *
+ * @author seulgae
+ * @version 1.0, 페이지 번호 묶음 이동
+ * @see "None"
  */
 function BlogListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -121,6 +127,13 @@ function BlogListPage() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
+  const groupStart =
+    Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+  const groupEnd = Math.min(groupStart + PAGE_GROUP_SIZE - 1, totalPages);
+  const pageNumbers = Array.from(
+    { length: groupEnd - groupStart + 1 },
+    (_, index) => groupStart + index,
+  );
   const visible = filtered.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
@@ -137,6 +150,10 @@ function BlogListPage() {
     setSearchParams({});
   };
 
+  /**
+   * 선택한 페이지의 글을 표시하고 목록 상단으로 이동합니다.
+   * @param {number} next 표시할 페이지 번호
+   */
   const goToPage = (next) => {
     setPage(next);
     window.scrollTo(0, 0);
@@ -237,29 +254,33 @@ function BlogListPage() {
           <button
             type="button"
             className="blog-page-button"
-            disabled={currentPage === 1}
-            onClick={() => goToPage(currentPage - 1)}
+            aria-label="이전 페이지 묶음"
+            disabled={groupStart === 1}
+            onClick={() => goToPage(groupStart - PAGE_GROUP_SIZE)}
           >
             이전
           </button>
 
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((n) => (
-            <button
-              key={n}
-              type="button"
-              className={`blog-page-button number ${n === currentPage ? "active" : ""}`}
-              aria-current={n === currentPage ? "page" : undefined}
-              onClick={() => goToPage(n)}
-            >
-              {n}
-            </button>
-          ))}
+          <div className="blog-page-numbers">
+            {pageNumbers.map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={`blog-page-button number ${n === currentPage ? "active" : ""}`}
+                aria-current={n === currentPage ? "page" : undefined}
+                onClick={() => goToPage(n)}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
 
           <button
             type="button"
             className="blog-page-button"
-            disabled={currentPage === totalPages}
-            onClick={() => goToPage(currentPage + 1)}
+            aria-label="다음 페이지 묶음"
+            disabled={groupEnd === totalPages}
+            onClick={() => goToPage(groupEnd + 1)}
           >
             다음
           </button>

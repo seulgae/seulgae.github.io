@@ -214,13 +214,21 @@
 
 /* ── 페이징 ── */
 .blog-pagination {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, max-content) auto;
+  align-items: center;
   justify-content: center;
   gap: 6px;
   margin-top: 28px;
   padding-top: 20px;
   border-top: 1px solid var(--blog-line, #e2e8f0);
+}
+
+.blog-page-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
 }
 
 .blog-page-button {
