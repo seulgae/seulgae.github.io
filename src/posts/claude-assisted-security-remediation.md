@@ -1,6 +1,7 @@
 ---
 title: 취약점을 유형별로 나누고 Claude와 검토하기 — 세션 분리부터 화면·데이터 검증까지
 date: 2026-11-13
+createdAt: 2026-11-13T00:00:00+09:00
 tags: Security, SAST, Claude, AI, Retrospective
 summary: CodeRay 결과를 유형별로 분류하고 Claude 세션을 나눠 분석·수정에 활용한 뒤, 브라우저 확인·직접 재테스트·AS-IS 데이터 대조로 검증한 보안 조치 경험
 category: sast-cwe

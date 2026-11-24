@@ -1,6 +1,7 @@
 ---
 title: 면접 정리 3 — 빌링 GW의 키 매핑·데이터 정합성·Oracle 튜닝
 date: 2026-10-22
+createdAt: 2026-10-22T00:00:00+09:00
 tags: Interview, Retrospective, Kafka, Oracle, POI, Spring
 summary: Kafka·Redis의 연계 구조, 오류 대응 절차 정비와 일일 보고 체계 구축, 인코딩 개선과 Oracle 튜닝 경험을 정리한 면접 자료
 category: project-review

@@ -1,6 +1,7 @@
 ---
 title: MyBatis를 JPA처럼 쓰던 연계 로직 — 범용 동적 쿼리를 정적 쿼리로 되돌리기
 date: 2026-06-17
+createdAt: 2026-06-17T00:00:00+09:00
 tags: Java, MyBatis, SQL, Security
 summary: 테이블명·컬럼명을 문자열 치환으로 조립하던 망간 데이터 동기화 로직을 테이블별 정적 쿼리로 재작성한 기록 — 그리고 대상 목록을 코드에서 뽑았다가 테이블 하나를 누락한 사고의 수습기
 category: spring-mybatis

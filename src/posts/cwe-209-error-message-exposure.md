@@ -1,6 +1,7 @@
 ---
 title: CWE-209 오류 메시지 정보노출 — 예외 로깅이 보안 결함이 되는 순간
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: e.getMessage() 문자열 조립, printStackTrace 등 예외 정보가 새어 나가던 25여 건을 "고정 문구 + throwable 전달" 원칙으로 통일한 기록
 category: sast-cwe

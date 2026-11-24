@@ -1,6 +1,7 @@
 ---
 title: CWE-330·489·497 — 결함의 절반은 쓰지 않는 코드에 있었다
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: 부적절한 난수, 디버그 코드, 시스템 정보 노출 검출을 추적해 보니 대부분 미사용 벤더 모듈과 테스트 화면 — 진입점 역추적 후 삭제로 종결한 기록
 category: sast-cwe

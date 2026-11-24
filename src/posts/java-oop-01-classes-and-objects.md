@@ -1,6 +1,7 @@
 ---
 title: Java 객체지향 01 — 클래스와 객체, 참조를 구분하기
 date: 2022-06-07
+createdAt: 2022-06-07T00:00:00+09:00
 tags: Java, OOP, Study
 summary: 객체지향의 네 가지 개념부터 클래스·인스턴스·참조 변수·객체 배열까지, 객체를 만드는 코드의 의미 정리
 category: java

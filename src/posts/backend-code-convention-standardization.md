@@ -1,6 +1,7 @@
 ---
 title: 4인 백엔드 팀의 제각각이던 selectList 코드 — 예제 코드와 PDF 가이드로 개발 기준 맞추기
 date: 2024-12-12
+createdAt: 2024-12-12T00:00:00+09:00
 tags: Java, Spring, MyBatis, Architecture
 summary: 4명이 서로 다른 방식으로 작성하던 조회 코드를 Request/Response DTO·Model·Builder 구조로 정리하고, 예제 코드와 PDF 가이드를 공유해 팀의 개발 기준을 맞춘 기록
 category: spring-mybatis

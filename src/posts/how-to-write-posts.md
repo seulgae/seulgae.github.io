@@ -1,6 +1,7 @@
 ---
 title: 이 블로그에 글 쓰는 방법
 date: 2026-08-11
+createdAt: 2026-08-11T00:00:00+09:00
 tags: Guide
 summary: DB 없이 마크다운 파일로 운영되는 이 블로그의 글 작성·수정·배포 방법 정리
 category: dev-notes

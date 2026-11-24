@@ -1,6 +1,7 @@
 ---
 title: 개발자 1분 자기소개 — 협업을 묻는 면접과 직무를 묻는 면접
 date: 2026-11-06
+createdAt: 2026-11-06T00:00:00+09:00
 tags: Interview, Java, Spring, 협업, 성능 개선
 summary: 신뢰를 쌓는 업무 태도와 성능·운영·보안의 세 가지 개선 성과를 자연형·직무형 자기소개로 정리했다.
 category: project-review

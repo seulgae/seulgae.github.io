@@ -1,6 +1,7 @@
 ---
 title: Java 객체지향 06 — 패키지와 접근 제어로 경계 만들기
 date: 2022-06-07
+createdAt: 2022-06-07T00:00:00+09:00
 tags: Java, OOP, Study
 summary: 패키지·import·클래스패스와 접근 제어, final·abstract·인터페이스를 객체의 사용 경계 관점으로 정리
 category: java

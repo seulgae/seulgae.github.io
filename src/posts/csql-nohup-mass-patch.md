@@ -1,6 +1,7 @@
 ---
 title: csql과 nohup — 운영 중인 DB에 수백만 건 패치를 조용히 밀어 넣는 법
 date: 2026-07-08
+createdAt: 2026-07-08T00:00:00+09:00
 tags: DB, Linux, Security, Operations
 summary: 개인정보 컬럼 대량 암호화 패치를 서비스 중단 없이 처리한 기록 — nohup 백그라운드 실행, 분할 커밋, 로그 기반 모니터링까지 대량 DML 작업의 절차 정리
 category: linux-ops

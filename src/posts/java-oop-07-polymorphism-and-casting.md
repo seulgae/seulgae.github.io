@@ -1,6 +1,7 @@
 ---
 title: Java 객체지향 07 — 다형성은 같은 호출을 다른 구현으로 연결한다
 date: 2022-06-07
+createdAt: 2022-06-07T00:00:00+09:00
 tags: Java, OOP, Study
 summary: 참조 타입과 실제 객체의 역할, 동적 메서드 호출·안전한 형변환·매개변수 다형성과 컬렉션 예제 정리
 category: java

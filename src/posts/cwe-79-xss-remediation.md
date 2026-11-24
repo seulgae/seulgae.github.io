@@ -1,6 +1,7 @@
 ---
 title: CWE-79 크로스 사이트 스크립팅 — 레거시 JSP 200여 건 조치 기록
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, JSP, XSS, SAST
 summary: 코드레이 정적분석에서 검출된 CWE-79 결함 200여 건을 패턴별로 분류하고, 레거시 JSP 출력 구조를 개편해 조치한 과정 정리
 category: sast-cwe

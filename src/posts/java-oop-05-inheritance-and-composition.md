@@ -1,6 +1,7 @@
 ---
 title: Java 객체지향 05 — 상속보다 먼저 관계를 판단하기
 date: 2022-06-07
+createdAt: 2022-06-07T00:00:00+09:00
 tags: Java, OOP, Study
 summary: is-a와 has-a로 상속·포함을 구분하고, super·오버라이딩·Object의 역할과 재정의 조건 이해
 category: java

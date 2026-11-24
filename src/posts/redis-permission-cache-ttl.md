@@ -1,6 +1,7 @@
 ---
 title: 화면마다 권한 API를 호출하던 시스템 — Redis 캐시의 TTL과 무효화 정책
 date: 2025-01-07
+createdAt: 2025-01-07T00:00:00+09:00
 tags: Java, Spring, Redis, Performance
 summary: 권한 API에서 가져온 사용자 권한을 Redis에 저장해 반복 호출을 줄인 기록 — 로그인·재로그인 시 권한 갱신, 캐시 재사용과 보관 기간 정리
 category: redis-cache

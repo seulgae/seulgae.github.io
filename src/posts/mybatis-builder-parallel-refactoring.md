@@ -1,6 +1,7 @@
 ---
 title: API 응답 약 480,000ms → 10,000ms 이내 — 병렬 조회 개선과 한계
 date: 2024-11-27
+createdAt: 2024-11-27T00:00:00+09:00
 tags: Java, Spring, MyBatis, Performance
 summary: DB 적재 규모를 1만 건에서 운영 데이터 테스트를 위한 100만 건으로 늘리자 드러난 청구·가입 조회 병목 — 병렬 스트림으로 API 응답을 약 480,000ms에서 10,000ms 이내로 줄인 과정과 한계
 category: spring-mybatis

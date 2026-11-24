@@ -1,6 +1,7 @@
 ---
 title: Java 객체지향 03 — 참조형도 값으로 전달된다
 date: 2022-06-07
+createdAt: 2022-06-07T00:00:00+09:00
 tags: Java, OOP, Study
 summary: 기본형·참조형 매개변수와 객체 변경·재대입의 차이, 복사와 static 메서드의 접근 범위 정리
 category: java

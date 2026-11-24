@@ -1,6 +1,7 @@
 ---
 title: CWE-754 부적절한 예외 처리 — catch(Exception)을 걷어내며
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: 광범위한 catch, 무의미한 재던지기, 예외 삼키기, null 미검사 — 네 가지 안티패턴을 걷어낸 예외 처리 정비 기록
 category: sast-cwe

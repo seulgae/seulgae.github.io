@@ -1,6 +1,7 @@
 ---
 title: CWE-404·496 — 자원 해제와 방어적 복사, 객체를 안전하게 다루는 두 가지
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: 수동 close를 try-with-resources로 전환하고(CWE-404), setter의 배열 참조 저장을 방어적 복사로 바꾼(CWE-496) 조치 기록
 category: sast-cwe

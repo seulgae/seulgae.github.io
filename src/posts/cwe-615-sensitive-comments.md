@@ -1,6 +1,7 @@
 ---
 title: CWE-615 주석 속 민감정보 — 주석 처리했다고 사라지는 게 아니다
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: 주석에 남은 인증 관련 정보 제거 기록 — 소스·형상관리와 HTML/JS 산출물의 노출 경로를 구분하고, 이력에 남은 비밀정보는 별도 조치해야 한다
 category: sast-cwe

@@ -1,6 +1,7 @@
 ---
 title: CWE-476 Null Pointer 역참조 — 검출 15건을 한 곳에서 잡은 이야기
 date: 2026-08-12
+createdAt: 2026-08-12T00:00:00+09:00
 tags: Security, Java, SAST
 summary: NPE 검출 20여 건을 라인 단위가 아니라 근원 단위로 추적해, 공통 유틸 한 곳 수정으로 15건을 일괄 해소한 기록
 category: sast-cwe
