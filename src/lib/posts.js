@@ -33,6 +33,13 @@ export const CATEGORY_DEFINITIONS = [
     ],
   },
   {
+    groupId: "ai",
+    groupLabel: "AI 활용",
+    subs: [
+      { id: "ai-tools", label: "AI 툴 활용법" },
+    ],
+  },
+  {
     groupId: "backend",
     groupLabel: "Backend & Architecture",
     subs: [

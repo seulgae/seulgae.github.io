@@ -11,6 +11,14 @@ import {
 } from "./posts";
 
 describe("블로그 글 로더", () => {
+  test("Claude 플러그인 글을 AI 활용 카테고리로 분류한다", () => {
+    const post = findPostBySlug("claude-code-development-environment-plugins");
+    expect(post.category.groupId).toBe("ai");
+    expect(post.category.subId).toBe("ai-tools");
+    const group = getCategoryTree().find((category) => category.groupId === "ai");
+    expect(group.subs.find((category) => category.id === "ai-tools").count).toBeGreaterThanOrEqual(1);
+  });
+
   test("객체지향 시리즈 7편을 Java 카테고리와 학습 날짜로 분류한다", () => {
     const series = getAllPosts().filter((post) => /^java-oop-0[1-7]-/.test(post.slug));
     expect(series).toHaveLength(7);

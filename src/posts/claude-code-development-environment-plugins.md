@@ -4,7 +4,7 @@ date: 2026-11-24
 createdAt: 2026-11-24T21:34:31+09:00
 tags: Claude, Claude Code, AI, MCP, LSP
 summary: Claude Code에서 플러그인과 MCP를 설정하는 방법, 29개 확장 기능의 역할, 설계부터 검증까지 단계별 활용 계획을 정리했다.
-category: seulgae-tech-lab
+category: ai-tools
 ---
 
 [보안 점검에 Claude를 활용했을 때](/blog/claude-assisted-security-remediation)는 취약점 유형별로 세션을 나눠 조치안을 검토하고, 수정 후 브라우저에서 기능을 함께 확인했다. 이후 직접 재테스트하고 기존 데이터와 대조했다. AI가 코드를 읽고 화면을 확인하는 동안에도, 어떤 동작과 데이터를 검증해야 하는지는 개발자가 정해야 했다.
