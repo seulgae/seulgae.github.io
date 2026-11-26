@@ -60,7 +60,7 @@ export const CATEGORY_DEFINITIONS = [
   },
   {
     groupId: "retrospective",
-    groupLabel: "면접 준비",
+    groupLabel: "Interview Prep",
     subs: [
       { id: "project-review", label: "기업 면접 준비" },
     ],
@@ -105,7 +105,7 @@ function inferCategory(slug, tags, rawCategory) {
   ) {
     return {
       groupId: "retrospective",
-      groupLabel: "면접 준비",
+      groupLabel: "Interview Prep",
       subId: "project-review",
       subLabel: "기업 면접 준비",
     };
