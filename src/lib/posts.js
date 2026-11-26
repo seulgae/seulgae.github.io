@@ -60,10 +60,9 @@ export const CATEGORY_DEFINITIONS = [
   },
   {
     groupId: "retrospective",
-    groupLabel: "면접 준비 · 사이트 가이드",
+    groupLabel: "면접 준비",
     subs: [
       { id: "project-review", label: "기업 면접 준비" },
-      { id: "dev-notes", label: "블로그 사이트 가이드" },
     ],
   },
 ];
@@ -106,18 +105,9 @@ function inferCategory(slug, tags, rawCategory) {
   ) {
     return {
       groupId: "retrospective",
-      groupLabel: "면접 준비 · 사이트 가이드",
+      groupLabel: "면접 준비",
       subId: "project-review",
       subLabel: "기업 면접 준비",
-    };
-  }
-
-  if (tagSet.has("guide") || tagSet.has("react") || tagSet.has("refactoring")) {
-    return {
-      groupId: "retrospective",
-      groupLabel: "면접 준비 · 사이트 가이드",
-      subId: "dev-notes",
-      subLabel: "블로그 사이트 가이드",
     };
   }
 

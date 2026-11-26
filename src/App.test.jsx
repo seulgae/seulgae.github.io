@@ -348,7 +348,8 @@ test("/blog 접속 시 포트폴리오 레이아웃 없이 독립된 티스토�
 
   getCategoryTree().forEach((group) => {
     expect(
-      within(categoryNav).getByRole("link", { name: new RegExp(group.groupLabel) }),
+      // 대분류 이름이 소분류 이름에 포함될 수 있으므로(면접 준비 ⊂ 기업 면접 준비) 이름의 시작으로 찾습니다.
+      within(categoryNav).getByRole("link", { name: new RegExp(`^${group.groupLabel}`) }),
     ).toBeInTheDocument();
   });
 
