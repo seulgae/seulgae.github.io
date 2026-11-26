@@ -58,7 +58,6 @@ GitHub 마크다운(GFM) 문법을 지원합니다.
 | 대분류 | id | 소분류 |
 | --- | --- | --- |
 | 사이드 프로젝트 | `seulgae-tech-lab` | 슬개 기술 연구소 |
-| 사이드 프로젝트 | `seulgaerium` | 슬개리움 |
 | AI 활용 | `ai-tools` | AI 툴 활용법 |
 | Backend & Architecture | `java` | Java |
 | Backend & Architecture | `spring-mybatis` | Spring · 아키텍처 |

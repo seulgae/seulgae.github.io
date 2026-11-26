@@ -30,7 +30,6 @@ export const CATEGORY_DEFINITIONS = [
     groupLabel: "사이드 프로젝트",
     subs: [
       { id: "seulgae-tech-lab", label: "슬개 기술 연구소" },
-      { id: "seulgaerium", label: "슬개리움" },
     ],
   },
   {
