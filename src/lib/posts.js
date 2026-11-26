@@ -27,9 +27,9 @@ const bodyLoaders = import.meta.glob("../posts/*.md", {
 export const CATEGORY_DEFINITIONS = [
   {
     groupId: "ai",
-    groupLabel: "AI 활용",
+    groupLabel: "AI Workflow",
     subs: [
-      { id: "ai-tools", label: "AI 툴 활용법" },
+      { id: "claude-code", label: "Claude Code" },
     ],
   },
   {

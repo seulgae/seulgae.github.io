@@ -57,7 +57,7 @@ GitHub 마크다운(GFM) 문법을 지원합니다.
 
 | 대분류 | id | 소분류 |
 | --- | --- | --- |
-| AI 활용 | `ai-tools` | AI 툴 활용법 |
+| AI Workflow | `claude-code` | Claude Code |
 | Backend & Architecture | `java` | Java |
 | Backend & Architecture | `spring-mybatis` | Spring · 아키텍처 |
 | Backend & Architecture | `kafka-di` | Kafka · 데이터 정합성 |
