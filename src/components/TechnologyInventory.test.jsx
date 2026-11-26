@@ -3,33 +3,43 @@ import projects from "../data/projects";
 import profile from "../data/profile";
 import { groupProjectTechnologies } from "../utils/projectTechnologies";
 import { expect, test } from "vitest";
-import TechnologyInventory, { inventoryRows } from "./TechnologyInventory";
+import TechnologyInventory, { inventoryZones } from "./TechnologyInventory";
 
-function itemsOf(groupLabel) {
-  const heading = screen.getByRole("heading", { level: 3, name: groupLabel });
-  return within(heading.closest(".technology-inventory-group")).getAllByRole("listitem").map((li) => li.textContent);
+function itemsOf(zoneLabel) {
+  const heading = screen.getByRole("heading", { level: 4, name: zoneLabel });
+  return within(heading.closest(".stack-zone")).getAllByRole("listitem").map((li) => li.textContent);
 }
 
-test("인벤토리는 역할별 9개 행을 정한 순서대로 표시하고 기타 도구 행은 없다", () => {
+function laneOf(laneTitle) {
+  return screen.getByRole("heading", { level: 3, name: new RegExp(`^${laneTitle}`) }).closest(".stack-lane");
+}
+
+test("인벤토리를 서비스 흐름·빌드 배포·품질 운영·AI 네 영역의 아키텍처 그림으로 표시한다", () => {
   render(<TechnologyInventory />);
-  const headings = screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent);
-  expect(headings).toEqual(inventoryRows.map(([, label]) => label));
-  // 기타 도구가 보이면 새 기술이 inventoryRows 어느 행에도 없는 것입니다.
-  expect(headings).not.toContain("기타 도구");
+  const lanes = screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.querySelector("span").textContent);
+  expect(lanes).toEqual(["Build & Deploy", "Service", "Quality & Ops", "AI-assisted Development"]);
+  expect(within(laneOf("Service")).getAllByRole("heading", { level: 4 }).map((h) => h.textContent))
+    .toEqual(["화면", "서버 · 인프라", "애플리케이션", "데이터 저장소", "메시징"]);
+  expect(within(laneOf("Build & Deploy")).getAllByRole("heading", { level: 4 }).map((h) => h.textContent))
+    .toEqual(["형상 관리", "빌드", "배포 자동화"]);
+  expect(within(laneOf("Quality & Ops")).getAllByRole("heading", { level: 4 }).map((h) => h.textContent))
+    .toEqual(["정적 분석", "모니터링", "API 문서화"]);
 });
 
-test("각 행의 기술은 inventoryRows에 정한 기술과 순서 그대로 표시한다", () => {
+test("각 영역의 기술은 inventoryZones에 정한 기술과 순서 그대로 표시하고 기타 도구는 없다", () => {
   render(<TechnologyInventory />);
-  // 실패하면 inventoryRows의 기술 이름이 프로젝트 데이터 표기와 다른지 확인하세요.
-  inventoryRows.forEach(([, label, names]) => {
-    expect(itemsOf(label), label).toEqual(names);
+  // 실패하면 inventoryZones의 기술 이름이 프로젝트 데이터 표기와 다른지 확인하세요.
+  Object.values(inventoryZones).forEach(({ label, items }) => {
+    expect(itemsOf(label), label).toEqual(items);
   });
+  // 기타 도구가 보이면 새 기술이 inventoryZones 어느 영역에도 없는 것입니다.
+  expect(screen.queryByRole("heading", { level: 4, name: "기타 도구" })).toBeNull();
 });
 
 test("프로젝트 skills에 없는 프로필 기술(HTML/CSS·Jasypt)도 인벤토리에 표시한다", () => {
   render(<TechnologyInventory />);
-  expect(itemsOf("화면 기술")).toContain("HTML/CSS");
-  expect(itemsOf("보안 · 모니터링")).toContain("Jasypt");
+  expect(itemsOf("화면")).toContain("HTML/CSS");
+  expect(itemsOf("애플리케이션")).toContain("Jasypt");
 });
 
 test("프로젝트 상세 분류는 원래 분야 이름을 유지한다", () => {
@@ -53,7 +63,7 @@ test("버전 표기를 합쳐 같은 기술을 한 번만 표시한다", () => {
 
 test("인벤토리는 Spring Boot·Spring Batch를 Spring으로 합치고 프로젝트 상세 분류는 원래 이름을 유지한다", () => {
   render(<TechnologyInventory />);
-  expect(itemsOf("언어 · 프레임워크")).toEqual(["Java", "Spring", "JPA", "MyBatis"]);
+  expect(itemsOf("애플리케이션")).toEqual(["Java", "Spring", "JPA", "MyBatis", "Jasypt"]);
   const billing = projects.find((project) => project.skills.some((group) => /Spring Batch/.test(group.value)));
   const backend = groupProjectTechnologies(billing.skills).find((group) => group.id === "backend").items;
   expect(backend).toEqual(expect.arrayContaining([expect.stringMatching(/^Spring Boot/), expect.stringMatching(/^Spring Batch/)]));

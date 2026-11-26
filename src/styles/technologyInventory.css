@@ -1,11 +1,89 @@
+/* 기술 인벤토리 — 아키텍처 그림형 배치
+ * 가운데 Service(요청 흐름), 왼쪽 Build & Deploy, 오른쪽 Quality & Ops, 아래 AI 띠.
+ * 900px 이하에서는 Service를 먼저 두고 영역을 세로로 쌓습니다. */
 .technology-inventory { margin-top: 20px; scroll-margin-top: 90px; }
-.technology-inventory h2 { margin: 0 0 18px; font-size: 1rem; color: var(--text); }
-.technology-inventory-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
-.technology-inventory-group { display: grid; grid-template-columns: 115px minmax(0, 1fr); align-items: start; gap: 12px; min-width: 0; }
-.technology-inventory-group h3 { margin: 0; font-size: .72rem; font-weight: 600; line-height: 23px; color: var(--muted); }
+.technology-inventory > header { margin-bottom: 16px; }
+.technology-inventory h2 { margin: 0 0 6px; font-size: 1rem; color: var(--text); }
+.technology-inventory > header p { margin: 0; font-size: .78rem; color: var(--muted); line-height: 1.6; }
+
+.stack-architecture {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.15fr) minmax(0, 1fr);
+  grid-template-areas: "delivery service ops" "ai ai ai";
+  gap: 14px;
+  align-items: stretch;
+}
+.stack-lane-delivery { grid-area: delivery; }
+.stack-lane-service { grid-area: service; }
+.stack-lane-ops { grid-area: ops; }
+.stack-lane-ai { grid-area: ai; }
+
+.stack-lane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-block);
+  background: var(--accent-wash);
+}
+.stack-lane-service { border-style: solid; border-color: var(--accent-border); background: var(--accent-soft); }
+.stack-lane h3 { display: flex; flex-direction: column; gap: 2px; margin: 0 0 4px; }
+.stack-lane h3 span { font-size: .74rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--accent-ink); }
+.stack-lane h3 small { font-size: .7rem; font-weight: 500; color: var(--muted); }
+
+.stack-zone {
+  min-width: 0;
+  padding: 9px 11px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  background: var(--surface);
+}
+.stack-zone h4 { margin: 0 0 6px; font-size: .68rem; font-weight: 700; color: var(--muted); }
+
+/* 서버 안에 애플리케이션이 올라가는 구조를 테두리로 표현 */
+.stack-runtime {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-block);
+  background: var(--surface-soft);
+}
+.stack-zone-host { border: 0; padding: 2px 4px 0; background: transparent; }
+.stack-zone-core { border-color: var(--accent-rule); box-shadow: inset 3px 0 0 var(--accent); }
+.stack-zone-core h4 { color: var(--accent-ink); }
+
+.stack-backing { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 8px; }
+
+/* 영역 사이의 흐름 화살표 */
+.stack-flow { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--muted); font-size: .66rem; }
+.stack-flow::before { content: ""; width: 1px; height: 10px; background: var(--accent-rule); }
+.stack-flow::after { content: ""; border: 5px solid transparent; border-top-color: var(--accent-rule); border-bottom-width: 0; }
+
+.stack-lane-note { margin: auto 0 0; padding-top: 6px; font-size: .68rem; color: var(--muted); }
+.stack-lane-note span { color: var(--accent-ink); font-weight: 700; }
+
+.stack-lane-ai { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.stack-lane-ai h3 { margin: 0; }
+.stack-lane-ai .stack-zone { flex: 1 1 280px; }
+
+.stack-zone-etc { margin-top: 14px; }
+
 .technology-inventory .project-technology-items { gap: 7px 13px; }
 .technology-inventory .project-technology-item { gap: 5px; min-height: 23px; font-size: .8rem; color: var(--text); }
 .technology-inventory .technology-logo { width: 17px; height: 17px; }
-@media (max-width: 640px) {
-  .technology-inventory-group { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+
+@media (max-width: 900px) {
+  .stack-architecture { grid-template-columns: minmax(0, 1fr); grid-template-areas: "service" "delivery" "ops" "ai"; }
+  /* Service가 위에 오므로 양옆 레일의 화살표(→, ←)를 위쪽(↑)으로 돌립니다. */
+  .stack-lane-note span { display: inline-block; }
+  .stack-lane-delivery .stack-lane-note span { transform: rotate(-90deg); }
+  .stack-lane-ops .stack-lane-note span { transform: rotate(90deg); }
+}
+@media (max-width: 520px) {
+  .stack-lane { padding: 12px; }
+  .stack-backing { grid-template-columns: minmax(0, 1fr); }
 }
