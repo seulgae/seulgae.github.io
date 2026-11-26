@@ -461,7 +461,7 @@ test("/blog 검색어를 입력하면 목록이 필터링된다", async () => {
   const [first] = getAllPosts();
   const searchBox = screen.getByRole("searchbox", { name: "블로그 글 검색" });
 
-  await userEvent.type(searchBox, first.title.slice(0, 8));
+  await userEvent.type(searchBox, first.title.slice(0, 8).replace(/\[/g, "[["));
 
   expect(
     screen.getByRole("heading", { level: 2, name: first.title }),
