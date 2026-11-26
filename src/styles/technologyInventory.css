@@ -1,89 +1,75 @@
-/* 기술 인벤토리 — 아키텍처 그림형 배치
- * 가운데 Service(요청 흐름), 왼쪽 Build & Deploy, 오른쪽 Quality & Ops, 아래 AI 띠.
- * 900px 이하에서는 Service를 먼저 두고 영역을 세로로 쌓습니다. */
-.technology-inventory { margin-top: 20px; scroll-margin-top: 90px; }
-.technology-inventory > header { margin-bottom: 16px; }
-.technology-inventory h2 { margin: 0 0 6px; font-size: 1rem; color: var(--text); }
-.technology-inventory > header p { margin: 0; font-size: .78rem; color: var(--muted); line-height: 1.6; }
-
-.stack-architecture {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2.15fr) minmax(0, 1fr);
-  grid-template-areas: "delivery service ops" "ai ai ai";
-  gap: 14px;
-  align-items: stretch;
-}
-.stack-lane-delivery { grid-area: delivery; }
-.stack-lane-service { grid-area: service; }
-.stack-lane-ops { grid-area: ops; }
-.stack-lane-ai { grid-area: ai; }
-
-.stack-lane {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-  padding: 14px;
-  border: 1px dashed var(--line);
-  border-radius: var(--radius-block);
-  background: var(--accent-wash);
-}
-.stack-lane-service { border-style: solid; border-color: var(--accent-border); background: var(--accent-soft); }
-.stack-lane h3 { display: flex; flex-direction: column; gap: 2px; margin: 0 0 4px; }
-.stack-lane h3 span { font-size: .74rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--accent-ink); }
-.stack-lane h3 small { font-size: .7rem; font-weight: 500; color: var(--muted); }
-
-.stack-zone {
-  min-width: 0;
-  padding: 9px 11px 10px;
+.technology-inventory { margin-top: 20px; scroll-margin-top: 90px; container-type: inline-size; }
+.technology-inventory h2 { margin: 0 0 5px; font-size: 1rem; }
+.technology-inventory > header p, .stack-zone p { margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.6; word-break: keep-all; }
+.stack-blueprint {
+  margin-top: 16px;
+  padding: clamp(16px, 3%, 32px);
   border: 1px solid var(--line);
-  border-radius: var(--radius-inner);
-  background: var(--surface);
-}
-.stack-zone h4 { margin: 0 0 6px; font-size: .68rem; font-weight: 700; color: var(--muted); }
-
-/* 서버 안에 애플리케이션이 올라가는 구조를 테두리로 표현 */
-.stack-runtime {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px;
-  border: 1px solid var(--accent-border);
   border-radius: var(--radius-block);
-  background: var(--surface-soft);
+  background: radial-gradient(var(--line) .8px, transparent 1px) 0 0 / 16px 16px, var(--surface-soft);
 }
-.stack-zone-host { border: 0; padding: 2px 4px 0; background: transparent; }
-.stack-zone-core { border-color: var(--accent-rule); box-shadow: inset 3px 0 0 var(--accent); }
-.stack-zone-core h4 { color: var(--accent-ink); }
-
-.stack-backing { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 8px; }
-
-/* 영역 사이의 흐름 화살표 */
-.stack-flow { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--muted); font-size: .66rem; }
-.stack-flow::before { content: ""; width: 1px; height: 10px; background: var(--accent-rule); }
-.stack-flow::after { content: ""; border: 5px solid transparent; border-top-color: var(--accent-rule); border-bottom-width: 0; }
-
-.stack-lane-note { margin: auto 0 0; padding-top: 6px; font-size: .68rem; color: var(--muted); }
-.stack-lane-note span { color: var(--accent-ink); font-weight: 700; }
-
-.stack-lane-ai { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
-.stack-lane-ai h3 { margin: 0; }
-.stack-lane-ai .stack-zone { flex: 1 1 280px; }
-
-.stack-zone-etc { margin-top: 14px; }
-
-.technology-inventory .project-technology-items { gap: 7px 13px; }
-.technology-inventory .project-technology-item { gap: 5px; min-height: 23px; font-size: .8rem; color: var(--text); }
-.technology-inventory .technology-logo { width: 17px; height: 17px; }
-
-@media (max-width: 900px) {
-  .stack-architecture { grid-template-columns: minmax(0, 1fr); grid-template-areas: "service" "delivery" "ops" "ai"; }
-  /* Service가 위에 오므로 양옆 레일의 화살표(→, ←)를 위쪽(↑)으로 돌립니다. */
-  .stack-lane-note span { display: inline-block; }
-  .stack-lane-delivery .stack-lane-note span { transform: rotate(-90deg); }
-  .stack-lane-ops .stack-lane-note span { transform: rotate(90deg); }
+.technology-inventory h3 { margin: 0 0 14px; font-size: .86rem; }
+.stack-topology {
+  --branch: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) 70px minmax(0, 1.2fr) calc(2 * var(--branch)) minmax(0, 1.2fr);
+  align-items: center;
 }
-@media (max-width: 520px) {
-  .stack-lane { padding: 12px; }
-  .stack-backing { grid-template-columns: minmax(0, 1fr); }
+.stack-zone { min-width: 0; }
+.stack-zone h4 { margin: 0; font-size: .87rem; }
+.stack-topology .stack-zone { padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-inner); }
+.stack-symbol { display: block; width: 32px; height: 32px; margin-bottom: 9px; color: var(--accent-ink); stroke-width: 1.5; }
+.stack-zone p { margin: 4px 0 8px; }
+.stack-host { border: 2px solid var(--accent-rule); background: var(--surface); border-radius: var(--radius-block); overflow: hidden; }
+.stack-host .stack-zone { border: 0; border-radius: 0; }
+.stack-host .stack-zone-server { display: flex; align-items: center; gap: 9px; background: var(--accent-wash); border-top: 1px dashed var(--accent-rule); }
+.stack-zone-server .stack-symbol { flex-shrink: 0; width: 21px; margin: 0; }
+.stack-http { position: relative; align-self: center; padding-bottom: 6px; border-bottom: 2px solid var(--accent-rule); text-align: center; color: var(--accent-ink); font-size: .66rem; }
+.stack-http::after, .stack-targets > .stack-zone::after {
+  content: ""; position: absolute; width: 0; height: 0;
+  border: 4px solid transparent; border-left: 6px solid var(--accent-rule);
 }
+.stack-http::after { right: -4px; bottom: -5px; }
+.stack-targets { grid-column: 5; position: relative; display: grid; grid-auto-rows: 1fr; }
+.stack-targets::before { content: ""; position: absolute; left: calc(-2 * var(--branch)); top: 50%; width: var(--branch); border-top: 2px solid var(--accent-rule); }
+.stack-targets > .stack-zone { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 0; border: 0; background: transparent; }
+.stack-targets .stack-symbol { flex: 0 0 32px; margin: 0; }
+.stack-targets > .stack-zone::before {
+  content: ""; position: absolute; left: calc(-1 * var(--branch)); top: 0; bottom: 0;
+  border-left: 2px solid var(--accent-rule);
+}
+.stack-targets > .stack-zone:first-child::before { top: 50%; }
+.stack-targets > .stack-zone:last-child::before { bottom: 50%; }
+.stack-targets > .stack-zone::after {
+  left: calc(-1 * var(--branch)); top: 50%; width: calc(var(--branch) - 5px); height: 7px; transform: translateY(-3px);
+  background: var(--accent-rule); border: 0; clip-path: polygon(0 38%, 78% 38%, 78% 0, 100% 50%, 78% 100%, 78% 65%, 0 65%);
+}
+.stack-toolbelt { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+.stack-toolbelt section { border-top: 1px solid var(--line); padding-top: 12px; }
+.stack-toolbelt .stack-zone > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; margin: 6px 0; }
+.stack-toolbelt h4 { color: var(--muted); font-size: .72rem; font-weight: 500; }
+.technology-inventory .project-technology-items { gap: 3px 9px; }
+.technology-inventory .project-technology-item { gap: 4px; min-height: 21px; font-size: .74rem; }
+.technology-inventory .technology-logo { width: 15px; height: 15px; }
+.stack-toolbelt .stack-zone-ai > div { flex-direction: column; align-items: stretch; }
+.stack-zone-ai h3 { margin: 0 0 4px; }
+.stack-usage-list { flex-direction: column; }
+.stack-usage-list .project-technology-item { align-items: flex-start; }
+.stack-usage-list .technology-logo { margin-top: 2px; }
+.technology-usage { display: block; color: var(--muted); line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+@container (max-width: 720px) {
+  .stack-topology { display: flex; flex-direction: column; align-items: stretch; }
+  .stack-zone-client { display: flex; align-items: center; gap: 12px; }
+  .stack-http { align-self: flex-start; margin-left: 24px; padding: 6px 9px; border: 0; border-left: 2px solid var(--accent-rule); }
+  .stack-http::after { bottom: -3px; left: -6px; right: auto; transform: rotate(90deg); }
+  .stack-targets { margin-left: 25px; padding: 8px 0 0 22px; --branch: 22px; }
+  .stack-targets::before { top: 0; left: 0; height: 8px; width: 0; border-left: 2px solid var(--accent-rule); border-top: 0; }
+  .stack-targets > .stack-zone:first-child::before { top: 0; }
+  .stack-toolbelt { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.inventory-table { width: 100%; margin-top: 14px; border-collapse: collapse; table-layout: fixed; font-size: .8rem; }
+.inventory-table th, .inventory-table td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.inventory-table thead th { background: var(--accent-wash); color: var(--accent-ink); }
+.inventory-table th:first-child { width: 28%; word-break: keep-all; }
+.inventory-table td p { margin: 5px 0 0; color: var(--muted); line-height: 1.55; overflow-wrap: anywhere; }

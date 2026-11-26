@@ -58,7 +58,7 @@ test("About에 기술 인벤토리를 표시하고 별도 Skills 메뉴와 카�
   expect(within(inventory).getByText("Java")).toBeInTheDocument();
   expect(within(inventory).getAllByText("Spring")).toHaveLength(1);
   expect(within(inventory).queryByText(/Spring (Boot|Batch)/)).not.toBeInTheDocument();
-  expect(within(inventory).queryByText("React")).not.toBeInTheDocument();
+  expect(within(inventory).getByText("React")).toBeInTheDocument();
   expect(within(inventory).getByText("HTML/CSS")).toBeInTheDocument();
   expect(within(inventory).getByText("Claude")).toBeInTheDocument();
   expect(within(inventory).queryByRole("table")).not.toBeInTheDocument();

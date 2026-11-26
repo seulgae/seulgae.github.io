@@ -34,7 +34,7 @@ test("품질·보안 분석 도구는 개발·배포 및 운영 모니터링과 
 test("어떤 분류 규칙에도 맞지 않아 기본 분류로 떨어진 기술이 없다", async () => {
   // 개발·배포 도구로 의도한 기술만 허용합니다. 새 기술이 여기서 실패하면
   // projectTechnologies.js의 분야별 정규식에 추가하거나, 정말 도구라면 이 목록에 추가하세요.
-  const intendedTools = ["Maven", "Gradle", "SVN", "GitLab", "Jenkins", "Swagger"];
+  const intendedTools = ["Maven", "Gradle", "SVN", "GitHub", "GitLab", "GitHub Actions", "Jenkins", "Swagger"];
   const { inventoryOnlySkills } = await import("../components/TechnologyInventory");
   const inputs = [
     ...[...projects, ...getCareerGroups().flatMap((group) => group.projects)].map((project) => project.skills),
