@@ -26,13 +26,6 @@ const bodyLoaders = import.meta.glob("../posts/*.md", {
 
 export const CATEGORY_DEFINITIONS = [
   {
-    groupId: "side-projects",
-    groupLabel: "사이드 프로젝트",
-    subs: [
-      { id: "seulgae-tech-lab", label: "슬개 기술 연구소" },
-    ],
-  },
-  {
     groupId: "ai",
     groupLabel: "AI 활용",
     subs: [
