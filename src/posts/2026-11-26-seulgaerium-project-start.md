@@ -1,5 +1,5 @@
 ---
-title: [2026.11.26] 슬개리움(Seulgaerium) 프로젝트의 시작
+title: 슬개리움(Seulgaerium) 프로젝트의 시작
 date: 2026-11-26
 createdAt: 2026-11-26T14:56:20+09:00
 tags: Seulgaerium, Side Project, Java, AI, SDLC
